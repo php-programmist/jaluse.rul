@@ -6,7 +6,9 @@
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.css');
+import '../css/global.scss'
+import '../css/style.scss'
+import '../css/media.scss'
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 import $ from 'jquery';
