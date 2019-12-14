@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ */
+class Product extends Page
+{
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Color", inversedBy="products")
+     */
+    private $color;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="products")
+     */
+    private $type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Material", inversedBy="products")
+     */
+    private $material;
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+}
