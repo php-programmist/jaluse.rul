@@ -34,6 +34,16 @@ class Product extends Page
      */
     private $material;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $popular;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
+     */
+    private $category;
+
     public function getPrice(): ?float
     {
         return $this->price;
@@ -90,6 +100,30 @@ class Product extends Page
     public function setMaterial(?Material $material): self
     {
         $this->material = $material;
+
+        return $this;
+    }
+
+    public function getPopular(): ?bool
+    {
+        return $this->popular;
+    }
+
+    public function setPopular(bool $popular): self
+    {
+        $this->popular = $popular;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -21,6 +21,8 @@ easy_admin:
                     - {property: 'type.name', label: 'Тип'}
                     - {property: 'material.name', label: 'Материал'}
                     - {property: 'color.name', label: 'Цвет'}
+                    - {property: 'category.name', label: 'Категория'}
+                    - {property: 'popular', label: 'Популярный'}
                     - {property: 'published', label: 'Опубликован'}
         Catalog:
             class: App\Entity\Catalog
@@ -50,6 +52,14 @@ easy_admin:
         Material:
             class: App\Entity\Material
             label: "Материал"
+            list:
+                fields:
+                    - 'id'
+                    - {property: 'name', label: 'Название'}
+                    - {property: 'products', label: 'Кол-во товаров'}
+        Category:
+            class: App\Entity\Category
+            label: "Категория"
             list:
                 fields:
                     - 'id'
