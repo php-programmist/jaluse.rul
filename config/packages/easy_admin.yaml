@@ -5,9 +5,9 @@ easy_admin:
             css:
                 - 'css/admin.css'
     list:
-        max_results: 50
+        max_results: 100
     show:
-        max_results: 50
+        max_results: 100
     entities:
         Product:
             class: App\Entity\Product
@@ -22,6 +22,16 @@ easy_admin:
                     - {property: 'material.name', label: 'Материал'}
                     - {property: 'color.name', label: 'Цвет'}
                     - {property: 'category.name', label: 'Категория'}
+                    - {property: 'popular', label: 'Популярный'}
+                    - {property: 'published', label: 'Опубликован'}
+                filters:
+                    - {property: 'name', label: 'Название'}
+                    - {property: 'uri', label: 'Ссылка'}
+                    - {property: 'price', label: 'Цена'}
+                    - {property: 'type', label: 'Тип'}
+                    - {property: 'material', label: 'Материал'}
+                    - {property: 'color', label: 'Цвет'}
+                    - {property: 'category', label: 'Категория'}
                     - {property: 'popular', label: 'Популярный'}
                     - {property: 'published', label: 'Опубликован'}
         Catalog:
