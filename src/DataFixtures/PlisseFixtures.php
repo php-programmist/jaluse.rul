@@ -7,7 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class ImportFixtures extends Fixture
+class PlisseFixtures extends Fixture
 {
     /**
      * @var Connection
@@ -28,40 +28,11 @@ class ImportFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $project_dir = $this->params->get('kernel.project_dir');
-        $fh = fopen($project_dir.'/csv/products.csv','r');
+        $fh = fopen($project_dir.'/csv/plisse.csv','r');
         while ($row = fgetcsv($fh,8000,';')){
-            [$uri,$price,$category,$popular,$published] = $row;
-            if (!$id = $this->getProductByUri($uri)) {
-                continue;
-            }
-            if ( ! $price) {
-                if ( !$price = $this->getPrice($id)){
-                    continue;
-                }
-            }
+            [$id,$uri,$price,$category,$popular,$published] = $row;
             $this->updateProduct($id,$price,$category,$popular,$published);
         }
-    }
-    
-    private function getProductByUri($uri)
-    {
-        $uri = trim($uri,'/');
-        return $this->connection->createQueryBuilder()
-                                  ->select('id')
-                                  ->from('page')
-                                  ->andWhere('uri = '.$this->connection->quote($uri))
-                                  ->execute()
-                                  ->fetchColumn();
-    }
-    
-    private function getPrice($id)
-    {
-        return $this->connection->createQueryBuilder()
-                                ->select('price')
-                                ->from('modx_ms2_products')
-                                ->andWhere('id = '.$id)
-                                ->execute()
-                                ->fetchColumn();
     }
     
     private function updateProduct($id, $price, $category, $popular, $published)
@@ -71,7 +42,8 @@ class ImportFixtures extends Fixture
                          ->set('price',$price)
                          ->set('popular',$popular)
                          ->set('published',$published)
-                         ->set('category_id',$category?:1)
+                         ->set('category_id',$category)
+                         ->set('type_id',175)
                          ->andWhere('id = '.$id)
                          ->execute();
     }
