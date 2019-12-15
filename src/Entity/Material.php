@@ -28,9 +28,15 @@ class Material
      */
     private $products;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Type", inversedBy="materials")
+     */
+    private $type;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->type = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,5 +89,31 @@ class Material
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection|Type[]
+     */
+    public function getType(): Collection
+    {
+        return $this->type;
+    }
+
+    public function addType(Type $type): self
+    {
+        if (!$this->type->contains($type)) {
+            $this->type[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(Type $type): self
+    {
+        if ($this->type->contains($type)) {
+            $this->type->removeElement($type);
+        }
+
+        return $this;
     }
 }

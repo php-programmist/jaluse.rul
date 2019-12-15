@@ -41,6 +41,11 @@ easy_admin:
                     - 'id'
                     - {property: 'name', label: 'Название'}
                     - {property: 'products', label: 'Кол-во товаров'}
+                    - {property: 'materials', label: 'Кол-во материалов'}
+            form:
+                fields:
+                    - {property: 'name', label: 'Название'}
+                    - {property: 'materials', label: 'Материалы'}
         Color:
             class: App\Entity\Color
             label: "Цвет"
@@ -57,6 +62,10 @@ easy_admin:
                     - 'id'
                     - {property: 'name', label: 'Название'}
                     - {property: 'products', label: 'Кол-во товаров'}
+            form:
+                fields:
+                    - {property: 'name', label: 'Название'}
+                    - {property: 'type', label: 'Тип'}
         Category:
             class: App\Entity\Category
             label: "Категория"

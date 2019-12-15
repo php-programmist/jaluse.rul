@@ -28,9 +28,15 @@ class Type
      */
     private $products;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Material", mappedBy="type")
+     */
+    private $materials;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->materials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,5 +89,33 @@ class Type
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection|Material[]
+     */
+    public function getMaterials(): Collection
+    {
+        return $this->materials;
+    }
+
+    public function addMaterial(Material $material): self
+    {
+        if (!$this->materials->contains($material)) {
+            $this->materials[] = $material;
+            $material->addType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMaterial(Material $material): self
+    {
+        if ($this->materials->contains($material)) {
+            $this->materials->removeElement($material);
+            $material->removeType($this);
+        }
+
+        return $this;
     }
 }
