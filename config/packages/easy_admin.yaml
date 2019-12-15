@@ -16,7 +16,7 @@ easy_admin:
                 fields:
                     - 'id'
                     - {property: 'name', label: 'Название'}
-                    - {property: 'uri', label: 'Ссылка'}
+                    - {property: 'path', label: 'Ссылка', type: 'url'}
                     - {property: 'price', label: 'Цена'}
                     - {property: 'type.name', label: 'Тип'}
                     - {property: 'material.name', label: 'Материал'}
@@ -41,7 +41,7 @@ easy_admin:
                 fields:
                     - 'id'
                     - {property: 'name', label: 'Название'}
-                    - {property: 'uri', label: 'Ссылка'}
+                    - {property: 'path', label: 'Ссылка', type: 'url'}
                     - {property: 'published', label: 'Опубликован'}
         Type:
             class: App\Entity\Type

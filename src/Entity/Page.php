@@ -109,6 +109,11 @@ class Page
         return $this->uri;
     }
 
+    public function getPath(): ?string
+    {
+        return '/'.$this->uri.'/';
+    }
+
     public function setUri(string $uri)
     {
         $this->uri = $uri;
