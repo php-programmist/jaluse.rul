@@ -28,6 +28,16 @@ class Color
      */
     private $products;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $alias;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $hex;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -83,5 +93,29 @@ class Color
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getAlias(): ?string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(string $alias): self
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+
+    public function getHex(): ?string
+    {
+        return $this->hex;
+    }
+
+    public function setHex(string $hex): self
+    {
+        $this->hex = $hex;
+
+        return $this;
     }
 }

@@ -63,6 +63,8 @@ easy_admin:
                 fields:
                     - 'id'
                     - {property: 'name', label: 'Название'}
+                    - {property: 'alias', label: 'Алиас'}
+                    - {property: 'hex', label: 'Hex-код'}
                     - {property: 'products', label: 'Кол-во товаров'}
         Material:
             class: App\Entity\Material

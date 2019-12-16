@@ -21,7 +21,7 @@ class ExtraFieldsFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $colors = $this->connection->createQueryBuilder()
-                                        ->select('id,pagetitle')
+                                        ->select('id,pagetitle,longtitle,alias')
                                         ->from('modx_site_content')
                                         ->andWhere('parent=82')
                                         ->execute()
@@ -29,7 +29,9 @@ class ExtraFieldsFixtures extends Fixture
         foreach ($colors as $color) {
             $values = [
                 'id'=>$color->id,
-                'name'=> $this->connection->quote($color->pagetitle)
+                'name'=> $this->connection->quote($color->pagetitle),
+                'alias'=> $this->connection->quote($color->alias),
+                'hex'=> $this->connection->quote($color->longtitle),
             ];
             $query = $this->connection->createQueryBuilder()
                                       ->insert('color')
