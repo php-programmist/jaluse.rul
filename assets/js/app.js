@@ -15,3 +15,11 @@ import $ from 'jquery';
 import slick from 'slick-carousel';
 import scripts from './script';
 scripts($);
+
+import Vue from 'vue';
+import MainPageCalc from './components/MainPageCalc';
+
+new Vue({
+	el: '#main-page-calc',
+	render: h => h(MainPageCalc)
+});

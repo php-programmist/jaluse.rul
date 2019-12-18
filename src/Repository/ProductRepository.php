@@ -18,7 +18,78 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
-
+    
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findFiltered($products_limit, $filters = [])
+    {
+        $query = $this->createQueryBuilder('p')
+                      ->leftJoin('p.type', 't')
+                      ->andWhere('t.show_main_page_calc = 1')
+                      ->orderBy('p.popular', 'DESC');
+        
+        if ( ! empty($filters['category'])) {
+            $query->andWhere('p.category = :category')
+                  ->setParameter('category', $filters['category']);
+        } else {
+            $query->andWhere('p.category = 1');
+        }
+    
+        if ( ! empty($filters['type'])) {
+            $query->andWhere('p.type = :type')
+                  ->setParameter('type', $filters['type']);
+        }
+    
+        if ( ! empty($filters['material'])) {
+            $query->andWhere('p.material = :material')
+                  ->setParameter('material', $filters['material']);
+        }
+    
+        if ( ! empty($filters['color'])) {
+            $query->andWhere('p.color IN(:color)')
+                  ->setParameter('color', explode(',',$filters['color']));
+        }
+        
+        
+        return $query->setMaxResults($products_limit)
+                     ->getQuery()
+                     ->getResult();
+    }
+    
+    public function getAvailableColors($filters = [])
+    {
+        $query = $this->createQueryBuilder('p')
+                      ->leftJoin('p.type', 't')
+                      ->innerJoin('p.color', 'c')
+                      ->select('c.id')
+                      ->andWhere('t.show_main_page_calc = 1')
+        ;
+    
+        if ( ! empty($filters['category'])) {
+            $query->andWhere('p.category = :category')
+                  ->setParameter('category', $filters['category']);
+        } else {
+            $query->andWhere('p.category = 1');
+        }
+    
+        if ( ! empty($filters['type'])) {
+            $query->andWhere('p.type = :type')
+                  ->setParameter('type', $filters['type']);
+        }
+    
+        if ( ! empty($filters['material'])) {
+            $query->andWhere('p.material = :material')
+                  ->setParameter('material', $filters['material']);
+        }
+    
+        $result = $query->distinct()
+                     ->getQuery()
+                     ->getScalarResult();
+        $ids = array_map('current', $result);
+        return array_filter($ids);
+    }
+    
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
@@ -35,7 +106,7 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
-
+    
     /*
     public function findOneBySomeField($value): ?Product
     {

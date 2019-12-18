@@ -33,6 +33,16 @@ class Type
      */
     private $materials;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $show_main_page_calc;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $calculation_type;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -115,6 +125,30 @@ class Type
             $this->materials->removeElement($material);
             $material->removeType($this);
         }
+
+        return $this;
+    }
+
+    public function getShowMainPageCalc(): ?bool
+    {
+        return $this->show_main_page_calc;
+    }
+
+    public function setShowMainPageCalc(bool $show_main_page_calc): self
+    {
+        $this->show_main_page_calc = $show_main_page_calc;
+
+        return $this;
+    }
+
+    public function getCalculationType(): ?string
+    {
+        return $this->calculation_type;
+    }
+
+    public function setCalculationType(string $calculation_type): self
+    {
+        $this->calculation_type = $calculation_type;
 
         return $this;
     }

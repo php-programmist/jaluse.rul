@@ -18,6 +18,26 @@ class TypeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Type::class);
     }
+    
+    /**
+     * @return Type[] Returns an array of Type objects
+     */
+    
+    public function getMainPageCalcData()
+    {
+        $plain_types = [];
+        $types = $this->findBy(['show_main_page_calc'=>1]);
+        foreach ($types as $type) {
+            $simple_type = new \stdClass();
+            $simple_type->id = $type->getId();
+            $simple_type->name = $type->getName();
+            $simple_type->calculation_type = $type->getCalculationType();
+            $simple_type->materials= $type->getMaterials();
+            $plain_types[] = $simple_type;
+        }
+        return $plain_types;
+    }
+    
 
     // /**
     //  * @return Type[] Returns an array of Type objects

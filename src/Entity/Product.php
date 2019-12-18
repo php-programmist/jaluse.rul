@@ -44,6 +44,11 @@ class Product extends Page
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $discount = 0;
+
     public function getPrice(): ?float
     {
         return $this->price;
@@ -124,6 +129,42 @@ class Product extends Page
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+    
+    public function getColorId()
+    {
+        if ($this->getColor()) {
+            return $this->getColor()->getId();
+        }
+        return 0;
+    }
+    
+    public function getColorName()
+    {
+        if ($this->getColor()) {
+            return $this->getColor()->getName();
+        }
+        return '';
+    }
+    
+    public function getMaterialName()
+    {
+        if ($this->getMaterial()) {
+            return $this->getMaterial()->getName();
+        }
+        return '';
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(int $discount): self
+    {
+        $this->discount = $discount;
 
         return $this;
     }
