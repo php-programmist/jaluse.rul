@@ -1,0 +1,22 @@
+<h3>Поступил новый заказ.</h3>
+<p>Имя клента: <strong>{{ name }}</strong></p>
+<p>Телефон клента: <strong>{{ phone }}</strong></p>
+<hr>
+<h3>Информация о заказе:</h3>
+<p>Ссылка: <a href="{{ app.request.schemeAndHttpHost~product_url }}">{{ app.request.schemeAndHttpHost~product_url }}</a></p>
+<p>Название: <strong>{{ product_name }}</strong></p>
+<p>Категория: <strong>{{ category }}</strong></p>
+<p>Материал: <strong>{{ material }}</strong></p>
+<p>Ширина: <strong>{{ width }} мм</strong></p>
+<p>Высота: <strong>{{ height }} мм</strong></p>
+<p>Количество: <strong>{{ number }} шт</strong></p>
+<p>Управление: <strong>{{ controlType }}</strong></p>
+<p>Цвет: <strong>{{ color }}</strong></p>
+<hr>
+<h3>Рассчитанные цены:</h3>
+<p>Базовая: <strong>{{ base_price }} р.</strong></p>
+<p>Со скидкой: <strong>{{ discounted_price }} р.</strong></p>
+<p>С доставкой: <strong>{{ price_with_delivery }} р.</strong></p>
+<hr>
+<p>Почтовик «Жалюзи на окна»</p>
+<p>Referer:<strong>{{ referer }}</strong></p>

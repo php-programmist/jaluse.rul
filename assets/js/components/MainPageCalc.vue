@@ -8,7 +8,7 @@
 						<div class="row">
 							<div class="calc-parametr-typewrap-type">
 								<div class="type-head type-head1">
-									<div class="type-text" @click="toggleTypeSelector()" >{{typeName}}</div>
+									<div class="type-text" @click="toggleTypeSelector()">{{typeName}}</div>
 								</div>
 								<div class="type-body type-body1" v-show="type_opened">
 									<div
@@ -23,7 +23,7 @@
 							</div>
 							<div class="calc-parametr-typewrap-type" v-show="materials.length > 0">
 								<div class="type-head type-head2">
-									<div class="type-text" @click="toggleMaterialSelector()" >{{materialName}}</div>
+									<div class="type-text" @click="toggleMaterialSelector()">{{materialName}}</div>
 								</div>
 								<div class="type-body type-body2" v-show="material_opened">
 									<div
@@ -130,40 +130,46 @@
 					
 					</div>
 				</div>
-				<button class="mbtn">Заказать</button>
-				<button class="mbtn mbtn2">Поулчить консультацию</button>
+				<button class="mbtn" @click="$refs.order.visible = true">Заказать</button>
+				<button class="mbtn mbtn2" @click="$refs.consultation.visible = true">Получить консультацию</button>
 			</div>
 		</div>
+		<popup header="Заказать" ref="order" @sendForm="sendOrder"></popup>
+		<popup header="Получить консультацию" ref="consultation" @sendForm="sendConsultation"></popup>
 	</div>
 </template>
 
 <script>
 	import axios from 'axios';
+	import popup from './PopupContactForm';
 	
 	export default {
 		data() {
 			return {
 				types: [],
 				colors: [],
-				availableColorsIds:[],
-				colorsIds:[],
+				availableColorsIds: [],
+				colorsIds: [],
 				products: [],
 				categories: [],
 				category_index: 0,
 				type_index: -1,
 				material_index: -1,
-				product_index:0,
-				usd_rate:0,
-				discount_global:0,
-				width:1000,
-				height:1000,
-				number:1,
-				controlType:"Ручное",
-				deliveryCost:500,
-				type_opened:false,
-				material_opened:false,
-				color_opened:false,
+				product_index: 0,
+				usd_rate: 0,
+				discount_global: 0,
+				width: 1000,
+				height: 1000,
+				number: 1,
+				controlType: "Ручное",
+				deliveryCost: 500,
+				type_opened: false,
+				material_opened: false,
+				color_opened: false,
 			};
+		},
+		components: {
+			popup
 		},
 		created() {
 			axios.get('/api/main-page-calc/getInitData')
@@ -181,21 +187,21 @@
 				});
 		},
 		computed: {
-			typeName(){
+			typeName() {
 				return this.type_index > -1 ? this.types[this.type_index].name : 'Тип';
 			},
-			materialName(){
-				return this.materials.length>0 && this.material_index > -1 ? this.materials[this.material_index].name : 'Материал';
+			materialName() {
+				return this.materials.length > 0 && this.material_index > -1 ? this.materials[this.material_index].name : 'Материал';
 			},
-			materials(){
+			materials() {
 				return this.type_index > -1 ? this.types[this.type_index].materials : [];
 			},
-			availableColors(){
+			availableColors() {
 				return this.colors.filter(color => this.availableColorsIds.includes(color.id));
 				
 			},
-			currentProduct(){
-				if (this.products.length === 0 || typeof this.products[this.product_index] == 'undefined'){
+			currentProduct() {
+				if (this.products.length === 0 || typeof this.products[this.product_index] == 'undefined') {
 					return {
 						"price": 0,
 						"image": '',
@@ -210,25 +216,25 @@
 				}
 				return this.products[this.product_index];
 			},
-			currentDiscount(){
+			currentDiscount() {
 				if (!this.currentProduct.discount || this.currentProduct.discount < 1) {
 					return this.discount_global;
 				}
 				return this.currentProduct.discount;
 			},
-			basePrice(){
+			basePrice() {
 				if (this.currentProduct.id === 0 || !this.width || !this.height) {
-					return 0;					
+					return 0;
 				}
-				if (this.type_index < 0 ||this.types[this.type_index].calculationType === 'simple') {
+				if (this.type_index < 0 || this.types[this.type_index].calculationType === 'simple') {
 					return parseInt(this.number * this.currentProduct.price * this.usd_rate * this.width * this.height / 1000000);
 				}
 				return 0;
 			},
-			discountedPrice(){
+			discountedPrice() {
 				return parseInt(this.basePrice * (100 - this.currentDiscount) / 100);
 			},
-			priceWithDelivery(){
+			priceWithDelivery() {
 				return this.discountedPrice + this.deliveryCost;
 			}
 		},
@@ -236,7 +242,7 @@
 		
 		},
 		methods: {
-			changeType( index) {
+			changeType(index) {
 				this.type_opened = false;
 				if (index !== this.type_index) {//Тип действительно изменился
 					this.type_index = index;
@@ -245,7 +251,7 @@
 					this.getProducts();
 				}
 			},
-			changeMaterial( index) {
+			changeMaterial(index) {
 				this.material_opened = false;
 				if (index !== this.material_index) {//Тип действительно изменился
 					this.material_index = index;
@@ -253,7 +259,7 @@
 					this.getProducts();
 				}
 			},
-			changeCategory( index) {
+			changeCategory(index) {
 				if (index !== this.category_index) {//Тип действительно изменился
 					this.category_index = index;
 					this.colorsIds = [];
@@ -269,30 +275,30 @@
 			toggleColorSelector() {
 				this.color_opened = !this.color_opened;
 			},
-			toggleColorId(colorId){
+			toggleColorId(colorId) {
 				if (this.colorsIds.includes(colorId)) {
-					this.colorsIds = this.colorsIds.filter(value => value!==colorId);
+					this.colorsIds = this.colorsIds.filter(value => value !== colorId);
 					this.getProducts();
-				}else{
+				} else {
 					this.colorsIds.push(colorId);
 					this.getProducts();
 				}
 			},
-			setActiveProductIndex(index){
+			setActiveProductIndex(index) {
 				this.product_index = index;
 			},
-			getProducts(){
+			getProducts() {
 				this.product_index = 0;
 				let query = '/api/main-page-calc/getProducts?';
-				query += 'category='+this.categories[this.category_index].id;
-				if(this.type_index > -1){
-					query +='&type='+this.types[this.type_index].id;
+				query += 'category=' + this.categories[this.category_index].id;
+				if (this.type_index > -1) {
+					query += '&type=' + this.types[this.type_index].id;
 				}
-				if(this.material_index > -1){
-					query +='&material='+this.materials[this.material_index].id;
+				if (this.material_index > -1) {
+					query += '&material=' + this.materials[this.material_index].id;
 				}
-				if(this.colorsIds.length > 0){
-					query +='&color='+this.colorsIds.join(',');
+				if (this.colorsIds.length > 0) {
+					query += '&color=' + this.colorsIds.join(',');
 				}
 				axios.get(query)
 					.then(response => {
@@ -300,8 +306,53 @@
 						this.setAvailableColorsIds(response.data.colors);
 					});
 			},
-			setAvailableColorsIds(array){
-				this.availableColorsIds = array.map(item=>parseInt(item));
+			setAvailableColorsIds(array) {
+				this.availableColorsIds = array.map(item => parseInt(item));
+			},
+			sendOrder(data) {
+				const {name, phone} = data;
+				const body = {
+					name,
+					phone,
+					product_url: this.currentProduct.uri,
+					product_name: this.currentProduct.name,
+					category: this.categories[this.category_index].name,
+					material: this.currentProduct.materialName,
+					width: this.width,
+					height: this.height,
+					number: this.number,
+					controlType: this.controlType,
+					color: this.currentProduct.colorName,
+					base_price: this.basePrice,
+					discounted_price: this.discountedPrice,
+					price_with_delivery: this.priceWithDelivery,
+				};
+				const str = JSON.stringify(body);
+				axios.post('/mail/callback/order', str)
+					.then((response) => {
+						alert('Спасибо, отправлено!');
+						this.$refs.order.visible = false;
+					})
+					.catch((error) => {
+						alert('Произошла ошибка');
+						console.log(error);
+					});
+			},
+			sendConsultation(data) {
+				const {name, phone} = data;
+				const body = {
+					name,
+					phone
+				};
+				const str = JSON.stringify(body);
+				axios.post('/mail/callback/consultation', str)
+					.then(({data}) => {
+						alert(data.msg);
+						this.$refs.consultation.visible = false;
+					})
+					.catch((error) => {
+						alert(error.response.data.detail);
+					});
 			}
 		}
 	};

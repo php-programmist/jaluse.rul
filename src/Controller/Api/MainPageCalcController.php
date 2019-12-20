@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/api/main-page-calc", name="main_page_calc_")
+ * @Route("/main-page-calc", name="main_page_calc_")
  */
 class MainPageCalcController extends AbstractController
 {
