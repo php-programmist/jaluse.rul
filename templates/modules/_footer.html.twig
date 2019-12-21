@@ -48,8 +48,8 @@
             </div>
             <div class="col-lg-3 footer-form">
                 <div class="footer-zag">Проконсультируем Вас</div>
-                <form action="#">
-                    <input type="text" class="phone-field" name="phone" placeholder="Номер телефона">
+                <form action="{{ path('mail.callback_consultation') }}" method="post" class="phone_callback">
+                    <input type="text" class="phone-field" name="phone" placeholder="Номер телефона" required="">
                     <input type="submit" class="mbtn">
                 </form>
             </div>

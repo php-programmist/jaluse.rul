@@ -14,5 +14,11 @@
 {{ include('modules/_locations.html.twig') }}
 {{ include('modules/_our_works.html.twig') }}
 {{ include('modules/_footer.html.twig') }}
+{{ include('modules/_modal_callback.html.twig') }}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('main') }}
 {% endblock %}

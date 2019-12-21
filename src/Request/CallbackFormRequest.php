@@ -54,22 +54,26 @@ class CallbackFormRequest implements RequestDTOInterface
     {
         $data = json_decode($request->getContent(), true);
         $request->request->replace(is_array($data) ? $data : array());
+        if ($request->request->has('name')) {
+            $this->name = trim($request->get('name'));
+        } else {
+            $this->name = "Не указано";
+        }
         
-        $this->name = trim($request->get('name'));
-        $this->phone = trim($request->get('phone'));
-        $this->subject = trim($request->get('subject','Заказ звонка'));
-        $this->referer = $_SERVER['HTTP_REFERER'] ?? 'Нет';
-        $this->product_url = trim($request->get('product_url'));
-        $this->product_name = trim($request->get('product_name'));
-        $this->category = trim($request->get('category'));
-        $this->material = trim($request->get('material'));
-        $this->width = trim($request->get('width'));
-        $this->height = trim($request->get('height'));
-        $this->number = trim($request->get('number'));
-        $this->controlType = trim($request->get('controlType'));
-        $this->color = trim($request->get('color'));
-        $this->base_price = trim($request->get('base_price'));
-        $this->discounted_price = trim($request->get('discounted_price'));
+        $this->phone               = trim($request->get('phone'));
+        $this->subject             = trim($request->get('subject', 'Заказ звонка'));
+        $this->referer             = $_SERVER['HTTP_REFERER'] ?? 'Нет';
+        $this->product_url         = trim($request->get('product_url'));
+        $this->product_name        = trim($request->get('product_name'));
+        $this->category            = trim($request->get('category'));
+        $this->material            = trim($request->get('material'));
+        $this->width               = trim($request->get('width'));
+        $this->height              = trim($request->get('height'));
+        $this->number              = trim($request->get('number'));
+        $this->controlType         = trim($request->get('controlType'));
+        $this->color               = trim($request->get('color'));
+        $this->base_price          = trim($request->get('base_price'));
+        $this->discounted_price    = trim($request->get('discounted_price'));
         $this->price_with_delivery = trim($request->get('price_with_delivery'));
     }
     

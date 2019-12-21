@@ -337,13 +337,12 @@
 				};
 				const str = JSON.stringify(body);
 				axios.post('/mail/callback/order', str)
-					.then((response) => {
-						alert('Спасибо, отправлено!');
+					.then(({data}) => {
+						alert(data.msg);
 						this.$refs.order.visible = false;
 					})
 					.catch((error) => {
-						alert('Произошла ошибка');
-						console.log(error);
+						alert(error.response.data.detail);
 					});
 			},
 			sendConsultation(data) {

@@ -1,0 +1,40 @@
+<div class="cd-user-modal" id="modal-callback">
+    <div class="overlay"></div>
+    <div class="cd-user-modal-container">
+        <div id="cd-raschet" class="is-selected">
+            <div class="modal_close">×</div>
+            <form class="cd-form phone_callback" method="POST" action="{{ path('mail.callback_consultation') }}">
+                <div class="form-body">
+                    <span class="sspan">Заказать звонок:</span>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-name" for="modal-form-name">Ваше имя:</label>
+                        <input
+                                class="full-width has-padding has-border"
+                                id="modal-form-name"
+                                name="name"
+                                type="text"
+                                placeholder="Ваше имя"
+                                required=""
+                        >
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-phone" for="modal-form-phone">Телефон</label>
+                        <input
+                                class="full-width has-padding has-border phone-field"
+                                id="modal-form-phone"
+                                name="phone"
+                                type="tel"
+                                placeholder="Телефон"
+                                required=""
+                        >
+                    </p>
+                    <p class="fieldset">
+                        <button class="full-width form-submit">ОТПРАВИТЬ</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div> <!-- cd-user-modal-container -->
+</div>
