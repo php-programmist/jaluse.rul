@@ -10,48 +10,56 @@
 								<div class="type-head type-head1">
 									<div class="type-text" @click="toggleTypeSelector()">{{typeName}}</div>
 								</div>
-								<div class="type-body type-body1" v-show="type_opened">
-									<div
-											v-for="(type,index) in types"
-											:key="index"
-											class="type-text"
-											@click="changeType(index)"
-									>
-										{{ type.name }}
+								<transition name="slide">
+									<div class="type-body type-body1" v-show="type_opened">
+										<div
+												v-for="(type,index) in types"
+												:key="index"
+												class="type-text"
+												@click="changeType(index)"
+										>
+											{{ type.name }}
+										</div>
 									</div>
-								</div>
+								</transition>
 							</div>
-							<div class="calc-parametr-typewrap-type" v-show="materials.length > 0">
+							<transition name="slide-fade">
+								<div class="calc-parametr-typewrap-type" v-show="materials.length > 0">
 								<div class="type-head type-head2">
 									<div class="type-text" @click="toggleMaterialSelector()">{{materialName}}</div>
 								</div>
-								<div class="type-body type-body2" v-show="material_opened">
-									<div
-											v-for="(material,index) in materials"
-											:key="index"
-											class="type-text"
-											@click="changeMaterial(index)"
-									>
-										{{ material.name }}
+								<transition name="slide">
+									<div class="type-body type-body2" v-show="material_opened">
+										<div
+												v-for="(material,index) in materials"
+												:key="index"
+												class="type-text"
+												@click="changeMaterial(index)"
+										>
+											{{ material.name }}
+										</div>
 									</div>
-								</div>
+								</transition>
 							</div>
+							</transition>
 						</div>
 					
 					</div>
 					<div class="calc-parametr-color">
 						<div class="minzag colorzag" @click="toggleColorSelector()">Цвет:</div>
-						<div class="bgcolor-wrap" v-show="color_opened">
-							<div
-									v-for="(color,index) in availableColors"
-									:key="color.id"
-									class="bgcolor-wrap-color"
-									:class="{colorActive:colorsIds.includes(color.id)}"
-									:title="color.name"
-									:style="'background-color:'+color.hex"
-									@click="toggleColorId(color.id)"
-							></div>
-						</div>
+						<transition name="slide">
+							<div class="bgcolor-wrap" v-show="color_opened">
+								<div
+										v-for="(color,index) in availableColors"
+										:key="color.id"
+										class="bgcolor-wrap-color"
+										:class="{colorActive:colorsIds.includes(color.id)}"
+										:title="color.name"
+										:style="'background-color:'+color.hex"
+										@click="toggleColorId(color.id)"
+								></div>
+							</div>
+						</transition>
 					</div>
 					<div class="calc-parametr-categori">
 						<span
@@ -359,4 +367,46 @@
 </script>
 
 <style>
+	.slide-enter-active {
+		-moz-transition-duration: 0.5s;
+		-webkit-transition-duration: 0.5s;
+		-o-transition-duration: 0.5s;
+		transition-duration: 0.5s;
+		-moz-transition-timing-function: ease-in;
+		-webkit-transition-timing-function: ease-in;
+		-o-transition-timing-function: ease-in;
+		transition-timing-function: ease-in;
+	}
+	
+	.slide-leave-active {
+		-moz-transition-duration: 0.3s;
+		-webkit-transition-duration: 0.3s;
+		-o-transition-duration: 0.3s;
+		transition-duration: 0.3s;
+		-moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+		-webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+		-o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+	}
+	
+	.slide-enter-to, .slide-leave {
+		max-height: 500px;
+		overflow: hidden;
+	}
+	
+	.slide-enter, .slide-leave-to {
+		overflow: hidden;
+		max-height: 0;
+	}
+	
+	.slide-fade-enter-active {
+		transition: all .3s ease;
+	}
+	.slide-fade-leave-active {
+		transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+	}
+	.slide-fade-enter, .slide-fade-leave-to{
+		transform: translateX(30px);
+		opacity: 0;
+	}
 </style>
