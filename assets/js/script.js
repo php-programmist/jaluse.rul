@@ -1,5 +1,7 @@
 export default function ($) {
-	
+	const im = new Inputmask("+9 (999) 999-9999");
+	const phoneFields = document.querySelectorAll(".phone-field");
+	im.mask(phoneFields);
 	$('.headermbtn').click(function (event) {
 		$('.header-n2').slideToggle(1000);
 	});

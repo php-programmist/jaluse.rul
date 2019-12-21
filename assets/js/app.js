@@ -13,6 +13,7 @@ import '../css/media.scss'
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 import $ from 'jquery';
 import slick from 'slick-carousel';
+import Inputmask from 'inputmask';
 import scripts from './script';
 scripts($);
 
