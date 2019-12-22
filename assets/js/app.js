@@ -9,12 +9,22 @@
 import '../css/global.scss'
 import '../css/style.scss'
 import '../css/media.scss'
+import '../css/modal_callback.css'
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 import $ from 'jquery';
-import slick from 'slick-carousel';
-import Inputmask from 'inputmask';
-import scripts from './script';
-scripts($);
+global.$ = $;
+
+import header_menu from './header_menu';
+header_menu();
+
+import modal_callback from './modal_callback';
+modal_callback();
+
+import slick_sliders from './slick_sliders';
+slick_sliders();
+
+import order_catalog from './order_catalog';
+order_catalog();
 
 
