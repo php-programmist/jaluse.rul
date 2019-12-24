@@ -4,7 +4,6 @@ namespace App\Controller\Api;
 
 use App\Repository\CategoryRepository;
 use App\Repository\ColorRepository;
-use App\Repository\ConfigRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TypeRepository;
 use App\Service\ConfigService;
@@ -94,7 +93,8 @@ class MainPageCalcController extends AbstractController
             AbstractNormalizer::ATTRIBUTES => [
                 'id',
                 'price',
-                'image',
+                'imageSmall',
+                'imageBig',
                 'name',
                 'uri',
                 'colorId',

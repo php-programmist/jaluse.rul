@@ -77,7 +77,7 @@
 								:key="product.id"
 						>
 							<div class="minimages" @click="setActiveProductIndex(index)">
-								<img src="/img/calc-img-min/1.jpg" alt="">
+								<img :src="product.imageSmall" alt="">
 							</div>
 						</div>
 					</div>
@@ -106,7 +106,7 @@
 			</div>
 			<div class="col-lg-5 col-md-6 calc-vivod align-self-center">
 				<div class="calc-vivod-imgwrap">
-					<img src="/img/calc-img/1.jpg" alt="*">
+					<img :src="currentProduct.imageBig" alt="*">
 				</div>
 				<div class="product-name">
 					{{currentProduct.name}}
@@ -212,7 +212,8 @@
 				if (this.products.length === 0 || typeof this.products[this.product_index] == 'undefined') {
 					return {
 						"price": 0,
-						"image": '',
+						"imageSmall": '',
+						"imageBig": '',
 						"colorId": 0,
 						"colorName": "",
 						"materialName": "",

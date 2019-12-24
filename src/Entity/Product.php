@@ -168,4 +168,28 @@ class Product extends Page
 
         return $this;
     }
+    
+    public function getImageSmall()
+    {
+        $segments = explode('/', $this->getUri());
+        $file_name = array_pop($segments).'.jpg';
+        $folder = array_pop($segments);
+        return '/img/products/'.$folder.'/small/'.$file_name;
+    }
+    
+    public function getImageBig()
+    {
+        $segments = explode('/', $this->getUri());
+        $file_name = array_pop($segments).'.jpg';
+        $folder = array_pop($segments);
+        return '/img/products/'.$folder.'/big/'.$file_name;
+    }
+    
+    public function getImageCatalog()
+    {
+        $segments = explode('/', $this->getUri());
+        $file_name = array_pop($segments).'.jpg';
+        $folder = array_pop($segments);
+        return '/img/products/'.$folder.'/catalog/'.$file_name;
+    }
 }
