@@ -57,7 +57,7 @@ easy_admin:
             form:
                 fields:
                     - {property: 'name', label: 'Название'}
-                    - {property: 'materials', label: 'Материалы'}
+                    - {property: 'materials', label: 'Материалы', type_options: { by_reference: false }}
                     - {property: 'showMainPageCalc', label: 'Калькулятор на главной', type: 'checkbox'}
                     - {property: 'calculationType', label: 'Тип рассчета',type: 'text'}
         Color:
