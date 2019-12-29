@@ -1,30 +1,9 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you require will output into a single css file (app.css in this case)
 import '../css/global.scss'
 import '../css/style.scss'
 import '../css/media.scss'
-import '../css/modal_callback.css'
-
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-import $ from 'jquery';
-global.$ = $;
-
-import header_menu from './header_menu';
-header_menu();
-
-import modal_callback from './modal_callback';
-modal_callback();
-
-import slick_sliders from './slick_sliders';
-slick_sliders();
-
-import order_catalog from './order_catalog';
-order_catalog();
 
 
+import './components/header_menu';
+import './components/modal_callback';
+import './components/slick_sliders';
+import './components/order_catalog';
