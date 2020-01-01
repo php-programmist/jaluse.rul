@@ -18,7 +18,8 @@ easy_admin:
                     - {property: 'name', label: 'Название'}
                     - {property: 'path', label: 'Ссылка', type: 'url'}
                     - {property: 'price', label: 'Цена'}
-                    - {property: 'discount', label: 'Скидка'}
+                    - {property: 'imageSmall', label: 'Изображение', type: 'image'}
+                   # - {property: 'discount', label: 'Скидка'}
                     - {property: 'type.name', label: 'Тип'}
                     - {property: 'material.name', label: 'Материал'}
                     - {property: 'color.name', label: 'Цвет'}
@@ -35,6 +36,8 @@ easy_admin:
                     - {property: 'category', label: 'Категория'}
                     - {property: 'popular', label: 'Популярный'}
                     - {property: 'published', label: 'Опубликован'}
+                sort: ['id', 'ASC']
+
         Catalog:
             class: App\Entity\Catalog
             label: "Каталог"
@@ -60,6 +63,7 @@ easy_admin:
                     - {property: 'materials', label: 'Материалы', type_options: { by_reference: false }}
                     - {property: 'showMainPageCalc', label: 'Калькулятор на главной', type: 'checkbox'}
                     - {property: 'calculationType', label: 'Тип рассчета',type: 'text'}
+                    - {property: 'products', label: 'Товары', type: easyadmin_autocomplete }
         Color:
             class: App\Entity\Color
             label: "Цвет"
@@ -82,6 +86,7 @@ easy_admin:
                 fields:
                     - {property: 'name', label: 'Название'}
                     - {property: 'type', label: 'Тип'}
+                    - {property: 'products', label: 'Товары', type: easyadmin_autocomplete }
         Category:
             class: App\Entity\Category
             label: "Категория"
