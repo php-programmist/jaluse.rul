@@ -9,7 +9,7 @@
 
     <div class="pager pagination list-pagination-paginator {{ not paginator.hasPreviousPage ? 'first-page' }} {{ not paginator.hasNextPage ? 'last-page' }}">
         <a class="btn btn-secondary {{ 1 == paginator.currentPage? 'disabled' }}"
-           href="{{ paginator.currentPage == paginator.nbPages ? '#' : path('easyadmin', _paginator_request_parameters|merge({ page: 1 }) ) }}">
+           href="{{ paginator.currentPage == 1 ? '#' : path('easyadmin', _paginator_request_parameters|merge({ page: 1 }) ) }}">
             <span class="btn-label">{{ 'paginator.first'|trans }}</span> <i class="fa fa-angle-double-left"></i>
         </a>
         <a class="btn btn-secondary {{ not paginator.hasPreviousPage ? 'disabled' }}"
