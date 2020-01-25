@@ -1,5 +1,7 @@
 RewriteEngine On RewriteBase /
 
+RewriteRule rulonnyie-shtoryi/kollekcziya-euro-vista-novinka-sezona-2014/(.*)$ /rulonnyie-shtoryi/standartnye-rulonnye-shtory/$1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php

@@ -142,4 +142,28 @@ class ImportController extends AbstractController
         $entityManager->flush();
         return new Response($counter);
     }
+    /**
+     * @Route("/standart", name="standart")
+     */
+    public function standart()
+    {
+        $project_dir = $this->params->get('kernel.project_dir');
+        $fh = fopen($project_dir.'/csv/standart.csv','r');
+        $entityManager = $this->getDoctrine()->getManager();
+        $counter = 0;
+        while ($row = fgetcsv($fh,8000,';')){
+            [$uri,$matrix_id,$category] = $row;
+            $product = $this->product_repository->findOneBy(['uri'=>$uri]);
+            if ( ! $product) {
+                throw new \Exception('не найден товар:'.$uri);
+            }
+            $category = $this->category_repository->find($category);
+            $product->setMatrixId($matrix_id);
+            $product->setCategory($category);
+            $product->setUri(str_replace('kollekcziya-euro-vista-novinka-sezona-2014','standartnye-rulonnye-shtory',$uri));
+            $counter++;
+        }
+        $entityManager->flush();
+        return new Response($counter);
+    }
 }
