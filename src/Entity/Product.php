@@ -49,6 +49,11 @@ class Product extends Page
      */
     private $discount = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $matrix_id;
+
     public function getPrice(): ?float
     {
         return $this->price;
@@ -191,5 +196,17 @@ class Product extends Page
         $file_name = array_pop($segments).'.jpg';
         $folder = array_pop($segments);
         return '/img/products/'.$folder.'/catalog/'.$file_name;
+    }
+
+    public function getMatrixId(): ?int
+    {
+        return $this->matrix_id;
+    }
+
+    public function setMatrixId(int $matrix_id): self
+    {
+        $this->matrix_id = $matrix_id;
+
+        return $this;
     }
 }
