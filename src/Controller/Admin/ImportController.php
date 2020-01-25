@@ -96,4 +96,27 @@ class ImportController extends AbstractController
         $entityManager->flush();
         return new Response($counter);
     }
+    /**
+     * @Route("/combo_uni", name="combo_uni")
+     */
+    public function combo_uni()
+    {
+        $project_dir = $this->params->get('kernel.project_dir');
+        $fh = fopen($project_dir.'/csv/combo-uni.csv','r');
+        $entityManager = $this->getDoctrine()->getManager();
+        $counter = 0;
+        while ($row = fgetcsv($fh,8000,';')){
+            [$uri,$matrix_id,$category] = $row;
+            $product = $this->product_repository->findOneBy(['uri'=>$uri]);
+            if ( ! $product) {
+                throw new \Exception('не найден товар:'.$uri);
+            }
+            $category = $this->category_repository->find($category);
+            $product->setMatrixId($matrix_id);
+            $product->setCategory($category);
+            $counter++;
+        }
+        $entityManager->flush();
+        return new Response($counter);
+    }
 }
