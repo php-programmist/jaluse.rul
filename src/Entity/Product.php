@@ -161,6 +161,15 @@ class Product extends Page
         }
         return '';
     }
+    
+    public function getMatrixFolder()
+    {
+        $parent = $this->getParent();
+        if ($parent && $parent instanceof Catalog) {
+            return $parent->getMatrixFolder();
+        }
+        return '';
+    }
 
     public function getDiscount(): ?int
     {

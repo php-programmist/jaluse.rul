@@ -7,6 +7,7 @@ use App\Repository\ColorRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TypeRepository;
 use App\Service\ConfigService;
+use App\Service\MatrixService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +45,10 @@ class MainPageCalcController extends AbstractController
      * @var ConfigService
      */
     protected $configs;
+    /**
+     * @var MatrixService
+     */
+    protected $matrix_service;
     
     public function __construct(
         ProductRepository $product_repository,
@@ -51,7 +56,8 @@ class MainPageCalcController extends AbstractController
         SerializerInterface $serializer,
         ColorRepository $color_repository,
         CategoryRepository $category_repository,
-        ConfigService $configs
+        ConfigService $configs,
+        MatrixService $matrix_service
     ) {
         $this->product_repository  = $product_repository;
         $this->type_repository     = $type_repository;
@@ -59,6 +65,7 @@ class MainPageCalcController extends AbstractController
         $this->color_repository    = $color_repository;
         $this->category_repository = $category_repository;
         $this->configs             = $configs;
+        $this->matrix_service      = $matrix_service;
     }
     
     /**
@@ -69,11 +76,13 @@ class MainPageCalcController extends AbstractController
         $types           = $this->getInitTypeData();
         $colors          = $this->getInitColors();
         $categories      = $this->getInitCategories();
+        $matrices        = $this->matrix_service->getAllMatrices();
         $usd_rate        = $this->configs->get('usd_rate', 62.5);
         $discount_global = $this->configs->get('discount_global', 7);
         
-        $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global');
+        $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices');
         $response = json_encode($response);
+        
         return new Response($response, 200, ['Content-Type' => 'application/json']);
     }
     
@@ -101,6 +110,8 @@ class MainPageCalcController extends AbstractController
                 'colorName',
                 'materialName',
                 'discount',
+                'matrixId',
+                'matrixFolder',
             ],
         ]);
         $products   = json_decode($jsonObject);

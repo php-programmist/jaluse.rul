@@ -26,7 +26,10 @@ class ProductRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('p')
                       ->leftJoin('p.type', 't')
+                      ->leftJoin('p.parent', 'p2')
+                      ->addSelect('p2')
                       ->andWhere('t.show_main_page_calc = 1')
+                      ->andWhere('p.price IS NOT NULL OR p.matrix_id IS NOT NULL')
                       ->orderBy('p.popular', 'DESC');
         
         if ( ! empty($filters['category'])) {

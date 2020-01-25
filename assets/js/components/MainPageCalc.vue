@@ -155,6 +155,7 @@
 		data() {
 			return {
 				types: [],
+				matrices: [],
 				colors: [],
 				availableColorsIds: [],
 				colorsIds: [],
@@ -183,6 +184,7 @@
 			axios.get('/api/main-page-calc/getInitData')
 				.then(response => {
 					this.types = response.data.types;
+					this.matrices = response.data.matrices;
 					this.colors = response.data.colors;
 					this.categories = response.data.categories;
 					this.usd_rate = parseFloat(response.data.usd_rate);
@@ -241,6 +243,23 @@
 						area = 1000000;
 					}
 					return parseInt(this.number * this.currentProduct.price * this.usd_rate * area / 1000000);
+				}else if(this.types[this.type_index].calculationType === 'matrix'){
+					const matrix_folder = this.currentProduct.matrixFolder;
+					const matrix_name = this.currentProduct.matrixId;
+					if (matrix_name && matrix_folder) {
+						const matrix_set = this.matrices[matrix_folder];
+						const matrix = matrix_set[matrix_name];
+						for(let width in matrix){
+							if (this.width <= width) {
+								for(let height in matrix[width]){
+									if (this.height <= height) {
+										return parseInt(this.number * matrix[width][height] * this.usd_rate);
+									}
+								}
+							}
+						}
+					}
+					
 				}
 				return 0;
 			},
