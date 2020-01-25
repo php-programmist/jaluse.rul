@@ -236,7 +236,11 @@
 					return 0;
 				}
 				if (this.type_index < 0 || this.types[this.type_index].calculationType === 'simple') {
-					return parseInt(this.number * this.currentProduct.price * this.usd_rate * this.width * this.height / 1000000);
+					let area = this.width * this.height;
+					if (area < 1000000) {
+						area = 1000000;
+					}
+					return parseInt(this.number * this.currentProduct.price * this.usd_rate * area / 1000000);
 				}
 				return 0;
 			},
