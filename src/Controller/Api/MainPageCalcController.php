@@ -9,6 +9,7 @@ use App\Repository\TypeRepository;
 use App\Service\ConfigService;
 use App\Service\MatrixService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,6 +50,10 @@ class MainPageCalcController extends AbstractController
      * @var MatrixService
      */
     protected $matrix_service;
+    /**
+     * @var AdapterInterface
+     */
+    protected $cache;
     
     public function __construct(
         ProductRepository $product_repository,
@@ -57,7 +62,8 @@ class MainPageCalcController extends AbstractController
         ColorRepository $color_repository,
         CategoryRepository $category_repository,
         ConfigService $configs,
-        MatrixService $matrix_service
+        MatrixService $matrix_service,
+        AdapterInterface $cache
     ) {
         $this->product_repository  = $product_repository;
         $this->type_repository     = $type_repository;
@@ -66,6 +72,7 @@ class MainPageCalcController extends AbstractController
         $this->category_repository = $category_repository;
         $this->configs             = $configs;
         $this->matrix_service      = $matrix_service;
+        $this->cache = $cache;
     }
     
     /**
@@ -73,16 +80,21 @@ class MainPageCalcController extends AbstractController
      */
     public function getInitData()
     {
-        $types           = $this->getInitTypeData();
-        $colors          = $this->getInitColors();
-        $categories      = $this->getInitCategories();
-        $matrices        = $this->matrix_service->getAllMatrices();
-        $usd_rate        = $this->configs->get('usd_rate', 62.5);
-        $discount_global = $this->configs->get('discount_global', 7);
-        
-        $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices');
-        $response = json_encode($response);
-        
+        $item = $this->cache->getItem('main.calc.init_data');
+        if (!$item->isHit()) {
+            $types           = $this->getInitTypeData();
+            $colors          = $this->getInitColors();
+            $categories      = $this->getInitCategories();
+            $matrices        = $this->matrix_service->getAllMatrices();
+            $usd_rate        = $this->configs->get('usd_rate', 62.5);
+            $discount_global = $this->configs->get('discount_global', 7);
+    
+            $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices');
+            $response = json_encode($response);
+            $item->set($response);
+            $this->cache->save($item);
+        }
+        $response = $response ?? $item->get();
         return new Response($response, 200, ['Content-Type' => 'application/json']);
     }
     
