@@ -72,7 +72,7 @@ class MainPageCalcController extends AbstractController
         $this->category_repository = $category_repository;
         $this->configs             = $configs;
         $this->matrix_service      = $matrix_service;
-        $this->cache               = $cache;
+        $this->cache = $cache;
     }
     
     /**
@@ -81,23 +81,21 @@ class MainPageCalcController extends AbstractController
     public function getInitData()
     {
         $item = $this->cache->getItem('main.calc.init_data');
-        if ( ! $item->isHit()) {
-            $types      = $this->getInitTypeData();
-            $colors     = $this->getInitColors();
-            $categories = $this->getInitCategories();
-            $matrices   = $this->matrix_service->getAllMatrices();
-            
-            $response = compact('types', 'colors', 'categories', 'matrices');
+        if (!$item->isHit()) {
+            $types           = $this->getInitTypeData();
+            $colors          = $this->getInitColors();
+            $categories      = $this->getInitCategories();
+            $matrices        = $this->matrix_service->getAllMatrices();
+            $usd_rate        = $this->configs->get('usd_rate', 62.5);
+            $discount_global = $this->configs->get('discount_global', 7);
+    
+            $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices');
+            $response = json_encode($response);
             $item->set($response);
             $this->cache->save($item);
         }
-        $response        = $response ?? $item->get();
-        $usd_rate        = $this->configs->get('usd_rate', 62.5);
-        $discount_global = $this->configs->get('discount_global', 7);
-        $response        = array_merge($response, compact('usd_rate', 'discount_global'));
-        
-        return new Response(json_encode($response), 200, ['Content-Type' => 'application/json']);
-        
+        $response = $response ?? $item->get();
+        return new Response($response, 200, ['Content-Type' => 'application/json']);
     }
     
     /**
