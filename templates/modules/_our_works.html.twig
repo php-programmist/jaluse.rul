@@ -1,57 +1,21 @@
-<!--Блок ПРИМЕРЫ РАБОТ(СЛАЙДЕР)-->
-<div class="block6 primeri">
+<div class="works">
     <div class="container container2">
-        <div class="zag">Примеры работ</div>
-        <div class="primeri-wrap">
-            <div class="preim-block">
-                <img src="img/primer_min/1.jpg" alt="*">
+        <div class="zag">Примеры работ:</div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {% for image in 1..10 %}
+                    <div class="swiper-slide swiper-lazy" data-background="{{ asset('img/primer_min/'~image~'.jpg') }}"
+                         data-index="{{ loop.index0 }}">
+                        <div class="swiper-lazy-preloader"></div>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="preim-block">
-                <img src="img/primer_min/2.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/3.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/4.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/5.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/6.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/7.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/8.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/9.jpg" alt="*">
-            </div>
-            <div class="preim-block">
-                <img src="img/primer_min/10.jpg" alt="*">
-            </div>
-        </div>
-        <div class="bigslider-wrap bigslider-foot-wrap">
-            <div class="bigslider-close bigslider-foot-close">&#215;</div>
 
-            <div class="bslider-body">
-                <div class="bigslider-for bigslider-foot-for">
-                    <img src="img/primer/1.jpg" alt="*">
-                    <img src="img/primer/2.jpg" alt="*">
-                    <img src="img/primer/3.jpg" alt="*">
-                    <img src="img/primer/4.jpg" alt="*">
-                    <img src="img/primer/5.jpg" alt="*">
-                    <img src="img/primer/6.jpg" alt="*">
-                    <img src="img/primer/7.jpg" alt="*">
-                    <img src="img/primer/8.jpg" alt="*">
-                    <img src="img/primer/9.jpg" alt="*">
-                    <img src="img/primer/10.jpg" alt="*">
-                </div>
-            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </div>
+
 </div>
 <!--конец ПРИМЕРЫ РАБОТ(СЛАЙДЕР)-->
