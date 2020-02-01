@@ -2,9 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Product;
 use App\Repository\CatalogRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\MaterialRepository;
 use App\Repository\ProductRepository;
+use App\Repository\TypeRepository;
 use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -165,5 +168,31 @@ class ImportController extends AbstractController
         }
         $entityManager->flush();
         return new Response($counter);
+    }
+    
+    /**
+     * @Route("/sub_types", name="sub_types")
+     */
+    public function sub_types(TypeRepository $type_repository,MaterialRepository $material_repository)
+    {
+        $type = $type_repository->find(133);
+        $sub_types_map = [
+            191 => 'combo-small',
+            192 => 'combo-uni',
+            193 => 'mini',
+            194 => 'uni',
+            195 => 'standart',
+        ];
+        foreach ($sub_types_map as $id => $matrix_folder) {
+            $material = $material_repository->find($id);
+            $catalog = $this->catalog_repository->findOneBy(['matrix_folder'=>$matrix_folder]);
+            foreach ($catalog->getPages() as $page) {
+                if ($page instanceof Product) {
+                    $page->setMaterial($material);
+                    $page->setType($type);
+                }
+            }
+        }
+        $this->getDoctrine()->getManager()->flush();
     }
 }

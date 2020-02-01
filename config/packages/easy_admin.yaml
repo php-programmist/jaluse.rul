@@ -60,7 +60,7 @@ easy_admin:
             form:
                 fields:
                     - {property: 'name', label: 'Название'}
-                    - {property: 'materials', label: 'Материалы', type_options: { by_reference: false }}
+                    - {property: 'materials', label: 'Подтипы', type_options: { by_reference: false }}
                     - {property: 'showMainPageCalc', label: 'Калькулятор на главной', type: 'checkbox'}
                     - {property: 'calculationType', label: 'Тип рассчета',type: 'text'}
                     - {property: 'products', label: 'Товары', type: easyadmin_autocomplete }
@@ -76,7 +76,7 @@ easy_admin:
                     - {property: 'products', label: 'Кол-во товаров'}
         Material:
             class: App\Entity\Material
-            label: "Материал"
+            label: "Подтип"
             list:
                 fields:
                     - 'id'

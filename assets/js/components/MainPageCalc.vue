@@ -4,7 +4,7 @@
 			<div class="col-lg-7 col-md-6 calc-parametr">
 				<form action="#">
 					<div class="calc-parametr-typewrap">
-						<div class="minzag">Выберите тип и материал жалюзи</div>
+						<div class="minzag">Выберите тип и подтип жалюзи</div>
 						<div class="row">
 							<div class="calc-parametr-typewrap-type">
 								<div class="type-head type-head1">
@@ -133,7 +133,7 @@
 						</div>
 						<div class="calc-vivod-opis-text col-sm-6">
 							<div><b>Управление: </b><span>{{controlType}}</span></div>
-							<div><b>Материал: </b><span>{{currentProduct.materialName}}</span></div>
+							<div><b>Подтип: </b><span>{{currentProduct.materialName}}</span></div>
 						</div>
 					
 					</div>
@@ -201,7 +201,7 @@
 				return this.type_index > -1 ? this.types[this.type_index].name : 'Тип';
 			},
 			materialName() {
-				return this.materials.length > 0 && this.material_index > -1 ? this.materials[this.material_index].name : 'Материал';
+				return this.materials.length > 0 && this.material_index > -1 ? this.materials[this.material_index].name : 'Подтип';
 			},
 			materials() {
 				return this.type_index > -1 ? this.types[this.type_index].materials : [];
