@@ -80,6 +80,8 @@ class Page
      */
     private $content;
     
+    
+    
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();

@@ -25,4 +25,45 @@ class Catalog extends Page
 
         return $this;
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="catalogs")
+     */
+    private $type;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Material", inversedBy="catalogs")
+     */
+    private $material;
+    
+    public function getType(): ?Type
+    {
+        if ($this->type) {
+            return $this->type;
+        }
+        $parent = $this->getParent();
+        if ($parent && $parent instanceof Catalog) {
+            return $parent->getType();
+        }
+        return null;
+    }
+    
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
+        
+        return $this;
+    }
+    
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+    
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+        
+        return $this;
+    }
 }

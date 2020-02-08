@@ -15,27 +15,27 @@ easy_admin:
             list:
                 fields:
                     - 'id'
-                    - {property: 'name', label: 'Название'}
-                    - {property: 'path', label: 'Ссылка', type: 'url'}
-                    - {property: 'price', label: 'Цена'}
-                    - {property: 'imageSmall', label: 'Изображение', type: 'image'}
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'path', label: 'Ссылка', type: 'url'}
+                    - { property: 'price', label: 'Цена'}
+                    - { property: 'imageSmall', label: 'Изображение', type: 'image'}
                    # - {property: 'discount', label: 'Скидка'}
-                    - {property: 'type.name', label: 'Тип'}
-                    - {property: 'material.name', label: 'Материал'}
-                    - {property: 'color.name', label: 'Цвет'}
-                    - {property: 'category.name', label: 'Категория'}
-                    - {property: 'popular', label: 'Популярный'}
-                    - {property: 'published', label: 'Опубликован'}
+                    - { property: 'type.name', label: 'Тип'}
+                    - { property: 'material.name', label: 'Подтип'}
+                    - { property: 'color.name', label: 'Цвет'}
+                    - { property: 'category.name', label: 'Категория'}
+                    - { property: 'popular', label: 'Популярный'}
+                    - { property: 'published', label: 'Опубликован'}
                 filters:
-                    - {property: 'name', label: 'Название'}
-                    - {property: 'uri', label: 'Ссылка'}
-                    - {property: 'price', label: 'Цена'}
-                    - {property: 'type', label: 'Тип'}
-                    - {property: 'material', label: 'Материал'}
-                    - {property: 'color', label: 'Цвет'}
-                    - {property: 'category', label: 'Категория'}
-                    - {property: 'popular', label: 'Популярный'}
-                    - {property: 'published', label: 'Опубликован'}
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'uri', label: 'Ссылка'}
+                    - { property: 'price', label: 'Цена'}
+                    - { property: 'type', label: 'Тип'}
+                    - { property: 'material', label: 'Подтип'}
+                    - { property: 'color', label: 'Цвет'}
+                    - { property: 'category', label: 'Категория'}
+                    - { property: 'popular', label: 'Популярный'}
+                    - { property: 'published', label: 'Опубликован'}
                 sort: ['id', 'ASC']
 
         Catalog:
@@ -44,9 +44,24 @@ easy_admin:
             list:
                 fields:
                     - 'id'
-                    - {property: 'name', label: 'Название'}
-                    - {property: 'path', label: 'Ссылка', type: 'url'}
-                    - {property: 'published', label: 'Опубликован'}
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'path', label: 'Ссылка', type: 'url'}
+                    - { property: 'parent', label: 'Родитель'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { property: 'type.name', label: 'Тип'}
+                    - { property: 'material.name', label: 'Подтип'}
+                sort: ['id', 'ASC']
+
+        Simple:
+            class: App\Entity\Simple
+            label: "Простая страница"
+            list:
+                fields:
+                    - 'id'
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'path', label: 'Ссылка', type: 'url'}
+                    - { property: 'published', label: 'Опубликован'}
+                sort: ['id', 'ASC']
         Type:
             class: App\Entity\Type
             label: "Тип"
@@ -56,6 +71,7 @@ easy_admin:
                     - {property: 'name', label: 'Название'}
                     - {property: 'products', label: 'Кол-во товаров'}
                     - {property: 'materials', label: 'Кол-во материалов'}
+                    - {property: 'catalogs', label: 'Кол-во каталогов'}
                     - {property: 'showMainPageCalc', label: 'Калькулятор на главной', type: 'toggle'}
             form:
                 fields:
@@ -82,6 +98,7 @@ easy_admin:
                     - 'id'
                     - {property: 'name', label: 'Название'}
                     - {property: 'products', label: 'Кол-во товаров'}
+                    - {property: 'catalogs', label: 'Кол-во каталогов'}
             form:
                 fields:
                     - {property: 'name', label: 'Название'}

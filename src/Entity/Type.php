@@ -29,6 +29,11 @@ class Type
     private $products;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Catalog", mappedBy="type")
+     */
+    private $catalogs;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Material", mappedBy="type")
      */
     private $materials;
@@ -47,6 +52,7 @@ class Type
     {
         $this->products = new ArrayCollection();
         $this->materials = new ArrayCollection();
+        $this->catalogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,6 +97,37 @@ class Type
             // set the owning side to null (unless already changed)
             if ($product->getType() === $this) {
                 $product->setType(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Catalog[]
+     */
+    public function getCatalogs(): Collection
+    {
+        return $this->catalogs;
+    }
+
+    public function addCatalog(Catalog $catalog): self
+    {
+        if (!$this->catalogs->contains($catalog)) {
+            $this->catalogs[] = $catalog;
+            $catalog->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCatalog(Catalog $catalog): self
+    {
+        if ($this->catalogs->contains($catalog)) {
+            $this->catalogs->removeElement($catalog);
+            // set the owning side to null (unless already changed)
+            if ($catalog->getType() === $this) {
+                $catalog->setType(null);
             }
         }
 
