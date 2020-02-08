@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Config;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Config|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,7 +18,24 @@ class ConfigRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Config::class);
     }
-
+    
+    /**
+     * @param $group
+     *
+     * @return Config[] Returns an array of Config objects
+     */
+    
+    public function findGroup(string $group)
+    {
+        return $this->createQueryBuilder('c')
+                    ->andWhere('c.name LIKE :group')
+                    ->setParameter('group', $group.'.%')
+                    ->orderBy('c.id', 'ASC')
+                    ->getQuery()
+                    ->getResult()
+            ;
+    }
+    
     // /**
     //  * @return Config[] Returns an array of Config objects
     //  */
@@ -35,7 +52,7 @@ class ConfigRepository extends ServiceEntityRepository
         ;
     }
     */
-
+    
     /*
     public function findOneBySomeField($value): ?Config
     {

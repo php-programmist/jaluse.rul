@@ -42,14 +42,14 @@ class PageController extends AbstractController
     
     private function product(Product $product)
     {
-        return $this->render('page/index.html.twig', [
-            'controller_name' => 'Product '.$product->getName(),
+        return $this->render('page/product.html.twig', [
+            'page' => $product,
         ]);
     }
     
     private function catalog(Catalog $catalog)
     {
-        return $this->render('page/index.html.twig', [
+        return $this->render('page/catalog.html.twig', [
             'controller_name' => 'Catalog '.$catalog->getName(),
         ]);
     }

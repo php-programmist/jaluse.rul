@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product extends Page
 {
+    const RULON_TYPE_ID = 133;
     /**
      * @ORM\Column(type="float")
      */
@@ -151,7 +152,15 @@ class Product extends Page
         if ($this->getColor()) {
             return $this->getColor()->getName();
         }
-        return '';
+        return 'Не указан';
+    }
+    
+    public function getTypeName()
+    {
+        if ($this->getType()) {
+            return $this->getType()->getName();
+        }
+        return 'Не указан';
     }
     
     public function getMaterialName()
@@ -159,7 +168,15 @@ class Product extends Page
         if ($this->getMaterial()) {
             return $this->getMaterial()->getName();
         }
-        return '';
+        return 'Не указан';
+    }
+    
+    public function getCategoryName()
+    {
+        if ($this->getCategory()) {
+            return $this->getCategory()->getName();
+        }
+        return 'Без категории';
     }
     
     public function getMatrixFolder()
@@ -217,5 +234,25 @@ class Product extends Page
         $this->matrix_id = $matrix_id;
 
         return $this;
+    }
+    
+    public function getTypeForPage()
+    {
+        if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
+            return $this->getMaterialName();
+        }elseif ($this->getType()){
+            return $this->getMaterialName().' жалюзи';
+        }
+        return 'Не установлен';
+    }
+    
+    public function getMaterialForPage()
+    {
+        if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
+            return 'такнь';
+        }elseif ($this->getType()){
+            return $this->getMaterialName();
+        }
+        return 'Не установлен';
     }
 }

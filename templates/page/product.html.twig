@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('product') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('product') }}
+{% endblock %}
+
+{% block title %}{{ page.name }}{% endblock %}
+{% block h1 %}{{ page.name }}{% endblock %}
+
+{% block body %}
+    <div class="cart-wrap">
+        <div class="container">
+            <div class="cart-block">
+                <div class="row">
+                    <div class="cart-left col-lg-6">
+                        <img src="{{ page.imageBig }}" alt="*">
+                    </div>
+
+                    <div class="cart-right col-lg-6 col-md-10 offset-lg-0 offset-md-1">
+                        <h2 class="card-zag">{{ page.name }}</h2>
+                        <div class="card-haract">
+                            <div><b>Вид:</b> {{ page.typeName }}</div>
+                            <div><b>Тип:</b> {{ page.typeForPage }}</div>
+                            <div><b>Материал:</b> {{ page.materialForPage }}</div>
+                            <div><b>Цвет:</b> {{ page.colorName }}.</div>
+                            <div><b>Категория:</b> {{ page.categoryName }}</div>
+                            <div><b>Размер:</b> на ваш выбор.</div>
+                            <div><b>Управление:</b> ручное и автоматическое.</div>
+                            <div><b>Срок изготовления и установки:</b> 1-5 дней.</div>
+                            <div><b>Выезд и замер:</b> бесплатный при оформлении заказа и оплате.</div>
+                            <div><b>Доставка и установка:</b> по Москве и области.</div>
+                        </div>
+                        <div class="cart-footer">
+                            <div class="cart-footer-zag">Цена {{ min_price(page) }}</div>
+                            <div class="cart-footer-orang">(Гарантия 2 года)</div>
+                            <div class="cart-footer-text">Скидка 7% при заказе с сайта + бесплатный замер</div>
+                            <div class="btn-wrap">
+                                <button class="mbtn">Рассчитать стоимость</button>
+                                <button class="mbtn mbtn2 modal-open">Получить консультацию</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

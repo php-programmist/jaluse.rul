@@ -1,0 +1,61 @@
+@import "../variables";
+.cart-wrap{
+  margin-bottom: 80px;
+  margin-top: 80px;
+  .cart-block{
+    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 25px;
+    .cart-left{
+      img{
+        max-width: 100%;
+      }
+    }
+    .cart-right{
+      .card-zag{
+        text-transform: uppercase;
+        font-weight: bold;
+        display: block;
+        line-height: 1.4;
+        margin-bottom: 20px;
+
+      }
+      .card-haract{
+        margin-bottom: 25px;
+        div{
+          line-height: 1.5;
+        }
+      }
+      .cart-footer{
+        border-top: 1.5px solid $blue;
+        padding-top: 10px;
+        &-zag{
+          font-size: 35px;
+        }
+        &-orang{
+          color: $orang;
+          font-size: 22px;
+          font-weight: 500;
+          line-height: 1;
+          margin-top: 5px;
+        }
+        &-text{
+          margin-top: 10px;
+          font-size: 18px;
+        }
+        .btn-wrap{
+          margin-top: 20px;
+        }
+        .mbtn{
+          width: 48%;
+          height: 40px;
+          margin-right: 1%;
+          font-weight: bold;
+        }
+        .mbtn2{
+          background-color: $orang;
+        }
+      }
+    }
+  }
+}

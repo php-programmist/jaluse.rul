@@ -16,9 +16,13 @@
         {% endblock %}
     </head>
     <body>
+    {{ include('modules/_header.html.twig') }}
+    {{ include('modules/_utp.html.twig', { h1 : block('h1')??null }) }}
         {% block body %}
 
         {% endblock %}
+    {{ include('modules/_footer.html.twig') }}
+    {{ include('modules/_modal_callback.html.twig') }}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
