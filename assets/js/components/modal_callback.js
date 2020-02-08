@@ -1,6 +1,6 @@
 import Inputmask from 'inputmask';
 import $ from 'jquery';
-import '../../css/modal_callback.css'
+import '../../scss/modal_callback.css'
 
 /*Обработчик ответа получаемого при отправке формы консультации*/
 const consultationFetchHandler = (response) => {

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Swiper from 'swiper';
-import '../../css/swiper.scss';
+import '../../scss/swiper.scss';
 $(document).ready(function(){
 	new Swiper('.works .swiper-container', {
 		effect: 'coverflow',

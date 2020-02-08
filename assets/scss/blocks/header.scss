@@ -1,0 +1,306 @@
+.header {
+  background: transparent;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  border-bottom: 1px solid transparent;
+  border-top: none;
+  z-index: 7;
+  &-n1 {
+    background-color: #fff;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    &-modphone {
+      display: none;
+    }
+    .headerpoisk {
+      display: none;
+    }
+    .headermbtn {
+      display: none;
+    }
+    &-logo {
+      img {
+        max-width: 100%;
+      }
+    }
+    &-menu {
+      text-align: center;
+      a {
+        padding-left: 25px;
+        padding-right: 25px;
+        text-transform: uppercase;
+        color: $black;
+        position: relative;
+        font-size: 15px;
+
+      }
+      &-ssil {
+        &:before {
+          content: "";
+          background: url(/img/new_menu_icons.png) no-repeat;
+          padding: 13px 15px;
+          position: absolute;
+          left: -7px;
+          top: 50%;
+          transform: translateY(-50%);
+          background-position: -107px 0px;
+        }
+      }
+      &-ssil2:before {
+        background-position: -175px 0
+      }
+      &-ssil3:before {
+        background-position: -202px 0
+      }
+    }
+    &-phone {
+      text-align: right;
+      small {
+        color: $text-grey;
+      }
+
+      &-phone {
+        display: block;
+        font-size: 18px;
+        color: $black;
+        line-height: 1.1;
+        &:hover {
+          text-decoration: none;
+          color: $black;
+        }
+      }
+
+      &-mail {
+        display: inline-block;
+        padding-left: 5px;
+        text-decoration: underline;
+        color: $blue;
+        &:hover {
+          text-decoration: underline;
+          color: $blue;
+        }
+      }
+    }
+  }
+  &-n2 {
+
+    background: $black;
+    text-align: center;
+
+    a {
+      color: $white;
+      padding-left: 20px;
+      padding-right: 20px;
+      display: block;
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+    }
+    .headern2phone {
+      a {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+    &-menu {
+      text-align: center;
+    }
+    .menu-wrap {
+      display: inline-block;
+      text-align: center;
+    }
+    .menu-none {
+      display: none;
+    }
+    .vip-menu {
+      position: fixed;
+      top: 146px;
+      left: 0;
+      width: 100%;
+      display: none;
+
+      .container {
+        padding-top: 20px;
+        background: #fff;
+        padding-right: 20px;
+        padding-left: 20px;
+
+        border-radius: 3px;
+        border: 1px solid #ededed;
+        border-bottom: none;
+
+      }
+      .menu-card {
+        z-index: 2;
+
+        display: block;
+        a {
+          width: 100%;
+          margin: auto;
+          display: block;
+          background: #f5f5f5;
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid transparent;
+          color: $text-grey;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+          &:hover {
+            text-decoration: none;
+            border-color: $blue;
+            .zag {
+              color: $blue;
+            }
+          }
+          .zag {
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 2px;
+
+          }
+          .vidi {
+            &-zag {
+              text-transform: uppercase;
+              font-weight: bold;
+              font-size: 16px;
+            }
+            ul {
+              padding-left: 70px;
+            }
+            li {
+              font-size: 14px;
+              text-align: left;
+              position: relative;
+              &:before {
+                content: '';
+                position: absolute;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                left: -15px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: $blue;
+              }
+            }
+          }
+          .vidib2 {
+            ul {
+              padding-left: 40px;
+            }
+          }
+          .cena {
+            font-size: 14px;
+            padding-bottom: 10px;
+            b {
+              font-size: 20px;
+            }
+          }
+          p {
+            font-size: 12px;
+            b {
+              font-size: 16px;
+              line-height: 1.1;
+            }
+          }
+          .titles {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 12px;
+            color: $black;
+            position: relative;
+            padding-left: 22px;
+            &:before {
+              content: '';
+              width: 21px;
+              height: 20px;
+              position: absolute;
+              left: 0px;
+              top: -1px;
+              background: url(/img/sverl.png) center no-repeat;
+            }
+
+          }
+
+          img {
+            max-width: 100%;
+            width: 70%;
+          }
+          span {
+            display: block;
+          }
+        }
+      }
+
+    }
+    .vip-menu1 {
+
+      .zag {
+        margin-bottom: 0;
+      }
+    }
+    .vip-menu3 {
+      display: none;
+      .container {
+        padding-bottom: 20px;
+      }
+      .menu-card {
+        width: 25%;
+        a {
+          width: 100%;
+        }
+      }
+    }
+    .bigtitle {
+      text-align: center;
+      width: 100%;
+      margin-top: -10px;
+      padding-top: 25px;
+      padding-bottom: 20px;
+      color: $black;
+      font-weight: bold;
+      background: linear-gradient(to top, $blue, rgba(249, 254, 239, 0.5));
+      span {
+        position: relative;
+        padding-left: 32px;
+        &:before {
+          content: '';
+          width: 29px;
+          height: 26px;
+          background: url(/img/sverl1.png) center no-repeat;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+}
+
+.social_icons {
+  display: flex;
+  &__icon {
+    -webkit-background-size: contain;
+    background-size: contain;
+    width: 50px;
+    height: 50px;
+    margin: 2px;
+    &_whatsapp {
+      background-image: url('/img/social/whatsapp.png');
+    }
+    &_insta {
+      background-image: url('/img/social/insta.png');
+    }
+    &_facebook {
+      background-image: url('/img/social/facebook.png');
+    }
+    a {
+      display: block;
+      height: 100%;
+    }
+  }
+}

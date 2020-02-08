@@ -1,6 +1,4 @@
-import '../css/global.scss'
-import '../css/style.scss'
-import '../css/media.scss'
+import '../scss/app.scss'
 
 import './components/header_menu';
 import './components/modal_callback';

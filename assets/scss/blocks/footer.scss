@@ -1,0 +1,76 @@
+.footer{
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  border-top: .5px solid #ccc;
+  color: grey;
+  &-logo{
+    .mbtn{display: none;}
+    img{
+      max-width: 90%;
+    }
+    &-social{
+      margin-top: 3px;
+      padding-left: 10px;
+
+      a{
+        transition: all 3s;
+        &:hover{
+          opacity: 8;
+          transition: all 3s;
+        }
+      }
+    }
+  }
+  &-text{
+
+    padding-top: 15px;
+    span{
+      font-size: 14px;
+      display: block;
+    }
+    small{
+      font-size: 12px;
+      display: block;
+
+    }
+  }
+  &-nav{
+    a{
+      display: block;
+      color: $black;
+      text-decoration: none;
+      font-size: 16px;
+
+      transition: all 3s;
+      &:hover{
+        color: $blue;
+        transition: all 3s;
+      }
+    }
+  }
+  &-form{
+    .footer-zag{
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    *{outline: none;}
+    input{
+      font-size: 18px;
+      height: 55px;
+      width: 100%;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      padding-left: 10px;
+      padding-right: 10px;
+      &:focus{
+        border: 1px solid $orang;
+      }
+    }
+    .mbtn{
+      border: 1px solid $orang;
+      background-color: $orang;
+
+    }
+  }
+}
