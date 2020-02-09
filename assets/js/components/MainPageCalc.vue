@@ -345,6 +345,9 @@
 				this.availableColorsIds = array.map(item => parseInt(item));
 			},
 			recalculatePrice(){
+				if (!this.price_calculator) {
+					return;
+				}
 				const prices = this.price_calculator.getAllPrices(this.currentProduct,this.width,this.height,this.number);
 				this.base_price = prices.basePrice;
 				this.discounted_price = prices.discountedPrice;

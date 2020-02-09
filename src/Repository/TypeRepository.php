@@ -38,6 +38,21 @@ class TypeRepository extends ServiceEntityRepository
         return $plain_types;
     }
     
+    /**
+     * @return Type[] Returns an array of Type objects
+     */
+    
+    public function findWithMaterials()
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.show_main_page_calc = true')
+            ->leftJoin('t.materials','m')
+            ->addSelect('m')
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return Type[] Returns an array of Type objects

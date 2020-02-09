@@ -72,7 +72,7 @@ class MainPageCalcController extends AbstractController
         $this->category_repository = $category_repository;
         $this->configs             = $configs;
         $this->matrix_service      = $matrix_service;
-        $this->cache = $cache;
+        $this->cache               = $cache;
     }
     
     /**
@@ -80,21 +80,21 @@ class MainPageCalcController extends AbstractController
      */
     public function getInitData()
     {
-        $item = $this->cache->getItem('main.calc.init_data');
-        if (!$item->isHit()) {
-            $types           = $this->getInitTypeData();
-            $colors          = $this->getInitColors();
-            $categories      = $this->getInitCategories();
-            $matrices        = $this->matrix_service->getAllMatrices();
-            $usd_rate        = $this->configs->get('usd_rate', 62.5);
-            $discount_global = $this->configs->get('discount_global', 7);
-    
-            $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices');
-            $response = json_encode($response);
-            $item->set($response);
-            $this->cache->save($item);
-        }
-        $response = $response ?? $item->get();
+        //$item = $this->cache->getItem('main.calc.init_data');
+        //if (!$item->isHit()) {
+        $types           = $this->getInitTypeData();
+        $colors          = $this->getInitColors();
+        $categories      = $this->getInitCategories();
+        $matrices        = $this->matrix_service->getAllCachedMatrices();
+        $usd_rate        = $this->configs->getCached('usd_rate', 62.5);
+        $discount_global = $this->configs->getCached('discount_global', 7);
+        
+        $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices');
+        $response = json_encode($response);
+        //$item->set($response);
+        //$this->cache->save($item);
+        //}
+        //$response = $response ?? $item->get();
         return new Response($response, 200, ['Content-Type' => 'application/json']);
     }
     
@@ -147,13 +147,13 @@ class MainPageCalcController extends AbstractController
     
     private function getInitTypeData()
     {
-        $items = $this->type_repository->findBy(['show_main_page_calc' => 1]);
+        $items = $this->type_repository->findWithMaterials();
         
         $jsonObject = $this->serializer->serialize($items, 'json', [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                 return $object->getId();
             },
-            AbstractNormalizer::IGNORED_ATTRIBUTES         => ['products'],
+            AbstractNormalizer::ATTRIBUTES                 => ['id', 'name', 'materials' => ['id', 'name']],
         ]);
         
         return json_decode($jsonObject);
