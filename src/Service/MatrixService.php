@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MatrixService
@@ -20,12 +21,20 @@ class MatrixService
      * @var FilesExplorerService
      */
     protected $explorer_service;
+    /**
+     * @var AdapterInterface
+     */
+    protected $cache;
     
-    public function __construct(ParameterBagInterface $params, FilesExplorerService $explorer_service)
-    {
+    public function __construct(
+        ParameterBagInterface $params,
+        FilesExplorerService $explorer_service,
+        AdapterInterface $cache
+    ) {
         
         $this->project_dir      = $params->get('kernel.project_dir');
         $this->explorer_service = $explorer_service;
+        $this->cache            = $cache;
     }
     
     public function getAllMatrices(): array
@@ -36,6 +45,18 @@ class MatrixService
         }
         
         return $matrices;
+    }
+    
+    public function getAllCachedMatrices(): array
+    {
+        $item = $this->cache->getItem('app.matrices_all');
+        if (!$item->isHit()) {
+            $matrices = $this->getAllMatrices();
+            $item->set($matrices);
+            $this->cache->save($item);
+        }
+        
+        return $item->get();
     }
     
     public function getMatrixSet($folder): array

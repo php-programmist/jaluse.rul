@@ -54,6 +54,8 @@ class Product extends Page
      * @ORM\Column(type="integer")
      */
     private $matrix_id;
+    
+    private $min_price;
 
     public function getPrice(): ?float
     {
@@ -254,5 +256,17 @@ class Product extends Page
             return $this->getMaterialName();
         }
         return 'Не установлен';
+    }
+    
+    public function getMinPrice():?int
+    {
+        return $this->min_price;
+    }
+    
+    
+    public function setMinPrice(int $min_price): self
+    {
+        $this->min_price = $min_price;
+        return $this;
     }
 }

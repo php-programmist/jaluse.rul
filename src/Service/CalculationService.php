@@ -12,6 +12,7 @@ class CalculationService
      * @var MatrixService
      */
     protected $matrix_service;
+    private $matrices;
     
     public function __construct(ConfigService $config_service, MatrixService $matrix_service)
     {
@@ -29,7 +30,10 @@ class CalculationService
             return round($this->usd_rate * $product->getPrice());
         }
         if ($type->getCalculationType() === 'matrix') {
-            $matrix    = $this->matrix_service->getMatrix($product->getMatrixFolder(), $product->getMatrixId());
+            if (! $this->matrices) {
+                $this->matrices = $this->matrix_service->getAllCachedMatrices();
+            }
+            $matrix    = $this->matrices[$product->getMatrixFolder()][$product->getMatrixId()];
             $min_width = current($matrix);
             $min_price = current($min_width);
             
@@ -37,5 +41,15 @@ class CalculationService
         }
         
         return 0;
+    }
+    
+    /**
+     * @param Product[] $products
+     */
+    public function setMinPriceForAll(array $products)
+    {
+        foreach ($products as $product) {
+            $product->setMinPrice($this->getMinPrice($product));
+        }
     }
 }
