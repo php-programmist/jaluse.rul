@@ -87,13 +87,9 @@ class MainPageCalcController extends AbstractController
         $colors          = $this->getInitColors();
         $categories      = $this->getInitCategories();
         $matrices        = $this->matrix_service->getAllCachedMatrices();
-        $calc_config     = $this->configs->getCachedGroup('calc');
-        $delivery_cost   = $calc_config['delivery_cost'];
-        $usd_rate        = $calc_config['usd_rate'];
-        $discount_global = $calc_config['discount_global'];
+        $priceConfigs     = $this->configs->getCachedGroup('calc');
         
-        $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices',
-            'delivery_cost');
+        $response = compact('types', 'colors', 'categories', 'priceConfigs', 'matrices');
         $response = json_encode($response);
         //$item->set($response);
         //$this->cache->save($item);

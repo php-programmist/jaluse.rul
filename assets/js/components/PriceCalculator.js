@@ -1,8 +1,8 @@
 export default class PriceCalculator {
-	constructor(discount_global,delivery_cost,usd_rate,matrices) {
-		this.discount_global = discount_global;
-		this.delivery_cost = delivery_cost;
-		this.usd_rate = usd_rate;
+	constructor(priceConfigs,matrices) {
+		this.usd_rate = parseFloat(priceConfigs.usd_rate);
+		this.delivery_cost = parseInt(priceConfigs.delivery_cost);
+		this.discount_global = parseInt(priceConfigs.discount_global);
 		this.matrices = matrices;
 	}
 	
@@ -12,11 +12,11 @@ export default class PriceCalculator {
 		}
 		return this.currentDiscount = this.product.discount;
 	}
-	getAllPrices(product,width,height,number){
+	getAllPrices(product,productConfigs){
 		this.product = product;
-		this.width = width;
-		this.height = height;
-		this.number = number;
+		this.width = productConfigs.width;
+		this.height = productConfigs.height;
+		this.number = productConfigs.number;
 		const currentDiscount = this.getCurrentDiscount();
 		const basePrice = this.getBasePrice();
 		const discountedPrice = this.getDiscountedPrice();

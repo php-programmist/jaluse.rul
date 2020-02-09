@@ -81,27 +81,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="calc-parametr-razmer">
-						<div class="bigzag">Задайте размер:</div>
-						<label for="width">Ширина, мм</label>
-						<input id="width" type="number" placeholder="Ширина, мм" v-model.number="width">
-						<label for="height">Высота, мм</label>
-						<input id="height" type="number" placeholder="Высота, мм" v-model.number="height">
-					</div>
-					<div class="calc-parametr-tipu">
-						<div class="bigzag">Выберите тип управления:</div>
-						<input type="radio" id="controlTypeManual" value="Ручное" v-model="controlType">
-						<label for="controlTypeManual">Ручное</label>
-						<input type="radio" id="controlTypeAuto" value="Электропривод" v-model="controlType">
-						<label for="controlTypeAuto">Электропривод</label>
-						<div>
-							<b>Количество изделий:</b>
-							<select v-model="number">
-								<option v-for="i in 10" :value="i">{{i}}</option>
-							</select>
-						</div>
-						<i>Изготовим за 1-3 рабочих дня</i>
-					</div>
+					<v-product-configurator v-model="productConfigs"></v-product-configurator>
+					
 				</form>
 			</div>
 			<div class="col-lg-5 col-md-6 calc-vivod align-self-center">
@@ -116,11 +97,11 @@
 					<div class="row">
 						<div class="calc-vivod-opis-text col-sm-6">
 							
-							<div><b>Размеры: </b><span>{{width}}</span> ММ X <span>{{height}}</span>ММ</div>
+							<div><b>Размеры: </b><span>{{productConfigs.width}}</span> ММ X <span>{{productConfigs.height}}</span>ММ</div>
 							<div><b>Цвет: {{currentProduct.colorName}}</b></div>
 						</div>
 						<div class="calc-vivod-opis-text col-sm-6">
-							<div><b>Управление: </b><span>{{controlType}}</span></div>
+							<div><b>Управление: </b><span>{{productConfigs.controlType}}</span></div>
 							<div><b>Подтип: </b><span>{{currentProduct.materialName}}</span></div>
 						</div>
 					
@@ -129,10 +110,7 @@
 				<v-order-form
 						text="Заказать"
 						:product="currentProduct"
-						:width="width"
-						:height="height"
-						:number="number"
-						:controlType="controlType"
+						:productConfigs="productConfigs"
 						:prices="prices"
 				></v-order-form>
 				<v-consultation-form text="Получить консультацию"></v-consultation-form>
@@ -148,12 +126,12 @@
 	import OrderForm from './OrderForm';
 	import PriceCalculator from './PriceCalculator'
 	import PriceRenderer from './PriceRenderer'
+	import ProductConfigurator from './ProductConfigurator'
 	
 	export default {
 		data() {
 			return {
 				types: [],
-				matrices: [],
 				colors: [],
 				availableColorsIds: [],
 				colorsIds: [],
@@ -163,35 +141,28 @@
 				type_index: -1,
 				material_index: -1,
 				product_index: 0,
-				usd_rate: 0,
-				discount_global: 0,
-				width: 1000,
-				height: 1000,
-				number: 1,
-				controlType: "Ручное",
-				delivery_cost: 0,
 				type_opened: false,
 				material_opened: false,
 				color_opened: false,
-				price_calculator: null
+				price_calculator: null,
+				productConfigs:{}
 			};
 		},
 		components: {
 			'v-consultation-form': ConsultationForm,
 			'v-order-form': OrderForm,
-			'v-price-renderer': PriceRenderer
+			'v-price-renderer': PriceRenderer,
+			'v-product-configurator': ProductConfigurator,
 		},
 		created() {
 			axios.get('/api/main-page-calc/getInitData')
 				.then(response => {
 					this.types = response.data.types;
-					this.matrices = response.data.matrices;
 					this.colors = response.data.colors;
 					this.categories = response.data.categories;
-					this.usd_rate = parseFloat(response.data.usd_rate);
-					this.delivery_cost = parseInt(response.data.delivery_cost);
-					this.discount_global = parseInt(response.data.discount_global);
-					this.price_calculator = new PriceCalculator(this.discount_global, this.delivery_cost, this.usd_rate, this.matrices);
+					const matrices = response.data.matrices;
+					const priceConfigs = response.data.priceConfigs;
+					this.price_calculator = new PriceCalculator(priceConfigs, matrices);
 				});
 			axios.get('/api/main-page-calc/getProducts')
 				.then(response => {
@@ -236,7 +207,7 @@
 					return {basePrice: 0, discountedPrice: 0, priceWithDelivery: 0, currentDiscount: 0};
 				}
 				
-				return this.price_calculator.getAllPrices(this.currentProduct, this.width, this.height, this.number);
+				return this.price_calculator.getAllPrices(this.currentProduct, this.productConfigs);
 				
 			}
 			

@@ -14,9 +14,7 @@
 		data() {
 			return {
 				matrices: [],
-				usd_rate: 0,
-				discount_global: 0,
-				delivery_cost: 0,
+				priceConfigs: {},
 				product: {},
 			};
 		},
@@ -29,9 +27,7 @@
 			axios.get('/api/main-page-calc/getInitData')
 				.then(response => {
 					this.matrices = response.data.matrices;
-					this.usd_rate = parseFloat(response.data.usd_rate);
-					this.delivery_cost = parseInt(response.data.delivery_cost);
-					this.discount_global = parseInt(response.data.discount_global);
+					this.priceConfigs = response.data.priceConfigs;
 				});
 			axios.get('/api/main-page-calc/getProduct/'+this.product_id)
 				.then(response => {

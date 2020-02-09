@@ -15,7 +15,7 @@
 		components: {
 			'v-popup-contact-form':PopupContactForm
 		},
-		props: ["text","product","width","height","number","prices","controlType"],
+		props: ["text","product","productConfigs","prices"],
 		methods:{
 			sendOrder(data) {
 				const {name, phone} = data;
@@ -26,10 +26,10 @@
 					product_name: this.product.name,
 					category: this.product.categoryName,
 					material: this.product.materialName,
-					width: this.width,
-					height: this.height,
-					number: this.number,
-					controlType: this.controlType,
+					width: this.productConfigs.width,
+					height: this.productConfigs.height,
+					number: this.productConfigs.number,
+					controlType: this.productConfigs.controlType,
 					color: this.product.colorName,
 					base_price: this.prices.basePrice,
 					discounted_price: this.prices.discountedPrice,
