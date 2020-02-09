@@ -25,22 +25,22 @@
 							</div>
 							<transition name="slide-fade">
 								<div class="calc-parametr-typewrap-type" v-show="materials.length > 0">
-								<div class="type-head type-head2">
-									<div class="type-text" @click="toggleMaterialSelector()">{{materialName}}</div>
-								</div>
-								<transition name="slide">
-									<div class="type-body type-body2" v-show="material_opened">
-										<div
-												v-for="(material,index) in materials"
-												:key="index"
-												class="type-text"
-												@click="changeMaterial(index)"
-										>
-											{{ material.name }}
-										</div>
+									<div class="type-head type-head2">
+										<div class="type-text" @click="toggleMaterialSelector()">{{materialName}}</div>
 									</div>
-								</transition>
-							</div>
+									<transition name="slide">
+										<div class="type-body type-body2" v-show="material_opened">
+											<div
+													v-for="(material,index) in materials"
+													:key="index"
+													class="type-text"
+													@click="changeMaterial(index)"
+											>
+												{{ material.name }}
+											</div>
+										</div>
+									</transition>
+								</div>
 							</transition>
 						</div>
 					
@@ -112,13 +112,13 @@
 					{{currentProduct.name}}
 				</div>
 				<div class="calc-vivod-price">
-					<div class="starcena">{{basePrice}}₽ <span>-{{currentDiscount}}%</span></div>
+					<div class="starcena">{{base_price}}₽ <span>-{{currentDiscount}}%</span></div>
 					
 					<div class="new-cenawrap">
 						<div class="row">
-							<div class="col-6 bigcena"><b>{{discountedPrice}}₽</b>
+							<div class="col-6 bigcena"><b>{{discounted_price}}₽</b>
 								<p>При самовывозе</p></div>
-							<div class="col-6 cena"><b>{{priceWithDelivery}}₽</b>
+							<div class="col-6 cena"><b>{{price_with_delivery}}₽</b>
 								<p>С доставкой</p></div>
 						</div>
 					</div>
@@ -138,18 +138,31 @@
 					
 					</div>
 				</div>
-				<button class="mbtn" @click="$refs.order.visible = true">Заказать</button>
-				<button class="mbtn mbtn2" @click="$refs.consultation.visible = true">Получить консультацию</button>
+				<v-order-form
+						text="Заказать"
+						:product="currentProduct"
+						:width="width"
+						:height="height"
+						:number="number"
+						:discount_global="discount_global"
+						:usd_rate="usd_rate"
+						:delivery_cost="delivery_cost"
+						:matrices="matrices"
+						:controlType="controlType"
+				></v-order-form>
+				<v-consultation-form text="Получить консультацию"></v-consultation-form>
 			</div>
 		</div>
-		<popup header="Заказать" ref="order" @sendForm="sendOrder"></popup>
-		<popup header="Получить консультацию" ref="consultation" @sendForm="sendConsultation"></popup>
+	
 	</div>
 </template>
 
 <script>
 	import axios from 'axios';
 	import popup from './PopupContactForm';
+	import ConsultationForm from './ConsultationForm';
+	import OrderForm from './OrderForm';
+	import PriceCalculator from './PriceCalculator'
 	
 	export default {
 		data() {
@@ -171,14 +184,21 @@
 				height: 1000,
 				number: 1,
 				controlType: "Ручное",
-				deliveryCost: 500,
+				delivery_cost: 500,
 				type_opened: false,
 				material_opened: false,
 				color_opened: false,
+				price_calculator: null,
+				base_price: 0,
+				discounted_price: 0,
+				price_with_delivery: 0,
+				currentDiscount:0
 			};
 		},
 		components: {
-			popup
+			popup,
+			'v-consultation-form': ConsultationForm,
+			'v-order-form': OrderForm
 		},
 		created() {
 			axios.get('/api/main-page-calc/getInitData')
@@ -189,12 +209,36 @@
 					this.categories = response.data.categories;
 					this.usd_rate = parseFloat(response.data.usd_rate);
 					this.discount_global = parseInt(response.data.discount_global);
+					this.price_calculator = new PriceCalculator(this.discount_global, this.delivery_cost, this.usd_rate,this.matrices);
+					this.currentDiscount = this.discount_global;
 				});
 			axios.get('/api/main-page-calc/getProducts')
 				.then(response => {
 					this.products = response.data.products;
 					this.setAvailableColorsIds(response.data.colors);
 				});
+		},
+		watch:{
+			currentProduct(){
+				this.$nextTick(() => {
+					this.recalculatePrice();
+				});
+			},
+			width(){
+				this.$nextTick(() => {
+					this.recalculatePrice();
+				});
+			},
+			height(){
+				this.$nextTick(() => {
+					this.recalculatePrice();
+				});
+			},
+			number(){
+				this.$nextTick(() => {
+					this.recalculatePrice();
+				});
+			}
 		},
 		computed: {
 			typeName() {
@@ -226,49 +270,8 @@
 					};
 				}
 				return this.products[this.product_index];
-			},
-			currentDiscount() {
-				if (!this.currentProduct.discount || this.currentProduct.discount < 1) {
-					return this.discount_global;
-				}
-				return this.currentProduct.discount;
-			},
-			basePrice() {
-				if (this.currentProduct.id === 0 || !this.width || !this.height) {
-					return 0;
-				}
-				if (this.type_index < 0 || this.types[this.type_index].calculationType === 'simple') {
-					let area = this.width * this.height;
-					if (area < 1000000) {
-						area = 1000000;
-					}
-					return parseInt(this.number * this.currentProduct.price * this.usd_rate * area / 1000000);
-				}else if(this.types[this.type_index].calculationType === 'matrix'){
-					const matrix_folder = this.currentProduct.matrixFolder;
-					const matrix_name = this.currentProduct.matrixId;
-					if (matrix_name && matrix_folder) {
-						const matrix_set = this.matrices[matrix_folder];
-						const matrix = matrix_set[matrix_name];
-						for(let width in matrix){
-							if (this.width <= width) {
-								for(let height in matrix[width]){
-									if (this.height <= height) {
-										return parseInt(this.number * matrix[width][height] * this.usd_rate);
-									}
-								}
-							}
-						}
-					}
-					
-				}
-				return 0;
-			},
-			discountedPrice() {
-				return parseInt(this.basePrice * (100 - this.currentDiscount) / 100);
-			},
-			priceWithDelivery() {
-				return this.discountedPrice + this.deliveryCost;
 			}
+			
 		},
 		mounted() {
 		
@@ -341,49 +344,12 @@
 			setAvailableColorsIds(array) {
 				this.availableColorsIds = array.map(item => parseInt(item));
 			},
-			sendOrder(data) {
-				const {name, phone} = data;
-				const body = {
-					name,
-					phone,
-					product_url: this.currentProduct.uri,
-					product_name: this.currentProduct.name,
-					category: this.categories[this.category_index].name,
-					material: this.currentProduct.materialName,
-					width: this.width,
-					height: this.height,
-					number: this.number,
-					controlType: this.controlType,
-					color: this.currentProduct.colorName,
-					base_price: this.basePrice,
-					discounted_price: this.discountedPrice,
-					price_with_delivery: this.priceWithDelivery,
-				};
-				const str = JSON.stringify(body);
-				axios.post('/mail/callback/order', str)
-					.then(({data}) => {
-						alert(data.msg);
-						this.$refs.order.visible = false;
-					})
-					.catch((error) => {
-						alert(error.response.data.detail);
-					});
-			},
-			sendConsultation(data) {
-				const {name, phone} = data;
-				const body = {
-					name,
-					phone
-				};
-				const str = JSON.stringify(body);
-				axios.post('/mail/callback/consultation', str)
-					.then(({data}) => {
-						alert(data.msg);
-						this.$refs.consultation.visible = false;
-					})
-					.catch((error) => {
-						alert(error.response.data.detail);
-					});
+			recalculatePrice(){
+				const prices = this.price_calculator.getAllPrices(this.currentProduct,this.width,this.height,this.number);
+				this.base_price = prices.basePrice;
+				this.discounted_price = prices.discountedPrice;
+				this.price_with_delivery = prices.priceWithDelivery;
+				this.currentDiscount = prices.currentDiscount;
 			}
 		}
 	};
@@ -425,10 +391,12 @@
 	.slide-fade-enter-active {
 		transition: all .3s ease;
 	}
+	
 	.slide-fade-leave-active {
 		transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 	}
-	.slide-fade-enter, .slide-fade-leave-to{
+	
+	.slide-fade-enter, .slide-fade-leave-to {
 		transform: translateX(30px);
 		opacity: 0;
 	}

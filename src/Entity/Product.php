@@ -269,4 +269,12 @@ class Product extends Page
         $this->min_price = $min_price;
         return $this;
     }
+    
+    public function getCalculationType()
+    {
+        if ( ! $this->getType()) {
+            return 'simple';
+        }
+        return $this->getType()->getCalculationType();
+    }
 }
