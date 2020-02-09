@@ -10,6 +10,24 @@ use Doctrine\ORM\Mapping as ORM;
 class Product extends Page
 {
     const RULON_TYPE_ID = 133;
+    const SERIALIZER_ATTRIBUTES = [
+        'id',
+        'price',
+        'imageSmall',
+        'imageCatalog',
+        'imageBig',
+        'name',
+        'uri',
+        'colorId',
+        'colorName',
+        'materialName',
+        'categoryName',
+        'typeName',
+        'discount',
+        'matrixId',
+        'matrixFolder',
+        'calculationType',
+    ];
     /**
      * @ORM\Column(type="float")
      */

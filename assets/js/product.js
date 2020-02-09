@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import ConsultationForm from './components/ConsultationForm';
+import ProductPageCalc from './components/ProductPageCalc';
 import '../scss/pages/product.scss'
-Vue.component('v-consultation-form',ConsultationForm);
+Vue.component('v-product-page-calc',ProductPageCalc);
 new Vue({
 	el: '#app'
 });

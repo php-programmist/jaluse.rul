@@ -111,19 +111,7 @@
 				<div class="product-name">
 					{{currentProduct.name}}
 				</div>
-				<div class="calc-vivod-price">
-					<div class="starcena">{{base_price}}₽ <span>-{{currentDiscount}}%</span></div>
-					
-					<div class="new-cenawrap">
-						<div class="row">
-							<div class="col-6 bigcena"><b>{{discounted_price}}₽</b>
-								<p>При самовывозе</p></div>
-							<div class="col-6 cena"><b>{{price_with_delivery}}₽</b>
-								<p>С доставкой</p></div>
-						</div>
-					</div>
-				
-				</div>
+				<v-price-renderer :prices="prices"></v-price-renderer>
 				<div class="calc-vivod-opis">
 					<div class="row">
 						<div class="calc-vivod-opis-text col-sm-6">
@@ -144,11 +132,8 @@
 						:width="width"
 						:height="height"
 						:number="number"
-						:discount_global="discount_global"
-						:usd_rate="usd_rate"
-						:delivery_cost="delivery_cost"
-						:matrices="matrices"
 						:controlType="controlType"
+						:prices="prices"
 				></v-order-form>
 				<v-consultation-form text="Получить консультацию"></v-consultation-form>
 			</div>
@@ -159,10 +144,10 @@
 
 <script>
 	import axios from 'axios';
-	import popup from './PopupContactForm';
 	import ConsultationForm from './ConsultationForm';
 	import OrderForm from './OrderForm';
 	import PriceCalculator from './PriceCalculator'
+	import PriceRenderer from './PriceRenderer'
 	
 	export default {
 		data() {
@@ -184,21 +169,17 @@
 				height: 1000,
 				number: 1,
 				controlType: "Ручное",
-				delivery_cost: 500,
+				delivery_cost: 0,
 				type_opened: false,
 				material_opened: false,
 				color_opened: false,
-				price_calculator: null,
-				base_price: 0,
-				discounted_price: 0,
-				price_with_delivery: 0,
-				currentDiscount:0
+				price_calculator: null
 			};
 		},
 		components: {
-			popup,
 			'v-consultation-form': ConsultationForm,
-			'v-order-form': OrderForm
+			'v-order-form': OrderForm,
+			'v-price-renderer': PriceRenderer
 		},
 		created() {
 			axios.get('/api/main-page-calc/getInitData')
@@ -208,9 +189,9 @@
 					this.colors = response.data.colors;
 					this.categories = response.data.categories;
 					this.usd_rate = parseFloat(response.data.usd_rate);
+					this.delivery_cost = parseInt(response.data.delivery_cost);
 					this.discount_global = parseInt(response.data.discount_global);
-					this.price_calculator = new PriceCalculator(this.discount_global, this.delivery_cost, this.usd_rate,this.matrices);
-					this.currentDiscount = this.discount_global;
+					this.price_calculator = new PriceCalculator(this.discount_global, this.delivery_cost, this.usd_rate, this.matrices);
 				});
 			axios.get('/api/main-page-calc/getProducts')
 				.then(response => {
@@ -218,28 +199,7 @@
 					this.setAvailableColorsIds(response.data.colors);
 				});
 		},
-		watch:{
-			currentProduct(){
-				this.$nextTick(() => {
-					this.recalculatePrice();
-				});
-			},
-			width(){
-				this.$nextTick(() => {
-					this.recalculatePrice();
-				});
-			},
-			height(){
-				this.$nextTick(() => {
-					this.recalculatePrice();
-				});
-			},
-			number(){
-				this.$nextTick(() => {
-					this.recalculatePrice();
-				});
-			}
-		},
+		
 		computed: {
 			typeName() {
 				return this.type_index > -1 ? this.types[this.type_index].name : 'Тип';
@@ -270,6 +230,14 @@
 					};
 				}
 				return this.products[this.product_index];
+			},
+			prices() {
+				if (!this.price_calculator) {
+					return {basePrice: 0, discountedPrice: 0, priceWithDelivery: 0, currentDiscount: 0};
+				}
+				
+				return this.price_calculator.getAllPrices(this.currentProduct, this.width, this.height, this.number);
+				
 			}
 			
 		},
@@ -343,22 +311,12 @@
 			},
 			setAvailableColorsIds(array) {
 				this.availableColorsIds = array.map(item => parseInt(item));
-			},
-			recalculatePrice(){
-				if (!this.price_calculator) {
-					return;
-				}
-				const prices = this.price_calculator.getAllPrices(this.currentProduct,this.width,this.height,this.number);
-				this.base_price = prices.basePrice;
-				this.discounted_price = prices.discountedPrice;
-				this.price_with_delivery = prices.priceWithDelivery;
-				this.currentDiscount = prices.currentDiscount;
 			}
 		}
 	};
 </script>
 
-<style>
+<style lang="scss">
 	.slide-enter-active {
 		-moz-transition-duration: 0.5s;
 		-webkit-transition-duration: 0.5s;
@@ -402,5 +360,56 @@
 	.slide-fade-enter, .slide-fade-leave-to {
 		transform: translateX(30px);
 		opacity: 0;
+	}
+	$text-grey: rgba(54, 54, 54, 0.8);
+	.calc-vivod {
+		&-imgwrap {
+			text-align: center;
+			img {
+				max-width: 100%;
+			}
+		}
+		&-opis {
+			margin-bottom: 20px;
+			&-text {
+				
+				font-size: 14px;
+				div {
+					
+					font-size: 14px;
+					b {
+						text-transform: uppercase;
+					}
+				}
+				i {
+					margin-left: 20px;
+					margin-top: 20px;
+					display: block;
+					margin-bottom: 20px;
+					
+				}
+			}
+			&-cena {
+				font-size: 14px;
+				a {
+					display: block;
+					color: $text-grey;
+					text-align: right;
+					text-decoration: underline;
+					margin-top: 10px;
+				}
+				.price {
+					font-weight: bold;
+					font-size: 16px;
+					margin-top: 10px;
+					b {
+						font-size: 36px;
+						display: inline-block;
+						margin-right: 5px;
+					}
+				}
+				
+			}
+		}
 	}
 </style>

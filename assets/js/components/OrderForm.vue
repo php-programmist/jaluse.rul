@@ -7,7 +7,6 @@
 
 <script>
 	import PopupContactForm from './PopupContactForm'
-	import PriceCalculator from './PriceCalculator'
 	import axios from 'axios';
 	export default {
 		data() {
@@ -16,15 +15,10 @@
 		components: {
 			'v-popup-contact-form':PopupContactForm
 		},
-		props: ["text","product","width","height","number","discount_global","delivery_cost","usd_rate","matrices","controlType"],
+		props: ["text","product","width","height","number","prices","controlType"],
 		methods:{
 			sendOrder(data) {
 				const {name, phone} = data;
-				const price_calculator = new PriceCalculator(this.discount_global,this.delivery_cost,this.usd_rate,this.matrices);
-				const prices = price_calculator.getAllPrices(this.product,this.width,this.height,this.number);
-				const base_price = prices.basePrice;
-				const discounted_price = prices.discountedPrice;
-				const price_with_delivery = prices.priceWithDelivery;
 				const body = {
 					name,
 					phone,
@@ -37,9 +31,9 @@
 					number: this.number,
 					controlType: this.controlType,
 					color: this.product.colorName,
-					base_price,
-					discounted_price,
-					price_with_delivery,
+					base_price: this.prices.basePrice,
+					discounted_price: this.prices.discountedPrice,
+					price_with_delivery: this.prices.priceWithDelivery,
 				};
 				const str = JSON.stringify(body);
 				axios.post('/mail/callback/order', str)

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ColorRepository;
 use App\Repository\ProductRepository;
@@ -86,10 +87,13 @@ class MainPageCalcController extends AbstractController
         $colors          = $this->getInitColors();
         $categories      = $this->getInitCategories();
         $matrices        = $this->matrix_service->getAllCachedMatrices();
-        $usd_rate        = $this->configs->getCached('usd_rate', 62.5);
-        $discount_global = $this->configs->getCached('discount_global', 7);
+        $calc_config     = $this->configs->getCachedGroup('calc');
+        $delivery_cost   = $calc_config['delivery_cost'];
+        $usd_rate        = $calc_config['usd_rate'];
+        $discount_global = $calc_config['discount_global'];
         
-        $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices');
+        $response = compact('types', 'colors', 'categories', 'usd_rate', 'discount_global', 'matrices',
+            'delivery_cost');
         $response = json_encode($response);
         //$item->set($response);
         //$this->cache->save($item);
@@ -109,30 +113,25 @@ class MainPageCalcController extends AbstractController
             $filters[$filter_name] = $request->get($filter_name, 0);
         }
         $colors     = $this->product_repository->getAvailableColors($filters);
-        $items      = $this->product_repository->findFiltered($this->configs->get('products_limit', 49), $filters);
+        $items      = $this->product_repository->findFiltered($this->configs->get('calc.products_limit', 49), $filters);
         $jsonObject = $this->serializer->serialize($items, 'json', [
-            AbstractNormalizer::ATTRIBUTES => [
-                'id',
-                'price',
-                'imageSmall',
-                'imageCatalog',
-                'imageBig',
-                'name',
-                'uri',
-                'colorId',
-                'colorName',
-                'materialName',
-                'categoryName',
-                'typeName',
-                'discount',
-                'matrixId',
-                'matrixFolder',
-                'calculationType',
-            ],
+            AbstractNormalizer::ATTRIBUTES => Product::SERIALIZER_ATTRIBUTES,
         ]);
         $products   = json_decode($jsonObject);
         
         return new Response(json_encode(compact('products', 'colors')), 200, ['Content-Type' => 'application/json']);
+    }
+    
+    /**
+     * @Route("/getProduct/{id}", name="get_product")
+     */
+    public function getProduct(Product $product)
+    {
+        $jsonObject = $this->serializer->serialize($product, 'json', [
+            AbstractNormalizer::ATTRIBUTES => Product::SERIALIZER_ATTRIBUTES,
+        ]);
+        
+        return new Response($jsonObject, 200, ['Content-Type' => 'application/json']);
     }
     
     private function getInitColors()

@@ -16,8 +16,9 @@ class PageController extends AbstractController
      */
     protected $page_repository;
     
-    public function __construct(PageRepository $page_repository)
-    {
+    public function __construct(
+        PageRepository $page_repository
+    ) {
         $this->page_repository = $page_repository;
     }
     
@@ -32,13 +33,12 @@ class PageController extends AbstractController
         
         if ($page instanceof Product) {
             return $this->product($page);
-        }elseif ($page instanceof Catalog){
+        } elseif ($page instanceof Catalog) {
             return $this->catalog($page);
         }
-    
-        throw new NotFoundHttpException('Page is instance of '.get_class($page));
+        
+        throw new NotFoundHttpException('Page is instance of ' . get_class($page));
     }
-    
     
     private function product(Product $product)
     {
@@ -50,7 +50,7 @@ class PageController extends AbstractController
     private function catalog(Catalog $catalog)
     {
         return $this->render('page/catalog.html.twig', [
-            'controller_name' => 'Catalog '.$catalog->getName(),
+            'controller_name' => 'Catalog ' . $catalog->getName(),
         ]);
     }
 }
