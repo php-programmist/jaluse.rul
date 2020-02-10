@@ -88,20 +88,20 @@ class CalcController extends AbstractController
      */
     public function getInitData()
     {
-        //$item = $this->cache->getItem('main.calc.init_data');
-        //if (!$item->isHit()) {
-        $types           = $this->getInitTypeData();
-        $colors          = $this->getInitColors();
-        $categories      = $this->getInitCategories();
-        $matrices        = $this->matrix_service->getAllCachedMatrices();
-        $priceConfigs     = $this->configs->getCachedGroup('calc');
-        
-        $response = compact('types', 'colors', 'categories', 'priceConfigs', 'matrices');
-        $response = json_encode($response);
-        //$item->set($response);
-        //$this->cache->save($item);
-        //}
-        //$response = $response ?? $item->get();
+        $item = $this->cache->getItem('calc.init_data');
+        if (!$item->isHit()) {
+            $types           = $this->getInitTypeData();
+            $colors          = $this->getInitColors();
+            $categories      = $this->getInitCategories();
+            $matrices        = $this->matrix_service->getAllMatrices();
+            $priceConfigs     = $this->configs->getGroup('calc');
+            
+            $response = compact('types', 'colors', 'categories', 'priceConfigs', 'matrices');
+            $response = json_encode($response);
+            $item->set($response);
+            $this->cache->save($item);
+        }
+        $response = $response ?? $item->get();
         return new Response($response, 200, ['Content-Type' => 'application/json']);
     }
     
