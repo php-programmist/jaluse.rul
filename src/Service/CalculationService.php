@@ -17,7 +17,7 @@ class CalculationService
     public function __construct(ConfigService $config_service, MatrixService $matrix_service)
     {
         $this->matrix_service = $matrix_service;
-        $this->usd_rate       = $config_service->getCached('usd_rate');
+        $this->usd_rate       = $config_service->getCached('calc.usd_rate');
     }
     
     public function getMinPrice(Product $product): int

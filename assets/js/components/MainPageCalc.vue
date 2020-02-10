@@ -203,7 +203,7 @@
 				return this.products[this.product_index];
 			},
 			prices() {
-				if (!this.price_calculator) {
+				if (!this.price_calculator || typeof this.price_calculator.getAllPrices === 'undefined') {
 					return {basePrice: 0, discountedPrice: 0, priceWithDelivery: 0, currentDiscount: 0};
 				}
 				
