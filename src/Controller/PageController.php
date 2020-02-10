@@ -50,7 +50,7 @@ class PageController extends AbstractController
     private function catalog(Catalog $catalog)
     {
         return $this->render('page/catalog.html.twig', [
-            'controller_name' => 'Catalog ' . $catalog->getName(),
+            'page' => $catalog,
         ]);
     }
 }

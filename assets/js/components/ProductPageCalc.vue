@@ -29,13 +29,13 @@
 			'v-popup-product-configurator': PopupProductConfigurator
 		},
 		created() {
-			axios.get('/api/main-page-calc/getInitData')
+			axios.get('/api/calc/getInitData')
 				.then(response => {
 					const matrices = response.data.matrices;
 					const priceConfigs = response.data.priceConfigs;
 					this.price_calculator = new PriceCalculator(priceConfigs, matrices);
 				});
-			axios.get('/api/main-page-calc/getProduct/'+this.product_id)
+			axios.get('/api/calc/getProduct/'+this.product_id)
 				.then(response => {
 					this.product = response.data;
 				});

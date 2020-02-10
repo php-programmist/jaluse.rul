@@ -40,8 +40,8 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
         yield ['/'];
         yield ['/zhalyuzi/'];
         yield ['/zhalyuzi/vertikalnye/tkanevye/avrora-persikovyj/'];
-        yield ['/api/main-page-calc/getInitData'];
-        yield ['/api/main-page-calc/getProducts'];
+        yield ['/api/calc/getInitData'];
+        yield ['/api/calc/getProducts'];
         
     }
 }

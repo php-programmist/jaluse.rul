@@ -20,9 +20,39 @@ class ProductRepository extends ServiceEntityRepository
     }
     
     /**
+     * @param array $filters
+     * @param int   $offset
+     * @param int   $limit
+     *
      * @return Product[] Returns an array of Product objects
      */
-    public function findFiltered($products_limit, $filters = [])
+    public function findFiltered($filters = [],$offset=0,$limit=0 )
+    {
+        $query = $this->getFilteredQB($filters);
+        if ($limit) {
+            $query->setMaxResults($limit);
+        }
+        if ($offset){
+            $query->setFirstResult($offset);
+        }
+        return $query->getQuery()
+                     ->getResult();
+    }
+    
+    public function countFiltered(array $filters = []):int
+    {
+        $query = $this->getFilteredQB($filters);
+        return $query->select('count(p.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
+    
+    /**
+     * @param array $filters
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getFilteredQB($filters = [])
     {
         $query = $this->createQueryBuilder('p')
                       ->leftJoin('p.type', 't')
@@ -31,7 +61,7 @@ class ProductRepository extends ServiceEntityRepository
                       ->andWhere('t.show_main_page_calc = 1')
                       ->andWhere('p.price IS NOT NULL OR p.matrix_id IS NOT NULL')
                       ->orderBy('p.popular', 'DESC');
-        
+    
         if ( ! empty($filters['category'])) {
             $query->andWhere('p.category = :category')
                   ->setParameter('category', $filters['category']);
@@ -53,11 +83,7 @@ class ProductRepository extends ServiceEntityRepository
             $query->andWhere('p.color IN(:color)')
                   ->setParameter('color', explode(',',$filters['color']));
         }
-        
-        
-        return $query->setMaxResults($products_limit)
-                     ->getQuery()
-                     ->getResult();
+        return $query;
     }
     
     public function getAvailableColors($filters = [])

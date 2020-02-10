@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\ColorRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TypeRepository;
+use App\Service\CalculationService;
 use App\Service\ConfigService;
 use App\Service\MatrixService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,9 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/main-page-calc", name="main_page_calc_")
+ * @Route("/calc", name="calc_")
  */
-class MainPageCalcController extends AbstractController
+class CalcController extends AbstractController
 {
     
     /**
@@ -55,6 +56,10 @@ class MainPageCalcController extends AbstractController
      * @var AdapterInterface
      */
     protected $cache;
+    /**
+     * @var CalculationService
+     */
+    protected $calculation_service;
     
     public function __construct(
         ProductRepository $product_repository,
@@ -64,6 +69,7 @@ class MainPageCalcController extends AbstractController
         CategoryRepository $category_repository,
         ConfigService $configs,
         MatrixService $matrix_service,
+        CalculationService $calculation_service,
         AdapterInterface $cache
     ) {
         $this->product_repository  = $product_repository;
@@ -74,6 +80,7 @@ class MainPageCalcController extends AbstractController
         $this->configs             = $configs;
         $this->matrix_service      = $matrix_service;
         $this->cache               = $cache;
+        $this->calculation_service = $calculation_service;
     }
     
     /**
@@ -109,13 +116,39 @@ class MainPageCalcController extends AbstractController
             $filters[$filter_name] = $request->get($filter_name, 0);
         }
         $colors     = $this->product_repository->getAvailableColors($filters);
-        $items      = $this->product_repository->findFiltered($this->configs->get('calc.products_limit', 49), $filters);
+        $limit = $this->configs->getCached('calc.products_limit');
+        $items      = $this->product_repository->findFiltered($filters,0,$limit);
         $jsonObject = $this->serializer->serialize($items, 'json', [
             AbstractNormalizer::ATTRIBUTES => Product::SERIALIZER_ATTRIBUTES,
         ]);
         $products   = json_decode($jsonObject);
         
         return new Response(json_encode(compact('products', 'colors')), 200, ['Content-Type' => 'application/json']);
+    }
+    
+    /**
+     * @Route("/getCatalogProducts", name="get_catalog_products")
+     */
+    public function getCatalogProducts(Request $request)
+    {
+        $filters       = [];
+        $filters_names = ['type', 'material', 'category', 'color'];
+        foreach ($filters_names as $filter_name) {
+            $filters[$filter_name] = $request->query->get($filter_name, 0);
+        }
+        $page = $request->query->get('page', 1);
+        $limit = $this->configs->getCached('calc.products_catalog_limit');
+        $offset = $limit * ($page-1);
+        $colors     = $this->product_repository->getAvailableColors($filters);
+        $items      = $this->product_repository->findFiltered($filters, $offset, $limit);
+        $count = $this->product_repository->countFiltered($filters);
+        $this->calculation_service->setMinPriceForAll($items);
+        $jsonObject = $this->serializer->serialize($items, 'json', [
+            AbstractNormalizer::ATTRIBUTES => Product::SERIALIZER_ATTRIBUTES,
+        ]);
+        $products   = json_decode($jsonObject);
+        
+        return new Response(json_encode(compact('products', 'colors','count')), 200, ['Content-Type' => 'application/json']);
     }
     
     /**

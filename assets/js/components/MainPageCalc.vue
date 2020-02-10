@@ -61,15 +61,7 @@
 							</div>
 						</transition>
 					</div>
-					<div class="calc-parametr-categori">
-						<span
-								v-for="(category,index) in categories"
-								:class="{activ:category_index===index}"
-								@click="changeCategory(index)"
-						>
-							{{category.name}}
-						</span>
-					</div>
+					<v-category-selector :categories="categories" v-model="category" @input="getProducts"></v-category-selector>
 					<div class="calc-parametr-minimages">
 						<div
 								class="minimages-wrap"
@@ -127,6 +119,7 @@
 	import PriceCalculator from './PriceCalculator'
 	import PriceRenderer from './PriceRenderer'
 	import ProductConfigurator from './ProductConfigurator'
+	import CategorySelector from './CategorySelector';
 	
 	export default {
 		data() {
@@ -137,7 +130,7 @@
 				colorsIds: [],
 				products: [],
 				categories: [],
-				category_index: 0,
+				category: {id:0},
 				type_index: -1,
 				material_index: -1,
 				product_index: 0,
@@ -153,22 +146,21 @@
 			'v-order-form': OrderForm,
 			'v-price-renderer': PriceRenderer,
 			'v-product-configurator': ProductConfigurator,
+			'v-category-selector': CategorySelector,
 		},
 		created() {
-			axios.get('/api/main-page-calc/getInitData')
+			axios.get('/api/calc/getInitData')
 				.then(response => {
 					this.types = response.data.types;
 					this.colors = response.data.colors;
 					this.categories = response.data.categories;
+					this.category = this.categories[0];
 					const matrices = response.data.matrices;
 					const priceConfigs = response.data.priceConfigs;
 					this.price_calculator = new PriceCalculator(priceConfigs, matrices);
+					this.getProducts();
 				});
-			axios.get('/api/main-page-calc/getProducts')
-				.then(response => {
-					this.products = response.data.products;
-					this.setAvailableColorsIds(response.data.colors);
-				});
+			
 		},
 		
 		computed: {
@@ -233,13 +225,6 @@
 					this.getProducts();
 				}
 			},
-			changeCategory(index) {
-				if (index !== this.category_index) {//Тип действительно изменился
-					this.category_index = index;
-					this.colorsIds = [];
-					this.getProducts();
-				}
-			},
 			toggleTypeSelector() {
 				this.type_opened = !this.type_opened;
 			},
@@ -263,8 +248,8 @@
 			},
 			getProducts() {
 				this.product_index = 0;
-				let query = '/api/main-page-calc/getProducts?';
-				query += 'category=' + this.categories[this.category_index].id;
+				let query = '/api/calc/getProducts?';
+				query += 'category=' + this.category.id;
 				if (this.type_index > -1) {
 					query += '&type=' + this.types[this.type_index].id;
 				}

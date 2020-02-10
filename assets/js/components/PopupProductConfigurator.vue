@@ -28,8 +28,6 @@
 	export default {
 		data() {
 			return {
-				name: '',
-				phone: '',
 				visible: false,
 				productConfigs:{}
 			};
@@ -112,6 +110,13 @@
 			.product-configurator-popup__container {
 				transform: translateY(0);
 			}
+		}
+		
+		.mbtn{
+			width: 48%;
+			height: 40px;
+			margin-right: 1%;
+			font-weight: bold;
 		}
 	}
 	

@@ -27,6 +27,7 @@ class Product extends Page
         'matrixId',
         'matrixFolder',
         'calculationType',
+        'minPrice',
     ];
     /**
      * @ORM\Column(type="float")
@@ -73,7 +74,7 @@ class Product extends Page
      */
     private $matrix_id;
     
-    private $min_price;
+    private $min_price=0;
 
     public function getPrice(): ?float
     {
