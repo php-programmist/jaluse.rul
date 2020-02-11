@@ -6,40 +6,21 @@
 					<div class="calc-parametr-typewrap">
 						<div class="minzag">Выберите тип и подтип жалюзи</div>
 						<div class="row">
-							<div class="calc-parametr-typewrap-type">
-								<div class="type-head type-head1">
-									<div class="type-text" @click="toggleTypeSelector()">{{typeName}}</div>
-								</div>
-								<transition name="slide">
-									<div class="type-body type-body1" v-show="type_opened">
-										<div
-												v-for="(type,index) in types"
-												:key="index"
-												class="type-text"
-												@click="changeType(index)"
-										>
-											{{ type.name }}
-										</div>
-									</div>
-								</transition>
+							<div class="type_selector">
+								<v-drop-down-selector
+										:items="types"
+										default_name="Тип"
+										v-model="type"
+								></v-drop-down-selector>
 							</div>
 							<transition name="slide-fade">
-								<div class="calc-parametr-typewrap-type" v-show="materials.length > 0">
-									<div class="type-head type-head2">
-										<div class="type-text" @click="toggleMaterialSelector()">{{materialName}}</div>
-									</div>
-									<transition name="slide">
-										<div class="type-body type-body2" v-show="material_opened">
-											<div
-													v-for="(material,index) in materials"
-													:key="index"
-													class="type-text"
-													@click="changeMaterial(index)"
-											>
-												{{ material.name }}
-											</div>
-										</div>
-									</transition>
+								<div class="material_selector" v-show="materials.length > 0">
+									<v-drop-down-selector
+											:items="materials"
+											default_name="Подтип"
+											v-model="material"
+											@input="getProducts"
+									></v-drop-down-selector>
 								</div>
 							</transition>
 						</div>
@@ -120,6 +101,7 @@
 	import PriceRenderer from './PriceRenderer'
 	import ProductConfigurator from './ProductConfigurator'
 	import CategorySelector from './CategorySelector';
+	import DropDownSelector from './DropDownSelector';
 	
 	export default {
 		data() {
@@ -131,8 +113,8 @@
 				products: [],
 				categories: [],
 				category: {id:0},
-				type_index: -1,
-				material_index: -1,
+				type: {id:0},
+				material: {id:0},
 				product_index: 0,
 				type_opened: false,
 				material_opened: false,
@@ -147,6 +129,7 @@
 			'v-price-renderer': PriceRenderer,
 			'v-product-configurator': ProductConfigurator,
 			'v-category-selector': CategorySelector,
+			'v-drop-down-selector': DropDownSelector,
 		},
 		created() {
 			axios.get('/api/calc/getInitData')
@@ -164,14 +147,8 @@
 		},
 		
 		computed: {
-			typeName() {
-				return this.type_index > -1 ? this.types[this.type_index].name : 'Тип';
-			},
-			materialName() {
-				return this.materials.length > 0 && this.material_index > -1 ? this.materials[this.material_index].name : 'Подтип';
-			},
 			materials() {
-				return this.type_index > -1 ? this.types[this.type_index].materials : [];
+				return this.type.id > 0 ? this.type.materials : [];
 			},
 			availableColors() {
 				return this.colors.filter(color => this.availableColorsIds.includes(color.id));
@@ -204,33 +181,17 @@
 			}
 			
 		},
-		mounted() {
-		
+		watch:{
+			type(newVal,oldVal){
+				if (newVal.id > 0 && oldVal.id > 0) {
+					this.material = {id:0};
+				}
+				if (newVal.id > 0) {
+					this.getProducts();
+				}
+			}
 		},
 		methods: {
-			changeType(index) {
-				this.type_opened = false;
-				if (index !== this.type_index) {//Тип действительно изменился
-					this.type_index = index;
-					this.material_index = -1;
-					this.colorsIds = [];
-					this.getProducts();
-				}
-			},
-			changeMaterial(index) {
-				this.material_opened = false;
-				if (index !== this.material_index) {//Тип действительно изменился
-					this.material_index = index;
-					this.colorsIds = [];
-					this.getProducts();
-				}
-			},
-			toggleTypeSelector() {
-				this.type_opened = !this.type_opened;
-			},
-			toggleMaterialSelector() {
-				this.material_opened = !this.material_opened;
-			},
 			toggleColorSelector() {
 				this.color_opened = !this.color_opened;
 			},
@@ -250,11 +211,11 @@
 				this.product_index = 0;
 				let query = '/api/calc/getProducts?';
 				query += 'category=' + this.category.id;
-				if (this.type_index > -1) {
-					query += '&type=' + this.types[this.type_index].id;
+				if (this.type.id > 0) {
+					query += '&type=' + this.type.id;
 				}
-				if (this.material_index > -1) {
-					query += '&material=' + this.materials[this.material_index].id;
+				if (this.material.id > 0) {
+					query += '&material=' + this.material.id;
 				}
 				if (this.colorsIds.length > 0) {
 					query += '&color=' + this.colorsIds.join(',');
