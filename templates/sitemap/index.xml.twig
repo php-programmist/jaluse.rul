@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+        xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
+        xsi:schemaLocation="https://www.sitemaps.org/schemas/sitemap/0.9 https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+{% for page in pages -%}
+    <url>
+        <loc>{{ app.request.schemeAndHttpHost~page.path }}</loc>
+        <lastmod>{{ page.modifyDate|date("Y-m-d\\TH:i:sP") }}</lastmod>
+        <priority>1</priority>
+    </url>
+{% endfor -%}
+</urlset>
