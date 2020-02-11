@@ -34,7 +34,7 @@
 						v-for="product in filteredProducts"
 						:key="product.id"
 				>
-					<img :src="product.imageCatalog" :alt="product.name">
+					<a :href="`/${product.uri}/`" target="_blank"><img :src="product.imageCatalog" :alt="product.name"></a>
 					<div class="product__name"><a :href="`/${product.uri}/`" target="_blank">{{ product.name }}</a></div>
 					<div class="product__price">{{product.calculationType === 'simple'? `${product.minPrice} руб/м2`:`от ${product.minPrice} руб` }}</div>
 					<button class="mbtn mbtn_orange" @click="showProductConfigurator(product)">Рассчитать</button>

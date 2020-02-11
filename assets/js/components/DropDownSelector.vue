@@ -1,7 +1,7 @@
 <template>
-	<div class="calc-parametr-typewrap-type">
-		<div class="type-head">
-			<div class="type-text" @click="selector_opened = !selector_opened">{{itemName}}</div>
+	<div class="calc-parametr-typewrap-type " :class="{blink:!selectedItem.id}">
+		<div class="type-head" @click="selector_opened = !selector_opened">
+			<div class="type-text" >{{itemName}}</div>
 		</div>
 		<transition name="slide">
 			<div class="type-body" v-show="selector_opened">
@@ -53,6 +53,23 @@
 
 <style lang="scss" scoped>
 	$orang: #fd971f;
+	.blink{
+		animation-name: blink_border;
+		animation-duration: 1s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		animation-delay: 1s;
+	}
+	
+	@keyframes blink_border{
+		0%{
+			border: 4px solid #f0f0f0;
+		}
+		100%{
+			border: 4px solid #2aa5cc;
+		}
+		
+	}
 	.slide-enter-active {
 		-moz-transition-duration: 0.5s;
 		-webkit-transition-duration: 0.5s;
@@ -137,7 +154,8 @@
 				left: 0;
 				background: #fff;
 				z-index: 4;
-				width: 200px;
+				width: 100%;
+				min-width: 200px;
 			}
 		}
 	}
