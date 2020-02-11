@@ -1,6 +1,7 @@
 <template>
 	<div class="row catalog-calculator">
 		<div class="col-md-3 col-sm-12">
+			<h3>Фильтры:</h3>
 			<div class="type_selector" v-show="types.length > 0 && type_id == 0">
 				<v-drop-down-selector
 					:items="types"
@@ -16,6 +17,12 @@
 					@input="getProducts"
 				></v-drop-down-selector>
 			</div>
+			<div class="color_selector" v-show="availableColors.length > 0">
+				<v-color-selector
+					:items="availableColors"
+					v-model="colorsIds"
+				></v-color-selector>
+			</div>
 		</div>
 		<div class="col-md-9 col-sm-12">
 			<div class="categories">
@@ -24,7 +31,7 @@
 			<div class="products">
 				<div
 						class="product"
-						v-for="product in products"
+						v-for="product in filteredProducts"
 						:key="product.id"
 				>
 					<img :src="product.imageCatalog" :alt="product.name">
@@ -54,6 +61,7 @@
 	import PriceCalculator from './PriceCalculator';
 	import CategorySelector from './CategorySelector';
 	import DropDownSelector from './DropDownSelector';
+	import ColorSelector from './ColorSelector';
 	
 	export default {
 		data() {
@@ -85,6 +93,7 @@
 			'v-popup-product-configurator': PopupProductConfigurator,
 			'v-category-selector': CategorySelector,
 			'v-drop-down-selector': DropDownSelector,
+			'v-color-selector': ColorSelector,
 		},
 		created() {
 			axios.get('/api/calc/getInitData')
@@ -109,8 +118,13 @@
 			},
 			availableColors() {
 				return this.colors.filter(color => this.availableColorsIds.includes(color.id));
-				
 			},
+			filteredProducts(){
+				if (this.colorsIds.length === 0) {
+					return this.products;
+				}
+				return this.products.filter(product => this.colorsIds.includes(product.colorId));
+			}
 		},
 		watch:{
 			type(newVal,oldVal){
@@ -162,9 +176,9 @@
 				if (this.material.id > 0) {
 					query += '&material=' + this.material.id;
 				}
-				if (this.colorsIds.length > 0) {
+				/*if (this.colorsIds.length > 0) {
 					query += '&color=' + this.colorsIds.join(',');
-				}
+				}*/
 				return query;
 			},
 			setAvailableColorsIds(array) {
@@ -187,6 +201,7 @@
 		}
 	}
 	.catalog-calculator{
+		margin-top: 2em;
 		.products{
 			display: flex;
 			flex-wrap: wrap;
