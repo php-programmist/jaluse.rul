@@ -31,6 +31,9 @@ catalogbtn2.click(function (event) {
 		slidesToScroll: 1,
 		fade: true,
 		asNavFor: '.slider-nav2',
+		lazyLoad: 'ondemand',
+		autoplay: true,
+		autoplaySpeed: 2000,
 		responsive: [
 			{
 				breakpoint: 567,
@@ -44,6 +47,7 @@ catalogbtn2.click(function (event) {
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		asNavFor: '.slider-for2',
+		lazyLoad: 'ondemand',
 		dots: false,
 		arrows: false,
 		centerMode: false,
@@ -78,6 +82,9 @@ catalogbtn3.click(function (event) {
 	$('.slider-for3').slick({
 		slidesToShow: 1,
 		slidesToScroll: 1,
+		lazyLoad: 'ondemand',
+		autoplay: true,
+		autoplaySpeed: 2000,
 		fade: true,
 		asNavFor: '.slider-nav3',
 		responsive: [
@@ -93,6 +100,7 @@ catalogbtn3.click(function (event) {
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		asNavFor: '.slider-for3',
+		lazyLoad: 'ondemand',
 		dots: false,
 		arrows: false,
 		centerMode: false,
@@ -127,6 +135,9 @@ catalogbtn4.click(function (event) {
 	$('.slider-for4').slick({
 		slidesToShow: 1,
 		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 2000,
+		lazyLoad: 'ondemand',
 		fade: true,
 		asNavFor: '.slider-nav4',
 		responsive: [
@@ -142,6 +153,7 @@ catalogbtn4.click(function (event) {
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		asNavFor: '.slider-for4',
+		lazyLoad: 'ondemand',
 		dots: false,
 		arrows: false,
 		centerMode: false,

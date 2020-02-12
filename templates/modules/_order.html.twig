@@ -11,30 +11,34 @@
         <div class="catalog-body catalog-body1">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="zagcena"><b>Цена</b> от 717 руб за м<sup>2</sup></div>
-                    <p>Ламели из ткани, пластика, алюминия крепятся к карнизу. Ручное или автоматическое управление позволяет ламелям сдвигаться в одну из сторон и разворачиваться вокруг своей оси.</p>
-                    <p class="catalog-vidi">Виды: <a href="#">тканевые</a>, <a href="/zhalyuzi/gorizontalnye/derevyannye/">деревянные</a>, <a href="#">пластиковые</a>, <a href="/zhalyuzi/gorizontalnye/alyuminievye/">алюминиевые</a>, <a href="#">мультифактурные</a></p>
+                    {% set new_price = 871 %}
+                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб за м<sup>2</sup></div>
+                    <p>Жалюзи состоят из вертикальных ламелей (пластиковые и тканевые) и крепятся к карнизу. Ручное и автоматическое управление на выбор. Ламели могут сдвигаться в бок и поворачиваться вокруг своей оси.</p>
+                    <p class="catalog-vidi">Виды:
+                        <a href="/zhalyuzi/vertikalnye/tkanevye/">тканевые</a>,
+                        <a href="/zhalyuzi/vertikalnye/plastikovyie/">пластиковые</a>
+                    </p>
 
                     <div class="catalog-body-opis">
                         <div class="row">
                             <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
-                            <div class="col-6"><b>6 мес.</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>20%</b> <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>2 года</b> <p>Гарантия</p></div>
+                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
                             <div class="col-6"><b>200</b> <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">896₽ <span>-20%</span></div>
+                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
 
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>717₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>1217₽</b><p>С доставкой</p>	</div>
+                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b><p>С доставкой</p>	</div>
                             </div>
                         </div>
                         <div class="catalog-btn-wrap">
                             <a href="#" class="catalogbtn">
-                                Заказать со скидкой 20%
+                                Заказать со скидкой 7%
                             </a>
                             <a href="#" class="catalogbtn2">Подробнее...</a>
                         </div>
@@ -44,27 +48,14 @@
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for1">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
-
+                            {% for i in 1..7 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/vertical/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                         <div class="slider-nav1">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
+                            {% for i in 1..7 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/vertical/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -73,30 +64,34 @@
         <div class="catalog-body catalog-body2">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="zagcena"><b>Цена</b> от 890 руб за м<sup>2</sup></div>
-                    <p>Изготавливаются из алюминия, дерева, бамбука, пластика ПВХ. Ширина ламели варьируется от 16 мм до 50 мм. Закрепленные на ниточной лесенке, горизонтальные жалюзи управляют потоком света за счет поворота ламелей вокруг своей оси до 180°.</p>
-                    <p class="catalog-vidi">Виды: <a href="/zhalyuzi/gorizontalnye/alyuminievye/">алюминиевые</a>, <a href="/zhalyuzi/gorizontalnye/derevyannye/">деревянные</a>, <a href="zhalyuzi/na-plastikovyie-okna/gorizontalnye-kassetnye-zhalyuzi-isolite">изолайт</a>, <a href="#">межрамные</a></p>
+                    {% set new_price = 987 %}
+                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб за м<sup>2</sup></div>
+                    <p>Жалюзи состоят из горизонтальных ламелей (алюминиевые и деревянные). Горизонтальные жалюзи имеют 2 типа управления — механическое и автоматическое. Ширина ламели от 16 мм до 50 мм и могут поворачиваться на 180° вокруг своей оси.</p>
+                    <p class="catalog-vidi">Виды:
+                        <a href="/zhalyuzi/gorizontalnye/alyuminievye/">алюминиевые</a>,
+                        <a href="/zhalyuzi/gorizontalnye/derevyannye/">деревянные</a>
+                    </p>
 
                     <div class="catalog-body-opis">
                         <div class="row">
                             <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
-                            <div class="col-6"><b>1 год</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>20%</b> <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>2 года</b> <p>Гарантия</p></div>
+                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
                             <div class="col-6"><b>95</b> <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">1113₽ <span>-20%</span></div>
+                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
 
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>890₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>1390₽</b><p>С доставкой</p>	</div>
+                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b><p>С доставкой</p>	</div>
                             </div>
                         </div>
                         <div class="catalog-btn-wrap">
                             <a href="#" class="catalogbtn">
-                                Заказать со скидкой 20%
+                                Заказать со скидкой 7%
                             </a>
                             <a href="#" class="catalogbtn2">Подробнее...</a>
                         </div>
@@ -106,27 +101,14 @@
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for2">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
-
+                            {% for i in 1..6 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/horizontal/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                         <div class="slider-nav2">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
+                            {% for i in 1..6 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/horizontal/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -135,7 +117,8 @@
         <div class="catalog-body catalog-body3">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="zagcena"><b>Цена</b> от 2817 руб за м<sup>2</sup></div>
+                    {% set new_price = 5753 %}
+                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб за м<sup>2</sup></div>
                     <p>Плиссе изготовлены из ткани, которая складывается «гармошкой» между двумя карнизами - верхним и нижним. Полотно целиком может собираться вверх, вниз или к центру.</p>
 
 
@@ -143,22 +126,22 @@
                         <div class="row">
                             <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
                             <div class="col-6"><b>1 год</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>15%</b> <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
                             <div class="col-6"><b>300</b> <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">3314₽ <span>-15%</span></div>
+                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
 
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>2817₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>3317₽</b><p>С доставкой</p>	</div>
+                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b><p>С доставкой</p>	</div>
                             </div>
                         </div>
                         <div class="catalog-btn-wrap">
                             <a href="#" class="catalogbtn">
-                                Заказать со скидкой 15%
+                                Заказать со скидкой 7%
                             </a>
                             <a href="#" class="catalogbtn2">Подробнее...</a>
                         </div>
@@ -168,27 +151,14 @@
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for3">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
-
+                            {% for i in 1..6 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/plisse/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                         <div class="slider-nav3">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
+                            {% for i in 1..6 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/plisse/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -197,7 +167,8 @@
         <div class="catalog-body catalog-body4">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="zagcena"><b>Цена</b> от 875 руб за м<sup>2</sup></div>
+                    {% set new_price = 717 %}
+                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб</div>
                     <p>Это единое полотно, закрепленное на валу. Оно наматывается на вал и возвращается в исходное положение с помощью цепочки управления или привода.</p>
                     <p class="catalog-vidi">Виды:
                         <a href="/katalog/rulonnyie-shtoryi/den-noch-uni-2/">Кассетные «День Ночь»</a>,
@@ -209,23 +180,23 @@
                     <div class="catalog-body-opis">
                         <div class="row">
                             <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
-                            <div class="col-6"><b>6 мес.</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>30%</b> <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>2 года</b> <p>Гарантия</p></div>
+                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
                             <div class="col-6"><b>200</b> <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">1250₽ <span>-30%</span></div>
+                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
 
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>875₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>1375₽</b><p>С доставкой</p>	</div>
+                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b><p>С доставкой</p>	</div>
                             </div>
                         </div>
                         <div class="catalog-btn-wrap">
                             <a href="#" class="catalogbtn">
-                                Заказать со скидкой 30%
+                                Заказать со скидкой 7%
                             </a>
                             <a href="#" class="catalogbtn2">Подробнее...</a>
                         </div>
@@ -235,27 +206,14 @@
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for4">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
-
+                            {% for i in 1..6 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/rulonnyie/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                         <div class="slider-nav4">
-                            <div class="img"><img src="img/catalog/1.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/2.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/3.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/4.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/5.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/6.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/7.jpg" alt="*"></div>
-                            <div class="img"><img src="img/catalog/8.jpg" alt="*"></div>
-
+                            {% for i in 1..6 %}
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/rulonnyie/'~i~'.jpg') }} alt="*"></div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

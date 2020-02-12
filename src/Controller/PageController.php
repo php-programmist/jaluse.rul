@@ -31,9 +31,9 @@ class PageController extends AbstractController
         ProductRepository $product_repository,
         ConfigService $configs
     ) {
-        $this->page_repository = $page_repository;
+        $this->page_repository    = $page_repository;
         $this->product_repository = $product_repository;
-        $this->configs = $configs;
+        $this->configs            = $configs;
     }
     
     /**
@@ -63,18 +63,19 @@ class PageController extends AbstractController
     
     private function catalog(Catalog $catalog)
     {
-        $filters = [];
+        $filters             = [];
         $filters['category'] = 1;
         if ($catalog->getType()) {
-            $filters['type']=$catalog->getType()->getId();
+            $filters['type'] = $catalog->getType()->getId();
         }
         if ($catalog->getMaterial()) {
-            $filters['material']=$catalog->getMaterial()->getId();
+            $filters['material'] = $catalog->getMaterial()->getId();
         }
-        $limit = $this->configs->getCached('calc.products_limit');
-        $items      = $this->product_repository->findFiltered($filters, 0, $limit);
+        $limit = 48;
+        $items = $this->product_repository->findFiltered($filters, 0, $limit);
+        
         return $this->render('page/catalog.html.twig', [
-            'page' => $catalog,
+            'page'  => $catalog,
             'items' => $items,
         ]);
     }

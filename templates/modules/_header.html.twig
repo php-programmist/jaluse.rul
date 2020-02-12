@@ -4,11 +4,11 @@
         <div class="container ">
             <div class="row">
                 <div class="header-n1-logo col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6 align-self-center">
-                    <a href="/"><img src="/img/logo.webp" alt="*"></a>
+                    <a href="/"><img {{ lazy_load('/img/logo.webp') }} alt="*"></a>
                 </div>
                 <div class="header-n1-modphone col-2 align-self-center">
                     <a href="tel:88007757238">
-                        <img src="/img/phone.webp" alt="#">
+                        <img {{ lazy_load('/img/phone.webp') }} alt="#">
                     </a>
                 </div>
 
@@ -38,8 +38,8 @@
                     <small>e-mail:</small><a class="header-n1-phone-mail" href="mailto:info@jaluse.ru" >info@jaluse.ru</a>
 
                 </div>
-                <div class="headerpoisk col-2 align-self-center"><img src="/img/poisk.webp" alt="*"></div>
-                <div class="headermbtn col-2 align-self-center"><img src="/img/burger.webp" alt="*"></div>
+                <div class="headerpoisk col-2 align-self-center"><img {{ lazy_load('/img/poisk.webp') }} alt="*"></div>
+                <div class="headermbtn col-2 align-self-center"><img {{ lazy_load('/img/burger.webp') }} alt="*"></div>
 
             </div>
         </div>
@@ -56,16 +56,14 @@
                             <div class="row">
                                 <div class="menu-card col-lg-3">
                                     <a href="/zhalyuzi/vertikalnye/">
-                                        <img src="/img/zhalyuzi-vertikalnue.png" alt="*">
+                                        <img {{ lazy_load('/img/zhalyuzi-vertikalnue.png') }} alt="*">
                                         <span class="zag">Вертикальные жалюзи</span>
-                                        <span class="cena"><b>₽ </b>от 1116 руб</span>
+                                        <span class="cena"><b>₽ </b>от 871 руб</span>
                                         <span class="vidi">
 												<span class="vidi-zag">Виды:</span>
 												<ul>
-													<li>Тканевые</li>
-													<li>Алюминиевые</li>
 													<li>Пластиковые</li>
-													<li>Мультифактурные</li>
+													<li>Тканевые</li>
 												</ul>
 											</span>
                                         <span class="titles">Монтаж без сверления</span>
@@ -73,17 +71,14 @@
                                 </div>
                                 <div class="menu-card col-lg-3">
                                     <a href="/zhalyuzi/gorizontalnye/">
-                                        <img src="/img/zhalyuzi-gorizontalnue.png" alt="*">
+                                        <img {{ lazy_load('/img/zhalyuzi-gorizontalnue.png') }} alt="*">
                                         <span class="zag">Горизонтальные Жалюзи</span>
-                                        <span class="cena"><b>₽ </b>от 1170 руб</span>
+                                        <span class="cena"><b>₽ </b>от 987 руб</span>
                                         <span class="vidi vidib2">
 												<span class="vidi-zag">Виды:</span>
 												<ul>
-													<li>Стандарт Алюминиевые</li>
-													<li>Кассетный Isolite</li>
+													<li>Алюминиевые</li>
 													<li>Деревянные</li>
-													<br>
-
 												</ul>
 											</span>
                                         <span class="titles">Монтаж без сверления</span>
@@ -91,9 +86,9 @@
                                 </div>
                                 <div class="menu-card col-lg-3">
                                     <a href="/zhalyuzi/plisse/">
-                                        <img src="/img/jaluzi-plisse.png" alt="*">
+                                        <img {{ lazy_load('/img/jaluzi-plisse.png') }} alt="*">
                                         <span class="zag">Плиссе</span>
-                                        <span class="cena"><b>₽ </b>от 1499 руб</span>
+                                        <span class="cena"><b>₽ </b>от 5753 руб</span>
                                         <p>
                                             <b>Более 150 образцов <br> и цветовой гаммы</b>
                                             <br><br><br>
@@ -104,10 +99,10 @@
                                     </a>
                                 </div>
                                 <div class="menu-card col-lg-3">
-                                    <a href="#">
-                                        <img src="/img/jaluzi-na-okna.png" alt="*">
+                                    <a href="/zhalyuzi/">
+                                        <img {{ lazy_load('/img/jaluzi-na-okna.png') }} alt="*">
                                         <span class="zag">Жалюзи на окна ПВХ</span>
-                                        <span class="cena"><b>₽ </b>от 1116 руб</span>
+                                        <span class="cena"><b>₽ </b>от 871 руб</span>
                                         <p><b>Лучшие образцы и виды жалюзи для пластиковых окон</b>
                                             <br>
                                             <br>
@@ -133,37 +128,37 @@
                             <div class="row">
                                 <div class="menu-card col-lg-3">
                                     <a href="/rulonnyie-shtoryi/mini/">
-                                        <img src="/img/mini1.png" alt="*">
+                                        <img {{ lazy_load('/img/mini1.png') }} alt="*">
                                         <span class="zag">мини</span>
-                                        <span class="cena"><b>₽ </b>от 1116 руб</span>
+                                        <span class="cena"><b>₽ </b>от 1162 руб</span>
                                         <p>Самый доступный вариант рулонных штор! <br> Более 300 видов тканей</p>
                                         <span class="titles">Монтаж без сверления</span>
                                     </a>
                                 </div>
                                 <div class="menu-card col-lg-3">
                                     <a href="/rulonnyie-shtoryi/uni/">
-                                        <img src="/img/uni1.png" alt="*">
+                                        <img {{ lazy_load('/img/uni1.png') }} alt="*">
                                         <span class="zag">Кассетные уни</span>
-                                        <span class="cena"><b>₽ </b>от 1170 руб</span>
+                                        <span class="cena"><b>₽ </b>от 2325 руб</span>
                                         <p>Шторы с вертикальным направляющим и коробом <br> Более 300 видов тканей</p>
                                         <span class="titles">Монтаж без сверления</span>
                                     </a>
                                 </div>
                                 <div class="menu-card col-lg-3">
                                     <a href="/rulonnyie-shtoryi/den-noch/">
-                                        <img src="/img/den-noch1.png" alt="*">
+                                        <img {{ lazy_load('/img/den-noch1.png') }} alt="*">
                                         <span class="zag">День-ночь</span>
-                                        <span class="cena"><b>₽ </b>от 1499 руб</span>
+                                        <span class="cena"><b>₽ </b>от 1685 руб</span>
                                         <p>Оригинальный внешний вид и практичность <br> Более 80 видов тканей</p>
                                         <span class="titles">Монтаж без сверления</span>
                                     </a>
                                 </div>
                                 <div class="menu-card col-lg-3">
                                     <a href="/rulonnyie-shtoryi/standartnye-rulonnye-shtory/">
-                                        <img src="/img/svobodnovisiachie.png" alt="*">
+                                        <img {{ lazy_load('/img/svobodnovisiachie.png') }} alt="*">
                                         <span class="zag">Стандартные</span>
-                                        <span class="cena"><b>₽ </b>от 1116 руб</span>
-                                        <p>100% светонепроницаемые рлонные шторы полностью блокируют солнечные лучи. </p>
+                                        <span class="cena"><b>₽ </b>от 1278 руб</span>
+                                        <p>100% светонепроницаемые рулонные шторы полностью блокируют солнечные лучи. </p>
                                         <span class="titles">Монтаж без сверления</span>
                                     </a>
                                 </div>
@@ -183,7 +178,7 @@
                             <div class="row">
                                 <div class="menu-card col-lg-4 offset-lg-4">
                                     <a href="#">
-                                        <img src="/img/rimskie-shtori.png" alt="*">
+                                        <img {{ lazy_load('/img/rimskie-shtori.png') }} alt="*">
                                         <span class="zag">Римские шторы</span>
                                         <span class="cena"><b>₽ </b>от 1116 руб</span>
                                         <p>Самый доступный вариант рулонных штор! <br> Более 300 видов тканей</p>

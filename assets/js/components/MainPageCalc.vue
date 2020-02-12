@@ -4,12 +4,12 @@
 			<div class="col-lg-7 col-md-6 calc-parametr">
 				<form action="#">
 					<div class="calc-parametr-typewrap">
-						<div class="minzag">Выберите тип и подтип жалюзи</div>
+						<div class="minzag">Выберите тип жалюзи</div>
 						<div class="row">
 							<div class="type_selector">
 								<v-drop-down-selector
 										:items="types"
-										default_name="Тип"
+										default_name="Выбрать вид"
 										v-model="type"
 								></v-drop-down-selector>
 							</div>
@@ -17,7 +17,7 @@
 								<div class="material_selector" v-show="materials.length > 0">
 									<v-drop-down-selector
 											:items="materials"
-											default_name="Подтип"
+											default_name="Выбрать изделие"
 											v-model="material"
 											@input="getProducts"
 									></v-drop-down-selector>
