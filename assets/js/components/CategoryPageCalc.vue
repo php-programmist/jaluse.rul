@@ -229,6 +229,9 @@
 				max-width: 100%;
 				object-fit: contain;
 			}
+			a{
+				text-align: center;
+			}
 			&__name{
 				font-weight: bold;
 				text-align: center;

@@ -14,6 +14,7 @@
 							:productConfigs="productConfigs"
 							:prices="prices"
 					></v-order-form>
+					<v-consultation-form text="Консультация"></v-consultation-form>
 				</div>
 			</div>
 		</div>
@@ -25,6 +26,7 @@
 	import PriceRenderer from './PriceRenderer'
 	import ProductConfigurator from './ProductConfigurator'
 	import OrderForm from './OrderForm';
+	import ConsultationForm from './ConsultationForm';
 	export default {
 		data() {
 			return {
@@ -40,6 +42,7 @@
 			'v-price-renderer': PriceRenderer,
 			'v-product-configurator': ProductConfigurator,
 			'v-order-form': OrderForm,
+			'v-consultation-form': ConsultationForm,
 		},
 		computed:{
 			prices() {

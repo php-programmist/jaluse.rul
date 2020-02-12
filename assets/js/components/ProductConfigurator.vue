@@ -1,13 +1,19 @@
 <template>
-	<div>
-		<div class="calc-parametr-razmer">
+	<div class="product_configurator">
+		<div class="product_configurator__dimension">
 			<div class="bigzag">Задайте размер:</div>
-			<label for="width">Ширина, мм</label>
-			<input id="width" type="number" placeholder="Ширина, мм" v-model.number="width">
-			<label for="height">Высота, мм</label>
-			<input id="height" type="number" placeholder="Высота, мм" v-model.number="height">
+			<div class="dimension_row">
+				<div class="dimension_wrapper">
+					<label for="width">Ширина, мм</label>
+					<input id="width" type="number" placeholder="Ширина, мм" v-model.number="width">
+				</div>
+				<div class="dimension_wrapper">
+					<label for="height">Высота, мм</label>
+					<input id="height" type="number" placeholder="Высота, мм" v-model.number="height">
+				</div>
+			</div>
 		</div>
-		<div class="calc-parametr-tipu">
+		<div class="calc-parametr__control">
 			<div class="bigzag">Выберите тип управления:</div>
 			<input type="radio" id="controlTypeManual" value="Ручное" v-model="controlType">
 			<label for="controlTypeManual">Ручное</label>
@@ -56,16 +62,22 @@
 </script>
 
 <style lang="scss" scoped>
-	$blue: #2aa5cc;
-	$text-grey: rgba(54, 54, 54, 0.8);
-	.calc-parametr{
-		.bigzag{
-			font-weight: bold;
-			font-size: 20px;
-			margin-bottom: 15px;
-		}
-		&-razmer{
+	.product_configurator{
+		&__dimension{
 			padding-top: 20px;
+			.bigzag{
+				font-weight: bold;
+				font-size: 20px;
+				margin-bottom: 15px;
+			}
+			.dimension_row{
+				display: flex;
+				flex-wrap: wrap;
+			}
+			.dimension_wrapper{
+				display: flex;
+				flex-direction: column;
+			}
 			input{
 				max-width: 300px;
 				margin-right: 15px;
@@ -73,19 +85,19 @@
 				outline: none!important;
 				border: 1px solid rgba(0,0,0, .1);
 				&:focus{
-					border: 1px solid $blue;
+					border: 1px solid #2aa5cc;
 				}
 			}
 			
 		}
-		&-tipu{
+		&__control{
 			margin-top: 20px;
 			label{
 				cursor: pointer;
 				margin-right: 40px;
 			}
 			i{
-				color: $text-grey;
+				color: rgba(54, 54, 54, 0.8);
 				margin-top: 15px;
 				display: inline-block;
 				font-size: 14px;
