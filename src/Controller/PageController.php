@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Catalog;
 use App\Entity\Product;
 use App\Repository\PageRepository;
+use App\Repository\ProductRepository;
+use App\Service\ConfigService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,11 +17,23 @@ class PageController extends AbstractController
      * @var PageRepository
      */
     protected $page_repository;
+    /**
+     * @var ProductRepository
+     */
+    protected $product_repository;
+    /**
+     * @var ConfigService
+     */
+    protected $configs;
     
     public function __construct(
-        PageRepository $page_repository
+        PageRepository $page_repository,
+        ProductRepository $product_repository,
+        ConfigService $configs
     ) {
         $this->page_repository = $page_repository;
+        $this->product_repository = $product_repository;
+        $this->configs = $configs;
     }
     
     /**
@@ -49,8 +63,19 @@ class PageController extends AbstractController
     
     private function catalog(Catalog $catalog)
     {
+        $filters = [];
+        $filters['category'] = 1;
+        if ($catalog->getType()) {
+            $filters['type']=$catalog->getType()->getId();
+        }
+        if ($catalog->getMaterial()) {
+            $filters['material']=$catalog->getMaterial()->getId();
+        }
+        $limit = $this->configs->getCached('calc.products_limit');
+        $items      = $this->product_repository->findFiltered($filters, 0, $limit);
         return $this->render('page/catalog.html.twig', [
             'page' => $catalog,
+            'items' => $items,
         ]);
     }
 }
