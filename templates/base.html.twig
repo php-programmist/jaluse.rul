@@ -11,9 +11,11 @@
         <meta property="og:keywords" content="{{ block('keywords') }}" />
         <meta property="og:description" content="{{ block('description') }}" />
         <meta property="og:url" content="{{ app.request.uri }}" />
+        {{ include('modules/scripts/schema.html.twig',{ title: block('title'), description: block('description')}) }}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+        {{ include('modules/scripts/yandex_metrics.html.twig') }}
     </head>
     <body>
     {{ include('modules/_header.html.twig') }}
@@ -23,8 +25,11 @@
         {% endblock %}
     {{ include('modules/_footer.html.twig') }}
     {{ include('modules/_modal_callback.html.twig') }}
+
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+    {{ include('modules/scripts/comagic.html.twig') }}
+    {{ include('modules/_whatsapp_button.html.twig') }}
     </body>
 </html>
