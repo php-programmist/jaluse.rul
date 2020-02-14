@@ -1,6 +1,6 @@
 <template>
 	<div class="row catalog-calculator">
-		<div class="col-md-3 col-sm-12">
+		<div class="col-md-2 col-sm-12">
 			<h3>Фильтры:</h3>
 			<div class="type_selector" v-show="types.length > 0 && type_id == 0">
 				<v-drop-down-selector
