@@ -83,6 +83,11 @@ class Page
      * @var File
      */
     protected $seoImageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ourWorksFolder;
     
     
     
@@ -295,5 +300,17 @@ class Page
         }
         $parts = preg_split('#<hr.*?>#',$this->getContent(),2);
         return $parts[1]??'';
+    }
+
+    public function getOurWorksFolder(): ?string
+    {
+        return $this->ourWorksFolder;
+    }
+
+    public function setOurWorksFolder(?string $ourWorksFolder): self
+    {
+        $this->ourWorksFolder = $ourWorksFolder;
+
+        return $this;
     }
 }

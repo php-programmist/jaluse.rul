@@ -1,21 +1,10 @@
-<div class="works">
-    <div class="container container2">
-        <div class="zag">Примеры работ:</div>
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                {% for image in 1..10 %}
-                    <div class="swiper-slide swiper-lazy" data-background="{{ asset('img/primer_min/'~image~'.jpg') }}"
-                         data-index="{{ loop.index0 }}">
-                        <div class="swiper-lazy-preloader"></div>
-                    </div>
-                {% endfor %}
-            </div>
-
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+{% if page.ourWorksFolder %}
+    <div class="works">
+        <div class="container container2">
+            <div class="zag">Примеры работ:</div>
+            {{ swiper_slider(page.ourWorksFolder) }}
         </div>
     </div>
+{% endif %}
 
-</div>
 <!--конец ПРИМЕРЫ РАБОТ(СЛАЙДЕР)-->

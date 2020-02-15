@@ -88,6 +88,7 @@ easy_admin:
                     - { property: 'published', label: 'Опубликован'}
                     - { property: 'type', label: 'Тип'}
                     - { property: 'material', label: 'Подтип'}
+                    - { property: 'ourWorksFolder', label: 'Папка изображений наших работ'}
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
