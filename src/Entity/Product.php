@@ -30,7 +30,7 @@ class Product extends Page
         'minPrice',
     ];
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float",nullable=true)
      */
     private $price;
 
@@ -65,7 +65,7 @@ class Product extends Page
     private $category;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $discount = 0;
 

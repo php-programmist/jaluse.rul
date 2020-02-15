@@ -1,14 +1,22 @@
 easy_admin:
     site_name: 'Админ-панель'
     design:
+        form_theme: # Both themes are for ckeditor integration
+                - "@EasyAdmin/form/bootstrap_4.html.twig"
+                - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
         assets:
             css:
                 - 'css/admin.css'
+            js:
+                - 'js/apply_button.js'
     list:
         max_results: 100
     show:
         max_results: 100
     entities:
+        Page:
+             class: App\Entity\Page
+             label: "Страница"
         Product:
             class: App\Entity\Product
             label: "Товар"
@@ -20,6 +28,7 @@ easy_admin:
                     - { property: 'price', label: 'Цена'}
                     - { property: 'imageSmall', label: 'Изображение', type: 'image'}
                    # - {property: 'discount', label: 'Скидка'}
+                    - { property: 'parent.name', label: 'Родитель'}
                     - { property: 'type.name', label: 'Тип'}
                     - { property: 'material.name', label: 'Подтип'}
                     - { property: 'color.name', label: 'Цвет'}
@@ -37,6 +46,25 @@ easy_admin:
                     - { property: 'popular', label: 'Популярный'}
                     - { property: 'published', label: 'Опубликован'}
                 sort: ['id', 'ASC']
+            form:
+                fields:
+                    - { type: 'tab' , label: 'Основные' }
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'uri', label: 'Ссылка', help: 'Без слэшей в начале и конце'}
+                    - { property: 'price', label: 'Цена'}
+                    - { property: 'discount', label: 'Скидка'}
+                    - { property: 'parent', label: 'Родитель', type: 'easyadmin_autocomplete'}
+                    - { property: 'type', label: 'Тип'}
+                    - { property: 'material', label: 'Подтип'}
+                    - { property: 'color', label: 'Цвет'}
+                    - { property: 'category', label: 'Категория'}
+                    - { property: 'popular', label: 'Популярный'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { type: 'tab' , label: 'SEO' }
+                    - { property: 'title', label: 'Заголовок'}
+                    - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
+                    - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
         Catalog:
             class: App\Entity\Catalog
@@ -51,6 +79,21 @@ easy_admin:
                     - { property: 'type.name', label: 'Тип'}
                     - { property: 'material.name', label: 'Подтип'}
                 sort: ['id', 'ASC']
+            form:
+                fields:
+                    - { type: 'tab' , label: 'Основные' }
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'uri', label: 'Ссылка', help: 'Без слэшей в начале и конце'}
+                    - { property: 'parent', label: 'Родитель', type: 'easyadmin_autocomplete'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { property: 'type', label: 'Тип'}
+                    - { property: 'material', label: 'Подтип'}
+                    - { type: 'tab' , label: 'SEO' }
+                    - { property: 'title', label: 'Заголовок'}
+                    - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
+                    - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
+
 
         Simple:
             class: App\Entity\Simple

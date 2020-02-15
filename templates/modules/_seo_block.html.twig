@@ -1,0 +1,20 @@
+{% if page.seoFirstPart %}
+    <div class="seo-block">
+        <div class="container">
+            <div class="row">
+                <div class="seo-left col-md-6">
+                    {{ page.seoFirstPart|raw }}
+                </div>
+                <div class="seo-right col-md-6 "><img src="{{ seo_images_url }}/{{ page.seoImage }}" alt="*"></div>
+    {% if page.seoSecondPart %}
+                <div class="seo-left col-12">
+                    <div class="seo-text-none">
+                       {{ page.seoSecondPart|raw }}
+                    </div>
+                    <div class="seo-btn mbtn">Читать далее</div>
+                </div>
+    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}

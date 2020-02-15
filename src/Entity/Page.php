@@ -5,11 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PageRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="page_type", type="string")
+ * @Vich\Uploadable
  */
 class Page
 {
@@ -18,67 +21,68 @@ class Page
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $uri;
+    protected $uri;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $title = null;
+    protected $title = null;
 
     /**
      * @ORM\Column(type="text", length=255, nullable=true)
      */
-    private $description = null;
+    protected $description = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $published =1;
+    protected $published =1;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    protected $created_at;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $modified_at;
+    protected $modified_at;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Page", inversedBy="pages")
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="parent")
      */
-    private $pages;
+    protected $pages;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $longtitle;
-
+    protected $seoImage;
+    
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @Vich\UploadableField(mapping="seo_images", fileNameProperty="seoImage")
+     * @var File
      */
-    private $introtext;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $content;
+    protected $seoImageFile;
     
     
     
@@ -118,9 +122,14 @@ class Page
 
     public function setUri(string $uri)
     {
-        $this->uri = $uri;
+        $this->uri = trim($uri);
 
         return $this;
+    }
+
+    public function setPath(string $path)
+    {
+        return $this->setUri($path);
     }
 
     public function getTitle(): ?string
@@ -226,29 +235,6 @@ class Page
         return $this;
     }
 
-    public function getLongtitle(): ?string
-    {
-        return $this->longtitle;
-    }
-
-    public function setLongtitle(?string $longtitle): self
-    {
-        $this->longtitle = $longtitle;
-
-        return $this;
-    }
-
-    public function getIntrotext(): ?string
-    {
-        return $this->introtext;
-    }
-
-    public function setIntrotext(?string $introtext): self
-    {
-        $this->introtext = $introtext;
-
-        return $this;
-    }
 
     public function getContent(): ?string
     {
@@ -265,5 +251,49 @@ class Page
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getSeoImage(): ?string
+    {
+        return $this->seoImage;
+    }
+
+    public function setSeoImage(?string $seoImage): self
+    {
+        $this->seoImage = $seoImage;
+
+        return $this;
+    }
+    
+    public function setSeoImageFile(File $image = null)
+    {
+        $this->seoImageFile = $image;
+        
+        if ($image) {
+            $this->modified_at = new \DateTime('now');
+        }
+    }
+    
+    public function getSeoImageFile()
+    {
+        return $this->seoImageFile;
+    }
+    
+    public function getSeoFirstPart():string
+    {
+        if (empty($this->getContent())) {
+            return '';
+        }
+        $parts = preg_split('#<hr.*?>#',$this->getContent(),2);
+        return $parts[0];
+    }
+    
+    public function getSeoSecondPart():string
+    {
+        if (empty($this->getContent())) {
+            return '';
+        }
+        $parts = preg_split('#<hr.*?>#',$this->getContent(),2);
+        return $parts[1]??'';
     }
 }

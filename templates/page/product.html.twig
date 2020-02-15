@@ -1,15 +1,31 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('product') }}
 {% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('product') }}
 {% endblock %}
 
-{% block title %}{{ page.name }} цена. Купить в «Мастерская Жалюзи»{% endblock %}
-{% block description %}{{ page.name }} купить от производителя в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ {{ page.name }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.{% endblock %}
+{% block title %}
+    {%- if page.title -%}
+        {{ page.title }}
+    {%- else -%}
+        {{ page.name }} цена. Купить в «Мастерская Жалюзи»
+    {%- endif -%}
+{% endblock %}
+
+{% block description %}
+    {%- if page.description -%}
+        {{ page.description }}
+    {%- else -%}
+        {{ page.name }} купить от производителя в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ {{ page.name }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.
+    {%- endif -%}
+{% endblock %}
+
 {% block h1 %}{{ page.name }}{% endblock %}
 
 {% block body %}
@@ -49,4 +65,5 @@
             </div>
         </div>
     </div>
+    {{ include('modules/_seo_block.html.twig') }}
 {% endblock %}
