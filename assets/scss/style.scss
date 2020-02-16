@@ -37,6 +37,9 @@ ul {
   padding: 0;
 
 }
+h2{
+  margin: 1em 0;
+}
 p{
   color: $text-grey;
 }
@@ -889,5 +892,73 @@ p{
   margin: 2em auto;
   .zag{
     text-align: center;
+  }
+}
+
+.zakaz{
+  margin-top: 2em;
+  .sidebar {
+    padding-top: 35px;
+  }
+  .phone-side {
+    text-align: center;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eff4f7;
+    .img img {
+      margin: 0 auto 15px;
+    }
+  }
+  .phone-side .phone, .phone-side .phone a {
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #000;
+  }
+  .phone-side .text-me {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .phone-side .count {
+    margin-bottom: 15px;
+    color: #f1a71b;
+    font-size: 24px;
+    font-weight: 300;
+  }
+  .phone-side .count .co {
+    margin-bottom: 15px;
+    font-size: 72px;
+    line-height: 50px;
+  }
+  .phone-side .img .minitext {
+    font-size: 13px;
+    line-height: 28px;
+    display: block;
+    color: #9ca2a5;
+  }
+}
+
+.video-tpl iframe {
+  width: 100% !important;
+  height: 225px !important;
+}
+.content {
+  ul > li {
+    color: #03131d;
+    font-size: 14px;
+    line-height: 26px;
+    margin: 0 0 20px;
+    padding-left: 15px;
+    padding-right: 20px;
+    position: relative;
+    &::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #f1a920;
+      font-size: 20px;
+      top: 1px;
+    }
   }
 }
