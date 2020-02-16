@@ -2,6 +2,10 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        seo_images:
-            uri_prefix:         '%app.path.seo_images%'
-            upload_destination: '%kernel.project_dir%/%web_root%%app.path.seo_images%'
+        web_root:
+            uri_prefix:         ''
+            upload_destination: '%kernel.project_dir%/%web_root%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            directory_namer:
+                service: vich_uploader.namer_directory_property
+                options: { property: 'imgFolder'}

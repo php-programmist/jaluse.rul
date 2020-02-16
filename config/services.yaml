@@ -5,7 +5,6 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     web_root: public_html
-    app.path.seo_images: /img/seo_images
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -78,6 +78,7 @@ easy_admin:
                     - { property: 'published', label: 'Опубликован'}
                     - { property: 'type.name', label: 'Тип'}
                     - { property: 'material.name', label: 'Подтип'}
+                    - { property: 'seoImageUrl', type: 'image', label: 'SEO-Изображение' }
                 sort: ['id', 'ASC']
             form:
                 fields:

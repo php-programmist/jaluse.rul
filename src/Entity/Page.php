@@ -79,7 +79,7 @@ class Page
     protected $seoImage;
     
     /**
-     * @Vich\UploadableField(mapping="seo_images", fileNameProperty="seoImage")
+     * @Vich\UploadableField(mapping="web_root", fileNameProperty="seoImage")
      * @var File
      */
     protected $seoImageFile;
@@ -312,5 +312,18 @@ class Page
         $this->ourWorksFolder = $ourWorksFolder;
 
         return $this;
+    }
+    
+    public function getImgFolder()
+    {
+        return 'img/seo_images/';
+    }
+    
+    public function getSeoImageUrl()
+    {
+        if ( ! $this->getSeoImage()) {
+            return '';
+        }
+        return '/'.$this->getImgFolder(). $this->getSeoImage();
     }
 }

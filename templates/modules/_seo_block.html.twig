@@ -5,7 +5,7 @@
                 <div class="seo-left col-md-6">
                     {{ page.seoFirstPart|raw }}
                 </div>
-                <div class="seo-right col-md-6 "><img src="{{ seo_images_url }}/{{ page.seoImage }}" alt="*"></div>
+                <div class="seo-right col-md-6 "><img src="{{ vich_uploader_asset(page,'seoImageFile') }}" alt="*"></div>
     {% if page.seoSecondPart %}
                 <div class="seo-left col-12">
                     <div class="seo-text-none">
