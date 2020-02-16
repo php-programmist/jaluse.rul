@@ -7,7 +7,8 @@
     {{ parent() }}
     {{ encore_entry_script_tags('location') }}
 {% endblock %}
-{% block body %}
+{% block content_h2 %}{{ page.name }}. Каталог и цены:{% endblock %}
+{% block location_block %}
     <div class="cart-wrap">
         <div class="container">
             <div class="cart-block">
@@ -32,5 +33,4 @@
             </div>
         </div>
     </div>
-    {{ parent() }}
 {% endblock %}
