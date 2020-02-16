@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block title 'Жалюзи, цвет Помещения купить на заказ в Москве, цена руб/м2' %}
+{% block body %}
+    <div class="container">
+        <h2>{{ page.name }}</h2>
+        <ul>
+            {% for item in items %}
+                <li><a href="{{ path('dynamic_pages',{'token':item.uri}) }}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

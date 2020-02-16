@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Catalog;
+use App\Entity\Location;
 use App\Entity\Product;
 use App\Repository\PageRepository;
 use App\Repository\ProductRepository;
@@ -49,6 +50,8 @@ class PageController extends AbstractController
             return $this->product($page);
         } elseif ($page instanceof Catalog) {
             return $this->catalog($page);
+        } elseif ($page instanceof Location) {
+            return $this->location($page);
         }
         
         throw new NotFoundHttpException('Page is instance of ' . get_class($page));
@@ -76,6 +79,19 @@ class PageController extends AbstractController
         
         return $this->render('page/catalog.html.twig', [
             'page'  => $catalog,
+            'items' => $items,
+        ]);
+    }
+    
+    private function location(Location $location)
+    {
+        $filters             = [];
+        $filters['category'] = 1;
+        $limit = 48;
+        $items = $this->product_repository->findFiltered($filters, 0, $limit);
+        
+        return $this->render('page/location.html.twig', [
+            'page'  => $location,
             'items' => $items,
         ]);
     }

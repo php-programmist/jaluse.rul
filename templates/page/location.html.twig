@@ -1,0 +1,36 @@
+{% extends 'page/catalog.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('location') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('location') }}
+{% endblock %}
+{% block body %}
+    <div class="cart-wrap">
+        <div class="container">
+            <div class="cart-block">
+                <div class="row">
+                    <div class="cart-left col-lg-6">
+                        <img src="{{ vich_uploader_asset(page,'locationImageFile') }}" alt="*">
+                    </div>
+
+                    <div class="cart-right col-lg-6 col-md-10 offset-lg-0 offset-md-1">
+                        <h2 class="card-zag">{{ page.name }} цена</h2>
+                        <div class="card-haract">
+                            {{ page.locationDescription|raw }}
+                        </div>
+                        <div class="cart-footer">
+                            <div id="product_app">
+                                <v-consultation-form text="Рассчитать"></v-consultation-form>
+                                <v-consultation-form text="Консультация"></v-consultation-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ parent() }}
+{% endblock %}

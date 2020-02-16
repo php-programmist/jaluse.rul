@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Location;
 use App\Entity\Product;
 use App\Repository\CatalogRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\LocationRepository;
 use App\Repository\MaterialRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TypeRepository;
@@ -244,5 +246,69 @@ class ImportController extends AbstractController
         }
         $this->em->flush();
         return new Response($counter);
+    }
+    
+    /**
+     * @Route("/locations", name="locations")
+     */
+    public function locations(LocationRepository $location_repository)
+    {
+        $root_dir   = $_SERVER['DOCUMENT_ROOT'];
+        $entityManager = $this->getDoctrine()->getManager();
+        $locations        = $location_repository->findAll();
+        $counter       = 0;
+        /** @var Location $location */
+        foreach ($locations as $location) {
+            $description = $this->getExtrafield($location->getId(),73);
+            $location->setLocationDescription($description);
+    
+            $image = $this->getExtrafield($location->getId(),68);
+            if ($image) {
+                $image_file = file_get_contents('https://jaluse.ru/assets/images/'.$image);
+                $image = str_replace('/','-',$image);
+                $location->setLocationImage($image);
+                file_put_contents($root_dir.'/img/location/'.$image,$image_file);
+            }
+            
+    
+            $title = $this->getExtrafield($location->getId(),1);
+            $location->setTitle($title);
+            
+            $description = $this->getExtrafield($location->getId(),4);
+            $location->setDescription($description);
+    
+            $content = $this->getContent($location->getId());
+            $location->setContent($content->content);
+            if ($content->longtitle) {
+                $location->setName($content->longtitle);
+            }else{
+                $location->setName($content->pagetitle);
+            }
+            
+            $counter++;
+        }
+        $entityManager->flush();
+        
+        return new Response($counter);
+    }
+    
+    private function getExtrafield($content_id, $var_id)
+    {
+        return $this->connection->createQueryBuilder()
+                                  ->select('value')
+                                  ->from('modx_site_tmplvar_contentvalues')
+                                  ->andWhere('contentid='.$content_id)
+                                  ->andWhere('tmplvarid='.$var_id)
+                                  ->execute()
+                                  ->fetchColumn();
+    }
+    
+    private function getContent($content_id){
+        return $this->connection->createQueryBuilder()
+                                    ->select('*')
+                                    ->from('modx_site_content')
+                                    ->andWhere('id='.$content_id)
+                                    ->execute()
+                                    ->fetch(\PDO::FETCH_OBJ);
     }
 }
