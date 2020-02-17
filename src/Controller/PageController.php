@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Catalog;
 use App\Entity\Location;
+use App\Entity\Markiz;
 use App\Entity\Product;
 use App\Repository\PageRepository;
 use App\Repository\ProductRepository;
@@ -52,6 +53,8 @@ class PageController extends AbstractController
             return $this->catalog($page);
         } elseif ($page instanceof Location) {
             return $this->location($page);
+        } elseif ($page instanceof Markiz) {
+            return $this->markiz($page);
         }
         
         throw new NotFoundHttpException('Page is instance of ' . get_class($page));
@@ -93,6 +96,13 @@ class PageController extends AbstractController
         return $this->render('page/location.html.twig', [
             'page'  => $location,
             'items' => $items,
+        ]);
+    }
+    
+    private function markiz(Markiz $markiz)
+    {
+        return $this->render('page/markiz.html.twig', [
+            'page'  => $markiz,
         ]);
     }
 }

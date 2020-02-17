@@ -124,6 +124,33 @@ easy_admin:
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
+        Markiz:
+            class: App\Entity\Markiz
+            label: "Маркизы"
+            list:
+                fields:
+                    - 'id'
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'path', label: 'Ссылка', type: 'url'}
+                    - { property: 'price', label: 'Цена'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { property: 'imageUrl', type: 'image', label: 'Изображение' }
+                sort: ['id', 'ASC']
+            form:
+                fields:
+                    - { type: 'tab' , label: 'Основные' }
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'uri', label: 'Ссылка', help: 'Без слэшей в начале и конце'}
+                    - { property: 'parent', label: 'Родитель', type: 'easyadmin_autocomplete'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { property: 'ourWorksFolder', label: 'Папка изображений наших работ'}
+                    - { property: 'markizDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
+                    - { type: 'tab' , label: 'SEO' }
+                    - { property: 'title', label: 'Заголовок'}
+                    - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
+                    - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
+
 
         Simple:
             class: App\Entity\Simple

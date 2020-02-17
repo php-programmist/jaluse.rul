@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('location') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('location') }}
+{% endblock %}
+
+{% block title %}
+    {%- if page.title -%}
+        {{ page.title }}
+    {%- else -%}
+        {{ page.name }} цена. Купить в «Мастерская Жалюзи»
+    {%- endif -%}
+{% endblock %}
+
+{% block description %}
+    {%- if page.description -%}
+        {{ page.description }}
+    {%- else -%}
+        {{ page.name }} купить от производителя в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ {{ page.name }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.
+    {%- endif -%}
+{% endblock %}
+
+{% block h1 %}{{ page.name }}{% endblock %}
+
+{% block body %}
+    <div class="cart-wrap">
+        <div class="container">
+            <div class="cart-block">
+                <div class="row">
+                    <div class="cart-left col-lg-6">
+                        <img src="{{ lazy_load(page.imageUrl) }}" alt="*">
+                    </div>
+
+                    <div class="cart-right col-lg-6 col-md-10 offset-lg-0 offset-md-1">
+                        <h2 class="card-zag">{{ page.name }} цена</h2>
+                        <div class="card-haract">
+                            {{ page.markizDescription|raw }}
+                        </div>
+                        <div class="cart-footer">
+                            <div class="cart-footer-zag">Цена от {{ page.price }} руб.</div>
+                            <div id="product_app">
+                                <v-consultation-form text="Рассчитать"></v-consultation-form>
+                                <v-consultation-form text="Консультация"></v-consultation-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ include('modules/_our_works.html.twig') }}
+    {{ include('modules/_seo_block.html.twig') }}
+{% endblock %}

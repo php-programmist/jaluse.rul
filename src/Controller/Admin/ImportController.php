@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Location;
+use App\Entity\Markiz;
 use App\Entity\Product;
 use App\Repository\CatalogRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\LocationRepository;
+use App\Repository\MarkizRepository;
 use App\Repository\MaterialRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TypeRepository;
@@ -283,6 +285,58 @@ class ImportController extends AbstractController
                 $location->setName($content->longtitle);
             }else{
                 $location->setName($content->pagetitle);
+            }
+            
+            $counter++;
+        }
+        $entityManager->flush();
+        
+        return new Response($counter);
+    }
+    
+    /**
+     * @Route("/markiz", name="markiz")
+     */
+    public function markiz(MarkizRepository $markiz_repository)
+    {
+        $root_dir   = $_SERVER['DOCUMENT_ROOT'];
+        $entityManager = $this->getDoctrine()->getManager();
+        $markizs        = $markiz_repository->findAll();
+        $counter       = 0;
+        /** @var Markiz $markiz */
+        foreach ($markizs as $markiz) {
+            $description = $this->getExtrafield($markiz->getId(),73);
+            $markiz->setMarkizDescription($description);
+    
+            $image = $this->getExtrafield($markiz->getId(),68);
+            if ($image) {
+                $image_file = file_get_contents('https://jaluse.ru/assets/images/'.$image);
+                $image = str_replace('/','-',$image);
+                $markiz->setImage($image);
+                file_put_contents($root_dir.'/img/markiz/'.$image,$image_file);
+            }
+    
+            $our_works_folder = $this->getExtrafield($markiz->getId(),69);
+            $our_works_folder = trim($our_works_folder,' /');
+            $parts = explode('/',$our_works_folder);
+            $alias = array_pop($parts);
+            $markiz->setOurWorksFolder('/img/our-works/markiz/'.$alias);
+            
+            $price = $this->getExtrafield($markiz->getId(),20);
+            $markiz->setPrice($price);
+            
+            $title = $this->getExtrafield($markiz->getId(),1);
+            $markiz->setTitle($title);
+            
+            $description = $this->getExtrafield($markiz->getId(),4);
+            $markiz->setDescription(str_replace('[[*price_from_cat]]',$price,$description));
+    
+            $content = $this->getContent($markiz->getId());
+            $markiz->setContent($content->content);
+            if ($content->longtitle) {
+                $markiz->setName($content->longtitle);
+            }else{
+                $markiz->setName($content->pagetitle);
             }
             
             $counter++;
