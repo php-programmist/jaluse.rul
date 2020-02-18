@@ -9,28 +9,16 @@
 {% endblock %}
 {% block content_h2 %}{{ page.name }}. Каталог и цены:{% endblock %}
 {% block location_block %}
-    <div class="cart-wrap">
-        <div class="container">
-            <div class="cart-block">
-                <div class="row">
-                    <div class="cart-left col-lg-6">
-                        <img src="{{ vich_uploader_asset(page,'locationImageFile') }}" alt="*">
-                    </div>
+    {% embed 'embedded/card.html.twig' %}
+        {% block image %}<img src="{{ vich_uploader_asset(page,'locationImageFile') }}" alt="*">{% endblock image %}
+        {% block header %}{{ page.name }} цена{% endblock header %}
+        {% block content %}{{ page.locationDescription|raw }}{% endblock content %}
 
-                    <div class="cart-right col-lg-6 col-md-10 offset-lg-0 offset-md-1">
-                        <h2 class="card-zag">{{ page.name }} цена</h2>
-                        <div class="card-haract">
-                            {{ page.locationDescription|raw }}
-                        </div>
-                        <div class="cart-footer">
-                            <div id="product_app">
-                                <v-consultation-form text="Рассчитать"></v-consultation-form>
-                                <v-consultation-form text="Консультация"></v-consultation-form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        {% block footer %}
+            <div id="product_app">
+                <v-consultation-form text="Рассчитать"></v-consultation-form>
+                <v-consultation-form text="Консультация"></v-consultation-form>
             </div>
-        </div>
-    </div>
-{% endblock %}
+        {% endblock footer %}
+    {% endembed %}
+{% endblock location_block %}

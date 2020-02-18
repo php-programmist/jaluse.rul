@@ -29,31 +29,19 @@
 {% block h1 %}{{ page.name }}{% endblock %}
 
 {% block body %}
-    <div class="cart-wrap">
-        <div class="container">
-            <div class="cart-block">
-                <div class="row">
-                    <div class="cart-left col-lg-6">
-                        <img src="{{ lazy_load(page.imageUrl) }}" alt="*">
-                    </div>
+    {% embed 'embedded/card.html.twig' %}
+        {% block image %}<img src="{{ lazy_load(page.imageUrl) }}" alt="*">{% endblock image %}
+        {% block header %}{{ page.name }} цена{% endblock header %}
+        {% block content %}{{ page.markizDescription|raw }}{% endblock content %}
 
-                    <div class="cart-right col-lg-6 col-md-10 offset-lg-0 offset-md-1">
-                        <h2 class="card-zag">{{ page.name }} цена</h2>
-                        <div class="card-haract">
-                            {{ page.markizDescription|raw }}
-                        </div>
-                        <div class="cart-footer">
-                            <div class="cart-footer-zag">Цена от {{ page.price }} руб.</div>
-                            <div id="product_app">
-                                <v-consultation-form text="Рассчитать"></v-consultation-form>
-                                <v-consultation-form text="Консультация"></v-consultation-form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        {% block footer %}
+            <div class="cart-footer-zag">Цена от {{ page.price }} руб.</div>
+            <div id="product_app">
+                <v-consultation-form text="Рассчитать"></v-consultation-form>
+                <v-consultation-form text="Консультация"></v-consultation-form>
             </div>
-        </div>
-    </div>
+        {% endblock footer %}
+    {% endembed %}
     {{ include('modules/_our_works.html.twig') }}
     {{ include('modules/_seo_block.html.twig') }}
 {% endblock %}

@@ -29,41 +29,31 @@
 {% block h1 %}{{ page.name }}{% endblock %}
 
 {% block body %}
-    <div class="cart-wrap">
-        <div class="container">
-            <div class="cart-block">
-                <div class="row">
-                    <div class="cart-left col-lg-6">
-                        <img src="{{ page.imageBig }}" alt="*">
-                    </div>
+    {% embed 'embedded/card.html.twig' %}
+        {% block image %}<img src="{{ page.imageBig }}" alt="*">{% endblock image %}
+        {% block header %}{{ page.name }}{% endblock header %}
+        {% block content %}
+            <div><b>Вид:</b> {{ page.typeName }}</div>
+            <div><b>Тип:</b> {{ page.typeForPage }}</div>
+            <div><b>Материал:</b> {{ page.materialForPage }}</div>
+            <div><b>Цвет:</b> {{ page.colorName }}.</div>
+            <div><b>Категория:</b> {{ page.categoryName }}</div>
+            <div><b>Размер:</b> на ваш выбор.</div>
+            <div><b>Управление:</b> ручное и автоматическое.</div>
+            <div><b>Срок изготовления и установки:</b> 1-5 дней.</div>
+            <div><b>Выезд и замер:</b> бесплатный при оформлении заказа и оплате.</div>
+            <div><b>Доставка и установка:</b> по Москве и области.</div>
+        {% endblock content %}
 
-                    <div class="cart-right col-lg-6 col-md-10 offset-lg-0 offset-md-1">
-                        <h2 class="card-zag">{{ page.name }}</h2>
-                        <div class="card-haract">
-                            <div><b>Вид:</b> {{ page.typeName }}</div>
-                            <div><b>Тип:</b> {{ page.typeForPage }}</div>
-                            <div><b>Материал:</b> {{ page.materialForPage }}</div>
-                            <div><b>Цвет:</b> {{ page.colorName }}.</div>
-                            <div><b>Категория:</b> {{ page.categoryName }}</div>
-                            <div><b>Размер:</b> на ваш выбор.</div>
-                            <div><b>Управление:</b> ручное и автоматическое.</div>
-                            <div><b>Срок изготовления и установки:</b> 1-5 дней.</div>
-                            <div><b>Выезд и замер:</b> бесплатный при оформлении заказа и оплате.</div>
-                            <div><b>Доставка и установка:</b> по Москве и области.</div>
-                        </div>
-                        <div class="cart-footer">
-                            <div class="cart-footer-zag">Цена {{ min_price(page) }}</div>
-                            <div class="cart-footer-orang">(Гарантия 2 года)</div>
-                            <div class="cart-footer-text">Скидка 7% при заказе с сайта + бесплатный замер</div>
+        {% block footer %}
+            <div class="cart-footer-zag">Цена {{ min_price(page) }}</div>
+            <div class="cart-footer-orang">(Гарантия 2 года)</div>
+            <div class="cart-footer-text">Скидка 7% при заказе с сайта + бесплатный замер</div>
 
-                            <div id="app" class="btn-wrap">
-                                <v-product-page-calc product_id="{{ page.id }}"></v-product-page-calc>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="app" class="btn-wrap">
+                <v-product-page-calc product_id="{{ page.id }}"></v-product-page-calc>
             </div>
-        </div>
-    </div>
+        {% endblock footer %}
+    {% endembed %}
     {{ include('modules/_seo_block.html.twig') }}
 {% endblock %}
