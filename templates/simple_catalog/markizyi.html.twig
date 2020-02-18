@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('location') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('location') }}
+{% endblock %}
+
+{% block title %}
+    {%- if page.title -%}
+        {{ page.title }}
+    {%- else -%}
+        {{ page.name }} цена. Купить в «Мастерская Жалюзи»
+    {%- endif -%}
+{% endblock %}
+
+{% block description %}
+    {%- if page.description -%}
+        {{ page.description }}
+    {%- else -%}
+        {{ page.name }} купить от производителя в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ {{ page.name }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.
+    {%- endif -%}
+{% endblock %}
+
+{% block h1 %}{{ page.name }}{% endblock %}
+
+{% block body %}
+    {% embed 'embedded/card.html.twig' %}
+        {% block image %}<img src="{{ lazy_load('/img/markiz/markizu.jpg') }}" alt="*">{% endblock image %}
+        {% block header %}{{ page.name }} цена{% endblock header %}
+        {% block content %}
+            <div class="cart-text">
+                <span><b>Материал:</b> акрил, полиэстер.</span>
+                <span><b>Цвет:</b> на выбор.</span>
+                <span><b>Размеры:</b> стандартные и под заказ</span>
+                <span><b>Виды:</b> выдвижные локтевые, корзинные, двухсторонние, вертикальные, боковые, витринные, пергола.</span>
+                <span><b>Применение:</b> кафе, бары, рестораны, дом, квартира, дача, зимний сад.</span>
+                <span><b>Помещения:</b> террасы, веранды, окна, входные двери</span>
+                <span><b>Управление:</b> механическое и автоматическое</span>
+                <span><b>Срок изготовления и установки:</b> 2-7 дней (зависит от сложности и объема).</span>
+                <span><b>Замер:</b> бесплатный (при оформлении и оплате заказа).</span>
+                <span><b>Доставка и установка маркиз:</b> в Москве и Московской области.</span>
+                <span>Возможна доставка и установка по России</span>
+            </div>
+        {% endblock content %}
+
+        {% block footer %}
+            <div class="cart-footer-zag">Цена от 13000 рублей за изделие</div>
+            <div id="product_app">
+                <v-consultation-form text="Рассчитать"></v-consultation-form>
+            </div>
+        {% endblock footer %}
+    {% endembed %}
+    {{ include('modules/_catalog.html.twig') }}
+    {{ include('modules/_seo_block.html.twig') }}
+    {{ include('modules/_employees.html.twig') }}
+    {{ include('modules/_clients.html.twig') }}
+{% endblock %}

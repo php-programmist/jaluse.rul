@@ -53,9 +53,14 @@ p{
   padding-right: 10px;
   transition: all 3s;
   border-radius: 5px;
+  height: 40px;
+  font-weight: bold;
   &:hover{
     opacity: 9;
     transition: all 3s;
+  }
+  &_orange{
+    background: $orange;
   }
 }
 
