@@ -35,11 +35,6 @@ class Product extends Page
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Color", inversedBy="products")
      */
     private $color;
@@ -84,18 +79,6 @@ class Product extends Page
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
 
         return $this;
     }
@@ -270,7 +253,7 @@ class Product extends Page
     public function getMaterialForPage()
     {
         if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
-            return 'такнь';
+            return 'ткань';
         }elseif ($this->getType()){
             return $this->getMaterialName();
         }

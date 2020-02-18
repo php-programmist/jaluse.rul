@@ -79,7 +79,7 @@ class Page
     protected $seoImage;
     
     /**
-     * @Vich\UploadableField(mapping="web_root", fileNameProperty="seoImage")
+     * @Vich\UploadableField(mapping="seo_images", fileNameProperty="seoImage")
      * @var File
      */
     protected $seoImageFile;
@@ -87,9 +87,23 @@ class Page
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ourWorksFolder;
+    protected $ourWorksFolder;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $cardImage;
     
-    
+    /**
+     * @Vich\UploadableField(mapping="card_images", fileNameProperty="cardImage")
+     * @var File
+     */
+    protected $cardImageFile;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $cardDescription;
     
     public function __construct()
     {
@@ -279,9 +293,23 @@ class Page
         }
     }
     
+    public function setCardImageFile(File $image = null)
+    {
+        $this->cardImageFile = $image;
+        
+        if ($image) {
+            $this->modified_at = new \DateTime('now');
+        }
+    }
+    
     public function getSeoImageFile()
     {
         return $this->seoImageFile;
+    }
+    
+    public function getCardImageFile()
+    {
+        return $this->cardImageFile;
     }
     
     public function getSeoFirstPart():string
@@ -314,9 +342,14 @@ class Page
         return $this;
     }
     
-    public function getImgFolder()
+    public function getSeoImgFolder()
     {
         return 'img/seo_images/';
+    }
+    
+    public function getCardImgFolder()
+    {
+        return 'img/card/';
     }
     
     public function getSeoImageUrl()
@@ -324,6 +357,38 @@ class Page
         if ( ! $this->getSeoImage()) {
             return '';
         }
-        return '/'.$this->getImgFolder(). $this->getSeoImage();
+        return '/'.$this->getSeoImgFolder(). $this->getSeoImage();
+    }
+
+    public function getCardImage(): ?string
+    {
+        return $this->cardImage;
+    }
+
+    public function setCardImage(?string $cardImage): self
+    {
+        $this->cardImage = $cardImage;
+
+        return $this;
+    }
+    
+    public function getCardImageUrl()
+    {
+        if ( ! $this->getCardImage()) {
+            return null;
+        }
+        return '/'.$this->getCardImgFolder(). $this->getCardImage();
+    }
+
+    public function getCardDescription(): ?string
+    {
+        return $this->cardDescription;
+    }
+
+    public function setCardDescription(?string $cardDescription): self
+    {
+        $this->cardDescription = $cardDescription;
+
+        return $this;
     }
 }

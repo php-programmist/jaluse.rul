@@ -1,24 +1,17 @@
 {% extends 'page/catalog.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('location') }}
+    {{ encore_entry_link_tags('simple_catalog') }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('location') }}
+    {{ encore_entry_script_tags('simple_catalog') }}
 {% endblock %}
 {% block content_h2 %}{{ page.name }}. Каталог и цены:{% endblock %}
 {% block location_block %}
     {% embed 'embedded/card.html.twig' %}
-        {% block image %}<img src="{{ vich_uploader_asset(page,'locationImageFile') }}" alt="*">{% endblock image %}
+        {% block image %}<img {{ lazy_load(page.cardImageUrl) }} alt="{{ page.name }}">{% endblock image %}
         {% block header %}{{ page.name }} цена{% endblock header %}
-        {% block content %}{{ page.locationDescription|raw }}{% endblock content %}
-
-        {% block footer %}
-            <div id="product_app">
-                <v-consultation-form text="Рассчитать"></v-consultation-form>
-                <v-consultation-form text="Консультация"></v-consultation-form>
-            </div>
-        {% endblock footer %}
+        {% block content %}{{ page.cardDescription|raw }}{% endblock content %}
     {% endembed %}
 {% endblock location_block %}

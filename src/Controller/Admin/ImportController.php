@@ -306,13 +306,12 @@ class ImportController extends AbstractController
         /** @var Markiz $markiz */
         foreach ($markizs as $markiz) {
             $description = $this->getExtrafield($markiz->getId(),73);
-            $markiz->setMarkizDescription($description);
-    
+            $markiz->setCardDescription($description);
             $image = $this->getExtrafield($markiz->getId(),68);
             if ($image) {
                 $image_file = file_get_contents('https://jaluse.ru/assets/images/'.$image);
                 $image = str_replace('/','-',$image);
-                $markiz->setImage($image);
+                $markiz->setCardImage($image);
                 file_put_contents($root_dir.'/img/markiz/'.$image,$image_file);
             }
     

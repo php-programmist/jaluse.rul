@@ -32,11 +32,16 @@
     {% embed 'embedded/card.html.twig' %}
         {% block image %}<img {{ lazy_load(page.cardImageUrl) }} alt="{{ page.name }}">{% endblock image %}
         {% block header %}{{ page.name }} цена{% endblock header %}
-        {% block content %}{{ page.cardDescription|raw }}{% endblock content %}
+        {% block content %}
+            {{ page.cardDescription|raw }}
+        {% endblock content %}
+
         {% block footer %}
-            <div class="cart-footer-zag">Цена от {{ page.price }} руб.</div>
+            <div class="cart-footer-zag">Цена от {{ page.price }} рублей за изделие</div>
         {% endblock footer %}
     {% endembed %}
-    {{ include('modules/_our_works.html.twig') }}
+    {{ include('modules/_catalog.html.twig') }}
     {{ include('modules/_seo_block.html.twig') }}
+    {{ include('modules/_employees.html.twig') }}
+    {{ include('modules/_clients.html.twig') }}
 {% endblock %}

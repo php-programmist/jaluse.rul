@@ -90,6 +90,10 @@ easy_admin:
                     - { property: 'type', label: 'Тип'}
                     - { property: 'material', label: 'Подтип'}
                     - { property: 'ourWorksFolder', label: 'Папка изображений наших работ'}
+                    - { type: 'tab' , label: 'Карточка' }
+                    - { property: 'price', label: 'Цена'}
+                    - { property: 'cardDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
+                    - { property: 'cardImageFile', type: 'vich_image', label: 'Изображение в карточке' }
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
@@ -105,6 +109,7 @@ easy_admin:
                     - { property: 'name', label: 'Название'}
                     - { property: 'path', label: 'Ссылка', type: 'url'}
                     - { property: 'published', label: 'Опубликован'}
+                    - { property: 'cardImageUrl', type: 'image', label: 'Изображение в карточке' }
                     - { property: 'seoImageUrl', type: 'image', label: 'SEO-Изображение' }
                 sort: ['id', 'ASC']
             form:
@@ -115,9 +120,9 @@ easy_admin:
                     - { property: 'parent', label: 'Родитель', type: 'easyadmin_autocomplete'}
                     - { property: 'published', label: 'Опубликован'}
                     - { property: 'ourWorksFolder', label: 'Папка изображений наших работ'}
-                    - { type: 'tab' , label: 'Карточка помещения' }
-                    - { property: 'locationDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
-                    - { property: 'locationImageFile', type: 'vich_image', label: 'Изображение в карточке' }
+                    - { type: 'tab' , label: 'Карточка' }
+                    - { property: 'cardDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
+                    - { property: 'cardImageFile', type: 'vich_image', label: 'Изображение в карточке' }
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
@@ -132,9 +137,10 @@ easy_admin:
                     - 'id'
                     - { property: 'name', label: 'Название'}
                     - { property: 'path', label: 'Ссылка', type: 'url'}
-                    - { property: 'price', label: 'Цена'}
+                    - { property: 'price', label: 'Цена',type: 'integer'}
                     - { property: 'published', label: 'Опубликован'}
-                    - { property: 'imageUrl', type: 'image', label: 'Изображение' }
+                    - { property: 'cardImageUrl', type: 'image', label: 'Изображение в карточке' }
+                    - { property: 'seoImageUrl', type: 'image', label: 'SEO-Изображение' }
                 sort: ['id', 'ASC']
             form:
                 fields:
@@ -144,7 +150,10 @@ easy_admin:
                     - { property: 'parent', label: 'Родитель', type: 'easyadmin_autocomplete'}
                     - { property: 'published', label: 'Опубликован'}
                     - { property: 'ourWorksFolder', label: 'Папка изображений наших работ'}
-                    - { property: 'markizDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
+                    - { type: 'tab' , label: 'Карточка' }
+                    - { property: 'price', label: 'Цена'}
+                    - { property: 'cardDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
+                    - { property: 'cardImageFile', type: 'vich_image', label: 'Изображение в карточке' }
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
