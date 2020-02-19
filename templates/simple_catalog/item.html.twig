@@ -34,7 +34,12 @@
         {% block header %}{{ page.name }} цена{% endblock header %}
         {% block content %}{{ page.cardDescription|raw }}{% endblock content %}
         {% block footer %}
-            <div class="cart-footer-zag">Цена от {{ page.price }} руб.</div>
+            <div class="cart-footer-zag">Цена
+                {% if area??false %}
+                    {{ page.price }} руб/м2
+                {% else %}
+                    от {{ page.price }} руб
+                {% endif %}</div>
         {% endblock footer %}
     {% endembed %}
     {{ include('modules/_our_works.html.twig') }}

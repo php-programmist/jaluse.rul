@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\MarkizRepository;
 use App\Repository\PageRepository;
 use App\Repository\RollRepository;
+use App\Repository\RomanRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,6 +44,20 @@ class SimpleCatalogController extends AbstractController
         return $this->render('simple_catalog/index.html.twig', [
             'page' => $page,
             'items' => $items,
+        ]);
+    }
+    
+    /**
+     * @Route("/rimskies/", name="simple_catalog_rimskies")
+     */
+    public function rimskies(RomanRepository $repository)
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'rimskies']);
+        $items = $repository->findAll();
+        return $this->render('simple_catalog/index.html.twig', [
+            'page' => $page,
+            'items' => $items,
+            'area' => true,
         ]);
     }
 }

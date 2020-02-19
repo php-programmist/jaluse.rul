@@ -13,6 +13,7 @@ use App\Repository\MarkizRepository;
 use App\Repository\MaterialRepository;
 use App\Repository\ProductRepository;
 use App\Repository\RollRepository;
+use App\Repository\RomanRepository;
 use App\Repository\TypeRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -401,6 +402,70 @@ class ImportController extends AbstractController
         return new Response($counter);
     }
     
+    /**
+     * @Route("/roman", name="roman")
+     */
+    public function roman(RomanRepository $repository)
+    {
+        $root_dir   = $_SERVER['DOCUMENT_ROOT'];
+        $entityManager = $this->getDoctrine()->getManager();
+        $items        = $repository->findAll();
+        $counter       = 0;
+        /** @var Roll $item */
+        foreach ($items as $item) {
+            // $description = $this->getExtrafield($item->getId(),67);
+            // $item->setCardDescription($description);
+            /*$image = $this->getExtrafield($item->getId(),68);
+            if ($image) {
+                $image_file = file_get_contents('https://jaluse.ru/assets/images/'.$image);
+                $image = str_replace('/','-',$image);
+                $item->setCardImage($image);
+                file_put_contents($root_dir.'/img/roll/'.$image,$image_file);
+            }*/
+    
+            /*$our_works_folder = $this->getExtrafield($item->getId(),69);
+            $our_works_folder = trim($our_works_folder,' /');
+            $parts = explode('/',$our_works_folder);
+            $alias = array_pop($parts);
+            $item->setOurWorksFolder('/img/our-works/roll/'.$alias);*/
+            
+            $price = $this->getExtrafield($item->getId(),20);
+            $item->setPrice($price);
+            
+            $title = $this->getExtrafield($item->getId(),1);
+            $item->setTitle($title);
+            
+            $description = $this->getExtrafield($item->getId(),4);
+            $item->setDescription($description);
+    
+            $content = $this->getContent($item->getId());
+            $item->setContent($content->content);
+            if (!$content->content) {
+                $item->setContent($this->getExtrafield($item->getId(),15));
+            }
+            
+            $item->setName($content->pagetitle);
+            
+            $product = $this->getProduct($item->getId());
+            if ($product) {
+                $item->setPrice($product->price*62.5);
+                $image = $product->image;
+                if ($image) {
+                    $image_file = file_get_contents('https://jaluse.ru'.$image);
+                    $parts = explode('/',$image);
+                    $image = array_pop($parts);
+                    $item->setCardImage($image);
+                    file_put_contents($root_dir.'/img/roman/'.$image,$image_file);
+                }
+            }
+            
+            $counter++;
+        }
+        $entityManager->flush();
+        
+        return new Response($counter);
+    }
+    
     private function getExtrafield($content_id, $var_id)
     {
         return $this->connection->createQueryBuilder()
@@ -416,6 +481,15 @@ class ImportController extends AbstractController
         return $this->connection->createQueryBuilder()
                                     ->select('*')
                                     ->from('modx_site_content')
+                                    ->andWhere('id='.$content_id)
+                                    ->execute()
+                                    ->fetch(\PDO::FETCH_OBJ);
+    }
+    
+    private function getProduct($content_id){
+        return $this->connection->createQueryBuilder()
+                                    ->select('*')
+                                    ->from('modx_ms2_products')
                                     ->andWhere('id='.$content_id)
                                     ->execute()
                                     ->fetch(\PDO::FETCH_OBJ);
