@@ -6,6 +6,7 @@ use App\Entity\Catalog;
 use App\Entity\Location;
 use App\Entity\Markiz;
 use App\Entity\Product;
+use App\Entity\Roll;
 use App\Repository\PageRepository;
 use App\Repository\ProductRepository;
 use App\Service\ConfigService;
@@ -55,6 +56,8 @@ class PageController extends AbstractController
             return $this->location($page);
         } elseif ($page instanceof Markiz) {
             return $this->markiz($page);
+        }elseif ($page instanceof Roll) {
+            return $this->roll($page);
         }
         
         throw new NotFoundHttpException('Page is instance of ' . get_class($page));
@@ -101,8 +104,15 @@ class PageController extends AbstractController
     
     private function markiz(Markiz $markiz)
     {
-        return $this->render('page/markiz.html.twig', [
+        return $this->render('simple_catalog/item.html.twig', [
             'page'  => $markiz,
+        ]);
+    }
+    
+    private function roll(Roll $roll)
+    {
+        return $this->render('simple_catalog/item.html.twig', [
+            'page'  => $roll,
         ]);
     }
 }

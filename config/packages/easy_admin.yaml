@@ -160,6 +160,37 @@ easy_admin:
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
+        Roll:
+            class: App\Entity\Roll
+            label: "Рольставни"
+            list:
+                fields:
+                    - 'id'
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'path', label: 'Ссылка', type: 'url'}
+                    - { property: 'price', label: 'Цена',type: 'integer'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { property: 'cardImageUrl', type: 'image', label: 'Изображение в карточке' }
+                    - { property: 'seoImageUrl', type: 'image', label: 'SEO-Изображение' }
+                sort: ['id', 'ASC']
+            form:
+                fields:
+                    - { type: 'tab' , label: 'Основные' }
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'uri', label: 'Ссылка', help: 'Без слэшей в начале и конце'}
+                    - { property: 'parent', label: 'Родитель', type: 'easyadmin_autocomplete'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { property: 'ourWorksFolder', label: 'Папка изображений наших работ'}
+                    - { type: 'tab' , label: 'Карточка' }
+                    - { property: 'price', label: 'Цена'}
+                    - { property: 'cardDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
+                    - { property: 'cardImageFile', type: 'vich_image', label: 'Изображение в карточке' }
+                    - { type: 'tab' , label: 'SEO' }
+                    - { property: 'title', label: 'Заголовок'}
+                    - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
+                    - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
+
 
         Simple:
             class: App\Entity\Simple

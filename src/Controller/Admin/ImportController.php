@@ -5,12 +5,14 @@ namespace App\Controller\Admin;
 use App\Entity\Location;
 use App\Entity\Markiz;
 use App\Entity\Product;
+use App\Entity\Roll;
 use App\Repository\CatalogRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\LocationRepository;
 use App\Repository\MarkizRepository;
 use App\Repository\MaterialRepository;
 use App\Repository\ProductRepository;
+use App\Repository\RollRepository;
 use App\Repository\TypeRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -336,6 +338,60 @@ class ImportController extends AbstractController
                 $markiz->setName($content->longtitle);
             }else{
                 $markiz->setName($content->pagetitle);
+            }
+            
+            $counter++;
+        }
+        $entityManager->flush();
+        
+        return new Response($counter);
+    }
+    
+    /**
+     * @Route("/roll", name="roll")
+     */
+    public function roll(RollRepository $repository)
+    {
+        $root_dir   = $_SERVER['DOCUMENT_ROOT'];
+        $entityManager = $this->getDoctrine()->getManager();
+        $items        = $repository->findAll();
+        $counter       = 0;
+        /** @var Roll $item */
+        foreach ($items as $item) {
+            $description = $this->getExtrafield($item->getId(),67);
+            $item->setCardDescription($description);
+            $image = $this->getExtrafield($item->getId(),68);
+            if ($image) {
+                $image_file = file_get_contents('https://jaluse.ru/assets/images/'.$image);
+                $image = str_replace('/','-',$image);
+                $item->setCardImage($image);
+                file_put_contents($root_dir.'/img/roll/'.$image,$image_file);
+            }
+    
+            $our_works_folder = $this->getExtrafield($item->getId(),69);
+            $our_works_folder = trim($our_works_folder,' /');
+            $parts = explode('/',$our_works_folder);
+            $alias = array_pop($parts);
+            $item->setOurWorksFolder('/img/our-works/roll/'.$alias);
+            
+            $price = $this->getExtrafield($item->getId(),20);
+            $item->setPrice($price);
+            
+            $title = $this->getExtrafield($item->getId(),1);
+            $item->setTitle($title);
+            
+            $description = $this->getExtrafield($item->getId(),4);
+            $item->setDescription(str_replace('[[*price_from_cat]]',$price,$description));
+    
+            $content = $this->getContent($item->getId());
+            $item->setContent($content->content);
+            if (!$content->content) {
+                $item->setContent($this->getExtrafield($item->getId(),15));
+            }
+            if ($content->longtitle) {
+                $item->setName($content->longtitle);
+            }else{
+                $item->setName($content->pagetitle);
             }
             
             $counter++;
