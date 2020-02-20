@@ -21,9 +21,21 @@
   @media (max-width: 575px) {
     width: calc(100% - 20px);
   }
-  img{
-    max-height: 200px;
-    object-fit: contain;
+
+  &__image_wrapper{
+    margin: 0 0 20px 0;
+    padding: 0 0 100% 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
   a{
     text-align: center;
@@ -41,7 +53,7 @@
     margin: 5px;
   }
   .mbtn{
-    width: 48%;
+    width: 98%;
     margin:5px 1%;
   }
 }
