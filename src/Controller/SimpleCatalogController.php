@@ -60,4 +60,30 @@ class SimpleCatalogController extends AbstractController
             'area' => true,
         ]);
     }
+    
+    /**
+     * @Route("/zhalyuzi/pomeshheniya/", name="simple_catalog_pomeshheniya")
+     */
+    public function pomeshheniya()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'zhalyuzi/pomeshheniya']);
+        $items = $page->getPages();
+        return $this->render('simple_catalog/pomeshheniya.html.twig', [
+            'page' => $page,
+            'items' => $items,
+        ]);
+    }
+    
+    /**
+     * @Route("/rulonnyie-shtoryi/pomeshheniya/", name="simple_catalog_pomeshheniya_rulonnyie")
+     */
+    public function pomeshheniya_rulonnyie()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'rulonnyie-shtoryi/pomeshheniya']);
+        $items = $page->getPages();
+        return $this->render('simple_catalog/pomeshheniya.html.twig', [
+            'page' => $page,
+            'items' => $items,
+        ]);
+    }
 }

@@ -265,13 +265,13 @@ class ImportController extends AbstractController
         /** @var Location $location */
         foreach ($locations as $location) {
             $description = $this->getExtrafield($location->getId(),73);
-            $location->setLocationDescription($description);
+            $location->setCardDescription($description);
     
             $image = $this->getExtrafield($location->getId(),68);
             if ($image) {
                 $image_file = file_get_contents('https://jaluse.ru/assets/images/'.$image);
                 $image = str_replace('/','-',$image);
-                $location->setLocationImage($image);
+                $location->setCardImage($image);
                 file_put_contents($root_dir.'/img/location/'.$image,$image_file);
             }
             

@@ -55,14 +55,14 @@ class PageController extends AbstractController
             return $this->catalog($page);
         } elseif ($page instanceof Location) {
             return $this->location($page);
-        } elseif ($page instanceof Markiz || $page instanceof Roll ) {
+        } elseif ($page instanceof Markiz || $page instanceof Roll) {
             return $this->render('simple_catalog/item.html.twig', [
-                'page'  => $page,
+                'page' => $page,
             ]);
-        }elseif ($page instanceof Roman) {
+        } elseif ($page instanceof Roman) {
             return $this->render('simple_catalog/item.html.twig', [
-                'page'  => $page,
-                'area'  => true
+                'page' => $page,
+                'area' => true,
             ]);
         }
         
@@ -99,8 +99,9 @@ class PageController extends AbstractController
     {
         $filters             = [];
         $filters['category'] = 1;
-        $limit = 48;
-        $items = $this->product_repository->findFiltered($filters, 0, $limit);
+        $filters['type']     = $location->getType()->getId();
+        $limit               = 48;
+        $items               = $this->product_repository->findFiltered($filters, 0, $limit);
         
         return $this->render('page/location.html.twig', [
             'page'  => $location,

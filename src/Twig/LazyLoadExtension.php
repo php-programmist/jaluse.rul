@@ -36,8 +36,11 @@ class LazyLoadExtension extends AbstractExtension
      *
      * @return string
      */
-    public function lazyLoad(string $src, array $classes = [], $lazy_off = false): string
+    public function lazyLoad(?string $src, array $classes = [], $lazy_off = false): string
     {
+        if (!$src) {
+            return 'src=""';
+        }
         $classes[] = 'lazy';
         if ($lazy_off) {
             return 'src="' . $src . '" class="' . implode(' ', $classes) . '"';

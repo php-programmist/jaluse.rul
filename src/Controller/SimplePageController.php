@@ -19,18 +19,6 @@ class SimplePageController extends AbstractController
         $this->page_repository = $page_repository;
     }
     
-    /**
-     * @Route("/zhalyuzi/pomeshheniya/", name="simple_page_pomeshheniya")
-     */
-    public function pomeshheniya(LocationRepository $location_repository)
-    {
-        $page = $this->page_repository->findOneBy(['uri'=>'zhalyuzi/pomeshheniya']);
-        $items = $location_repository->findAll();
-        return $this->render('simple_page/pomeshheniya.html.twig', [
-            'page' => $page,
-            'items' => $items,
-        ]);
-    }
     
     /**
      * @Route("/kontaktyi/", name="simple_page_kontaktyi")

@@ -3,8 +3,7 @@ RewriteEngine On RewriteBase /
 RewriteRule rulonnyie-shtoryi/kollekcziya-euro-vista-novinka-sezona-2014/(.*)$ /rulonnyie-shtoryi/standartnye-rulonnye-shtory/$1 [R=301,L]
 #RewriteRule zhalyuzi/na-plastikovyie-okna/rulonnaya-kassetnaya-sistema-uni1/(.*)$ /rulonnyie-shtoryi/uni/of-rulonnaya-kassetnaya-sistema-uni2/$1 [R=301,L]
 RewriteRule zhalyuzi/na-plastikovyie-okna/(.*)$ /zhalyuzi/$1 [R=301,L]
-RewriteRule katalog/markizyi/(.*)$ /markizyi/$1 [R=301,L]
-RewriteRule katalog/rolstavni/(.*)$ /rolstavni/$1 [R=301,L]
+RewriteRule katalog/(.*)$ /$1 [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

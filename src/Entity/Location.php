@@ -13,4 +13,13 @@ class Location extends Page
     {
         return 'img/location/';
     }
+    
+    public function getType(): ?Type
+    {
+        $parent = $this->getParent();
+        if ($parent && $parent instanceof Catalog) {
+            return $parent->getType();
+        }
+        return null;
+    }
 }
