@@ -54,6 +54,11 @@
       &-ssil3:before {
         background-position: -202px 0
       }
+      &-pay:before{
+        content: "";
+        background: url(/img/oplata.png) no-repeat;
+        padding: 6px 15px;
+      }
     }
     &-phone {
       text-align: right;

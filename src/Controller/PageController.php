@@ -97,15 +97,9 @@ class PageController extends AbstractController
     
     private function location(Location $location)
     {
-        $filters             = [];
-        $filters['category'] = 1;
-        $filters['type']     = $location->getType()->getId();
-        $limit               = 48;
-        $items               = $this->product_repository->findFiltered($filters, 0, $limit);
-        
         return $this->render('page/location.html.twig', [
             'page'  => $location,
-            'items' => $items,
+            'items' => [],
         ]);
     }
 }

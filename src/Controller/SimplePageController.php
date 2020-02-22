@@ -82,4 +82,37 @@ class SimplePageController extends AbstractController
     {
         return $this->render('simple_page/confidence-policy.html.twig');
     }
+    
+    /**
+     * @Route("/pay/", name="simple_page_pay")
+     */
+    public function pay()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'pay']);
+        return $this->render('simple_page/pay.html.twig', [
+            'page' => $page,
+        ]);
+    }
+    
+    /**
+     * @Route("/dostavka/", name="simple_page_dostavka")
+     */
+    public function dostavka()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'dostavka']);
+        return $this->render('simple_page/dostavka.html.twig', [
+            'page' => $page,
+        ]);
+    }
+    
+    /**
+     * @Route("/uslugi/", name="simple_page_uslugi")
+     */
+    public function uslugi()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'uslugi']);
+        return $this->render('simple_page/uslugi.html.twig', [
+            'page' => $page,
+        ]);
+    }
 }

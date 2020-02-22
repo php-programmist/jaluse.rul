@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block title page.title %}
+{% block h1 page.name %}
+{% block description page.description %}
+
+{% block body %}
+    <div class="container">
+        <div class="row zakaz">
+            <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-xs-12 content  content-position-2">
+                <div class="row">
+                    <div class="col-md-12 content">
+                        <h2>{{ page.name }}</h2>
+                        <p>При оплате наличными через представителя компании, вы оплачиваете 70% от общей стоимости счет-заказа. Заказ поступает в производство на следующий день. Окончательный расчёт в размере 30% производится после монтажа или доставки.</p>
+
+                        <p>При безналичной оплате вы направляете реквизиты на e-mail:
+                            <a href="mailto:info@jaluse.ru">info@jaluse.ru</a> Менеджер отправляет вам счет на оплату в ближайшее время. После поступления на расчетный счет денежных средств, заказ поступает в изготовление.
+                        </p>
+
+                        <p>За день до назначенной даты монтажа с вами свяжется по телефону ваш персональный менеджер, чтобы согласовать наиболее удобное вам время установки. Обязательно обговаривается факт присутствия на объекте лица, которое сможет оценить качество проведенных работ и принять товар.</p>
+
+                        <p>По факту монтажа заказчик подписывает товарные накладные (ТОРГ-12).</p>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="sidebar slider-mobile ">
+
+                    <div class="phone-side">
+                        <div class="img">
+                            <img src="/img/zakaz/side-phone.png" alt="">
+                            <span class="minitext">многоканальный</span>
+                        </div>
+                        <div class="phone"><a href="tel:+74959843848">+7 (495) 984-38-48</a></div>
+                        <div class="text-me">Вызов консультанта бесплатный</div>
+                    </div>
+
+                    <div class="phone-side">
+                        <div class="count">
+                            <div class="co">3-5</div>
+                            <div>дней</div>
+                        </div>
+                        <div class="text-me">Срок выполнения заказа</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
