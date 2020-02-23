@@ -23,3 +23,7 @@ yarn-error.log
 /public_html/build/
 /public_html/bundles/
 /public_html/img/products/
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
