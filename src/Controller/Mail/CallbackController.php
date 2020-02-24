@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Twig\Environment;
 
 /**
  * @Route("/callback", name="callback_")
@@ -27,22 +28,30 @@ class CallbackController extends AbstractController
      * @var TemplatedEmail
      */
     protected $email;
+    /**
+     * @var Environment
+     */
+    protected $twig;
+    private $recipients;
+    private $headers;
     
-    public function __construct(MailerInterface $mailer, ConfigService $config, MailJsonResponse $response)
+    public function __construct(MailerInterface $mailer, ConfigService $config, MailJsonResponse $response,Environment $twig )
     {
         $this->mailer   = $mailer;
-        $recipients     = $config->get('mail.recipients', '');
+        $this->recipients     = $config->get('mail.recipients', '');
         $from           = $config->get('mail.from', '');
         $this->response = $response;
-        $this->email    = (new TemplatedEmail())->from($from);
+        /*$this->email    = (new TemplatedEmail())->from($from);
         if (strpos($recipients, ',') !== false) {
             $recipients = explode(',', $recipients);
             $recipients = array_map('trim', $recipients);
             $this->email->to(...$recipients);
         } else {
             $this->email->to($recipients);
-        }
-        
+        }*/
+        $this->twig = $twig;
+        $this->headers  = 'MIME-Version: 1.0' . "\r\n";
+        $this->headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
     }
     
     /**
@@ -50,6 +59,9 @@ class CallbackController extends AbstractController
      */
     public function consultation(CallbackFormRequest $request)
     {
+        $body = $this->twig->render('mail/callback/consultation.html.twig',(array)$request);
+        mail($this->recipients,"Заявка на консультацию",$body,$this->headers);
+        return $this->response->success("Спасибо, отправлено!");
         
         $this->email
             ->subject("Заявка на консультацию")
@@ -66,6 +78,9 @@ class CallbackController extends AbstractController
      */
     public function order(CallbackFormRequest $request)
     {
+        $body = $this->twig->render('mail/callback/order.html.twig',(array)$request);
+        mail($this->recipients,"Новый заказ",$body,$this->headers);
+        return $this->response->success("Спасибо, отправлено!");
         $this->email
             ->subject("Новый заказ")
             ->htmlTemplate('mail/callback/order.html.twig')
