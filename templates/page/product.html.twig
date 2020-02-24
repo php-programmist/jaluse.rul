@@ -49,11 +49,12 @@
             <div class="cart-footer-zag">Цена {{ min_price(page) }}</div>
             <div class="cart-footer-orang">(Гарантия 2 года)</div>
             <div class="cart-footer-text">Скидка 7% при заказе с сайта + бесплатный замер</div>
-
+        {% endblock footer %}
+        {% block buttons %}
             <div id="app" class="btn-wrap">
                 <v-product-page-calc product_id="{{ page.id }}"></v-product-page-calc>
             </div>
-        {% endblock footer %}
+        {% endblock buttons %}
     {% endembed %}
     {{ include('modules/_seo_block.html.twig') }}
 {% endblock %}

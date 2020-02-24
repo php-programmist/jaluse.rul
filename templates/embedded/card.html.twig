@@ -13,10 +13,12 @@
                     </div>
                     <div class="cart-footer">
                         {% block footer %}{% endblock %}
-                        <div class="d-flex">
-                            <button class="mbtn mbtn_orange modal-open" data-title="Рассчитать">Рассчитать</button>
-                            <button class="mbtn modal-open modal-open" data-title="Консультация">Консультация</button>
-                        </div>
+                        {% block buttons %}
+                            <div class="d-flex">
+                                <button class="mbtn mbtn_orange modal-open" data-title="Рассчитать">Рассчитать</button>
+                                <button class="mbtn modal-open modal-open" data-title="Консультация">Консультация</button>
+                            </div>
+                        {% endblock %}
                     </div>
                 </div>
             </div>
