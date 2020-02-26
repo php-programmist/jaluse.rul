@@ -71,8 +71,11 @@ class PageController extends AbstractController
     
     private function product(Product $product)
     {
+        $limit = 12;
+        $items = $this->product_repository->getPopularSiblings($product,$limit);
         return $this->render('page/product.html.twig', [
             'page' => $product,
+            'items' => $items,
         ]);
     }
     

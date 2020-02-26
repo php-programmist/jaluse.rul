@@ -26,25 +26,27 @@ class ProductRepository extends ServiceEntityRepository
      *
      * @return Product[] Returns an array of Product objects
      */
-    public function findFiltered($filters = [],$offset=0,$limit=0 )
+    public function findFiltered($filters = [], $offset = 0, $limit = 0)
     {
         $query = $this->getFilteredQB($filters);
         if ($limit) {
             $query->setMaxResults($limit);
         }
-        if ($offset){
+        if ($offset) {
             $query->setFirstResult($offset);
         }
+        
         return $query->getQuery()
                      ->getResult();
     }
     
-    public function countFiltered(array $filters = []):int
+    public function countFiltered(array $filters = []): int
     {
         $query = $this->getFilteredQB($filters);
+        
         return $query->select('count(p.id)')
-                ->getQuery()
-                ->getSingleScalarResult();
+                     ->getQuery()
+                     ->getSingleScalarResult();
     }
     
     /**
@@ -60,29 +62,31 @@ class ProductRepository extends ServiceEntityRepository
                       ->addSelect('p2')
                       ->andWhere('t.show_main_page_calc = 1')
                       ->andWhere('p.price IS NOT NULL OR p.matrix_id IS NOT NULL')
-                      ->orderBy('p.popular', 'DESC');
-    
+                      ->addOrderBy('p.price', 'ASC')
+                      ->addOrderBy('p.matrix_id', 'ASC');
+        
         if ( ! empty($filters['category'])) {
             $query->andWhere('p.category = :category')
                   ->setParameter('category', $filters['category']);
         } else {
             $query->andWhere('p.category = 1');
         }
-    
+        
         if ( ! empty($filters['type'])) {
             $query->andWhere('p.type = :type')
                   ->setParameter('type', $filters['type']);
         }
-    
+        
         if ( ! empty($filters['material'])) {
             $query->andWhere('p.material = :material')
                   ->setParameter('material', $filters['material']);
         }
-    
+        
         if ( ! empty($filters['color'])) {
             $query->andWhere('p.color IN(:color)')
-                  ->setParameter('color', explode(',',$filters['color']));
+                  ->setParameter('color', explode(',', $filters['color']));
         }
+        
         return $query;
     }
     
@@ -92,31 +96,46 @@ class ProductRepository extends ServiceEntityRepository
                       ->leftJoin('p.type', 't')
                       ->innerJoin('p.color', 'c')
                       ->select('c.id')
-                      ->andWhere('t.show_main_page_calc = 1')
-        ;
-    
+                      ->andWhere('t.show_main_page_calc = 1');
+        
         if ( ! empty($filters['category'])) {
             $query->andWhere('p.category = :category')
                   ->setParameter('category', $filters['category']);
         } else {
             $query->andWhere('p.category = 1');
         }
-    
+        
         if ( ! empty($filters['type'])) {
             $query->andWhere('p.type = :type')
                   ->setParameter('type', $filters['type']);
         }
-    
+        
         if ( ! empty($filters['material'])) {
             $query->andWhere('p.material = :material')
                   ->setParameter('material', $filters['material']);
         }
-    
+        
         $result = $query->distinct()
-                     ->getQuery()
-                     ->getScalarResult();
-        $ids = array_map('current', $result);
+                        ->getQuery()
+                        ->getScalarResult();
+        $ids    = array_map('current', $result);
+        
         return array_filter($ids);
+    }
+    
+    public function getPopularSiblings(Product $product, $limit=0)
+    {
+        $filters             = [];
+        $filters['type']     = $product->getType()->getId();
+        $filters['material'] = $product->getMaterial() ? $product->getMaterial()->getId() : null;
+        $filters['category'] = $product->getCategory()->getId();
+        $query               = $this->getFilteredQB($filters);
+        $query->orderBy('p.popular','DESC');
+        if ($limit) {
+            $query->setMaxResults($limit);
+        }
+        return $query->getQuery()
+                     ->getResult();
     }
     
     // /**

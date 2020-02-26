@@ -7,6 +7,7 @@ RewriteRule rulonnyie-shtoryi/dlya-detskoj/$ /rulonnyie-shtoryi/pomeshheniya/dly
 RewriteRule rulonnyie-shtoryi/na-kuhnyu/$ /rulonnyie-shtoryi/pomeshheniya/na-kuhnyu/ [R=301,L]
 RewriteRule rulonnyie-shtoryi/na-balkonnuyu-dver/$ /rulonnyie-shtoryi/pomeshheniya/na-balkonnuyu-dver/ [R=301,L]
 RewriteRule rulonnyie-shtoryi/na-balkon/$ /rulonnyie-shtoryi/pomeshheniya/na-balkon/ [R=301,L]
+RewriteRule shtory-dlya-besedok-i-verand/myagkie-okna/$ /shtory-dlya-besedok-i-verand/shtory-pvh/ [R=301,L]
 RewriteRule katalog/(.*)$ /$1 [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f

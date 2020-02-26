@@ -60,6 +60,18 @@ class SimpleCatalogController extends AbstractController
             'area' => true,
         ]);
     }
+    /**
+     * @Route("/shtory-dlya-besedok-i-verand/shtory-pvh/", name="simple_catalog_shtory-pvh")
+     */
+    public function shtory_pvh()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'shtory-dlya-besedok-i-verand/shtory-pvh']);
+        
+        return $this->render('simple_catalog/index.html.twig', [
+            'page' => $page,
+            'items' => [],
+        ]);
+    }
     
     /**
      * @Route("/zhalyuzi/pomeshheniya/", name="simple_catalog_pomeshheniya")

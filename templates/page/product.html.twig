@@ -33,7 +33,7 @@
         {% block image %}<img src="{{ page.imageBig }}" alt="*">{% endblock image %}
         {% block header %}{{ page.name }}{% endblock header %}
         {% block content %}
-            <div><b>Вид:</b> {{ page.typeName }}</div>
+            <div><b>Вид:</b> {{ page.typeNameForPage }}</div>
             <div><b>Тип:</b> {{ page.typeForPage }}</div>
             <div><b>Материал:</b> {{ page.materialForPage }}</div>
             <div><b>Цвет:</b> {{ page.colorName }}.</div>
@@ -56,5 +56,10 @@
             </div>
         {% endblock buttons %}
     {% endembed %}
+    <div class="container">
+        <h2>Рекомендуемые образцы:</h2>
+        {{ include('modules/_catalog_complex.html.twig') }}
+    </div>
+
     {{ include('modules/_seo_block.html.twig') }}
 {% endblock %}

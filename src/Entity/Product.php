@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Product extends Page
 {
     const RULON_TYPE_ID = 133;
+    const ISOLITE_TYPE_ID = 178;
     const SERIALIZER_ATTRIBUTES = [
         'id',
         'price',
@@ -167,6 +168,14 @@ class Product extends Page
         return 'Не указан';
     }
     
+    public function getTypeNameForPage()
+    {
+        if ($this->getType() && $this->getType()->getId() === self::ISOLITE_TYPE_ID) {
+            return 'Горизонтальные';
+        }
+        return $this->getTypeName();
+    }
+    
     public function getMaterialName()
     {
         if ($this->getMaterial()) {
@@ -227,6 +236,11 @@ class Product extends Page
         $folder = array_pop($segments);
         return '/img/products/'.$folder.'/catalog/'.$file_name;
     }
+    
+    public function getCardImageUrl()
+    {
+        return $this->getImageBig();
+    }
 
     public function getMatrixId(): ?int
     {
@@ -244,6 +258,8 @@ class Product extends Page
     {
         if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
             return $this->getMaterialName();
+        }elseif ($this->getType()->getId() === self::ISOLITE_TYPE_ID){
+            return 'Жалюзи Isolite';
         }elseif ($this->getType()){
             return $this->getMaterialName().' жалюзи';
         }
