@@ -70,6 +70,7 @@ class SimpleCatalogController extends AbstractController
         return $this->render('simple_catalog/index.html.twig', [
             'page' => $page,
             'items' => [],
+            'cardArea' => true,
         ]);
     }
     

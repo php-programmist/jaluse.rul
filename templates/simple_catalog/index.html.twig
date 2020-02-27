@@ -38,7 +38,14 @@
             {% endblock content %}
 
             {% block footer %}
-                <div class="cart-footer-zag">Цена от {{ page.price }} рублей за изделие</div>
+                <div class="cart-footer-zag">
+                    Цена от
+                    {% if cardArea??false %}
+                        {{ page.price }} руб/м2
+                    {% else %}
+                        {{ page.price }} рублей за изделие
+                    {% endif %}
+                </div>
             {% endblock footer %}
         {% endembed %}
     {% endif %}
