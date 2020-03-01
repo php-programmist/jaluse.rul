@@ -9,6 +9,7 @@ easy_admin:
                 - 'css/admin.css'
             js:
                 - 'js/apply_button.js'
+                - 'js/cache_clear.js'
     list:
         max_results: 100
     show:
