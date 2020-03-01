@@ -1,14 +1,51 @@
 <?php
 
 namespace App\Controller\Admin;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use App\Logger\FileSqlLogger;
 /**
  * @Route("/admin")
  */
 class AdminController extends EasyAdminController
 {
+    /**
+     * @var AdapterInterface
+     */
+    protected $cache;
+    /**
+     * @var FileSqlLogger
+     */
+    protected $sql_logger;
+    
+    public function __construct(AdapterInterface $cache,FileSqlLogger $sql_logger)
+    {
+        $this->cache = $cache;
+        $this->sql_logger = $sql_logger;
+    }
+    
+    protected function initialize(Request $request)
+    {
+        parent::initialize($request);
+        if ($this->em) {
+            $connection = $this->em->getConnection();
+            $connection->getConfiguration()->setSQLLogger($this->sql_logger);
+        }
+    }
+    /**
+     * @Route("/cache-clear", name="admin_cache_clear")
+     */
+    public function cacheClearAction()
+    {
+        if ($this->cache->clear()) {
+            return $this->json(['status'=>true,'msg'=>'Кэш очищен']);
+        }else{
+            return $this->json(['status'=>false,'msg'=>'Произошла ошибка']);
+        }
+    }
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
