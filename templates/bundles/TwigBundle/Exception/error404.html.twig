@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}404 - Страница не найдена{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>404 Страница не найдена</h1>
+
+        <p>К сожалению, запрашиваемая Вами страница не найдена.</p>.
+        <p>
+            <a href="{{ path('home') }}">Вернуться на главную</a>.
+        </p>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ include('modules/scripts/yandex_metrics.html.twig') }}
+    <script>
+		window.onload = function (){
+			yaCounter57496875.reachGoal('404error');
+		}
+    </script>
+{% endblock %}
