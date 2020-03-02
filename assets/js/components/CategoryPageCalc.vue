@@ -2,14 +2,14 @@
 	<div class="row catalog-calculator">
 		<div class="col-md-2 col-sm-12">
 			<h3>Фильтры:</h3>
-			<div class="type_selector" v-show="types.length > 0">
+			<div class="type_selector" v-show="types.length > 0 && (type_id == 0 || force_show_filters)">
 				<v-drop-down-selector
 					:items="types"
 					default_name="Выбрать вид"
 					v-model="type"
 				></v-drop-down-selector>
 			</div>
-			<div class="material_selector" v-show="materials.length > 0">
+			<div class="material_selector" v-show="materials.length > 0 && material_id == 0">
 				<v-drop-down-selector
 					:items="materials"
 					default_name="Выбрать изделие"
@@ -87,7 +87,7 @@
 				},
 			};
 		},
-		props: ["type_id","material_id",],
+		props: ["type_id","material_id","force_show_filters"],
 		components: {
 			'v-consultation-form': ConsultationForm,
 			'v-popup-product-configurator': PopupProductConfigurator,

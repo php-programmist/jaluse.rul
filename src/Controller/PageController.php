@@ -91,10 +91,11 @@ class PageController extends AbstractController
         }
         $limit = 48;
         $items = $this->product_repository->findFiltered($filters, 0, $limit);
-        
+        $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         return $this->render('page/catalog.html.twig', [
             'page'  => $catalog,
             'items' => $items,
+            'force_show_filters' => $force_show_filters,
         ]);
     }
     

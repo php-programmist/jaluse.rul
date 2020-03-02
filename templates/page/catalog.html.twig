@@ -32,6 +32,7 @@
             <v-category-page-calc
                     type_id="{{ page.type.id??0 }}"
                     material_id="{{ page.material.id??0 }}"
+                    force_show_filters="{{ force_show_filters ?? 0 }}"
             >
                 <div class="products">
                     {% for item in items %}
