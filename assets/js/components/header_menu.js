@@ -18,7 +18,7 @@ $(window).scroll(function () {
 			$('.header-n1').css({display: 'block'});
 			$('.header-n2').css({background: 'rgba(0,0,0, 1)'});
 			$('.headern2phone').css({display: 'none'});
-			$('.vip-menu').css({top: '143px'});
+			$('.vip-menu').css({top: '120px'});
 		}
 	}
 });
