@@ -17,7 +17,6 @@ RewriteRule zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/$ /rulonnyie-shtoryi/uni/
 RewriteRule zhalyuzi/vertikalnye/alyuminievye/$ /zhalyuzi/gorizontalnye/alyuminievye/ [R=301,L]
 RewriteRule rulonnyie-shtoryi/den-noch/combo/$ /rulonnyie-shtoryi/den-noch/ [R=301,L]
 RewriteRule rulonnyie-shtoryi/den-noch/zebra/$ /rulonnyie-shtoryi/den-noch/ [R=301,L]
-RewriteRule rulonnyie-shtoryi/den-noch/$ /rulonnyie-shtoryi/uni/ [R=301,L]
 RewriteRule zhalyuzi/bambukovye/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/avtomatika/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/uni/$ /zhalyuzi/ [R=301,L]
