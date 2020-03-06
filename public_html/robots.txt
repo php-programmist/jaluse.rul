@@ -31,6 +31,7 @@ Disallow: /vidyi-zhalyuzi-na-okna/
 Disallow: /stoimost-zhalyuzi-na-plastikovyie-okna/
 Disallow: /kupit-zhalyuzi-na-okna-v-internet-magazine/
 Disallow: /somfy/
+Disallow: /confidence-policy/
 
 Host: https://jaluse.ru/
 Sitemap: https://jaluse.ru/sitemap.xml

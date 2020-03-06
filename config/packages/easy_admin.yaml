@@ -11,9 +11,9 @@ easy_admin:
                 - 'js/apply_button.js'
                 - 'js/cache_clear.js'
     list:
-        max_results: 100
+        max_results: 500
     show:
-        max_results: 100
+        max_results: 500
     entities:
         Page:
              class: App\Entity\Page
