@@ -122,9 +122,6 @@ RewriteRule zhalyuzi/multifakturnyie-zhalyuzi/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/rolikovyie-zhalyuzi/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/derevyannyie/$ /zhalyuzi/gorizontalnye/derevyannye/ [R=301,L]
 RewriteRule zhalyuzi/tkanevye/$ /zhalyuzi/vertikalnye/tkanevye/ [R=301,L]
-RewriteRule zhalyuzi/vertikalnye/tkanevye/$ /zhalyuzi/vertikalnye/plastikovyie/ [R=301,L]
-RewriteRule zhalyuzi/vertikalnye/plastikovyie/$ /zhalyuzi/ [R=301,L]
-RewriteRule zhalyuzi/vertikalnye/plastikovyie/$ /zhalyuzi/vertikalnye/plastikovyie/ [R=301,L]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
