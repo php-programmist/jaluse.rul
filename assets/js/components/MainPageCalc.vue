@@ -123,6 +123,7 @@
 				productConfigs:{}
 			};
 		},
+		props:["type_filter"],
 		components: {
 			'v-consultation-form': ConsultationForm,
 			'v-order-form': OrderForm,
@@ -135,6 +136,9 @@
 			axios.get('/api/calc/getInitData')
 				.then(response => {
 					this.types = response.data.types;
+					if (typeof this.type_filter !== 'undefined') {
+						this.types = this.types.filter(type => this.type_filter.includes(type.id));
+					}
 					this.colors = response.data.colors;
 					this.categories = response.data.categories;
 					this.category = this.categories[0];
@@ -213,6 +217,8 @@
 				query += 'category=' + this.category.id;
 				if (this.type.id > 0) {
 					query += '&type=' + this.type.id;
+				}else{
+					query += '&type=' + this.types[0].id;
 				}
 				if (this.material.id > 0) {
 					query += '&material=' + this.material.id;
