@@ -3,7 +3,7 @@
     <div class="header-n1">
         <div class="container ">
             <div class="row">
-                <div class="header-n1-logo col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6 align-self-center">
+                <div class="header-n1-logo col-xl-4 col-lg-5 col-md-4 col-sm-5 col-6 align-self-center">
                     <a href="/"><img {{ lazy_load('/img/logo/logo.png') }} alt="*"></a>
                 </div>
                 <div class="header-n1-modphone col-2 align-self-center">
@@ -12,14 +12,20 @@
                     </a>
                 </div>
 
-                <div class="header-n1-menu col-xl-6 col-lg-6 align-self-center">
-                    <a href="{{ path('simple_page_dostavka') }}" class="header-n1-menu-ssil ">Доставка</a>
-                    <a href="{{ path('simple_page_pay') }}" class="header-n1-menu-pay ">Оплата</a>
-                    <a href="{{ path('simple_page_uslugi') }}" class="header-n1-menu-ssil2 header-n1-menu-ssil">Услуги</a>
-                    <a href="{{ path('simple_page_kontaktyi') }}" class="header-n1-menu-ssil3 header-n1-menu-ssil">Контакты</a>
+                <div class="header-n1-menu col-xl-4 col-lg-4 align-self-center">
+                    <div class="row">
+                        <div class="col-6 header-n1-menu__item"><a href="{{ path('simple_page_dostavka') }}" class="header-n1-menu-ssil ">Доставка</a></div>
+                        <div class="col-6 header-n1-menu__item"><a href="{{ path('simple_page_uslugi') }}" class="header-n1-menu-ssil2 header-n1-menu-ssil">Услуги</a></div>
+                        <div class="col-6 header-n1-menu__item"><a href="{{ path('simple_page_pay') }}" class="header-n1-menu-pay header-n1-menu-ssil">Оплата</a></div>
+                        <div class="col-6 header-n1-menu__item"><a href="{{ path('simple_page_kontaktyi') }}" class="header-n1-menu-ssil3 header-n1-menu-ssil">Контакты</a></div>
+                    </div>
+
+
+
+
                 </div>
                 <div class="col-xl-2 header-n1-phone header-n1-phone1 align-self-center">
-                    <a href="tel:74959843848" class="header-n1-phone-phone">+7 (495) 984-38-48</a>
+                    <a href="tel:88007757238" class="header-n1-phone-phone">8-800-775-72-38</a>
                     <div class="social_icons">
                         <div class="social_icons__icon_whatsapp social_icons__icon">
                             <a href="https://wa.me/79104014017" title="Написать на Whatsapp" target="_blank"></a>
@@ -33,8 +39,7 @@
                     </div>
                 </div>
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 header-n1-phone align-self-center">
-                    <small>Бесплатно по России</small>
-                    <b><a href="tel:88007757238" class="header-n1-phone-phone">8-800-775-72-38</a></b>
+                    <b><a href="tel:74959843848" class="header-n1-phone-phone">+7 (495) 984-38-48</a></b>
                     <small>e-mail:</small><a class="header-n1-phone-mail" href="mailto:info@jaluse.ru" >info@jaluse.ru</a>
 
                 </div>
@@ -184,7 +189,7 @@
                     <a href="/shtory-dlya-besedok-i-verand/shtory-pvh/">Шторы ПВХ</a>
                 </div>
                 <div class="vip-menu-wrap menu-wrap headern2phone">
-                    <a href="#">8-800-775-72-38</a>
+                    <a href="tel:74959843848">+7 (495) 984-38-48</a>
                 </div>
                 <div class="menu-wrap menu-none"><a href="{{ path('simple_page_dostavka') }}">Доставка</a></div>
                 <div class="menu-wrap menu-none"><a href="{{ path('simple_page_pay') }}">Оплата</a></div>

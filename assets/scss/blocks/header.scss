@@ -34,7 +34,10 @@
         color: $black;
         position: relative;
         font-size: 15px;
-
+      }
+      &__item{
+        text-align: left;
+        padding: 10px;
       }
       &-ssil {
         &:before {
@@ -54,14 +57,18 @@
       &-ssil3:before {
         background-position: -202px 0
       }
-      &-pay:before{
-        content: "";
-        background: url(/img/oplata.png) no-repeat;
-        padding: 6px 15px;
+      &-pay{
+        &:before{
+          content: "";
+          background: url(/img/oplata.png) no-repeat;
+          padding: 14px 15px;
+
+        }
       }
+
     }
     &-phone {
-      text-align: right;
+      text-align: left;
       small {
         color: $text-grey;
       }
@@ -121,7 +128,7 @@
     }
     .vip-menu {
       position: fixed;
-      top: 120px;
+      top: 180px;
       left: 0;
       width: 100%;
       display: none;

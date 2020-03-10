@@ -4,8 +4,8 @@
         <div class="zag col-12">Наши клиенты</div>
         <div class="client-wraper">
             <div class="client-wrap">
-                {% for i in 1..15 %}
-                    <div class="client-block text-center"><img {{ slick_lazy_load('/img/b'~i~'.png') }} alt="*"></div>
+                {% for i in 1..10 %}
+                    <div class="client-block text-center"><img {{ slick_lazy_load('/img/our-clients/'~i~'.png') }} alt="*"></div>
                 {% endfor %}
             </div>
         </div>

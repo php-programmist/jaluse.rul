@@ -4,7 +4,7 @@ $('.headermbtn').click(function (event) {
 	$('.header-n2').slideToggle(1000);
 });
 var headertop = $('.header').height();
-
+$('.vip-menu').css({top: (headertop-2)+'px'});
 $(window).scroll(function () {
 	if ($(window).width() > 1199) {
 		if ($(window).scrollTop() > headertop) {
@@ -18,7 +18,7 @@ $(window).scroll(function () {
 			$('.header-n1').css({display: 'block'});
 			$('.header-n2').css({background: 'rgba(0,0,0, 1)'});
 			$('.headern2phone').css({display: 'none'});
-			$('.vip-menu').css({top: '120px'});
+			$('.vip-menu').css({top: (headertop-2)+'px'});
 		}
 	}
 });

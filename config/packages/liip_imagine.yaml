@@ -16,4 +16,4 @@ liip_imagine:
         catalog_thumb:
             quality: 75
             filters:
-                thumbnail: { size: [395, 395], mode: outbound }
+                thumbnail: { size: [235, 235], mode: outbound }
