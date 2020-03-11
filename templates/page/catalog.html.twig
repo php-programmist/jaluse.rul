@@ -52,6 +52,10 @@
         </div>
     </div>
     {{ include('modules/_seo_block.html.twig') }}
+    {% if show_calc %}
+        {{ include('modules/_calculator.html.twig') }}
+    {% endif %}
+
     {{ include('modules/_our_works.html.twig') }}
     {{ include('modules/_employees.html.twig') }}
     {{ include('modules/_clients.html.twig') }}
