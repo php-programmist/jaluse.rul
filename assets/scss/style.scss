@@ -67,8 +67,6 @@ p{
 .block1{
   color: $white;
   position: relative;
-  background: url(/img/2.jpg) center no-repeat;
-  background-size: cover;
   overflow: hidden;
 
   .b1fonwrap{
@@ -81,7 +79,7 @@ p{
     top: 0;
     .b1fon{
       width: 100%;
-      min-height: 636px;
+      min-height: 674px;
 
 
     }
@@ -946,23 +944,4 @@ p{
 .video-tpl iframe {
   width: 100% !important;
   height: 225px !important;
-}
-.content {
-  ul > li {
-    color: #03131d;
-    font-size: 14px;
-    line-height: 26px;
-    margin: 0 0 20px;
-    padding-left: 15px;
-    padding-right: 20px;
-    position: relative;
-    &::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: #f1a920;
-      font-size: 20px;
-      top: 1px;
-    }
-  }
 }

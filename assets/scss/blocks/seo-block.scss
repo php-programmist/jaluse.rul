@@ -41,25 +41,7 @@
 			padding: 0;
 			margin-bottom: 10px;
 		}
-		ul{
-			li{
-				margin-left: 40px;
-				position: relative;
-				line-height: 1.2;
-				margin-bottom: 10px;
-				&:before{
-					position: absolute;
-					content: '';
-					width: 20px;
-					height: 20px;
-					background: url(/img/seo_block/check1.svg) center no-repeat;
-					background-size: cover;
-					left: -30px;
-					top: 50%;
-					transform: translateY(-50%);
-				}
-			}
-		}
+
 		.seo-text-none{display: none;}
 	}
 	.seo-right{
@@ -72,6 +54,7 @@
 
 	}
 }
+
 @media (max-width: 992px){
 	.seo-block{
 		display: none;
