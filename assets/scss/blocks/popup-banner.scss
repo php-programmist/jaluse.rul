@@ -1,0 +1,234 @@
+.baner-wraper {
+  width: 100%;
+  position: fixed;
+  top: 10%;
+  right: 0;
+  display: none;
+  z-index: 199;
+}
+.banner-overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 200;
+  left: 0;
+  top: 0;
+}
+.baner-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 30px;
+  font-family: Roboto;
+  color: #fa991e;
+  background: #fff;
+  opacity: 0.8;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 205;
+}
+.baner-close:hover {
+  opacity: .9;
+  background: #fa991e;
+  color: #17769c;
+}
+.baner-wraper * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.baner-container {
+  position: relative;
+  width: 1270px;
+  background: url(/img/popup-banner/baner_fon.png) center no-repeat;
+  background-size: cover;
+  min-height: 450px;
+  font-family: Roboto;
+  margin-right: auto;
+  margin-left: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 201;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.baner-container .baner-left {
+  padding-left: 290px;
+  padding-top: 15px;
+  width: 990px;
+}
+.baner-container .baner-left-logo {
+  max-width: 650px;
+  margin-bottom: 60px;
+}
+.baner-container .baner-left-line {
+  width: 650px;
+  max-width: 650px;
+  height: 40px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 31px;
+  font-weight: 400;
+  background: url(/img/popup-banner/baner_line1.png) center no-repeat;
+  background-size: cover;
+  text-align: center;
+  line-height: 40px;
+  margin-bottom: 20px;
+}
+.baner-container .baner-left-line2 {
+  background: url(/img/popup-banner/baner_line2.png) center no-repeat;
+  background-size: cover;
+}
+.baner-container .baner-right {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.67);
+}
+.baner-container .baner-right-title {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+.baner-container .baner-right form {
+  text-align: center;
+}
+.baner-container .baner-right form input {
+  display: block;
+  width: 85%;
+  margin: auto;
+  outline: none;
+  color: #fff;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 50px;
+  border: none;
+  text-align: center;
+  background: rgba(136, 136, 141, 0.5);
+  margin-bottom: 30px;
+}
+.baner-container .baner-right form label {
+  padding-bottom: 10px;
+  display: block;
+}
+.baner-container .baner-right form .baner-btn {
+  cursor: pointer;
+  background: #88888d;
+}
+@media (max-width: 1275px) {
+  .baner-container {
+    width: 960px;
+    background-position: right;
+  }
+  .baner-container .baner-left {
+    width: 680px;
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+  .baner-container .baner-left-logo {
+    max-width: 550px;
+  }
+}
+@media (max-width: 991px) {
+  .baner-container {
+    width: 720px;
+    min-height: 300px;
+    background-position: right;
+  }
+  .baner-container .baner-left {
+    width: 480px;
+    padding-top: 30px;
+  }
+  .baner-container .baner-left-logo {
+    max-width: 400px;
+    margin-bottom: 40px;
+  }
+  .baner-container .baner-left-line {
+    width: 400px;
+    font-size: 20px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+  }
+  .baner-container .baner-right {
+    width: 240px;
+    font-size: 16px;
+  }
+  .baner-container .baner-right-title {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  .baner-container .baner-right form input {
+    margin-bottom: 20px;
+    height: 45px;
+  }
+  .baner-container .baner-right form label {
+    padding-bottom: 3px;
+  }
+}
+@media (max-width: 767px) {
+  .baner-container {
+    width: 540px;
+  }
+  .baner-container .baner-left {
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 0;
+  }
+  .baner-container .baner-left-logo {
+    max-width: 150px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+  .baner-container .baner-left-line {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+  }
+  .baner-container .baner-right {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .baner-container .baner-right-title {
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  .baner-container .baner-right form {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+  }
+}
+@media (max-width: 567px) {
+  .baner-container {
+    max-width: 98%;
+  }
+}
+@media (max-width: 470px) {
+  .baner-container .baner-left-line {
+    font-size: 18px;
+  }
+  .baner-container .baner-right form {
+    width: 100%;
+  }
+}
+@media (max-width: 370px) {
+  .baner-container .baner-left-line {
+    font-size: 15px;
+  }
+  .baner-container .baner-right {
+    margin-top: 10px;
+  }
+  .baner-container .baner-right form {
+    width: 100%;
+  }
+}
