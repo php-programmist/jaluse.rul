@@ -80,6 +80,9 @@
   text-align: center;
   line-height: 40px;
   margin-bottom: 20px;
+  &--small{
+    font-size: 20px;
+  }
 }
 .baner-container .baner-left-line2 {
   background: url(/img/popup-banner/baner_line2.png) center no-repeat;
@@ -156,6 +159,9 @@
     height: 30px;
     line-height: 30px;
     margin-bottom: 10px;
+    &--small{
+      font-size: 12px;
+    }
   }
   .baner-container .baner-right {
     width: 240px;
