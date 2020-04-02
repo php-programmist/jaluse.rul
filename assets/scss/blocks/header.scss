@@ -1,3 +1,6 @@
+.carantin {
+  color: red;
+}
 .header {
   background: transparent;
   position: fixed;
@@ -11,6 +14,18 @@
     background-color: #fff;
     padding-bottom: 1px;
     padding-top: 1px;
+    position: relative;
+    .carantin{
+      position: absolute;
+      bottom: 0;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+      color: red;
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
     &-modphone {
       display: none;
     }
