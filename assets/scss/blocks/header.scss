@@ -133,6 +133,7 @@
     }
     &-menu {
       text-align: center;
+      position: relative;
     }
     .menu-wrap {
       display: inline-block;
@@ -142,10 +143,9 @@
       display: none;
     }
     .vip-menu {
-      position: fixed;
-      top: 180px;
+      position: absolute;
+      top: 43px;
       left: 0;
-      width: 100%;
       display: none;
 
       .container {
@@ -157,7 +157,6 @@
         border-radius: 3px;
         border: 1px solid #ededed;
         border-bottom: none;
-
       }
       .menu-card {
         z-index: 2;
