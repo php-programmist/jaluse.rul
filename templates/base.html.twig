@@ -12,6 +12,7 @@
         <meta property="og:description" content="{{ block('description') }}" />
         <meta property="og:url" content="{{ app.request.uri }}" />
         {{ include('modules/scripts/schema.html.twig',{ title: block('title'), description: block('description')}) }}
+        {{ schema_breadcrumbs(page) }}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
