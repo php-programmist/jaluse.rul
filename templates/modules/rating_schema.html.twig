@@ -1,0 +1,30 @@
+<div class="rating_schema">
+    <div
+            class="pl-4 mt-2"
+            itemprop="aggregateRating"
+            itemscope="itemscope"
+            itemtype="http://schema.org/AggregateRating"
+    >
+        <div class="rating-box mr-2">
+            {{ stars(4.5) }}
+        </div>
+        <meta itemprop="worstRating" content="1">
+
+        <div class="rating-details">
+          <span class="mr-1">
+                <strong>
+                    <span itemprop="ratingValue">{{ page.ratingValue }}</span>
+                </strong>&nbsp;
+                <span class="text-muted">из&nbsp;
+                    <span itemprop="bestRating">5</span>
+                </span>
+            </span>
+            <em class="small text-muted">
+                <span itemprop="ratingCount">{{ page.ratingCount }}</span>&nbsp;оценок
+            </em>
+        </div>
+
+        <div class="clr"></div>
+        <p class="small text-muted"> Рейтинг составлялся по отзывам от клиентов.</p>
+    </div>
+</div>

@@ -29,6 +29,7 @@
 {% block h1 %}{{ page.name }}{% endblock %}
 
 {% block body %}
+    {{ include('modules/rating_schema.html.twig') }}
     {% embed 'embedded/card.html.twig' %}
         {% block image %}<img src="{{ page.imageBig }}" alt="*">{% endblock image %}
         {% block header %}{{ page.name }}{% endblock header %}

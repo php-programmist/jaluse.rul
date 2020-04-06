@@ -10,6 +10,19 @@ easy_admin:
             js:
                 - 'js/apply_button.js'
                 - 'js/cache_clear.js'
+        menu:
+            - {label: 'Каталоги',icon: 'file-alt',entity: 'Catalog'}
+            - {label: 'Помещения',icon: 'file-alt',entity: 'Location'}
+            - {label: 'Маркизы',icon: 'file-alt',entity: 'Markiz'}
+            - {label: 'Рольставни',icon: 'file-alt',entity: 'Roll'}
+            - {label: 'Римские шторы',icon: 'file-alt',entity: 'Roman'}
+            - {label: 'Простые страницы',icon: 'file-alt',entity: 'Simple'}
+            - {label: 'Типы',icon: 'file-alt',entity: 'Type'}
+            - {label: 'Цвета',icon: 'file-alt',entity: 'Color'}
+            - {label: 'Подтипы',icon: 'file-alt',entity: 'Material'}
+            - {label: 'Категории',icon: 'file-alt',entity: 'Category'}
+            - {label: 'Настройки',icon: 'cogs',entity: 'Config'}
+            - {label: 'Генератор',icon: 'cogs',route: 'admin_generator_index'}
     list:
         max_results: 500
     show:

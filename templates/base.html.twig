@@ -18,9 +18,9 @@
         {% endblock %}
         {{ include('modules/scripts/yandex_metrics.html.twig') }}
     </head>
-    <body>
+    <body itemscope="itemscope" itemtype="https://schema.org/Product">
     {{ include('modules/_header.html.twig') }}
-    {{ include('modules/_utp.html.twig', { h1 : block('h1')??null }) }}
+    {{ include('modules/_utp.html.twig', { h1 : block('h1')??null, description: block('description') }) }}
         {% block body %}
 
         {% endblock %}

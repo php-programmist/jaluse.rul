@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\RatingTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +17,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Page
 {
+    use RatingTrait;
+    const MIN_RATING_VALUE = 4.7;
+    const MAX_RATING_VALUE = 4.9;
+    const MIN_RATING_COUNT = 8;
+    const MAX_RATING_COUNT = 35;
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
