@@ -1,0 +1,20 @@
+{% if page.cardDescription %}
+    {% embed 'embedded/card.html.twig' %}
+        {% block image %}<img {{ lazy_load(page.cardImageUrl) }} alt="{{ page.name }}">{% endblock image %}
+        {% block header %}{{ page.name }} цена{% endblock header %}
+        {% block content %}
+            {{ page.cardDescription|raw }}
+        {% endblock content %}
+
+        {% block footer %}
+            <div class="cart-footer-zag">
+                Цена от
+                {% if cardArea??false %}
+                    {{ page.price }} руб/м2
+                {% else %}
+                    {{ page.price }} рублей за изделие
+                {% endif %}
+            </div>
+        {% endblock footer %}
+    {% endembed %}
+{% endif %}

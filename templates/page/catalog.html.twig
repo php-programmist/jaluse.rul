@@ -2,10 +2,12 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('catalog') }}
+    {{ encore_entry_link_tags('simple_catalog') }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('catalog') }}
+    {{ encore_entry_script_tags('simple_catalog') }}
 {% endblock %}
 
 {% block title %}
@@ -52,6 +54,8 @@
             </v-category-page-calc>
         </div>
     </div>
+
+    {{ include('modules/_catalog_card.html.twig') }}
     {{ include('modules/_seo_block.html.twig') }}
     {% if show_calc %}
         {{ include('modules/_calculator.html.twig') }}
