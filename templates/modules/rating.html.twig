@@ -1,0 +1,55 @@
+<!--Блок РЕЙТИНГИ начало-->
+{% set ratingItems = [
+    {
+        'link' : 'https://zoon.ru/msk/building/torgovo-servisnaya_kompaniya_masterskaya_zhalyuzi/',
+        'img': 'img/rating/logo-zoon.png',
+        'alt': 'Zoon.ru',
+        'stars': 4.5,
+        'rating': 4.6
+    },
+    {
+        'link' : 'https://yandex.ru/maps/org/masterskaya_zhalyuzi/199082594181/',
+        'img': 'img/rating/logo-yandex.png',
+        'alt': 'Yandex',
+        'stars': 4.5,
+        'rating': 4.3
+    },
+    {
+        'link' : 'https://goo.gl/maps/RomdL3CkncjsZyr47',
+        'img': 'img/rating/logo-google.png',
+        'alt': 'Google',
+        'stars': 5,
+        'rating': 5
+    },
+    {
+        'link' : 'https://go.2gis.com/i6gws',
+        'img': 'img/rating/logo-2gis.png',
+        'alt': '2 Gis',
+        'stars': 5,
+        'rating': 5
+    },
+] %}
+<div class="rating">
+    <div class="container container2">
+        <div class="zag">Независимые отзывы:</div>
+        <div class="row">
+            {% for ratingItem in ratingItems %}
+                <div class="col-lg-3 col-6">
+                    <a target="_blank" href="{{ ratingItem.link }}">
+                        <div class="rating-card">
+                            <div class="img">
+                                <img {{ lazy_load(asset(ratingItem.img)) }} alt="{{ ratingItem.alt }}">
+                            </div>
+                            <div class="text">
+                                <span>рейтинг</span>
+                                {{ stars(ratingItem.stars) }}
+                                <b>{{ ratingItem.rating }} из 5</b>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!--Блок РЕЙТИНГИ Конец-->
