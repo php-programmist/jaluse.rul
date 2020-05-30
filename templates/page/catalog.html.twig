@@ -56,7 +56,10 @@
     </div>
 
     {{ include('modules/_catalog_card.html.twig') }}
-    {{ include('modules/rating.html.twig') }}
+    {% block rating_block %}
+        {{ include('modules/rating.html.twig') }}
+    {% endblock %}
+
     {{ include('modules/_seo_block.html.twig') }}
     {% if show_calc %}
         {{ include('modules/_calculator.html.twig') }}
