@@ -54,8 +54,10 @@
             </v-category-page-calc>
         </div>
     </div>
+    {% block catalog_card %}
+        {{ include('modules/_catalog_card.html.twig') }}
+    {% endblock %}
 
-    {{ include('modules/_catalog_card.html.twig') }}
     {% block rating_block %}
         {{ include('modules/rating.html.twig') }}
     {% endblock %}
