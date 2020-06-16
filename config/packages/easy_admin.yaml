@@ -12,6 +12,7 @@ easy_admin:
                 - 'js/cache_clear.js'
         menu:
             - {label: 'Каталоги',icon: 'file-alt',entity: 'Catalog'}
+            - {label: 'Товары',icon: 'file-alt',entity: 'Product'}
             - {label: 'Помещения',icon: 'file-alt',entity: 'Location'}
             - {label: 'Маркизы',icon: 'file-alt',entity: 'Markiz'}
             - {label: 'Рольставни',icon: 'file-alt',entity: 'Roll'}

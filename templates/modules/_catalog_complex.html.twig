@@ -2,9 +2,14 @@
     {% for item in items %}
         <div class="product">
             <a href="/{{item.uri}}/" target="_blank">
-                <div class="product__image_wrapper">
-                    <img {{ lazy_load(asset(item.cardImageUrl) | imagine_filter('catalog_thumb')) }} alt="{{ item.name }}">
-                </div>
+                {% if needWrapper ?? true %}
+                    <div class="product__image_wrapper">
+                {% endif %}
+                        <img {{ lazy_load(asset(item.cardImageUrl) | imagine_filter('catalog_thumb')) }} alt="{{ item.name }}">
+                {% if needWrapper ?? true %}
+                    </div>
+                {% endif %}
+
             </a>
             <div class="product__name">
                 <a href="/{{item.uri}}/" target="_blank">{{ item.name }}</a>

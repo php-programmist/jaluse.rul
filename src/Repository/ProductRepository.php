@@ -49,6 +49,20 @@ class ProductRepository extends ServiceEntityRepository
                      ->getSingleScalarResult();
     }
     
+    public function getPopular($filters = [],$limit=0)
+    {
+        $query               = $this->getFilteredQB($filters);
+        $query->andWhere('p.popular = true')
+            ->orderBy('p.price', 'DESC')
+            ->addOrderBy('p.matrix_id', 'DESC')
+        ;
+        if ($limit) {
+            $query->setMaxResults($limit);
+        }
+        return $query->getQuery()
+                     ->getResult();
+    }
+    
     /**
      * @param array $filters
      *

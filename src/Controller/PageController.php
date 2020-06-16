@@ -89,8 +89,8 @@ class PageController extends AbstractController
         if ($catalog->getMaterial()) {
             $filters['material'] = $catalog->getMaterial()->getId();
         }
-        $limit = 48;
-        $items = $this->product_repository->findFiltered($filters, 0, $limit);
+        $limit = 0;
+        $items = $this->product_repository->getPopular($filters,$limit);
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         $show_calc = in_array($catalog->getUri(),['zhalyuzi','rulonnyie-shtoryi']);
         $cardArea = !in_array($catalog->getUri(),['markizyi','rulonnyie-shtoryi']);

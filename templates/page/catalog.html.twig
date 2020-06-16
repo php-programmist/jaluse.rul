@@ -37,23 +37,19 @@
                     material_id="{{ page.material.id??0 }}"
                     force_show_filters="{{ force_show_filters ?? 0 }}"
             >
-                <div class="products">
-                    {% for item in items %}
-                        <div class="product">
-                            <div class="product__name">
-                                <a href="/{{ item.uri }}/" target="_blank">
-                                    {{ item.name }}
-                                </a>
-                            </div>
-                            <div class="product__price">{{ min_price(item) }}</div>
-                            <button class="mbtn mbtn_orange">Рассчитать</button>
-                        </div>
-                    {% endfor %}
-                </div>
-
             </v-category-page-calc>
         </div>
     </div>
+    {% if items is not empty %}
+        <div class="container-fluid catalog-container">
+            <div class="row catalog-calculator">
+                <div class="offset-md-2 col-md-9 col-sm-12">
+                    <h2>Рекомендуемые {{ page.name }}:</h2>
+                    {{ include('modules/_catalog_complex.html.twig',{needWrapper: false}) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {% block catalog_card %}
         {{ include('modules/_catalog_card.html.twig') }}
     {% endblock %}
