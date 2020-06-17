@@ -40,6 +40,11 @@ class Catalog extends Page
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $recommendedTitle;
     
     public function getPrice(): ?float
     {
@@ -81,6 +86,18 @@ class Catalog extends Page
     {
         $this->material = $material;
         
+        return $this;
+    }
+
+    public function getRecommendedTitle(): ?string
+    {
+        return $this->recommendedTitle;
+    }
+
+    public function setRecommendedTitle(?string $recommendedTitle): self
+    {
+        $this->recommendedTitle = $recommendedTitle;
+
         return $this;
     }
 }

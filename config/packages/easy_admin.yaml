@@ -111,6 +111,7 @@ easy_admin:
                     - { property: 'cardImageFile', type: 'vich_image', label: 'Изображение в карточке' }
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
+                    - { property: 'recommendedTitle', label: 'Заголовок рекомендуемых товаров'}
                     - { property: 'description', label: 'Мета-описание'}
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
