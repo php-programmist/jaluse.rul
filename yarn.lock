@@ -3957,6 +3957,11 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
+jquery@>2.1.4:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
+  integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+
 jquery@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
@@ -5790,6 +5795,18 @@ readdirp@~3.3.0:
   integrity sha512-zz0pAkSPOXXm1viEwygWIPSPkcBYjW1xU5j/JBh5t9bGCJwa6f9+BJa6VaB2g+b55yVrmXzqkyLf4xaWYM0IkQ==
   dependencies:
     picomatch "^2.0.7"
+
+readmore-js@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/readmore-js/-/readmore-js-2.2.1.tgz#ab75036c8a47b6ffa2d3d14cd527c7f479edc117"
+  integrity sha512-hbPP0nQpYYkAywCEZ8ozHivvhWyHic37KJ2IXrHES4qzjp0+nmw8R33MeyMAtXBZfXX4Es8cpd5JBVf9qj47+Q==
+  dependencies:
+    jquery ">2.1.4"
+
+readmore@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/readmore/-/readmore-0.0.2.tgz#c895eb542186d2dc7020e4fd3efdf3bf1eeb8a00"
+  integrity sha1-yJXrVCGG0txwIOT9Pv3zvx7rigA=
 
 redent@^1.0.0:
   version "1.0.0"
