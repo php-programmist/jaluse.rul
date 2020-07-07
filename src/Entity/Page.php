@@ -14,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="page_type", type="string")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class Page
 {
@@ -397,5 +398,14 @@ class Page
         $this->cardDescription = $cardDescription;
 
         return $this;
+    }
+    
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function changeModifyDate()
+    {
+        $this->modified_at = new \DateTimeImmutable();
     }
 }

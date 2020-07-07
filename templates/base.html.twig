@@ -11,6 +11,9 @@
         <meta property="og:keywords" content="{{ block('keywords') }}" />
         <meta property="og:description" content="{{ block('description') }}" />
         <meta property="og:url" content="{{ app.request.uri }}" />
+        {% if page.modifiedAt is not empty-%}
+            <meta http-equiv="Last-Modified" content="{{ page.modifiedAt|date('D, d M Y H:i:s') }} GMT">
+        {% endif %}
         {{ include('modules/scripts/schema.html.twig',{ title: block('title'), description: block('description')}) }}
         {{ schema_breadcrumbs(page) }}
         {% block stylesheets %}
