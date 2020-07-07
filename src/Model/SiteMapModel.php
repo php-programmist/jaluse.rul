@@ -44,10 +44,10 @@ class SiteMapModel
     
     private function addContentPages()
     {
-        $pages    = $this->page_repository->findBy([], ['id' => 'asc']);
+        $pages    = $this->page_repository->findBy(['published'=>true], ['id' => 'asc']);
         $excluded = ['/404/'];
         foreach ($pages as $page) {
-            if (in_array($page->getPath(), $excluded)) {
+            if (in_array($page->getPath(), $excluded, true)) {
                 continue;
             }
             $this->pages[] = new PageDto($page->getPath(), $page->getModifiedAt());
