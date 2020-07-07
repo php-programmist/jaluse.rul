@@ -29,8 +29,11 @@ class SchemaBreadcrumbs extends AbstractExtension
         ];
     }
 
-    public function render(Environment $twig, Page $page)
+    public function render(Environment $twig, ?Page $page)
     {
+        if (null === $page) {
+            return '';
+        }
         $data = $this->breadcrumbs->getSchema($page);
         if (empty($data)) {
             return '';

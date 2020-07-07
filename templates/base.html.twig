@@ -11,11 +11,11 @@
         <meta property="og:keywords" content="{{ block('keywords') }}" />
         <meta property="og:description" content="{{ block('description') }}" />
         <meta property="og:url" content="{{ app.request.uri }}" />
-        {% if page.modifiedAt is not empty-%}
+        {% if page is defined -%}
             <meta http-equiv="Last-Modified" content="{{ page.modifiedAt|date('D, d M Y H:i:s') }} GMT">
         {% endif %}
         {{ include('modules/scripts/schema.html.twig',{ title: block('title'), description: block('description')}) }}
-        {{ schema_breadcrumbs(page) }}
+        {{ schema_breadcrumbs(page ?? null) }}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
