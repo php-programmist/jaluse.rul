@@ -144,6 +144,9 @@ class Page
 
     public function getPath(): ?string
     {
+        if ($this->uri === '/' ) {
+            return '/';
+        }
         return '/'.$this->uri.'/';
     }
 
