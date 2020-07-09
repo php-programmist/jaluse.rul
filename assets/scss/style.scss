@@ -945,3 +945,10 @@ p{
   width: 100% !important;
   height: 225px !important;
 }
+.pagination{
+  .page-item{
+    &::before{
+      display: none;
+    }
+  }
+}
