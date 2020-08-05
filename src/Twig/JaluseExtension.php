@@ -26,16 +26,19 @@ class JaluseExtension extends AbstractExtension
         ];
     }
 
-    public function min_price(Product $product)
+    public function min_price(Product $product, bool $digitsOnly = false)
     {
         $min_price = $this->calculation_service->getMinPrice($product);
+        if ($digitsOnly){
+            return $min_price;
+        }
         if ( ! $min_price || !$product->getType()) {
             return 'рассчитывается индивидуально';
         }
         if ( $product->getType()->getCalculationType() === 'simple') {
             return $min_price.' рублей за м<sup>2</sup>';
-        }else{
-            return 'от '.$min_price.' рублей за изделие';
         }
+    
+        return 'от '.$min_price.' рублей за изделие';
     }
 }

@@ -258,11 +258,16 @@ class Product extends Page
     {
         if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
             return $this->getMaterialName();
-        }elseif ($this->getType()->getId() === self::ISOLITE_TYPE_ID){
+        }
+    
+        if ($this->getType()->getId() === self::ISOLITE_TYPE_ID) {
             return 'Жалюзи Isolite';
-        }elseif ($this->getType()){
+        }
+    
+        if ($this->getType()) {
             return $this->getMaterialName().' жалюзи';
         }
+    
         return 'Не установлен';
     }
     
@@ -270,9 +275,12 @@ class Product extends Page
     {
         if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
             return 'ткань';
-        }elseif ($this->getType()){
+        }
+    
+        if ($this->getType()) {
             return $this->getMaterialName();
         }
+    
         return 'Не установлен';
     }
     
@@ -294,5 +302,14 @@ class Product extends Page
             return 'simple';
         }
         return $this->getType()->getCalculationType();
+    }
+    
+    public function getDescriptionComputed()
+    {
+        if (!empty($this->getDescription())) {
+            return $this->getDescription();
+        }
+        return sprintf('%s купить от производителя в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ %s по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.',
+            $this->getName(),$this->getName());
     }
 }

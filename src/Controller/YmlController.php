@@ -2,23 +2,41 @@
 
 namespace App\Controller;
 
-use App\Model\YmlModel;
+use App\Entity\Catalog;
+use App\Repository\PageRepository;
+use App\Service\CatalogManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class YmlController extends AbstractController
 {
+    
     /**
-     * @Route("/yml/index.xml", name="yml",format="xml")
+     * @Route("/{token}.yml", name="dynamic_yaml",requirements={"token"=".+"}, format="xml")
+     * @param string         $token
+     * @param PageRepository $pageRepository
+     * @param CatalogManager $catalogManager
+     *
+     * @return Response
      */
-    public function index(YmlModel $model)
-    {
-        $offers         = $model->getOffers();
-        $main_page_data = $model->getMainPageData();
+    public function dynamicYaml(
+        string $token,
+        PageRepository $pageRepository,
+        CatalogManager $catalogManager
+    ): Response {
+        if (!$catalog = $pageRepository->findOneBy(['uri' => $token])) {
+            throw new NotFoundHttpException();
+        }
+        if (!$catalog instanceof Catalog) {
+            throw new NotFoundHttpException();
+        }
+        $offers = $catalogManager->getPopular($catalog);
         
         return $this->render('yml/index.xml.twig', [
-            'offers'         => $offers,
-            'main_page_data' => $main_page_data,
+            'offers' => $offers,
+            'page'   => $catalog,
         ]);
     }
 }

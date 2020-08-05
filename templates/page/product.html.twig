@@ -19,11 +19,7 @@
 {% endblock %}
 
 {% block description %}
-    {%- if page.description -%}
-        {{ page.description }}
-    {%- else -%}
-        {{ page.name }} купить от производителя в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ {{ page.name }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.
-    {%- endif -%}
+   {{ page.descriptionComputed }}
 {% endblock %}
 
 {% block h1 %}{{ page.name }}{% endblock %}

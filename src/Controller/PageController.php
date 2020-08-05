@@ -10,6 +10,7 @@ use App\Entity\Roll;
 use App\Entity\Roman;
 use App\Repository\PageRepository;
 use App\Repository\ProductRepository;
+use App\Service\CatalogManager;
 use App\Service\ConfigService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -29,15 +30,21 @@ class PageController extends AbstractController
      * @var ConfigService
      */
     protected $configs;
+    /**
+     * @var CatalogManager
+     */
+    private $catalogManager;
     
     public function __construct(
         PageRepository $page_repository,
         ProductRepository $product_repository,
-        ConfigService $configs
+        ConfigService $configs,
+        CatalogManager $catalogManager
     ) {
         $this->page_repository    = $page_repository;
         $this->product_repository = $product_repository;
         $this->configs            = $configs;
+        $this->catalogManager = $catalogManager;
     }
     
     /**
@@ -81,22 +88,12 @@ class PageController extends AbstractController
     
     private function catalog(Catalog $catalog)
     {
-        $filters             = [];
-        $filters['category'] = 1;
-        if ($catalog->getType()) {
-            $filters['type'] = $catalog->getType()->getId();
-        }
-        if ($catalog->getMaterial()) {
-            $filters['material'] = $catalog->getMaterial()->getId();
-        }
-        $limit = 0;
-        $items = $this->product_repository->getPopular($filters,$limit);
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         $show_calc = in_array($catalog->getUri(),['zhalyuzi','rulonnyie-shtoryi']);
         $cardArea = !in_array($catalog->getUri(),['markizyi','rulonnyie-shtoryi']);
         return $this->render('page/catalog.html.twig', [
             'page'  => $catalog,
-            'items' => $items,
+            'items' => $this->catalogManager->getPopular($catalog),
             'force_show_filters' => $force_show_filters,
             'show_calc' => $show_calc,
             'cardArea' => $cardArea,

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <yml_catalog date="{{ 'now'|date('Y-m-d H:i') }}">
     <shop>
-        <name>{{ main_page_data.meta_title }}?></name>
-        <company>{{ main_page_data.meta_description }}?></company>
-        <url>{{ app.request.schemeAndHttpHost }}/</url>
+        <name>{{ page.name }}</name>
+        <company>{{ page.descriptionComputed }}</company>
+        <url>{{ app.request.schemeAndHttpHost }}{{ page.path }}</url>
         <currencies>
             <currency id="RUR" rate="1" />
         </currencies>
@@ -14,14 +14,14 @@
             {% for offer in offers -%}
             <offer id="{{ offer.id }}" available="true">
                 <url>{{ app.request.schemeAndHttpHost~offer.path }}</url>
-                <price>{{ offer.price }}</price>
+                <price>{{ min_price(offer,true) }}</price>
                 <currencyId>RUR</currencyId>
                 <categoryId>1</categoryId>
-                <name>{{ offer.meta_title }}</name>
-                <description>{{ offer.meta_description }}</description>
+                <name>{{ offer.name }}</name>
+                <description>{{ offer.descriptionComputed }}</description>
                 <manufacturer_warranty>true</manufacturer_warranty>
                 <delivery>false</delivery>
-                <picture>{{ app.request.schemeAndHttpHost }}/img/yml/product.jpg</picture>
+                <picture>{{ app.request.schemeAndHttpHost }}{{ offer.cardImageUrl }}</picture>
             </offer>
             {% endfor -%}
         </offers>
