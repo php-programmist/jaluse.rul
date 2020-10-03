@@ -117,6 +117,17 @@ class SimplePageController extends AbstractController
     }
     
     /**
+     * @Route("/yuridicheskim-licam/", name="simple_page_yuridicheskim-licam")
+     */
+    public function yuridicheskimLicam()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'yuridicheskim-licam']);
+        return $this->render('simple_page/yuridicheskim-licam.html.twig', [
+            'page' => $page,
+        ]);
+    }
+    
+    /**
      * @Route("/zakaz-zhalyuzi/kalkulyator-zhalyuzi/", name="simple_page_kalkulyator_zhalyuzi")
      */
     public function kalkulyator_zhalyuzi()

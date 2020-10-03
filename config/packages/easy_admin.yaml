@@ -248,6 +248,24 @@ easy_admin:
                     - { property: 'path', label: 'Ссылка', type: 'url'}
                     - { property: 'published', label: 'Опубликован'}
                 sort: ['id', 'ASC']
+            form:
+                fields:
+                    - { type: 'tab' , label: 'Основные' }
+                    - { property: 'name', label: 'Название'}
+                    - { property: 'uri', label: 'Ссылка', help: 'Без слэшей в начале и конце'}
+                    - { property: 'parent', label: 'Родитель', type: 'easyadmin_autocomplete'}
+                    - { property: 'published', label: 'Опубликован'}
+                    - { property: 'ourWorksFolder', label: 'Папка изображений наших работ'}
+                    - { type: 'tab' , label: 'Карточка' }
+                    - { property: 'cardDescription', label: 'Описание в карточке', type: 'fos_ckeditor'}
+                    - { property: 'cardImageFile', type: 'vich_image', label: 'Изображение в карточке' }
+                    - { type: 'tab' , label: 'SEO' }
+                    - { property: 'title', label: 'Заголовок'}
+                    - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
+                    - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
+                    - { property: 'ratingValue', type: 'text', label: 'Рейтинг' }
+                    - { property: 'ratingCount', type: 'text', label: 'Количество голосов' }
         Type:
             class: App\Entity\Type
             label: "Тип"

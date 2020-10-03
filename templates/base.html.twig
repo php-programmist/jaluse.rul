@@ -23,7 +23,7 @@
     </head>
     <body itemscope="itemscope" itemtype="https://schema.org/Product">
     {{ include('modules/_header.html.twig') }}
-    {{ include('modules/_utp.html.twig', { h1 : block('h1')??null, description: block('description') }) }}
+    {{ include('modules/_utp.html.twig', { h1 : block('h1')??null, description: block('description'), warranty: block('warranty') ?? 2 }) }}
         {% block body %}
 
         {% endblock %}

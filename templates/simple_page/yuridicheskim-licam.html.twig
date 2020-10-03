@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title page.title %}
+{% block h1 page.name %}
+{% block description page.description %}
+{% block warranty 3 %}
+
+{% block body %}
+    <style>
+        .seo-block{
+            display: block!important;
+        }
+    </style>
+    {{ include('modules/_seo_block.html.twig') }}
+    {{ include('modules/_clients.html.twig') }}
+    {{ include('modules/_employees.html.twig') }}
+    {{ include('modules/rating.html.twig') }}
+{% endblock %}

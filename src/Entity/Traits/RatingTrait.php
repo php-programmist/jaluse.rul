@@ -33,7 +33,7 @@ trait RatingTrait
     
     public function getRatingValue(): ?float
     {
-        return $this->ratingValue;
+        return $this->ratingValue ?? $this->getRandomRatingValue();
     }
     
     public function setRatingValue(float $ratingValue): self
@@ -45,7 +45,7 @@ trait RatingTrait
     
     public function getRatingCount(): ?int
     {
-        return $this->ratingCount;
+        return $this->ratingCount  ?? $this->getRandomRatingCount();
     }
     
     public function setRatingCount(int $ratingCount): self
