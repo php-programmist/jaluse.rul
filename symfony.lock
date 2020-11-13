@@ -176,6 +176,9 @@
     "php": {
         "version": "7.3"
     },
+    "php-programmist/yandex-turbo-rss-generator-bundle": {
+        "version": "v1.0.1"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
     },

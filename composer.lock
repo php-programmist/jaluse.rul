@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2df410026bce65fcc48e162c9ce0b46",
+    "content-hash": "c5ccb590198bea91a1298c219b8b762e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1142,6 +1142,7 @@
             "keywords": [
                 "reflection"
             ],
+            "abandoned": "roave/better-reflection",
             "time": "2018-06-14T14:45:07+00:00"
         },
         {
@@ -2044,6 +2045,54 @@
                 "paging"
             ],
             "time": "2019-07-17T20:56:16+00:00"
+        },
+        {
+            "name": "php-programmist/yandex-turbo-rss-generator-bundle",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-programmist/yandex-turbo-rss-generator-bundle.git",
+                "reference": "1c374325b9d29198788eff1484865dd0dee7f1a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-programmist/yandex-turbo-rss-generator-bundle/zipball/1c374325b9d29198788eff1484865dd0dee7f1a8",
+                "reference": "1c374325b9d29198788eff1484865dd0dee7f1a8",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.10",
+                "php": "^7.2.5",
+                "symfony/config": "^4.4 || ^5.0",
+                "symfony/dependency-injection": "^4.4 || ^5.0",
+                "symfony/filesystem": "^4.4 || ^5.0",
+                "symfony/http-kernel": "^4.4 || ^5.0",
+                "symfony/twig-bundle": "^4.4 || ^5.0",
+                "symfony/yaml": "^4.4 || ^5.0"
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "^3.5",
+                "symfony/framework-bundle": "^4.4 || ^5.0",
+                "symfony/phpunit-bridge": "^4.4 || ^5.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "PhpProgrammist\\YandexTurboRssGeneratorBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-Programmist.ru",
+                    "email": "php.programmist.ru@gmail.com"
+                }
+            ],
+            "description": "Bundle for Sumfony 4-5 for generation RSS feed for Yandex Turbo pages.",
+            "time": "2020-04-13T17:26:53+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -7138,6 +7187,7 @@
                 "monolog",
                 "productivity"
             ],
+            "abandoned": true,
             "time": "2019-10-24T07:13:31+00:00"
         },
         {

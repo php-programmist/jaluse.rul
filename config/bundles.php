@@ -19,4 +19,5 @@ return [
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+    PhpProgrammist\YandexTurboRssGeneratorBundle\YandexTurboRssGeneratorBundle::class => ['all' => true],
 ];
