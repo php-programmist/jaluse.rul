@@ -2,7 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Contracts\TurboPageInterface;
 use App\Entity\Traits\RatingTrait;
+use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +20,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()
  */
-class Page
+class Page implements TurboPageInterface
 {
     use RatingTrait;
     const MIN_RATING_VALUE = 4.7;
@@ -115,8 +119,8 @@ class Page
     
     public function __construct()
     {
-        $this->created_at = new \DateTimeImmutable();
-        $this->modified_at = new \DateTimeImmutable();
+        $this->created_at = new DateTimeImmutable();
+        $this->modified_at = new DateTimeImmutable();
         $this->pages = new ArrayCollection();
     }
     
@@ -142,7 +146,7 @@ class Page
         return $this->uri;
     }
 
-    public function getPath(): ?string
+    public function getPath(): string
     {
         if ($this->uri === '/' ) {
             return '/';
@@ -198,24 +202,24 @@ class Page
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at)
+    public function setCreatedAt(DateTimeInterface $created_at): Page
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getModifiedAt(): ?\DateTimeInterface
+    public function getModifiedAt(): ?DateTimeInterface
     {
         return $this->modified_at;
     }
 
-    public function setModifiedAt(\DateTimeInterface $modified_at)
+    public function setModifiedAt(DateTimeInterface $modified_at)
     {
         $this->modified_at = $modified_at;
 
@@ -300,25 +304,25 @@ class Page
         $this->seoImageFile = $image;
         
         if ($image) {
-            $this->modified_at = new \DateTime('now');
+            $this->modified_at = new DateTime('now');
         }
     }
     
-    public function setCardImageFile(File $image = null)
+    public function setCardImageFile(File $image = null): void
     {
         $this->cardImageFile = $image;
         
         if ($image) {
-            $this->modified_at = new \DateTime('now');
+            $this->modified_at = new DateTime('now');
         }
     }
     
-    public function getSeoImageFile()
+    public function getSeoImageFile(): File
     {
         return $this->seoImageFile;
     }
     
-    public function getCardImageFile()
+    public function getCardImageFile(): File
     {
         return $this->cardImageFile;
     }
@@ -383,10 +387,10 @@ class Page
         return $this;
     }
     
-    public function getCardImageUrl()
+    public function getCardImageUrl():string
     {
         if ( ! $this->getCardImage()) {
-            return null;
+            return '';
         }
         return '/'.$this->getCardImgFolder(). $this->getCardImage();
     }
@@ -409,6 +413,27 @@ class Page
      */
     public function changeModifyDate()
     {
-        $this->modified_at = new \DateTimeImmutable();
+        $this->modified_at = new DateTimeImmutable();
+    }
+    
+    public function getH1(): string
+    {
+        return $this->getName();
+    }
+    
+    public function getCardHeader(): string
+    {
+        return $this->getName().' цена';
+    }
+    
+    public function getTextComputed(): string
+    {
+        return str_replace(['<p>', '</p>', '<span>', '</span>'], ['<ul>', '</ul>', '<li>', '</li>'],
+            (string)$this->getCardDescription());
+    }
+    
+    public function getModifyDate(): ?DateTimeInterface
+    {
+        return $this->getModifiedAt();
     }
 }

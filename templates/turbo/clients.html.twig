@@ -1,0 +1,9 @@
+<h2>Наши клиенты</h2>
+
+<div data-block="slider" data-view="landscape">
+    {% for i in 1..5 %}
+        <figure>
+            <img src="{{ app.request.schemeAndHttpHost ~ '/img/our-clients/'~i~'.png' }}" alt="*"/>
+        </figure>
+    {% endfor %}
+</div>

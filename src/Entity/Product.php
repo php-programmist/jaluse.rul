@@ -237,7 +237,7 @@ class Product extends Page
         return '/img/products/'.$folder.'/catalog/'.$file_name;
     }
     
-    public function getCardImageUrl()
+    public function getCardImageUrl():string
     {
         return $this->getImageBig();
     }
