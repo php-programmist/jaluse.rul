@@ -9,10 +9,17 @@
 {% endblock %}
 {% block content_h2 %}{{ page.name }}. Каталог и цены:{% endblock %}
 {% block location_block %}
+    {{ include('modules/rating.html.twig') }}
     {% embed 'embedded/card.html.twig' %}
         {% block image %}<img {{ lazy_load(page.cardImageUrl) }} alt="{{ page.name }}">{% endblock image %}
         {% block header %}{{ page.name }} цена{% endblock header %}
         {% block content %}{{ page.cardDescription|raw }}{% endblock content %}
+        {% block footer %}
+            <div class="cart-footer-zag">
+                Цена от
+                664 руб/м2
+            </div>
+        {% endblock %}
     {% endembed %}
 {% endblock location_block %}
 {% block rating_block %}{% endblock %}
