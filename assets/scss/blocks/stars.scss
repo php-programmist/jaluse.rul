@@ -5,6 +5,9 @@
     color: gray;
     position:relative;
     text-align: center;
+    @media (max-width: 576px) {
+        width: 28px;
+    }
 }
 .star:last-child {
     margin-right: 0;
@@ -23,4 +26,7 @@
     width: 11px;
     left:14px;
     overflow: hidden;
+    @media (max-width: 576px) {
+        left: 4px;
+    }
 }

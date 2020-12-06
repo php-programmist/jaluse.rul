@@ -405,6 +405,17 @@
   }
 }
 @media (max-width: 500px) {
+  .header-n1-logo {
+    flex: 0 0 38%;
+    max-width: 38%;
+  }
+  .headerpoisk{
+    flex: 0 0 35%;
+    max-width: 35%;
+  }
+  .block1-wrap{
+    margin-top: 53px;
+  }
   .block3 .calc-parametr-razmer input {
     width: 120px;
   }
