@@ -140,9 +140,9 @@ class ProductRepository extends ServiceEntityRepository
     public function getPopularSiblings(Product $product, $limit=0)
     {
         $filters             = [];
-        $filters['type']     = $product->getType()->getId();
+        $filters['type']     = $product->getType() ? $product->getType()->getId() : null;
         $filters['material'] = $product->getMaterial() ? $product->getMaterial()->getId() : null;
-        $filters['category'] = $product->getCategory()->getId();
+        $filters['category'] = $product->getCategory() ? $product->getCategory()->getId() : null;
         $query               = $this->getFilteredQB($filters);
         $query->orderBy('p.popular','DESC');
         if ($limit) {
@@ -150,6 +150,19 @@ class ProductRepository extends ServiceEntityRepository
         }
         return $query->getQuery()
                      ->getResult();
+    }
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function getAllActive():array
+    {
+        return $this->createQueryBuilder('p')
+                    ->andWhere('p.published = 1')
+                    ->andWhere('p.price is not null or p.category is not null')
+                    ->orderBy('p.id', 'ASC')
+                    ->getQuery()
+                    ->getResult()
+            ;
     }
     
     // /**

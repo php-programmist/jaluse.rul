@@ -317,12 +317,12 @@ class Page implements TurboPageInterface
         }
     }
     
-    public function getSeoImageFile(): File
+    public function getSeoImageFile(): ?File
     {
         return $this->seoImageFile;
     }
     
-    public function getCardImageFile(): File
+    public function getCardImageFile(): ?File
     {
         return $this->cardImageFile;
     }

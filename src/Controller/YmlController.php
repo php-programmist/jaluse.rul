@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Catalog;
+use App\Repository\CategoryRepository;
 use App\Repository\PageRepository;
+use App\Repository\ProductRepository;
 use App\Service\CatalogManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +39,22 @@ class YmlController extends AbstractController
         return $this->render('yml/index.xml.twig', [
             'offers' => $offers,
             'page'   => $catalog,
+        ]);
+    }
+    
+    /**
+     * @Route("/ymarket.xml", name="ymarket", format="xml")
+     *
+     * @param ProductRepository  $productRepository
+     * @param CategoryRepository $categoryRepository
+     *
+     * @return Response
+     */
+    public function ymarket(ProductRepository $productRepository, CategoryRepository $categoryRepository)
+    {
+        return $this->render('yml/ymarket.xml.twig', [
+            'offers' => $productRepository->getAllActive(),
+            'categories'   => $categoryRepository->findAll(),
         ]);
     }
 }

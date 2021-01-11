@@ -289,6 +289,11 @@ class Product extends Page
         return $this->min_price;
     }
     
+    public function getMinSize():string
+    {
+        return $this->getCalculationType() === 'simple' ? '100 x 100 см' : '40 x 50 см';
+    }
+    
     
     public function setMinPrice(int $min_price): self
     {

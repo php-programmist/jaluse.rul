@@ -33,6 +33,9 @@ class CalculationService
             if (! $this->matrices) {
                 $this->matrices = $this->matrix_service->getAllCachedMatrices();
             }
+            if (!isset($this->matrices[$product->getMatrixFolder()][$product->getMatrixId()])) {
+                return 0;
+            }
             $matrix    = $this->matrices[$product->getMatrixFolder()][$product->getMatrixId()];
             $min_width = current($matrix);
             $min_price = current($min_width);
