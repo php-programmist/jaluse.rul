@@ -128,6 +128,17 @@ class SimplePageController extends AbstractController
     }
     
     /**
+     * @Route("/rekvizity/", name="simple_page_rekvizity")
+     */
+    public function rekvizity()
+    {
+        $page = $this->page_repository->findOneBy(['uri'=>'rekvizity']);
+        return $this->render('simple_page/rekvizity.html.twig', [
+            'page' => $page,
+        ]);
+    }
+    
+    /**
      * @Route("/zakaz-zhalyuzi/kalkulyator-zhalyuzi/", name="simple_page_kalkulyator_zhalyuzi")
      */
     public function kalkulyator_zhalyuzi()
