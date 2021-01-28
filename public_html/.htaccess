@@ -123,6 +123,15 @@ RewriteRule zhalyuzi/rolikovyie-zhalyuzi/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/derevyannyie/$ /zhalyuzi/gorizontalnye/derevyannye/ [R=301,L]
 RewriteRule zhalyuzi/tkanevye/$ /zhalyuzi/vertikalnye/tkanevye/ [R=301,L]
 
+RewriteRule zhalyuzi/gorizontalnye-kassetnye-zhalyuzi-isolite/568/$ /zhalyuzi/gorizontalnye-kassetnye-zhalyuzi-isolite/567/ [R=301,L]
+RewriteRule zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/kalipso-bezhevyj1/$ /zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/indra-salatovyj1/ [R=301,L]
+RewriteRule zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/klaudia-vajt3/$ /zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/klaudia-blekaut-vajt3/ [R=301,L]
+RewriteRule rulonnaya-kassetnaya-sistema-uni1/klaudia-indigo3/$ /zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/klaudia-blekaut-indigo3/ [R=301,L]
+RewriteRule zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/klaudia-grin3/$ /zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/klaudia-blekaut-grin3/ [R=301,L]
+RewriteRule uni/porto-blekaut-temno-bezhevyj2/$ /zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/porto-blekaut-temno-bezhevyj1/ [R=301,L]
+RewriteRule rulonnyie-shtoryi/den-noch-uni-2/rulonnyie-shtoryi-den-noch-toskana-33/$ /rulonnyie-shtoryi/den-noch-uni-2/rulonnyie-shtoryi-den-noch-toskana-34/ [R=301,L]
+RewriteRule rulonnyie-shtoryi/den-noch/6043/$ /rulonnyie-shtoryi/den-noch/6042/ [R=301,L]
+
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
