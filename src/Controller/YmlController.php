@@ -53,7 +53,7 @@ class YmlController extends AbstractController
     public function ymarket(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         return $this->render('yml/ymarket.xml.twig', [
-            'offers' => $productRepository->getAllActive(),
+            'offers' => $productRepository->getForYml(),
             'categories'   => $categoryRepository->findAll(),
         ]);
     }

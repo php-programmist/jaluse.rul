@@ -50,6 +50,7 @@ easy_admin:
                     - { property: 'category.name', label: 'Категория'}
                     - { property: 'popular', label: 'Популярный'}
                     - { property: 'published', label: 'Опубликован'}
+                    - { property: 'yml', label: 'YML'}
                 filters:
                     - { property: 'name', label: 'Название'}
                     - { property: 'uri', label: 'Ссылка'}
@@ -60,6 +61,7 @@ easy_admin:
                     - { property: 'category', label: 'Категория'}
                     - { property: 'popular', label: 'Популярный'}
                     - { property: 'published', label: 'Опубликован'}
+                    - { property: 'yml', label: 'YML' }
                 sort: ['id', 'ASC']
             form:
                 fields:
@@ -75,6 +77,7 @@ easy_admin:
                     - { property: 'category', label: 'Категория'}
                     - { property: 'popular', label: 'Популярный'}
                     - { property: 'published', label: 'Опубликован'}
+                    - { property: 'yml', label: 'YML' }
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}

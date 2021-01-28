@@ -165,6 +165,21 @@ class ProductRepository extends ServiceEntityRepository
             ;
     }
     
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function getForYml():array
+    {
+        return $this->createQueryBuilder('p')
+                    ->andWhere('p.published = 1')
+                    ->andWhere('p.yml = 1')
+                    ->andWhere('p.price is not null or p.category is not null')
+                    ->orderBy('p.id', 'ASC')
+                    ->getQuery()
+                    ->getResult()
+            ;
+    }
+    
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

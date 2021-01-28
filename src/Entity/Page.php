@@ -61,6 +61,11 @@ class Page implements TurboPageInterface
     protected $published =1;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": 0})
+     */
+    protected $yml = false;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $created_at;
@@ -436,4 +441,24 @@ class Page implements TurboPageInterface
     {
         return $this->getModifiedAt();
     }
+    
+    /**
+     * @return bool
+     */
+    public function isYml(): bool
+    {
+        return $this->yml;
+    }
+    
+    /**
+     * @param bool $yml
+     *
+     * @return $this
+     */
+    public function setYml(bool $yml): self
+    {
+        $this->yml = $yml;
+        
+        return $this;
+}
 }
