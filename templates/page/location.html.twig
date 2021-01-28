@@ -8,9 +8,7 @@
     {{ encore_entry_script_tags('simple_catalog') }}
 {% endblock %}
 {% block content_h2 %}{{ page.name }}. Каталог и цены:{% endblock %}
-{% block description %}
-    ⭐⭐⭐⭐⭐{{ page.description }}
-{% endblock %}
+{% block description %}⭐⭐⭐⭐⭐ {{ page.description }}{% endblock %}
 {% block location_block %}
     {{ include('modules/rating.html.twig') }}
     {% embed 'embedded/card.html.twig' %}
