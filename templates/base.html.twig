@@ -2,8 +2,8 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Жалюзи на окна купить в Москве. Каталог и цены - Мастерская Жалюзи{% endblock %}</title>
-        <meta name="description" content="{% block description %}{% endblock %}"/>
+        <title>{% block title %} {{ page.title ?? 'Жалюзи на окна купить в Москве. Каталог и цены - Мастерская Жалюзи' }}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{{ page.description|default('') }}{% endblock %}"/>
         <meta name="keywords" content="{% block keywords %}Жалюзи на окна в Москве{% endblock %}"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +23,7 @@
     </head>
     <body itemscope="itemscope" itemtype="https://schema.org/Product">
     {{ include('modules/_header.html.twig') }}
-    {{ include('modules/_utp.html.twig', { h1 : block('h1')??null, description: block('description'), warranty: block('warranty') ?? 2 }) }}
+    {{ include('modules/_utp.html.twig', { h1 : block('h1')??page.h1, description: block('description'), warranty: block('warranty') ?? 2 }) }}
         {% block body %}
 
         {% endblock %}
