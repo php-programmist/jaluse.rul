@@ -1,0 +1,15 @@
+{% if page.ourWorksFolder is not empty %}
+    {% set images = getFilesFromFolder(page.ourWorksFolder) %}
+    {% if images is not empty %}
+        <div class="works">
+            <h2>Примеры работ:</h2>
+            <div data-block="slider" data-view="landscape">
+                {% for image in images %}
+                    <figure>
+                        <img src="{{ app.request.schemeAndHttpHost ~ image }}" alt="*" />
+                    </figure>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

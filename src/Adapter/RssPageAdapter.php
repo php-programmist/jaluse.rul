@@ -13,16 +13,16 @@ class RssPageAdapter implements RssAdapterInterface
     /**
      * @var RssItem[]
      */
-    private $items;
+    protected $items;
     /**
      * @var BasePageInterface
      */
-    private $basePage;
+    protected $basePage;
     /**
      * @var Environment
      */
-    private $twig;
-    private $originalItems;
+    protected $twig;
+    protected $originalItems;
 
     /**
      * @param Environment $twig
@@ -61,7 +61,7 @@ class RssPageAdapter implements RssAdapterInterface
         }
     }
 
-    private function getText(TurboPageInterface $page): string
+    protected function getText(TurboPageInterface $page): string
     {
         
         return $this->twig->render('turbo/content.html.twig', [

@@ -1,0 +1,36 @@
+{% set employees = [
+    {
+        "name": "Анатолие Амброси",
+        "job": "Директор компании",
+        "img": "img/anatolii.jpg"
+    },
+    {
+        "name": "Анжелика Дорофеева",
+        "job": "Старший менеджер",
+        "img": "img/angelica.png"
+    },
+    {
+        "name": "Александр Мухамеджанов",
+        "job": "Отдел логистики",
+        "img": "img/urii.jpg"
+    },
+] %}
+<div class="employees">
+    <h2 >Руководство компании</h2>
+    {% for employee in employees %}
+        <div>
+            <img src="{{ app.request.schemeAndHttpHost }}/{{ employee.img }}" alt="*">
+            <p><b>{{ employee.name }}</b></p>
+            <p>{{ employee.job }}</p>
+            <button
+                    formaction="tel:{{ phone }}"
+                    data-background-color="blue"
+                    data-color="white"
+                    data-turbo="false"
+                    data-primary="true"
+            >
+                Заказать звонок
+            </button>
+        </div>
+    {% endfor %}
+</div>

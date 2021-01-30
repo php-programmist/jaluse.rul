@@ -22,6 +22,7 @@ class SliderExtension extends AbstractExtension
         return [
             new TwigFunction('swiper_slider', [$this, 'swiper_slider'],
                 ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('getFilesFromFolder', [$this, 'getFilesFromFolder']),
         ];
     }
 
@@ -34,7 +35,7 @@ class SliderExtension extends AbstractExtension
         return $twig->render('extension/swiper_slider.html.twig', compact('files'));
     }
     
-    private function getFilesFromFolder($folder)
+    public function getFilesFromFolder($folder):array
     {
         if (empty($folder)) {
             return [];
