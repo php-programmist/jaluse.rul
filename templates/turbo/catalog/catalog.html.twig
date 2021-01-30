@@ -1,0 +1,31 @@
+{% if catalog is not empty %}
+    <h2>Каталог:</h2>
+    <div class="products">
+        {% for item in catalog %}
+            <div class="product">
+                <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/" target="_blank">
+                    <img src="{{ app.request.schemeAndHttpHost }}{{ asset(item.cardImageUrl) }}" alt="{{ item.name }}">
+                </a>
+                <div class="product__name">
+                    <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/" target="_blank">{{ item.name }}</a>
+                </div>
+                <div class="product__price">
+                    {% if area??false %}
+                        {{ item.price }} руб/м2
+                    {% else %}
+                        от {{ item.price }} руб
+                    {% endif %}
+                </div>
+                <button
+                        formaction="tel:{{ phone }}"
+                        data-background-color="blue"
+                        data-color="white"
+                        data-turbo="false"
+                        data-primary="true"
+                >
+                    Рассчитать
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
