@@ -66,6 +66,11 @@ class Page implements TurboPageInterface
     protected $yml = false;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": 0})
+     */
+    protected $turbo = false;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $created_at;
@@ -460,5 +465,25 @@ class Page implements TurboPageInterface
         $this->yml = $yml;
         
         return $this;
-}
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isTurbo(): bool
+    {
+        return $this->turbo;
+    }
+    
+    /**
+     * @param bool $turbo
+     *
+     * @return $this
+     */
+    public function setTurbo(bool $turbo): self
+    {
+        $this->turbo = $turbo;
+        
+        return $this;
+    }
 }
