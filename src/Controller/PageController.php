@@ -90,13 +90,11 @@ class PageController extends AbstractController
     {
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         $show_calc = in_array($catalog->getUri(),['zhalyuzi','rulonnyie-shtoryi']);
-        $cardArea = !in_array($catalog->getUri(),['markizyi','rulonnyie-shtoryi']);
         return $this->render('page/catalog.html.twig', [
             'page'  => $catalog,
             'items' => $this->catalogManager->getPopular($catalog),
             'force_show_filters' => $force_show_filters,
             'show_calc' => $show_calc,
-            'cardArea' => $cardArea,
         ]);
     }
     

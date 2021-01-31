@@ -486,4 +486,9 @@ class Page implements TurboPageInterface
         
         return $this;
     }
+    
+    public function getUnits(): string
+    {
+        return 'руб/м2';
+    }
 }

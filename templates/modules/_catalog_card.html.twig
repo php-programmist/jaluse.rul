@@ -8,12 +8,7 @@
 
         {% block footer %}
             <div class="cart-footer-zag">
-                Цена от
-                {% if cardArea??false %}
-                    {{ page.price }} руб/м2
-                {% else %}
-                    {{ page.price }} рублей за изделие
-                {% endif %}
+                Цена от {{ page.price }} {{ page.units }}
             </div>
         {% endblock footer %}
     {% endembed %}

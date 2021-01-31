@@ -1,0 +1,7 @@
+<div class="card">
+    <h2>{{ page.cardHeader }}</h2>
+    <img src="{{ app.request.schemeAndHttpHost }}{{ page.cardImageUrl }}" alt="*">
+    {{ page.textComputed|raw }}
+    <hr />
+    <h3><b>Цена от {{ page.price }} {{ page.units }}</b></h3>
+</div>
