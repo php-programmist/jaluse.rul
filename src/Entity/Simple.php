@@ -9,5 +9,5 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Simple  extends Page
 {
-
+    public const TYPE = 'simple';
 }

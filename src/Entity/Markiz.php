@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Markiz extends Page
 {
+    public const TYPE = 'markiz';
     /**
      * @ORM\Column(type="float", nullable=true)
      */

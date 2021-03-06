@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product extends Page
 {
+    public const TYPE = 'product';
     const RULON_TYPE_ID = 133;
     const ISOLITE_TYPE_ID = 178;
     const SERIALIZER_ATTRIBUTES = [

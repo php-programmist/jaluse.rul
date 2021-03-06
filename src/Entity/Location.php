@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Location extends Page
 {
+    public const TYPE = 'location';
+    
     public function getCardImgFolder()
     {
         return 'img/location/';

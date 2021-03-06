@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Roman extends Page
 {
+    public const TYPE = 'roman';
     /**
      * @ORM\Column(type="float", nullable=true)
      */

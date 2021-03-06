@@ -17,6 +17,19 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\PageRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="page_type", type="string")
+ * @ORM\DiscriminatorMap({
+ *     Region::TYPE = "Region",
+ *     District::TYPE = "District",
+ *     Metro::TYPE = "Metro",
+ *     City::TYPE = "City",
+ *     Product::TYPE = "Product",
+ *     Catalog::TYPE = "Catalog",
+ *     Simple::TYPE = "Simple",
+ *     Location::TYPE = "Location",
+ *     Roman::TYPE = "Roman",
+ *     Roll::TYPE = "Roll",
+ *     Markiz::TYPE = "Markiz",
+ * })
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()
  */

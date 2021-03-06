@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Catalog extends Page
 {
+    public const TYPE = 'catalog';
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */

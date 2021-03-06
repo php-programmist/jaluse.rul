@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Roll extends Page
 {
+    public const TYPE = 'roll';
     /**
      * @ORM\Column(type="float", nullable=true)
      */
