@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Adapter\CatalogPageAdapter;
 use App\Adapter\RssPageAdapter;
+use App\Entity\Geo;
 use App\Entity\Location;
 use App\Repository\CatalogRepository;
 use App\Repository\LocationRepository;
@@ -64,13 +65,39 @@ class TurboPageController extends AbstractController
             'Жалюзи на пластиковые окна купить недорого в Москве. Выезд и замер бесплатно! Изготовление жалюзи с установкой за 1-4 дня. Гарантия 2 года. Жалюзи на пластиковые окна по низким ценам в интернет магазине «Мастерская жалюзи».  8-800-775-72-38.',
             '/zhalyuzi/'
         );
-        $items = $catalogRepository->findBy(['turbo' => true]);
+        $items     = $catalogRepository->findBy(['turbo' => true]);
+    
+        $adapter
+            ->setBasePage($base_page)
+            ->setOriginalItems($items);
+    
+        return $generator->render($adapter, $base_page);
+    }
+    
+    /**
+     * @Route("/turbo/districts.xml", name="turbo_pages_districts")
+     * @param RssPageAdapter          $adapter
+     * @param YandexTurboRssGenerator $generator
+     *
+     * @return Response
+     */
+    public function districts(
+        RssPageAdapter $adapter,
+        YandexTurboRssGenerator $generator
+    ) {
+        $repo      = $this->getDoctrine()->getRepository(Geo::class);
+        $base_page = new BasePage(
+            'Жалюзи на пластиковые окна в Москве',
+            'Жалюзи на пластиковые окна купить недорого в Москве. Выезд и замер бесплатно! Изготовление жалюзи с установкой за 1-4 дня. Гарантия 2 года. Жалюзи на пластиковые окна по низким ценам в интернет магазине «Мастерская жалюзи».  8-800-775-72-38.',
+            '/districts/'
+        );
+        $items     = $repo->findBy(['turbo' => true]);
         
         $adapter
             ->setBasePage($base_page)
             ->setOriginalItems($items);
-
+        
         return $generator->render($adapter, $base_page);
     }
-
+    
 }
