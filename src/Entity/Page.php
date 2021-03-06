@@ -33,9 +33,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()
  */
-class Page implements TurboPageInterface
+abstract class Page implements TurboPageInterface
 {
     use RatingTrait;
+    
     const MIN_RATING_VALUE = 4.7;
     const MAX_RATING_VALUE = 4.9;
     const MIN_RATING_COUNT = 8;
@@ -142,9 +143,10 @@ class Page implements TurboPageInterface
     
     public function __construct()
     {
-        $this->created_at = new DateTimeImmutable();
+        $this->created_at  = new DateTimeImmutable();
         $this->modified_at = new DateTimeImmutable();
-        $this->pages = new ArrayCollection();
+        $this->pages       = new ArrayCollection();
+        $this->generateRatingAndCount();
     }
     
     public function getId(): ?int

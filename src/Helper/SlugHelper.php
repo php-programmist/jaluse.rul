@@ -8,10 +8,9 @@ class SlugHelper
     {
         mb_internal_encoding("UTF-8");
         $string = mb_strtolower($string);
-        $string = htmlspecialchars_decode(trim($string));
+        $string = htmlspecialchars_decode($string);
         $string = preg_replace('/(\s)/', ' ', $string);
-        
-        $trans = [
+        $trans  = [
             'а' => 'a',
             'б' => 'b',
             'в' => 'v',
@@ -55,8 +54,9 @@ class SlugHelper
             '«' => '',
             '»' => '',
         ];
-        
+    
         $string = strtr($string, $trans);
+        $string = preg_replace('/[\x00-\x2C\x7B-\xFF]/', '-', $string);
         $string = preg_replace('#-{2,}#', '-', $string);
         
         return trim($string, ' -');

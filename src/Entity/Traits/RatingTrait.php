@@ -5,16 +5,17 @@ namespace App\Entity\Traits;
 trait RatingTrait
 {
     
-    public function getRandomRatingValue():float
+    public function getRandomRatingValue(): float
     {
         $min = self::MIN_RATING_VALUE * 10;
         $max = self::MAX_RATING_VALUE * 10;
-        return rand($min,$max)/10;
+    
+        return rand($min, $max) / 10;
     }
     
-    public function getRandomRatingCount():int
+    public function getRandomRatingCount(): int
     {
-        return rand(self::MIN_RATING_COUNT,self::MAX_RATING_COUNT);
+        return rand(self::MIN_RATING_COUNT, self::MAX_RATING_COUNT);
     }
     
     /**
@@ -45,7 +46,7 @@ trait RatingTrait
     
     public function getRatingCount(): ?int
     {
-        return $this->ratingCount  ?? $this->getRandomRatingCount();
+        return $this->ratingCount ?? $this->getRandomRatingCount();
     }
     
     public function setRatingCount(int $ratingCount): self
@@ -53,5 +54,11 @@ trait RatingTrait
         $this->ratingCount = $ratingCount;
         
         return $this;
+    }
+    
+    public function generateRatingAndCount(): void
+    {
+        $this->setRatingValue($this->getRandomRatingValue());
+        $this->setRatingCount($this->getRandomRatingCount());
     }
 }
