@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <h2>{{ page.name }}</h2>
+        {% for district in districts %}
+            <h2><a href="{{ path('dynamic_pages',{'token':district.uri}) }}">{{ district.name }}</a></h2>
+            {% if district.subDistricts is not empty %}
+                <h3 class="mb-2">По районам:</h3>
+                <ul>
+                    {% for item in district.subDistricts %}
+                        <li><a href="{{ path('dynamic_pages',{'token':item.uri}) }}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if district.metros is not empty %}
+                <h3 class="mb-2">По метро:</h3>
+                <ul>
+                    {% for item in district.metros %}
+                        <li><a href="{{ path('dynamic_pages',{'token':item.uri}) }}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if district.cities is not empty %}
+                <ul>
+                    {% for item in district.cities %}
+                        <li><a href="{{ path('dynamic_pages',{'token':item.uri}) }}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+{% endblock %}

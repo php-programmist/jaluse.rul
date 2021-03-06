@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\District;
 use App\Repository\MarkizRepository;
 use App\Repository\PageRepository;
 use App\Repository\RollRepository;
@@ -26,10 +27,11 @@ class SimpleCatalogController extends AbstractController
      */
     public function markizyi(MarkizRepository $repository)
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'markizyi']);
+        $page  = $this->page_repository->findOneBy(['uri'=>'markizyi']);
         $items = $repository->findAll();
+        
         return $this->render('simple_catalog/index.html.twig', [
-            'page' => $page,
+            'page'  => $page,
             'items' => $items,
         ]);
     }
@@ -39,10 +41,11 @@ class SimpleCatalogController extends AbstractController
      */
     public function rolstavni(RollRepository $repository)
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'rolstavni']);
+        $page  = $this->page_repository->findOneBy(['uri'=>'rolstavni']);
         $items = $repository->findAll();
+        
         return $this->render('simple_catalog/index.html.twig', [
-            'page' => $page,
+            'page'  => $page,
             'items' => $items,
         ]);
     }
@@ -52,23 +55,25 @@ class SimpleCatalogController extends AbstractController
      */
     public function rimskies(RomanRepository $repository)
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'rimskies']);
+        $page  = $this->page_repository->findOneBy(['uri'=>'rimskies']);
         $items = $repository->findAll();
+        
         return $this->render('simple_catalog/index.html.twig', [
-            'page' => $page,
+            'page'  => $page,
             'items' => $items,
-            'area' => true,
+            'area'  => true,
         ]);
     }
+    
     /**
      * @Route("/shtory-dlya-besedok-i-verand/shtory-pvh/", name="simple_catalog_shtory-pvh")
      */
     public function shtory_pvh()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'shtory-dlya-besedok-i-verand/shtory-pvh']);
+        $page = $this->page_repository->findOneBy(['uri' =>'shtory-dlya-besedok-i-verand/shtory-pvh']);
         
         return $this->render('simple_catalog/index.html.twig', [
-            'page' => $page,
+            'page'  => $page,
             'items' => [],
         ]);
     }
@@ -78,11 +83,27 @@ class SimpleCatalogController extends AbstractController
      */
     public function pomeshheniya()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'zhalyuzi/pomeshheniya']);
+        $page  = $this->page_repository->findOneBy(['uri' => 'zhalyuzi/pomeshheniya']);
         $items = $page->getPages();
+        
         return $this->render('simple_catalog/pomeshheniya.html.twig', [
-            'page' => $page,
+            'page'  => $page,
             'items' => $items,
+        ]);
+    }
+    
+    /**
+     * @Route("/districts/", name="simple_catalog_districts")
+     */
+    public function districts()
+    {
+        $page      = $this->page_repository->findOneBy(['uri' => 'districts']);
+        $repo      = $this->getDoctrine()->getRepository(District::class);
+        $districts = $repo->findBy(['parent' => null]);
+        
+        return $this->render('simple_catalog/districts.html.twig', [
+            'page'      => $page,
+            'districts' => $districts,
         ]);
     }
     
@@ -91,10 +112,11 @@ class SimpleCatalogController extends AbstractController
      */
     public function pomeshheniya_rulonnyie()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'rulonnyie-shtoryi/pomeshheniya']);
+        $page  = $this->page_repository->findOneBy(['uri' => 'rulonnyie-shtoryi/pomeshheniya']);
         $items = $page->getPages();
+        
         return $this->render('simple_catalog/pomeshheniya.html.twig', [
-            'page' => $page,
+            'page'  => $page,
             'items' => $items,
         ]);
     }

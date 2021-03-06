@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,9 +31,39 @@ class District extends Geo
         if (!empty($this->description)) {
             return $this->description;
         }
-    
+        
         return sprintf('Жалюзи на окна купить недорого в районе %s. ⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ Жалюзи по низким ценам в районе %s ☎ 8-800-775-72-38.',
             $this->getName(), $this->getName());
+    }
+    
+    /**
+     * @return Collection|Metro[]
+     */
+    public function getMetros(): Collection
+    {
+        return $this->getPages()->filter(function (Page $page) {
+            return $page instanceof Metro;
+        });
+    }
+    
+    /**
+     * @return Collection|District[]
+     */
+    public function getSubDistricts(): Collection
+    {
+        return $this->getPages()->filter(function (Page $page) {
+            return $page instanceof District;
+        });
+    }
+    
+    /**
+     * @return Collection|City[]
+     */
+    public function getCities(): Collection
+    {
+        return $this->getPages()->filter(function (Page $page) {
+            return $page instanceof City;
+        });
     }
     
 }
