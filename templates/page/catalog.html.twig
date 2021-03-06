@@ -26,17 +26,19 @@
     {% block location_block %}{% endblock %}
     <div class="container-fluid catalog-container">
         {{ include('modules/rating_schema.html.twig') }}
-        <h2>{% block content_h2 %}{{ page.name }}{% endblock %}</h2>
-        <div id="app">
-            <v-category-page-calc
-                    type_id="{{ page.type.id??0 }}"
-                    material_id="{{ page.material.id??0 }}"
-                    force_show_filters="{{ force_show_filters ?? 0 }}"
-            >
-            </v-category-page-calc>
-        </div>
+        {% if showCatalog is not defined or showCatalog %}
+            <h2>{% block content_h2 %}{{ page.name }}{% endblock %}</h2>
+            <div id="app">
+                <v-category-page-calc
+                        type_id="{{ page.type.id??0 }}"
+                        material_id="{{ page.material.id??0 }}"
+                        force_show_filters="{{ force_show_filters ?? 0 }}"
+                >
+                </v-category-page-calc>
+            </div>
+        {% endif %}
     </div>
-    {% if items is not empty %}
+    {% if items|default(null) is not empty %}
         <div class="container-fluid catalog-container read-more-block">
             <div class="row catalog-calculator">
                 <div class="offset-md-2 col-md-9 col-sm-12">
@@ -55,7 +57,7 @@
     {% endblock %}
 
     {{ include('modules/_seo_block.html.twig') }}
-    {% if show_calc %}
+    {% if show_calc is not defined or show_calc %}
         {{ include('modules/_calculator.html.twig') }}
     {% endif %}
 

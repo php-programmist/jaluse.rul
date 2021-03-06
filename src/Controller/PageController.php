@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Catalog;
+use App\Entity\Geo;
 use App\Entity\Location;
 use App\Entity\Markiz;
 use App\Entity\Product;
@@ -52,27 +53,43 @@ class PageController extends AbstractController
      */
     public function index($token)
     {
-        if ( ! $page = $this->page_repository->findOneBy(['uri' => $token])) {
+        if (!$page = $this->page_repository->findOneBy(['uri' => $token])) {
             throw new NotFoundHttpException();
         }
-        
+    
         if ($page instanceof Product) {
             return $this->product($page);
-        } elseif ($page instanceof Catalog) {
+        }
+    
+        if ($page instanceof Catalog) {
             return $this->catalog($page);
-        } elseif ($page instanceof Location) {
+        }
+    
+        if ($page instanceof Location) {
             return $this->location($page);
-        } elseif ($page instanceof Markiz || $page instanceof Roll) {
+        }
+    
+        if ($page instanceof Markiz || $page instanceof Roll) {
             return $this->render('simple_catalog/item.html.twig', [
                 'page' => $page,
             ]);
-        } elseif ($page instanceof Roman) {
+        }
+    
+        if ($page instanceof Roman) {
             return $this->render('simple_catalog/item.html.twig', [
                 'page' => $page,
                 'area' => true,
             ]);
         }
-        
+    
+        if ($page instanceof Geo) {
+            return $this->render('page/geo.html.twig', [
+                'page'        => $page,
+                'show_calc'   => true,
+                'showCatalog' => false,
+            ]);
+        }
+    
         throw new NotFoundHttpException('Page is instance of ' . get_class($page));
     }
     

@@ -4,8 +4,8 @@ namespace App\Command;
 
 use App\Entity\City;
 use App\Entity\District;
+use App\Entity\Geo;
 use App\Entity\Metro;
-use App\Entity\Region;
 use App\Helper\SlugHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -55,16 +55,16 @@ class GeoImportCommand extends Command
         while ($row = fgetcsv($fh, 0, ';')) {
             $row = array_map('trim', $row);
             if ('' !== $row[0]) {
-                $parent = $this->createRegion($row[0]);
+                $parent = $this->createGeo(District::class, $row[0], null);
             }
             if ('' !== $row[1]) {
-                $this->createChild(City::class, $row[1], $parent);
+                $this->createGeo(City::class, $row[1], $parent);
             }
             if ('' !== $row[2]) {
-                $this->createChild(District::class, $row[2], $parent);
+                $this->createGeo(District::class, $row[2], $parent);
             }
             if ('' !== $row[3]) {
-                $this->createChild(Metro::class, $row[3], $parent);
+                $this->createGeo(Metro::class, $row[3], $parent);
             }
         }
         $this->entityManager->flush();
@@ -73,25 +73,20 @@ class GeoImportCommand extends Command
         return 0;
     }
     
-    private function createRegion(string $name): Region
+    private function createGeo(string $class, string $name, ?Geo $parent): Geo
     {
-        $region = (new Region())
-            ->setName($name)
-            ->setUri(SlugHelper::makeSlug($name))
-            ->setTurbo(true);
-        $this->entityManager->persist($region);
-        
-        return $region;
-    }
-    
-    private function createChild(string $class, string $name, Region $parent): void
-    {
-        $uri   = sprintf('%s/%s', $parent->getUri(), SlugHelper::makeSlug($name));
-        $child = (new $class())
+        $uri = '';
+        if (null !== $parent) {
+            $uri = $parent->getUri() . '/';
+        }
+        $uri .= SlugHelper::makeSlug($name);
+        $geo = (new $class())
             ->setName($name)
             ->setUri($uri)
             ->setParent($parent)
             ->setTurbo(true);
-        $this->entityManager->persist($child);
+        $this->entityManager->persist($geo);
+        
+        return $geo;
     }
 }

@@ -18,7 +18,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="page_type", type="string")
  * @ORM\DiscriminatorMap({
- *     Region::TYPE = "Region",
  *     District::TYPE = "District",
  *     Metro::TYPE = "Metro",
  *     City::TYPE = "City",
