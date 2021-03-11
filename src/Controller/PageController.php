@@ -69,7 +69,13 @@ class PageController extends AbstractController
             return $this->location($page);
         }
     
-        if ($page instanceof Markiz || $page instanceof Roll) {
+        if ($page instanceof Markiz) {
+            return $this->render('simple_catalog/markizyi/item.html.twig', [
+                'page' => $page,
+            ]);
+        }
+    
+        if ($page instanceof Roll) {
             return $this->render('simple_catalog/item.html.twig', [
                 'page' => $page,
             ]);

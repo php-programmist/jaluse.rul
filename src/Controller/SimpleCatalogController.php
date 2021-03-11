@@ -30,7 +30,7 @@ class SimpleCatalogController extends AbstractController
         $page  = $this->page_repository->findOneBy(['uri'=>'markizyi']);
         $items = $repository->findAll();
         
-        return $this->render('simple_catalog/index.html.twig', [
+        return $this->render('simple_catalog/markizyi/index.html.twig', [
             'page'  => $page,
             'items' => $items,
         ]);
