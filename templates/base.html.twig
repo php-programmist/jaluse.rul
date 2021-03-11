@@ -1,40 +1,75 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %} {{ page.title ?? 'Жалюзи на окна купить в Москве. Каталог и цены - Мастерская Жалюзи' }}{% endblock %}</title>
-        <meta name="description" content="{% block description %}{{ page.description|default('') }}{% endblock %}"/>
-        <meta name="keywords" content="{% block keywords %}Жалюзи на окна в Москве{% endblock %}"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta property="og:title" content="{{ block('title') }}" />
-        <meta property="og:keywords" content="{{ block('keywords') }}" />
-        <meta property="og:description" content="{{ block('description') }}" />
-        <meta property="og:url" content="{{ app.request.uri }}" />
-        {% if page is defined -%}
-            <meta http-equiv="Last-Modified" content="{{ page.modifiedAt|date('D, d M Y H:i:s') }} GMT">
-        {% endif %}
-        {{ include('modules/scripts/schema.html.twig',{ title: block('title'), description: block('description')}) }}
-        {{ schema_breadcrumbs(page ?? null) }}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-        {{ include('modules/scripts/yandex_metrics.html.twig') }}
-    </head>
-    <body itemscope="itemscope" itemtype="https://schema.org/Product">
-    {{ include('modules/_header.html.twig') }}
-    {{ include('modules/_utp.html.twig', { h1 : block('h1')??page.h1, description: block('description'), warranty: block('warranty') ?? 2 }) }}
-        {% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {{ page.title ?? 'Жалюзи на окна купить в Москве. Каталог и цены - Мастерская Жалюзи' }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ page.description|default('') }}{% endblock %}" />
+    <meta name="keywords" content="{% block keywords %}Жалюзи на окна в Москве{% endblock %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="{{ block('title') }}" />
+    <meta property="og:keywords" content="{{ block('keywords') }}" />
+    <meta property="og:description" content="{{ block('description') }}" />
+    <meta property="og:url" content="{{ app.request.uri }}" />
+    {% if page is defined -%}
+        <meta http-equiv="Last-Modified" content="{{ page.modifiedAt|date('D, d M Y H:i:s') }} GMT">
+    {% endif %}
+    {{ include('modules/scripts/schema.html.twig',{ title: block('title'), description: block('description')}) }}
+    {{ schema_breadcrumbs(page ?? null) }}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {{ include('modules/scripts/yandex_metrics.html.twig') }}
+</head>
+<body itemscope="itemscope" itemtype="https://schema.org/Product">
+{{ include('modules/_header.html.twig') }}
 
-        {% endblock %}
-    {{ include('modules/_footer.html.twig') }}
-    {{ include('modules/_modal_callback.html.twig') }}
-    {{ include('modules/_popup-banner.html.twig') }}
+<!--УТП начало-->
+<div class="block1">
+    <div class="b1fonwrap">
+        <div {{ lazy_load_bg('/img/slide2.jpg',['b1fon','b1fon2']) }}></div>
+    </div>
+    <div class="block1-wrap">
+        <div class="container">
+            <div class="row">
+                <h1 class="col-12" itemprop="name">
+                    {%- block h1 -%}
+                        {{ page.h1 ?? 'ЖАЛЮЗИ НА ОКНА ОТ ПРОИЗВОДИТЕЛЯ' }}
+                    {%- endblock -%}
+                </h1>
+                <div itemprop="description" class="d-none">{{ block('description') }}</div>
+                <div class="col-xl-6 offset-xl-1 col-lg-6 utp-wrap align-self-center">
+                    {%- block utp -%}
+                        <div class="utp-block"><span>Гарантия {% block warranty '2' %} года</span></div>
+                        <div class="utp-block"><span>Бесплатный выезд и замер (c 9:00 до 18:00)</span></div>
+                        <div class="utp-block"><span>Изготовление и установка 1-3 дня</span></div>
+                        <div class="utp-block"><span>Замер и монтаж круглосуточно, 24/7</span></div>
+                    {%- endblock utp -%}
+                </div>
+                <div class="col-lg-6 col-xl-4 align-self-center form-wrap">
+                    <form action="{{ path('mail.callback_consultation') }}" method="post" class="phone_callback">
+                        <span class="zag2">БЕСПЛАТНЫЙ ЗАМЕР И КОНСУЛЬТАЦИЯ</span>
+                        <input type="text" placeholder="Имя" name="name" required="" />
+                        <input type="text" class="phone-field" name="phone" placeholder="Номер телефона" required="" />
+                        <input type="submit" class="form-btn" value="Узнать стоимость" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--УТП БЛОК КОНЕЦ-->
+{% block body %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    {{ include('modules/scripts/comagic.html.twig') }}
-    {{ include('modules/_whatsapp_button.html.twig') }}
-    </body>
+{% endblock %}
+{{ include('modules/_footer.html.twig') }}
+{{ include('modules/_modal_callback.html.twig') }}
+{{ include('modules/_popup-banner.html.twig') }}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+{{ include('modules/scripts/comagic.html.twig') }}
+{{ include('modules/_whatsapp_button.html.twig') }}
+</body>
 </html>
