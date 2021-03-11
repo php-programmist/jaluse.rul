@@ -4,4 +4,13 @@
     {{ include('simple_catalog/markizyi/_upt.html.twig') }}
 {% endblock %}
 
+{% block body %}
+    {{ include('modules/_catalog_card.html.twig') }}
+    {{ include('simple_catalog/markizyi/_advantages.html.twig') }}
+    {{ include('modules/_catalog.html.twig') }}
+    {{ include('modules/rating.html.twig') }}
+    {{ include('modules/_seo_block.html.twig') }}
+    {{ include('modules/_employees.html.twig') }}
+    {{ include('modules/_clients.html.twig') }}
+{% endblock %}
 
