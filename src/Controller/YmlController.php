@@ -53,8 +53,24 @@ class YmlController extends AbstractController
     public function ymarket(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         return $this->render('yml/ymarket.xml.twig', [
-            'offers' => $productRepository->getForYml(),
-            'categories'   => $categoryRepository->findAll(),
+            'offers'     => $productRepository->getForYml(),
+            'categories' => $categoryRepository->findAll(),
+        ]);
+    }
+    
+    /**
+     * @Route("/ymarket-cards.xml", name="ymarket_cards", format="xml")
+     *
+     * @param ProductRepository  $productRepository
+     * @param CategoryRepository $categoryRepository
+     *
+     * @return Response
+     */
+    public function ymarketCards(ProductRepository $productRepository, CategoryRepository $categoryRepository)
+    {
+        return $this->render('yml/ymarket-cards.xml.twig', [
+            'offers'     => $productRepository->getForYml(),
+            'categories' => $categoryRepository->findAll(),
         ]);
     }
 }

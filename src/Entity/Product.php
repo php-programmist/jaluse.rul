@@ -232,22 +232,28 @@ class Product extends Page
     
     public function getImageCatalog()
     {
-        $segments = explode('/', $this->getUri());
-        $file_name = array_pop($segments).'.jpg';
-        $folder = array_pop($segments);
-        return '/img/products/'.$folder.'/catalog/'.$file_name;
+        $segments  = explode('/', $this->getUri());
+        $file_name = array_pop($segments) . '.jpg';
+        $folder    = array_pop($segments);
+    
+        return '/img/products/' . $folder . '/catalog/' . $file_name;
     }
     
-    public function getCardImageUrl():string
+    public function getCardImageUrl(): string
     {
         return $this->getImageBig();
     }
-
+    
+    public function getCardHeader(): string
+    {
+        return $this->getName();
+    }
+    
     public function getMatrixId(): ?int
     {
         return $this->matrix_id;
     }
-
+    
     public function setMatrixId(int $matrix_id): self
     {
         $this->matrix_id = $matrix_id;

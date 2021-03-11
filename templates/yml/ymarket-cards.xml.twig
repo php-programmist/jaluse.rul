@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="{{ 'now'|date('Y-m-d H:i') }}">
+    <shop>
+        <name>Мастерская Жалюзи</name>
+        <company>Жалюзи на окна купить недорого в Москве. Выезд и замер бесплатно!</company>
+        <url>{{ app.request.schemeAndHttpHost }}</url>
+        <currencies>
+            <currency id="RUR" rate="1" />
+        </currencies>
+        <categories>
+            {% for category in categories %}
+                <category id="{{ category.id }}">{{ category.name }}</category>
+            {% endfor %}
+        </categories>
+        <delivery-options>
+            <option cost="500" days="3" />
+        </delivery-options>
+        <offers>
+            {% for offer in offers -%}
+                <offer id="{{ offer.id }}" available="true">
+                    <url>{{ app.request.schemeAndHttpHost~offer.path }}</url>
+                    <price>{{ min_price(offer,true) }}</price>
+                    <currencyId>RUR</currencyId>
+                    <categoryId>{{ offer.category.id ?? 1 }}</categoryId>
+                    <name>{{ offer.name }} ({{ offer.minSize }}, {{ offer.colorName }})</name>
+                    <description>
+                        <![CDATA[
+                        <h3>{{ offer.cardHeader }} характеристики:</h3>
+                        <br/>
+                        <ul>
+                            <li>Вид: {{ offer.typeNameForPage }}</li>
+                            <li>Тип: {{ offer.typeForPage }}</li>
+                            <li>Цвет: {{ offer.colorName }}</li>
+                            <li>Категория: {{ offer.categoryName }}</li>
+                            <li>Размер: На ваш выбор.</li>
+                            <li>Управление: Ручное и автоматическое</li>
+                            <li>Срок изготовления и установки: 1-5 дней</li>
+                        </ul>
+                    ]]>
+                    </description>
+                    <manufacturer_warranty>true</manufacturer_warranty>
+                    <picture>{{ app.request.schemeAndHttpHost }}{{ offer.cardImageUrl }}</picture>
+                    <param name="Вид">{{ offer.typeNameForPage }}</param>
+                    <param name="Тип">{{ offer.typeForPage }}</param>
+                    <param name="Материал">{{ offer.materialForPage }}</param>
+                    <param name="Цвет">{{ offer.colorName }}</param>
+                    <param name="Категория">{{ offer.categoryName }}</param>
+                    <param name="Размер">{{ offer.minSize }}</param>
+                    <param name="Управление">ручное и автоматическое</param>
+                    <param name="Срок изготовления и установки">1-5 дней</param>
+                    <param name="Выезд и замер">бесплатный при оформлении заказа и оплате</param>
+                </offer>
+            {% endfor -%}
+        </offers>
+    </shop>
+</yml_catalog>

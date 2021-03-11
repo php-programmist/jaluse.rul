@@ -28,7 +28,7 @@
     {{ include('modules/rating_schema.html.twig') }}
     {% embed 'embedded/card.html.twig' %}
         {% block image %}<img src="{{ page.imageBig }}" alt="*">{% endblock image %}
-        {% block header %}{{ page.name }}{% endblock header %}
+        {% block header %}{{ page.cardHeader }}{% endblock header %}
         {% block content %}
             <div><b>Вид:</b> {{ page.typeNameForPage }}</div>
             <div><b>Тип:</b> {{ page.typeForPage }}</div>
