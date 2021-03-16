@@ -4,17 +4,17 @@
 			<div class="col-lg-7 col-md-6 calc-parametr">
 				<form action="#">
 					<div class="calc-parametr-typewrap">
-						<div class="minzag">Выберите тип жалюзи</div>
-						<div class="row">
-							<div class="type_selector">
-								<v-drop-down-selector
-										:items="types"
-										default_name="Выбрать вид"
-										v-model="type"
-								></v-drop-down-selector>
-							</div>
-							<transition name="slide-fade">
-								<div class="material_selector" v-show="materials.length > 0">
+            <div class="minzag">Выберите тип {{ rulonnyie_only ? 'рулонных штор' : 'жалюзи' }}</div>
+            <div class="row">
+              <div class="type_selector">
+                <v-drop-down-selector
+                    :items="types"
+                    :default_name="rulonnyie_only?'Рулонные':'Выбрать вид'"
+                    v-model="type"
+                ></v-drop-down-selector>
+              </div>
+              <transition name="slide-fade">
+                <div class="material_selector" v-show="materials.length > 0">
 									<v-drop-down-selector
 											:items="materials"
 											default_name="Выбрать изделие"
@@ -94,61 +94,71 @@
 </template>
 
 <script>
-	import axios from 'axios';
-	import ConsultationForm from './ConsultationForm';
-	import OrderForm from './OrderForm';
-	import PriceCalculator from './PriceCalculator'
-	import PriceRenderer from './PriceRenderer'
-	import ProductConfigurator from './ProductConfigurator'
-	import CategorySelector from './CategorySelector';
-	import DropDownSelector from './DropDownSelector';
-	
-	export default {
-		data() {
-			return {
-				types: [],
-				colors: [],
-				availableColorsIds: [],
-				colorsIds: [],
-				products: [],
-				categories: [],
-				category: {id:0},
-				type: {id:0},
-				material: {id:0},
-				product_index: 0,
-				type_opened: false,
-				material_opened: false,
-				color_opened: false,
-				price_calculator: null,
-				productConfigs:{}
-			};
-		},
-		props:["type_filter"],
-		components: {
-			'v-consultation-form': ConsultationForm,
-			'v-order-form': OrderForm,
-			'v-price-renderer': PriceRenderer,
-			'v-product-configurator': ProductConfigurator,
-			'v-category-selector': CategorySelector,
-			'v-drop-down-selector': DropDownSelector,
-		},
-		created() {
-			axios.get('/api/calc/getInitData')
-				.then(response => {
-					this.types = response.data.types;
-					if (typeof this.type_filter !== 'undefined') {
-						this.types = this.types.filter(type => this.type_filter.includes(type.id));
-					}
-					this.colors = response.data.colors;
-					this.categories = response.data.categories;
-					this.category = this.categories[0];
-					const matrices = response.data.matrices;
+import axios from 'axios';
+import ConsultationForm from './ConsultationForm';
+import OrderForm from './OrderForm';
+import PriceCalculator from './PriceCalculator'
+import PriceRenderer from './PriceRenderer'
+import ProductConfigurator from './ProductConfigurator'
+import CategorySelector from './CategorySelector';
+import DropDownSelector from './DropDownSelector';
+
+export default {
+  data() {
+    return {
+      types: [],
+      colors: [],
+      availableColorsIds: [],
+      colorsIds: [],
+      products: [],
+      categories: [],
+      category: {id: 0},
+      type: {id: 0},
+      material: {id: 0},
+      product_index: 0,
+      type_opened: false,
+      material_opened: false,
+      color_opened: false,
+      price_calculator: null,
+      productConfigs: {}
+    };
+  },
+  props: ["type_filter", "rulonnyie_only"],
+  components: {
+    'v-consultation-form': ConsultationForm,
+    'v-order-form': OrderForm,
+    'v-price-renderer': PriceRenderer,
+    'v-product-configurator': ProductConfigurator,
+    'v-category-selector': CategorySelector,
+    'v-drop-down-selector': DropDownSelector,
+  },
+  created() {
+    if (this.rulonnyie_only) {
+      this.type = {
+        "id": 133,
+        "name": "Рулонные",
+        "materials": [{"id": 191, "name": "Мини «День Ночь»"}, {"id": 192, "name": "Кассетные «День Ночь»"}, {
+          "id": 193,
+          "name": "Мини"
+        }, {"id": 194, "name": "Кассетные UNI"}, {"id": 195, "name": "Стандартные"}]
+      };
+    }
+    axios.get('/api/calc/getInitData')
+        .then(response => {
+          this.types = response.data.types;
+          if (typeof this.type_filter !== 'undefined') {
+            this.types = this.types.filter(type => this.type_filter.includes(type.id));
+          }
+          this.colors = response.data.colors;
+          this.categories = response.data.categories;
+          this.category = this.categories[0];
+          const matrices = response.data.matrices;
 					const priceConfigs = response.data.priceConfigs;
 					this.price_calculator = new PriceCalculator(priceConfigs, matrices);
 					this.getProducts();
 				});
-			
-		},
+
+  },
 		
 		computed: {
 			materials() {
