@@ -114,7 +114,7 @@ class SimpleCatalogController extends AbstractController
      */
     public function rulonnyieShtoryiDistricts()
     {
-        $page      = $this->page_repository->findOneBy(['uri' => 'districts']);
+        $page      = $this->page_repository->findOneBy(['uri' => 'rulonnyie-shtoryi/districts']);
         $repo      = $this->getDoctrine()->getRepository(District::class);
         $districts = $repo->findBy(['parent' => null, 'geoProductType' => RulonnyieShtoryiGeoProduct::TYPE]);
         
