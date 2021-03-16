@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Model\GeoProduct\AbstractGeoProduct;
-use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,11 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class Geo extends Page
 {
-    /**
-     * @var string
-     * @ORM\Column(type="string",options={"default": App\Model\GeoProduct\ZhalyuziGeoProduct::TYPE})
-     */
-    protected $geoProductType = ZhalyuziGeoProduct::TYPE;
     
     /**
      * @var AbstractGeoProduct
