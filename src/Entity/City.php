@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,12 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class City extends Geo
 {
     public const TYPE = 'city';
-    
-    /**
-     * @var string
-     * @ORM\Column(type="string",options={"default": App\Model\GeoProduct\ZhalyuziGeoProduct::TYPE})
-     */
-    protected $geoProductType = ZhalyuziGeoProduct::TYPE;
     
     public function getH1(): string
     {

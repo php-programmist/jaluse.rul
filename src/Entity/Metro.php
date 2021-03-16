@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,11 +11,6 @@ class Metro extends Geo
 {
     public const TYPE = 'metro';
     
-    /**
-     * @var string
-     * @ORM\Column(type="string",options={"default": App\Model\GeoProduct\ZhalyuziGeoProduct::TYPE})
-     */
-    protected $geoProductType = ZhalyuziGeoProduct::TYPE;
     
     public function getH1(): string
     {

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Contracts\TurboPageInterface;
 use App\Entity\Traits\RatingTrait;
+use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -134,11 +135,17 @@ abstract class Page implements TurboPageInterface
      * @var File
      */
     protected $cardImageFile;
-
+    
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $cardDescription;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string",options={"default": App\Model\GeoProduct\ZhalyuziGeoProduct::TYPE})
+     */
+    protected $geoProductType = ZhalyuziGeoProduct::TYPE;
     
     public function __construct()
     {
@@ -497,12 +504,32 @@ abstract class Page implements TurboPageInterface
     public function setTurbo(bool $turbo): self
     {
         $this->turbo = $turbo;
-        
+    
         return $this;
     }
     
     public function getUnits(): string
     {
         return 'руб/м2';
+    }
+    
+    /**
+     * @return string
+     */
+    public function getGeoProductType(): string
+    {
+        return $this->geoProductType;
+    }
+    
+    /**
+     * @param string $geoProductType
+     *
+     * @return $this
+     */
+    public function setGeoProductType(string $geoProductType): self
+    {
+        $this->geoProductType = $geoProductType;
+        
+        return $this;
     }
 }

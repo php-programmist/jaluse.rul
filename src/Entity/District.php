@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,12 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class District extends Geo
 {
     public const TYPE = 'district';
-    
-    /**
-     * @var string
-     * @ORM\Column(type="string",options={"default": App\Model\GeoProduct\ZhalyuziGeoProduct::TYPE})
-     */
-    protected $geoProductType = ZhalyuziGeoProduct::TYPE;
     
     public function getH1(): string
     {

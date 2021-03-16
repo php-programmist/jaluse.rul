@@ -17,26 +17,6 @@ abstract class Geo extends Page
     protected $geoProduct;
     
     /**
-     * @return string
-     */
-    public function getGeoProductType(): string
-    {
-        return $this->geoProductType;
-    }
-    
-    /**
-     * @param string $geoProductType
-     *
-     * @return $this
-     */
-    public function setGeoProductType(string $geoProductType): self
-    {
-        $this->geoProductType = $geoProductType;
-        
-        return $this;
-    }
-    
-    /**
      * @return AbstractGeoProduct
      */
     public function getGeoProduct(): AbstractGeoProduct
