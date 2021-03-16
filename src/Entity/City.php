@@ -13,7 +13,7 @@ class City extends Geo
     
     public function getH1(): string
     {
-        return 'Жалюзи ' . $this->getName();
+        return $this->getGeoProduct()->getNameNominative() . ' ' . $this->getName();
     }
     
     public function getTitle(): ?string
@@ -21,8 +21,8 @@ class City extends Geo
         if (!empty($this->title)) {
             return $this->title;
         }
-        
-        return 'Жалюзи на окна купить ' . $this->getName();
+    
+        return $this->getGeoProduct()->getNameNominative() . ' на окна купить ' . $this->getName();
     }
     
     public function getDescription(): ?string
@@ -31,7 +31,12 @@ class City extends Geo
             return $this->description;
         }
     
-        return sprintf('Жалюзи на окна купить недорого %s. ⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ Жалюзи по низким ценам %s ☎ 8-800-775-72-38.',
-            $this->getName(), $this->getName());
+        return sprintf('%s на окна купить недорого %s. ⭐ Выезд и замер бесплатно! ✅ Изготовление %s с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ %s по низким ценам %s ☎ 8-800-775-72-38.',
+            $this->getGeoProduct()->getNameNominative(),
+            $this->getName(),
+            $this->getGeoProduct()->getNameGenitive(),
+            $this->getGeoProduct()->getNameNominative(),
+            $this->getName()
+        );
     }
 }
