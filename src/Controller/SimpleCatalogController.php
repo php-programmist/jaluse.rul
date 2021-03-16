@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\District;
+use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
+use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use App\Repository\MarkizRepository;
 use App\Repository\PageRepository;
 use App\Repository\RollRepository;
@@ -27,7 +29,7 @@ class SimpleCatalogController extends AbstractController
      */
     public function markizyi(MarkizRepository $repository)
     {
-        $page  = $this->page_repository->findOneBy(['uri'=>'markizyi']);
+        $page  = $this->page_repository->findOneBy(['uri' => 'markizyi']);
         $items = $repository->findAll();
         
         return $this->render('simple_catalog/markizyi/index.html.twig', [
@@ -41,7 +43,7 @@ class SimpleCatalogController extends AbstractController
      */
     public function rolstavni(RollRepository $repository)
     {
-        $page  = $this->page_repository->findOneBy(['uri'=>'rolstavni']);
+        $page  = $this->page_repository->findOneBy(['uri' => 'rolstavni']);
         $items = $repository->findAll();
         
         return $this->render('simple_catalog/index.html.twig', [
@@ -55,7 +57,7 @@ class SimpleCatalogController extends AbstractController
      */
     public function rimskies(RomanRepository $repository)
     {
-        $page  = $this->page_repository->findOneBy(['uri'=>'rimskies']);
+        $page  = $this->page_repository->findOneBy(['uri' => 'rimskies']);
         $items = $repository->findAll();
         
         return $this->render('simple_catalog/index.html.twig', [
@@ -70,7 +72,7 @@ class SimpleCatalogController extends AbstractController
      */
     public function shtory_pvh()
     {
-        $page = $this->page_repository->findOneBy(['uri' =>'shtory-dlya-besedok-i-verand/shtory-pvh']);
+        $page = $this->page_repository->findOneBy(['uri' => 'shtory-dlya-besedok-i-verand/shtory-pvh']);
         
         return $this->render('simple_catalog/index.html.twig', [
             'page'  => $page,
@@ -99,7 +101,22 @@ class SimpleCatalogController extends AbstractController
     {
         $page      = $this->page_repository->findOneBy(['uri' => 'districts']);
         $repo      = $this->getDoctrine()->getRepository(District::class);
-        $districts = $repo->findBy(['parent' => null]);
+        $districts = $repo->findBy(['parent' => null, 'geoProductType' => ZhalyuziGeoProduct::TYPE]);
+    
+        return $this->render('simple_catalog/districts.html.twig', [
+            'page'      => $page,
+            'districts' => $districts,
+        ]);
+    }
+    
+    /**
+     * @Route("/rulonnyie-shtoryi/districts/", name="simple_catalog_rulonnyie_shtoryi_districts")
+     */
+    public function rulonnyieShtoryiDistricts()
+    {
+        $page      = $this->page_repository->findOneBy(['uri' => 'districts']);
+        $repo      = $this->getDoctrine()->getRepository(District::class);
+        $districts = $repo->findBy(['parent' => null, 'geoProductType' => RulonnyieShtoryiGeoProduct::TYPE]);
         
         return $this->render('simple_catalog/districts.html.twig', [
             'page'      => $page,
