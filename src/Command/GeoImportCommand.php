@@ -7,6 +7,7 @@ use App\Entity\District;
 use App\Entity\Geo;
 use App\Entity\Metro;
 use App\Helper\SlugHelper;
+use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -75,18 +76,20 @@ class GeoImportCommand extends Command
     
     private function createGeo(string $class, string $name, ?Geo $parent): Geo
     {
-        $uri = '';
+        $uri = 'rulonnyie-shtoryi/';
         if (null !== $parent) {
             $uri = $parent->getUri() . '/';
         }
         $uri .= SlugHelper::makeSlug($name);
-        $geo = (new $class())
-            ->setName($name)
+        /** @var Geo $geo */
+        $geo = new $class();
+        $geo->setName($name)
             ->setUri($uri)
             ->setParent($parent)
-            ->setTurbo(true);
+            ->setTurbo(true)
+            ->setGeoProductType(RulonnyieShtoryiGeoProduct::TYPE);
         $this->entityManager->persist($geo);
-        
+    
         return $geo;
     }
 }
