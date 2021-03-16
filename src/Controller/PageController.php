@@ -9,6 +9,7 @@ use App\Entity\Markiz;
 use App\Entity\Product;
 use App\Entity\Roll;
 use App\Entity\Roman;
+use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use App\Repository\PageRepository;
 use App\Repository\ProductRepository;
 use App\Service\CatalogManager;
@@ -90,9 +91,10 @@ class PageController extends AbstractController
     
         if ($page instanceof Geo) {
             return $this->render('page/geo.html.twig', [
-                'page'        => $page,
-                'show_calc'   => true,
-                'showCatalog' => false,
+                'page'          => $page,
+                'show_calc'     => true,
+                'showCatalog'   => false,
+                'rulonnyieOnly' => $page->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE,
             ]);
         }
     

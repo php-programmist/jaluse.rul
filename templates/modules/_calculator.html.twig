@@ -1,7 +1,7 @@
 <!--третий блок (калькулятор) начало-->
 <div class="block3 calcblock">
     <div class="container">
-        <div class="zag">Калькулятор жалюзи и рулонных штор</div>
+        <div class="zag">Калькулятор {{ rulonnyieOnly|default(false) ? '' : 'жалюзи и ' }} рулонных штор</div>
         <div id="app-calc">
             <main-page-calc></main-page-calc>
         </div>
