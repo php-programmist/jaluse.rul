@@ -108,9 +108,12 @@ class PageController extends AbstractController
         if (strpos($product->getUri(), 'zhalyuzi') === 0) {
             $template = 'catalog/zhalyuzi/item.html.twig';
         }
+        if (strpos($product->getUri(), 'rulonnyie-shtoryi') === 0) {
+            $template = 'catalog/rulonnyie-shtoryi/item.html.twig';
+        }
         $limit = 12;
         $items = $this->product_repository->getPopularSiblings($product, $limit);
-        
+    
         return $this->render($template, [
             'page'  => $product,
             'items' => $items,
@@ -122,6 +125,9 @@ class PageController extends AbstractController
         $template = 'page/catalog.html.twig';
         if (strpos($catalog->getUri(), 'zhalyuzi') === 0) {
             $template = 'catalog/zhalyuzi/index.html.twig';
+        }
+        if (strpos($catalog->getUri(), 'rulonnyie-shtoryi') === 0) {
+            $template = 'catalog/rulonnyie-shtoryi/index.html.twig';
         }
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
