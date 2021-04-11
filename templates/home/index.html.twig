@@ -7,6 +7,9 @@
     {{ parent() }}
     {{ encore_entry_link_tags('main') }}
 {% endblock %}
+{% block utp %}
+    {{ include('catalog/zhalyuzi/_upt.html.twig') }}
+{% endblock %}
 {% block body %}
 
 {{ include('modules/_order.html.twig') }}

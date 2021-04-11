@@ -15,6 +15,7 @@ use App\Repository\ProductRepository;
 use App\Service\CatalogManager;
 use App\Service\ConfigService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -101,25 +102,35 @@ class PageController extends AbstractController
         throw new NotFoundHttpException('Page is instance of ' . get_class($page));
     }
     
-    private function product(Product $product)
+    private function product(Product $product): Response
     {
+        $template = 'page/product.html.twig';
+        if (strpos($product->getUri(), 'zhalyuzi') === 0) {
+            $template = 'catalog/zhalyuzi/item.html.twig';
+        }
         $limit = 12;
-        $items = $this->product_repository->getPopularSiblings($product,$limit);
-        return $this->render('page/product.html.twig', [
-            'page' => $product,
+        $items = $this->product_repository->getPopularSiblings($product, $limit);
+        
+        return $this->render($template, [
+            'page'  => $product,
             'items' => $items,
         ]);
     }
     
     private function catalog(Catalog $catalog)
     {
+        $template = 'page/catalog.html.twig';
+        if (strpos($catalog->getUri(), 'zhalyuzi') === 0) {
+            $template = 'catalog/zhalyuzi/index.html.twig';
+        }
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
-        $show_calc = in_array($catalog->getUri(),['zhalyuzi','rulonnyie-shtoryi']);
-        return $this->render('page/catalog.html.twig', [
-            'page'  => $catalog,
-            'items' => $this->catalogManager->getPopular($catalog),
+        $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
+    
+        return $this->render($template, [
+            'page'               => $catalog,
+            'items'              => $this->catalogManager->getPopular($catalog),
             'force_show_filters' => $force_show_filters,
-            'show_calc' => $show_calc,
+            'show_calc'          => $show_calc,
         ]);
     }
     
