@@ -22,6 +22,7 @@ class Location extends Page
         if ($parent && $parent instanceof Catalog) {
             return $parent->getType();
         }
+    
         return null;
     }
     
@@ -30,8 +31,14 @@ class Location extends Page
         if (!empty(parent::getDescription())) {
             return parent::getDescription();
         }
+        
         return sprintf('%s купить недорого в Москве. ✅ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ %s по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.',
-            $this->getName(),$this->getName());
+            $this->getName(), $this->getName());
+    }
+    
+    public function getTurboContentTemplate(): string
+    {
+        return 'turbo/locations/content.html.twig';
     }
     
 }

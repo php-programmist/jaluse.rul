@@ -120,4 +120,9 @@ class Catalog extends Page
         
         return parent::getUnits();
     }
+    
+    public function getTurboContentTemplate(): string
+    {
+        return 'turbo/catalog/content.html.twig';
+    }
 }

@@ -557,4 +557,9 @@ abstract class Page implements TurboPageInterface
         
         return $this;
     }
+    
+    public function getTurboContentTemplate(): string
+    {
+        return 'turbo/content.html.twig';
+    }
 }

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Adapter\CatalogPageAdapter;
-use App\Adapter\LocationPageAdapter;
+use App\Adapter\MainPageAdapter;
 use App\Adapter\RssPageAdapter;
 use App\Entity\Geo;
 use App\Entity\Location;
@@ -11,6 +11,7 @@ use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use App\Repository\CatalogRepository;
 use App\Repository\LocationRepository;
+use App\Repository\SimpleRepository;
 use PhpProgrammist\YandexTurboRssGeneratorBundle\Adapters\BasePage;
 use PhpProgrammist\YandexTurboRssGeneratorBundle\YandexTurboRssGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,14 +23,14 @@ class TurboPageController extends AbstractController
     
     /**
      * @Route("/turbo/locations.xml", name="turbo_pages_locations")
-     * @param LocationPageAdapter     $adapter
+     * @param RssPageAdapter          $adapter
      * @param LocationRepository      $locationRepository
      * @param YandexTurboRssGenerator $generator
      *
      * @return Response
      */
     public function locations(
-        LocationPageAdapter $adapter,
+        RssPageAdapter $adapter,
         LocationRepository $locationRepository,
         YandexTurboRssGenerator $generator
     ): Response {
@@ -122,6 +123,34 @@ class TurboPageController extends AbstractController
             '/rulonnyie-shtoryi/districts/'
         );
         $items     = $repo->findBy(['turbo' => true, 'geoProductType' => RulonnyieShtoryiGeoProduct::TYPE]);
+    
+        $adapter
+            ->setBasePage($base_page)
+            ->setOriginalItems($items);
+    
+        return $generator->render($adapter, $base_page);
+    }
+    
+    /**
+     * @Route("/turbo/main.xml", name="turbo_pages_main")
+     * @param MainPageAdapter         $adapter
+     * @param SimpleRepository        $simpleRepository
+     * @param YandexTurboRssGenerator $generator
+     *
+     * @return Response
+     */
+    public function main(
+        MainPageAdapter $adapter,
+        SimpleRepository $simpleRepository,
+        YandexTurboRssGenerator $generator
+    ): Response {
+        
+        $base_page = new BasePage(
+            'Жалюзи на пластиковые окна в Москве',
+            'Жалюзи на пластиковые окна купить недорого в Москве. Выезд и замер бесплатно! Изготовление жалюзи с установкой за 1-4 дня. Гарантия 2 года. Жалюзи на пластиковые окна по низким ценам в интернет магазине «Мастерская жалюзи».  8-800-775-72-38.',
+            '/'
+        );
+        $items     = $simpleRepository->findBy(['uri' => '/']);
         
         $adapter
             ->setBasePage($base_page)

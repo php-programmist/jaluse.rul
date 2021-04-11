@@ -64,7 +64,7 @@ class RssPageAdapter implements RssAdapterInterface
     protected function getText(TurboPageInterface $page): string
     {
         
-        return $this->twig->render('turbo/content.html.twig', [
+        return $this->twig->render($page->getTurboContentTemplate(), [
             'page' => $page,
         ]);
     }
