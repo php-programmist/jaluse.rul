@@ -1,0 +1,29 @@
+<button
+        formaction="tel:{{ phone }}"
+        data-background-color="blue"
+        data-color="white"
+        data-turbo="true"
+        data-primary="true"
+>
+    Рассчитать
+</button>
+
+<button
+        formaction="{{ app.request.schemeAndHttpHost }}{{ page.path }}"
+        data-background-color="blue"
+        data-color="white"
+        data-turbo="false"
+        data-primary="true"
+>
+    Посмотреть образцы
+</button>
+
+<button
+        formaction="tel:{{ phone }}"
+        data-background-color="blue"
+        data-color="white"
+        data-turbo="true"
+        data-primary="true"
+>
+    Консультация
+</button>
