@@ -38,6 +38,7 @@
 					<div class="product__name"><a :href="`/${product.uri}/`" target="_blank">{{ product.name }}</a></div>
 					<div class="product__price">{{product.calculationType === 'simple'? `${product.minPrice} руб/м2`:`от ${product.minPrice} руб` }}</div>
 					<button class="mbtn mbtn_orange" @click="showProductConfigurator(product)">Рассчитать</button>
+          <v-consultation-form text="Консультация"></v-consultation-form>
 				</div>
 			</div>
 			<div class="text-center">
@@ -55,25 +56,25 @@
 </template>
 
 <script>
-	import axios from 'axios';
-	import ConsultationForm from './ConsultationForm';
-	import PopupProductConfigurator from './PopupProductConfigurator';
-	import PriceCalculator from './PriceCalculator';
-	import CategorySelector from './CategorySelector';
-	import DropDownSelector from './DropDownSelector';
-	import ColorSelector from './ColorSelector';
-	
-	export default {
-		data() {
-			return {
-				types: [],
-				colors: [],
-				availableColorsIds: [],
-				colorsIds: [],
-				products: [],
-				categories: [],
-				price_calculator: {},
-				category: {},
+import axios from 'axios';
+import ConsultationForm from './ConsultationForm';
+import PopupProductConfigurator from './PopupProductConfigurator';
+import PriceCalculator from './PriceCalculator';
+import CategorySelector from './CategorySelector';
+import DropDownSelector from './DropDownSelector';
+import ColorSelector from './ColorSelector';
+
+export default {
+  data() {
+    return {
+      types: [],
+      colors: [],
+      availableColorsIds: [],
+      colorsIds: [],
+      products: [],
+      categories: [],
+      price_calculator: {},
+      category: {},
 				type: {id:0},
 				material: {id:0},
 				totalProducts:0,
