@@ -73,22 +73,27 @@ abstract class Page implements TurboPageInterface
      * @ORM\Column(type="boolean")
      */
     protected $published =1;
-
+    
     /**
      * @ORM\Column(type="boolean", options={"default": 0})
      */
     protected $yml = false;
-
+    
     /**
      * @ORM\Column(type="boolean", options={"default": 0})
      */
     protected $turbo = false;
-
+    
+    /**
+     * @ORM\Column(type="boolean", options={"default": 1})
+     */
+    protected $showSeoText = true;
+    
     /**
      * @ORM\Column(type="datetime")
      */
     protected $created_at;
-
+    
     /**
      * @ORM\Column(type="datetime")
      */
@@ -529,6 +534,26 @@ abstract class Page implements TurboPageInterface
     public function setGeoProductType(string $geoProductType): self
     {
         $this->geoProductType = $geoProductType;
+        
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isShowSeoText(): bool
+    {
+        return $this->showSeoText;
+    }
+    
+    /**
+     * @param bool $showSeoText
+     *
+     * @return $this
+     */
+    public function setShowSeoText(bool $showSeoText): self
+    {
+        $this->showSeoText = $showSeoText;
         
         return $this;
     }

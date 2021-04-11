@@ -81,6 +81,7 @@ easy_admin:
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'showSeoText', label: 'Отображать Seo-текст' }
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
@@ -94,6 +95,7 @@ easy_admin:
                     - { property: 'path', label: 'Ссылка', type: 'url'}
                     - { property: 'parent', label: 'Родитель'}
                     - { property: 'published', label: 'Опубликован'}
+                    - { property: 'showSeoText', label: 'Seo-текст' }
                     - { property: 'type.name', label: 'Тип'}
                     - { property: 'material.name', label: 'Подтип'}
                     - { property: 'seoImageUrl', type: 'image', label: 'SEO-Изображение' }
@@ -116,6 +118,7 @@ easy_admin:
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'recommendedTitle', label: 'Заголовок рекомендуемых товаров'}
                     - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'showSeoText', label: 'Отображать Seo-текст' }
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
@@ -145,6 +148,7 @@ easy_admin:
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'showSeoText', label: 'Отображать Seo-текст' }
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
@@ -176,6 +180,7 @@ easy_admin:
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'showSeoText', label: 'Отображать Seo-текст' }
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
@@ -207,6 +212,7 @@ easy_admin:
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'showSeoText', label: 'Отображать Seo-текст' }
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
@@ -238,6 +244,7 @@ easy_admin:
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'showSeoText', label: 'Отображать Seo-текст' }
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
 
@@ -265,6 +272,7 @@ easy_admin:
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
+                    - { property: 'showSeoText', label: 'Отображать Seo-текст' }
                     - { property: 'content', label: 'SEO-текст', type: 'fos_ckeditor'}
                     - { property: 'seoImageFile', type: 'vich_image', label: 'SEO-Изображение' }
                     - { property: 'ratingValue', type: 'text', label: 'Рейтинг' }
