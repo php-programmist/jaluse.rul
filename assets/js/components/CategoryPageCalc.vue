@@ -19,8 +19,9 @@
 			</div>
 			<div class="color_selector" v-show="availableColors.length > 0">
 				<v-color-selector
-					:items="availableColors"
-					v-model="colorsIds"
+            :items="availableColors"
+            v-model="colorsIds"
+            @input="getProducts"
 				></v-color-selector>
 			</div>
 		</div>
@@ -121,10 +122,7 @@ export default {
 				return this.colors.filter(color => this.availableColorsIds.includes(color.id));
 			},
 			filteredProducts(){
-				if (this.colorsIds.length === 0) {
-					return this.products;
-				}
-				return this.products.filter(product => this.colorsIds.includes(product.colorId));
+        return this.products;
 			}
 		},
 		watch:{
@@ -163,28 +161,30 @@ export default {
 				this.page++;
 				axios.get(query+'&page='+this.page)
 					.then(response => {
-						this.products = this.products.concat(response.data.products);
-						this.totalProducts = response.data.count;
-						this.addAvailableColorsIds(response.data.colors);
-					});
+            this.products = this.products.concat(response.data.products);
+            this.totalProducts = response.data.count;
+            //this.addAvailableColorsIds(response.data.colors);
+          });
 			},
-			getProductsQuery(){
-				let query = '/api/calc/getCatalogProducts?';
-				query += 'category=' + this.category.id;
-				if (this.type.id > 0) {
-					query += '&type=' + this.type.id;
-				}
-				if (this.material.id > 0) {
-					query += '&material=' + this.material.id;
-				}
-				/*if (this.colorsIds.length > 0) {
-					query += '&color=' + this.colorsIds.join(',');
-				}*/
-				return query;
-			},
+			getProductsQuery() {
+        let query = '/api/calc/getCatalogProducts?';
+        query += 'category=' + this.category.id;
+        if (this.type.id > 0) {
+          query += '&type=' + this.type.id;
+        }
+        if (this.material.id > 0) {
+          query += '&material=' + this.material.id;
+        }
+        if (this.colorsIds.length > 0) {
+          query += '&color=' + this.colorsIds.join(',');
+        }
+        return query;
+      },
 			setAvailableColorsIds(array) {
-				this.availableColorsIds = array.map(item => parseInt(item));
-			},
+        if (this.availableColorsIds.length === 0) {
+          this.availableColorsIds = array.map(item => parseInt(item));
+        }
+      },
 			addAvailableColorsIds(array) {
 				this.availableColorsIds = this.availableColorsIds.concat(array.map(item => parseInt(item)));
 			}
