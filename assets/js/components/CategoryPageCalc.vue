@@ -11,24 +11,25 @@
 			</div>
 			<div class="material_selector" v-show="materials.length > 0 && material_id == 0">
 				<v-drop-down-selector
-					:items="materials"
-					default_name="Выбрать изделие"
-					v-model="material"
-					@input="getProducts"
-				></v-drop-down-selector>
+            :items="materials"
+            default_name="Выбрать изделие"
+            v-model="material"
+            @input="materialChanged"
+        ></v-drop-down-selector>
 			</div>
 			<div class="color_selector" v-show="availableColors.length > 0">
 				<v-color-selector
             :items="availableColors"
             v-model="colorsIds"
-            @input="getProducts"
+            @changed="getProducts"
+            ref="colorSelector"
 				></v-color-selector>
 			</div>
 		</div>
 		<div class="col-md-9 col-sm-12">
-			<div class="categories">
-				<v-category-selector :categories="categories" v-model="category" @input="getProducts"></v-category-selector>
-			</div>
+      <div class="categories">
+        <v-category-selector :categories="categories" v-model="category" @input="categoryChanged"></v-category-selector>
+      </div>
 			<div class="products">
 				<div
 						class="product"
@@ -128,8 +129,9 @@ export default {
 		watch:{
 			type(newVal,oldVal){
 				if (newVal.id > 0 && oldVal.id > 0) {
-					this.material = {id:0};
-				}
+          this.material = {id: 0};
+          this.resetColors();
+        }
 				if (newVal.id > 0) {
 					this.getProducts();
 				}
@@ -146,27 +148,39 @@ export default {
 					this.type = this.types.find(type => type.id == this.type_id);
 				}
 			},
-			getProducts() {
-				const query = this.getProductsQuery();
-				axios.get(query)
-					.then(response => {
-						this.products = response.data.products;
-						this.totalProducts = response.data.count;
-						this.page=1;
-						this.setAvailableColorsIds(response.data.colors);
-					});
-			},
-			getProductsNextPage() {
-				const query = this.getProductsQuery();
-				this.page++;
-				axios.get(query+'&page='+this.page)
-					.then(response => {
-            this.products = this.products.concat(response.data.products);
-            this.totalProducts = response.data.count;
-            //this.addAvailableColorsIds(response.data.colors);
-          });
-			},
-			getProductsQuery() {
+      getProducts() {
+        const query = this.getProductsQuery();
+        axios.get(query)
+            .then(response => {
+              this.products = response.data.products;
+              this.totalProducts = response.data.count;
+              this.page = 1;
+              this.setAvailableColorsIds(response.data.colors);
+            });
+      },
+      categoryChanged() {
+        this.resetColors();
+        this.getProducts();
+      },
+      materialChanged() {
+        this.resetColors();
+        this.getProducts();
+      },
+      getProductsNextPage() {
+        const query = this.getProductsQuery();
+        this.page++;
+        axios.get(query + '&page=' + this.page)
+            .then(response => {
+              this.products = this.products.concat(response.data.products);
+              this.totalProducts = response.data.count;
+              this.addAvailableColorsIds(response.data.colors);
+            });
+      },
+      resetColors() {
+        this.colorsIds = [];
+        this.$refs.colorSelector.resetColors();
+      },
+      getProductsQuery() {
         let query = '/api/calc/getCatalogProducts?';
         query += 'category=' + this.category.id;
         if (this.type.id > 0) {
@@ -181,9 +195,7 @@ export default {
         return query;
       },
 			setAvailableColorsIds(array) {
-        if (this.availableColorsIds.length === 0) {
           this.availableColorsIds = array.map(item => parseInt(item));
-        }
       },
 			addAvailableColorsIds(array) {
 				this.availableColorsIds = this.availableColorsIds.concat(array.map(item => parseInt(item)));

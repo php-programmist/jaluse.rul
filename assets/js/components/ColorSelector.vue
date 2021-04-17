@@ -29,17 +29,21 @@
 		props: ["items"],
 		methods: {
 			toggleColorId(colorId) {
-				if (this.colorsIds.includes(colorId)) {
-					this.colorsIds = this.colorsIds.filter(value => value !== colorId);
-				} else {
-					this.colorsIds.push(colorId);
-				}
-				this.triggerEvent();
-			},
-			triggerEvent() {
-				this.$emit('input', this.colorsIds);
-			}
-		},
+        if (this.colorsIds.includes(colorId)) {
+          this.colorsIds = this.colorsIds.filter(value => value !== colorId);
+        } else {
+          this.colorsIds.push(colorId);
+        }
+        this.triggerEvent();
+        this.$emit('changed', this.colorsIds);
+      },
+      triggerEvent() {
+        this.$emit('input', this.colorsIds);
+      },
+      resetColors() {
+        this.colorsIds = [];
+      }
+    },
 		watch:{
 			items(newVal,oldVal){
 				this.colorsIds = this.colorsIds.filter(selectedId => newVal.find(color => color.id == selectedId));
