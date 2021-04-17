@@ -182,6 +182,7 @@ class Product extends Page
         if ($this->getMaterial()) {
             return $this->getMaterial()->getName();
         }
+    
         return 'Не указан';
     }
     
@@ -190,7 +191,17 @@ class Product extends Page
         if ($this->getCategory()) {
             return $this->getCategory()->getName();
         }
+        
         return 'Без категории';
+    }
+    
+    public function getYmlCategory(): array
+    {
+        if (strpos($this->getUri(), 'zhalyuzi') === 0) {
+            return ['id' => 1, 'name' => 'Жалюзи'];
+        }
+        
+        return ['id' => 2, 'name' => 'Рулонные шторы'];
     }
     
     public function getMatrixFolder()
@@ -199,6 +210,7 @@ class Product extends Page
         if ($parent && $parent instanceof Catalog) {
             return $parent->getMatrixFolder();
         }
+        
         return '';
     }
 

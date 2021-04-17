@@ -8,9 +8,8 @@
             <currency id="RUR" rate="1" />
         </currencies>
         <categories>
-            {% for category in categories %}
-                <category id="{{ category.id }}">{{ category.name }}</category>
-            {% endfor %}
+            <category id="1">Жалюзи</category>
+            <category id="2">Рулонные шторы</category>
         </categories>
         <delivery-options>
             <option cost="500" days="3" />
@@ -21,7 +20,7 @@
                     <url>{{ app.request.schemeAndHttpHost~offer.path }}</url>
                     <price>{{ min_price(offer,true) }}</price>
                     <currencyId>RUR</currencyId>
-                    <categoryId>{{ offer.category.id ?? 1 }}</categoryId>
+                    <categoryId>{{ offer.ymlCategory.id }}</categoryId>
                     <name>{{ offer.name }} ({{ offer.minSize }}, {{ offer.colorName }})</name>
                     <description>
                         <![CDATA[
@@ -31,7 +30,7 @@
                             <li>Вид: {{ offer.typeNameForPage }}</li>
                             <li>Тип: {{ offer.typeForPage }}</li>
                             <li>Цвет: {{ offer.colorName }}</li>
-                            <li>Категория: {{ offer.categoryName }}</li>
+                            <li>Категория: {{ offer.ymlCategory.name }}</li>
                             <li>Размер: На ваш выбор.</li>
                             <li>Управление: Ручное и автоматическое</li>
                             <li>Срок изготовления и установки: 1-5 дней</li>
@@ -44,7 +43,7 @@
                     <param name="Тип">{{ offer.typeForPage }}</param>
                     <param name="Материал">{{ offer.materialForPage }}</param>
                     <param name="Цвет">{{ offer.colorName }}</param>
-                    <param name="Категория">{{ offer.categoryName }}</param>
+                    <param name="Категория">{{ offer.ymlCategory.name }}</param>
                     <param name="Размер">{{ offer.minSize }}</param>
                     <param name="Управление">ручное и автоматическое</param>
                     <param name="Срок изготовления и установки">1-5 дней</param>
