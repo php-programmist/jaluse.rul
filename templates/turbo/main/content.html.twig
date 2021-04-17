@@ -4,6 +4,7 @@
 {% include 'turbo/rating.html.twig' %}
 {% for subCatalog in catalog %}
     {% include 'turbo/catalog/card.html.twig' with {page: subCatalog} %}
+    {% include 'turbo/callback-buttons-with-direct-link.html.twig' with {page: subCatalog} %}
 {% endfor %}
 
 {% include 'turbo/catalog/our-works.html.twig' %}
