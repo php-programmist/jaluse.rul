@@ -59,7 +59,7 @@ class YmlController extends AbstractController
     }
     
     /**
-     * @Route("/ymarket-cards.xml", name="ymarket_cards")
+     * @Route("/ymarket-cards.xml", name="ymarket_cards", format="xml")
      *
      * @param ProductRepository $productRepository
      *
