@@ -31,7 +31,7 @@ class Location extends Page
         if (!empty(parent::getDescription())) {
             return parent::getDescription();
         }
-        
+    
         return sprintf('%s купить недорого в Москве. ✅ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ %s по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.',
             $this->getName(), $this->getName());
     }
@@ -41,4 +41,12 @@ class Location extends Page
         return 'turbo/locations/content.html.twig';
     }
     
+    public function getPrice(): string
+    {
+        if (strpos($this->getUri(), 'rulonnyie-shtoryi') === 0) {
+            return 'от 1432 рублей за изделие';
+        }
+        
+        return 'от 664 руб/м2';
+    }
 }

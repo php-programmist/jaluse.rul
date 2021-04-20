@@ -17,8 +17,7 @@
         {% block content %}{{ page.cardDescription|raw }}{% endblock content %}
         {% block footer %}
             <div class="cart-footer-zag">
-                Цена от
-                664 руб/м2
+                Цена {{ page.price }}
             </div>
         {% endblock %}
     {% endembed %}
