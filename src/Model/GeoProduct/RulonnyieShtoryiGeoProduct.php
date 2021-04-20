@@ -8,6 +8,6 @@ class RulonnyieShtoryiGeoProduct extends AbstractGeoProduct
     
     protected $nameNominative = 'Рулонные шторы';
     protected $nameGenitive = 'рулонных штор';
-    protected $cardImage = '/img/rulonnue-shtori.jpg';
+    protected $cardImage = '/img/pomesheniia.jpg';
     
 }
