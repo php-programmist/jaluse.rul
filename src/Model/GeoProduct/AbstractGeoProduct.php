@@ -27,6 +27,11 @@ abstract class AbstractGeoProduct
     protected $cardImage;
     
     /**
+     * @var string
+     */
+    protected $price;
+    
+    /**
      * @return string
      */
     public function getNameNominative(): string
@@ -58,6 +63,11 @@ abstract class AbstractGeoProduct
         }
         
         return new $class();
+    }
+    
+    public function getPrice(): string
+    {
+        return $this->price;
     }
     
 }
