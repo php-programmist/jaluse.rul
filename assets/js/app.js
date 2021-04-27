@@ -7,8 +7,10 @@ import './components/order_catalog';
 import './components/swiper_sliders';
 import './blocks/seo-block';
 import './blocks/popup-banner';
+import './blocks/manimate';
 
 import LazyLoad from './libs/lazyload.min'
+
 new LazyLoad({
 	elements_selector: ".lazy"
 });
