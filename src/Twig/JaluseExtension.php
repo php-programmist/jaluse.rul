@@ -23,6 +23,7 @@ class JaluseExtension extends AbstractExtension
     {
         return [
             new TwigFunction('min_price', [$this, 'min_price'], ['is_safe' => ['html']]),
+            new TwigFunction('rub_price', [$this, 'rub_price']),
         ];
     }
 
@@ -32,13 +33,18 @@ class JaluseExtension extends AbstractExtension
         if ($digitsOnly){
             return $min_price;
         }
-        if ( ! $min_price || !$product->getType()) {
+        if (!$min_price || !$product->getType()) {
             return 'рассчитывается индивидуально';
         }
-        if ( $product->getType()->getCalculationType() === 'simple') {
-            return $min_price.' рублей за м<sup>2</sup>';
+        if ($product->getType()->getCalculationType() === 'simple') {
+            return $min_price . ' рублей за м<sup>2</sup>';
         }
     
-        return 'от '.$min_price.' рублей за изделие';
+        return 'от ' . $min_price . ' рублей за изделие';
+    }
+    
+    public function rub_price(float $usdPrice): int
+    {
+        return $this->calculation_service->getRubPrice($usdPrice);
     }
 }

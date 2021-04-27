@@ -55,4 +55,9 @@ class CalculationService
             $product->setMinPrice($this->getMinPrice($product));
         }
     }
+    
+    public function getRubPrice(float $usdPrice): int
+    {
+        return round($this->usd_rate * $usdPrice);
+    }
 }
