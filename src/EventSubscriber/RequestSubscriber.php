@@ -2,6 +2,9 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\RobotsIp;
+use App\Service\RecaptchaValidator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -23,13 +26,35 @@ class RequestSubscriber implements EventSubscriberInterface
      * @var Environment
      */
     private $twig;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+    /**
+     * @var string
+     */
+    private $recaptchaPublicKey;
+    /**
+     * @var RecaptchaValidator
+     */
+    private $validator;
     
     /**
-     * @param Environment $twig
+     * @param Environment            $twig
+     * @param EntityManagerInterface $entityManager
+     * @param RecaptchaValidator     $validator
+     * @param string                 $recaptchaPublicKey
      */
-    public function __construct(Environment $twig)
-    {
-        $this->twig = $twig;
+    public function __construct(
+        Environment $twig,
+        EntityManagerInterface $entityManager,
+        RecaptchaValidator $validator,
+        string $recaptchaPublicKey
+    ) {
+        $this->twig               = $twig;
+        $this->entityManager      = $entityManager;
+        $this->recaptchaPublicKey = $recaptchaPublicKey;
+        $this->validator          = $validator;
     }
     
     /**
@@ -52,29 +77,83 @@ class RequestSubscriber implements EventSubscriberInterface
             return;
         }
         
+        $robotsCheckResponse = $this->getRobotsCkeckResponse($request->getUri());
+        $ip                  = $request->server->get('REMOTE_ADDR');
+        if ($this->isInRobotsIpsList($ip)) {
+            if ($this->validator->isValid()) { //Каптча пройдена успешно
+                $this->removeIpToRobotsList($ip);
+                
+                return;
+            }
+            $event->setResponse($robotsCheckResponse);
+            
+            return;
+        }
+        
         $referer = $request->server->get('HTTP_REFERER');
         if (empty($referer)) {
             return;
         }
+        
         $host = parse_url($referer, PHP_URL_HOST);
         
-        foreach (self::SOCIAL_REFERRERS as $ref) {
-            if (strpos($host, $ref) !== false) {
-                $event->setResponse($this->getRobotsCkeckResponse($request->getUri()));
-                
-                return;
-            }
+        if ($this->isFromSocial($host)) {
+            $this->saveIpToRobotsList($ip);
+            $event->setResponse($robotsCheckResponse);
         }
     }
     
     private function getRobotsCkeckResponse(string $uri)
     {
         $content  = $this->twig->render('robots-check.html.twig', [
-            'uri' => $uri,
+            'uri'       => $uri,
+            'publicKey' => $this->recaptchaPublicKey,
         ]);
         $response = new Response();
         $response->setContent($content);
         
         return $response;
+    }
+    
+    private function isInRobotsIpsList(string $ip): bool
+    {
+        return null !== $this->getIpFromRobotsList($ip);
+    }
+    
+    private function getIpFromRobotsList($ip): ?RobotsIp
+    {
+        return $this->entityManager
+            ->getRepository(RobotsIp::class)
+            ->findOneBy(['ip' => $ip]);
+    }
+    
+    private function isFromSocial(string $host): bool
+    {
+        foreach (self::SOCIAL_REFERRERS as $ref) {
+            if (strpos($host, $ref) !== false) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private function saveIpToRobotsList(string $ip): void
+    {
+        if (!$this->isInRobotsIpsList($ip)) {
+            $robotsIp = (new RobotsIp())
+                ->setIp($ip);
+            $this->entityManager->persist($robotsIp);
+            $this->entityManager->flush();
+        }
+    }
+    
+    private function removeIpToRobotsList(string $ip): void
+    {
+        $robotsIp = $this->getIpFromRobotsList($ip);
+        if (null !== $robotsIp) {
+            $this->entityManager->remove($robotsIp);
+            $this->entityManager->flush();
+        }
     }
 }
