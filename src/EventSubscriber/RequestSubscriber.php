@@ -82,9 +82,9 @@ class RequestSubscriber implements EventSubscriberInterface
         $robotsCheckResponse = $this->getRobotsCkeckResponse($request->getUri());
         $ip                  = $request->server->get('REMOTE_ADDR');
         if ($this->isInRobotsIpsList($ip)) {
-            if ($this->validator->isValid()) { //Каптча пройдена успешно
+            if ($this->validator->isValid(0.9)) { //Каптча пройдена успешно
                 $this->removeIpToRobotsList($ip);
-                
+    
                 return;
             }
             $event->setResponse($robotsCheckResponse);

@@ -24,7 +24,7 @@ class RecaptchaValidator
         $this->captchaResponse = $request->request->get('g-recaptcha-response');
     }
     
-    public function isValid(): bool
+    public function isValid(float $score = 0.2): bool
     {
         if (!$this->captchaResponse) {
             return false;
@@ -34,8 +34,8 @@ class RecaptchaValidator
             return false;
         }
         $data = json_decode($data, true);
-        
-        return $data && $data['success'];
+    
+        return $data && $data['success'] && $data['score'] >= $score;
     }
     
     private function sendRequest()
