@@ -1,5 +1,9 @@
 RewriteEngine On RewriteBase /
 
+Order Allow,Deny
+Allow from all
+Deny from 31.173.80.0/21 178.176.64.0/19
+
 RewriteRule rulonnyie-shtoryi/kollekcziya-euro-vista-novinka-sezona-2014/(.*)$ /rulonnyie-shtoryi/standartnye-rulonnye-shtory/$1 [R=301,L]
 #RewriteRule zhalyuzi/na-plastikovyie-okna/rulonnaya-kassetnaya-sistema-uni1/(.*)$ /rulonnyie-shtoryi/uni/of-rulonnaya-kassetnaya-sistema-uni2/$1 [R=301,L]
 RewriteRule zhalyuzi/na-plastikovyie-okna/(.*)$ /zhalyuzi/$1 [R=301,L]
