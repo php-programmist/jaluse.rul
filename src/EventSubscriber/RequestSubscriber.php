@@ -18,6 +18,8 @@ class RequestSubscriber implements EventSubscriberInterface
         'instagram.com',
         'ok.ru',
         'fb.com',
+        'facebook.com',
+        't.co',
         'twitter.com',
         'my.mail.ru',
     ];
@@ -98,7 +100,7 @@ class RequestSubscriber implements EventSubscriberInterface
         $host = parse_url($referer, PHP_URL_HOST);
         
         if ($this->isFromSocial($host)) {
-            $this->saveIpToRobotsList($ip);
+            $this->saveIpToRobotsList($ip, $referer);
             $event->setResponse($robotsCheckResponse);
         }
     }
@@ -138,11 +140,12 @@ class RequestSubscriber implements EventSubscriberInterface
         return false;
     }
     
-    private function saveIpToRobotsList(string $ip): void
+    private function saveIpToRobotsList(string $ip, ?string $referer = null): void
     {
         if (!$this->isInRobotsIpsList($ip)) {
             $robotsIp = (new RobotsIp())
-                ->setIp($ip);
+                ->setIp($ip)
+                ->setReferer($referer);
             $this->entityManager->persist($robotsIp);
             $this->entityManager->flush();
         }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,25 @@ class RobotsIp
      * @var string
      */
     private $ip;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var ?string
+     */
+    private $referer;
+    
+    /**
+     * @ORM\Column(type="datetime", length=255, nullable=true)
+     * @var DateTime
+     */
+    private $createdAt;
+    
+    /**
+     */
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
     
     /**
      * @return int
@@ -59,6 +79,46 @@ class RobotsIp
     public function setIp(string $ip): self
     {
         $this->ip = $ip;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getReferer(): ?string
+    {
+        return $this->referer;
+    }
+    
+    /**
+     * @param string $referer
+     *
+     * @return $this
+     */
+    public function setReferer(string $referer): self
+    {
+        $this->referer = $referer;
+        
+        return $this;
+    }
+    
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+    
+    /**
+     * @param DateTime $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
         
         return $this;
     }
