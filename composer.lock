@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "c5ccb590198bea91a1298c219b8b762e",
-    "packages": [
-        {
-            "name": "doctrine/annotations",
-            "version": "v1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/annotations.git",
-                "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc"
-            },
-            "dist": {
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "e4332814ed6ef19beab377e7a8dd5715",
+  "packages": [
+    {
+      "name": "doctrine/annotations",
+      "version": "v1.8.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/doctrine/annotations.git",
+        "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc"
+      },
+      "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/annotations/zipball/904dca4eb10715b92569fbcd79e201d5c349b6bc",
                 "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc",
@@ -1356,26 +1356,78 @@
                 },
                 {
                     "name": "FriendsOfSymfony Community",
-                    "homepage": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle/graphs/contributors"
+                  "homepage": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle/graphs/contributors"
                 }
             ],
-            "description": "Provides a CKEditor integration for your Symfony project.",
-            "keywords": [
-                "CKEditor"
-            ],
-            "time": "2019-12-23T15:31:36+00:00"
+          "description": "Provides a CKEditor integration for your Symfony project.",
+          "keywords": [
+            "CKEditor"
+          ],
+          "time": "2019-12-23T15:31:36+00:00"
         },
-        {
-            "name": "imagine/imagine",
-            "version": "1.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "cb2361e5bb4410b681462d8e4f912bc5dabf84ab"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/cb2361e5bb4410b681462d8e4f912bc5dabf84ab",
+    {
+      "name": "google/recaptcha",
+      "version": "1.2.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/google/recaptcha.git",
+        "reference": "614f25a9038be4f3f2da7cbfd778dc5b357d2419"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/google/recaptcha/zipball/614f25a9038be4f3f2da7cbfd778dc5b357d2419",
+        "reference": "614f25a9038be4f3f2da7cbfd778dc5b357d2419",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.5"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.2.20|^2.15",
+        "php-coveralls/php-coveralls": "^2.1",
+        "phpunit/phpunit": "^4.8.36|^5.7.27|^6.59|^7.5.11"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.2.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "ReCaptcha\\": "src/ReCaptcha"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "BSD-3-Clause"
+      ],
+      "description": "Client library for reCAPTCHA, a free service that protects websites from spam and abuse.",
+      "homepage": "https://www.google.com/recaptcha/",
+      "keywords": [
+        "Abuse",
+        "captcha",
+        "recaptcha",
+        "spam"
+      ],
+      "support": {
+        "forum": "https://groups.google.com/forum/#!forum/recaptcha",
+        "issues": "https://github.com/google/recaptcha/issues",
+        "source": "https://github.com/google/recaptcha"
+      },
+      "time": "2020-03-31T17:50:54+00:00"
+    },
+    {
+      "name": "imagine/imagine",
+      "version": "1.2.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/avalanche123/Imagine.git",
+        "reference": "cb2361e5bb4410b681462d8e4f912bc5dabf84ab"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/cb2361e5bb4410b681462d8e4f912bc5dabf84ab",
                 "reference": "cb2361e5bb4410b681462d8e4f912bc5dabf84ab",
                 "shasum": ""
             },
@@ -1856,37 +1908,38 @@
             ],
             "time": "2019-12-20T14:22:59+00:00"
         },
-        {
-            "name": "ocramius/package-versions",
-            "version": "1.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/1d32342b8c1eb27353c8887c366147b4c2da673c",
-                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c",
-                "shasum": ""
-            },
+    {
+      "name": "ocramius/package-versions",
+      "version": "1.11.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Ocramius/PackageVersions.git",
+        "reference": "f51ff2b2b49baaa302d6bf71880e4d8b5acd7015"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/f51ff2b2b49baaa302d6bf71880e4d8b5acd7015",
+        "reference": "f51ff2b2b49baaa302d6bf71880e4d8b5acd7015",
+        "shasum": ""
+      },
             "require": {
-                "composer-plugin-api": "^1.0.0",
-                "php": "^7.3.0"
+              "composer-plugin-api": "^2.0.0",
+              "composer-runtime-api": "^2.0.0",
+              "php": "^7.4.7"
             },
             "require-dev": {
-                "composer/composer": "^1.8.6",
-                "doctrine/coding-standard": "^6.0.0",
-                "ext-zip": "*",
-                "infection/infection": "^0.13.4",
-                "phpunit/phpunit": "^8.2.5",
-                "vimeo/psalm": "^3.4.9"
+              "composer/composer": "^2.0.0@dev",
+              "doctrine/coding-standard": "^8.1.0",
+              "ext-zip": "^1.15.0",
+              "infection/infection": "^0.16.4",
+              "phpunit/phpunit": "^9.1.5",
+              "vimeo/psalm": "^3.12.2"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "PackageVersions\\Installer",
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                  "dev-master": "1.99.x-dev"
                 }
             },
             "autoload": {
@@ -1895,18 +1948,32 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com"
-                }
-            ],
-            "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2019-07-17T15:49:50+00:00"
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Marco Pivetta",
+          "email": "ocramius@gmail.com"
+        }
+      ],
+      "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
+      "support": {
+        "issues": "https://github.com/Ocramius/PackageVersions/issues",
+        "source": "https://github.com/Ocramius/PackageVersions/tree/1.11.x"
+      },
+      "funding": [
+        {
+          "url": "https://github.com/Ocramius",
+          "type": "github"
         },
+        {
+          "url": "https://tidelift.com/funding/github/packagist/ocramius/package-versions",
+          "type": "tidelift"
+        }
+      ],
+      "time": "2020-08-21T12:16:47+00:00"
+    },
         {
             "name": "ocramius/proxy-manager",
             "version": "2.2.3",
@@ -3452,34 +3519,35 @@
             "homepage": "https://symfony.com",
             "time": "2020-01-04T14:08:26+00:00"
         },
-        {
-            "name": "symfony/flex",
-            "version": "v1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/flex.git",
-                "reference": "952f45d1c5077e658cb16a61d11603bee873f968"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/952f45d1c5077e658cb16a61d11603bee873f968",
-                "reference": "952f45d1c5077e658cb16a61d11603bee873f968",
-                "shasum": ""
-            },
+    {
+      "name": "symfony/flex",
+      "version": "v1.12.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/symfony/flex.git",
+        "reference": "e472606b4b3173564f0edbca8f5d32b52fc4f2c9"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/symfony/flex/zipball/e472606b4b3173564f0edbca8f5d32b52fc4f2c9",
+        "reference": "e472606b4b3173564f0edbca8f5d32b52fc4f2c9",
+        "shasum": ""
+      },
             "require": {
-                "composer-plugin-api": "^1.0",
-                "php": "^7.0"
+              "composer-plugin-api": "^1.0|^2.0",
+              "php": ">=7.1"
             },
             "require-dev": {
-                "composer/composer": "^1.0.2",
-                "symfony/dotenv": "^3.4|^4.0|^5.0",
-                "symfony/phpunit-bridge": "^3.4.19|^4.1.8|^5.0",
-                "symfony/process": "^2.7|^3.0|^4.0|^5.0"
+              "composer/composer": "^1.0.2|^2.0",
+              "symfony/dotenv": "^4.4|^5.0",
+              "symfony/filesystem": "^4.4|^5.0",
+              "symfony/phpunit-bridge": "^4.4|^5.0",
+              "symfony/process": "^3.4|^4.4|^5.0"
             },
             "type": "composer-plugin",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                  "dev-main": "1.12-dev"
                 },
                 "class": "Symfony\\Flex\\Flex"
             },
@@ -3489,18 +3557,36 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien.potencier@gmail.com"
-                }
-            ],
-            "description": "Composer plugin for Symfony",
-            "time": "2019-12-13T18:05:11+00:00"
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Fabien Potencier",
+          "email": "fabien.potencier@gmail.com"
+        }
+      ],
+      "description": "Composer plugin for Symfony",
+      "support": {
+        "issues": "https://github.com/symfony/flex/issues",
+        "source": "https://github.com/symfony/flex/tree/v1.12.2"
+      },
+      "funding": [
+        {
+          "url": "https://symfony.com/sponsor",
+          "type": "custom"
         },
+        {
+          "url": "https://github.com/fabpot",
+          "type": "github"
+        },
+        {
+          "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+          "type": "tidelift"
+        }
+      ],
+      "time": "2021-02-16T14:05:05+00:00"
+    },
         {
             "name": "symfony/form",
             "version": "v5.0.2",
@@ -7767,13 +7853,16 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": {
-        "php": "^7.2.5",
-        "ext-ctype": "*",
-        "ext-iconv": "*"
-    },
-    "platform-dev": []
+  "stability-flags": [],
+  "prefer-stable": false,
+  "prefer-lowest": false,
+  "platform": {
+    "php": "^7.4.0",
+    "ext-ctype": "*",
+    "ext-curl": "*",
+    "ext-iconv": "*",
+    "ext-json": "*"
+  },
+  "platform-dev": [],
+  "plugin-api-version": "2.0.0"
 }
