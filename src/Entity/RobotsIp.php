@@ -31,6 +31,17 @@ class RobotsIp
     private $referer;
     
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var ?string
+     */
+    private $userAgent;
+    
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0})
+     */
+    private bool $passed = false;
+    
+    /**
      * @ORM\Column(type="datetime", length=255, nullable=true)
      * @var DateTime
      */
@@ -98,7 +109,7 @@ class RobotsIp
      */
     public function setReferer(?string $referer): self
     {
-        $this->referer = $referer ?? '';
+        $this->referer = $referer;
         
         return $this;
     }
@@ -119,6 +130,46 @@ class RobotsIp
     public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getUserAgent(): ?string
+    {
+        return $this->userAgent;
+    }
+    
+    /**
+     * @param string|null $userAgent
+     *
+     * @return $this
+     */
+    public function setUserAgent(?string $userAgent): self
+    {
+        $this->userAgent = $userAgent;
+        
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isPassed(): bool
+    {
+        return $this->passed;
+    }
+    
+    /**
+     * @param bool $passed
+     *
+     * @return $this
+     */
+    public function setPassed(bool $passed): self
+    {
+        $this->passed = $passed;
         
         return $this;
     }

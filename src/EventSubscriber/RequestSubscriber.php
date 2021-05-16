@@ -61,8 +61,13 @@ class RequestSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $session = $request->getSession();
         if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
+            return;
+        }
+    
+        $session = $request->getSession();
+        if ($session->get(self::SESSION_KEY_PASSED_CHECK)) {
+            //Проверка каптчи пройдена ранне
             return;
         }
     
@@ -78,7 +83,7 @@ class RequestSubscriber implements EventSubscriberInterface
                     ->setScoreThreshold(0.8)
                     ->verify($gRecaptchaResponse, $request->getClientIp());
                 if ($result->isSuccess()) { //Каптча пройдена успешно
-                    $this->removeIpToRobotsList($ip);
+                    $this->removeIpFromRobotsList($ip);
                     $session->set(self::SESSION_KEY_PASSED_CHECK, true);
                 
                     return;
@@ -90,13 +95,8 @@ class RequestSubscriber implements EventSubscriberInterface
             return;
         }
     
-        if ($session->get(self::SESSION_KEY_PASSED_CHECK)) {
-            //Проверка каптчи пройдена ранне
-            return;
-        }
-    
         if ($this->isFromSocial($referer) || $this->isSuspicious($referer, $useragent)) {
-            $this->saveIpToRobotsList($ip, $referer);
+            $this->saveIpToRobotsList($ip, $referer, $useragent);
             $event->setResponse($robotsCheckResponse);
         }
     }
@@ -114,7 +114,9 @@ class RequestSubscriber implements EventSubscriberInterface
     
     private function isInRobotsIpsList(string $ip): bool
     {
-        return null !== $this->getIpFromRobotsList($ip);
+        $ipList = $this->getIpFromRobotsList($ip);
+    
+        return null !== $ipList && !$ipList->isPassed();
     }
     
     private function getIpFromRobotsList($ip): ?RobotsIp
@@ -142,22 +144,23 @@ class RequestSubscriber implements EventSubscriberInterface
         return false;
     }
     
-    private function saveIpToRobotsList(string $ip, ?string $referer = null): void
+    private function saveIpToRobotsList(string $ip, ?string $referer = null, ?string $useragent = null): void
     {
         if (!$this->isInRobotsIpsList($ip)) {
             $robotsIp = (new RobotsIp())
                 ->setIp($ip)
-                ->setReferer($referer);
+                ->setReferer($referer)
+                ->setUserAgent($useragent);
             $this->entityManager->persist($robotsIp);
             $this->entityManager->flush();
         }
     }
     
-    private function removeIpToRobotsList(string $ip): void
+    private function removeIpFromRobotsList(string $ip): void
     {
         $robotsIp = $this->getIpFromRobotsList($ip);
         if (null !== $robotsIp) {
-            $this->entityManager->remove($robotsIp);
+            $robotsIp->setPassed(true);
             $this->entityManager->flush();
         }
     }
