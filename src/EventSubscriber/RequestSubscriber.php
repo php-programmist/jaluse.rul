@@ -75,7 +75,13 @@ class RequestSubscriber implements EventSubscriberInterface
         $ip                  = $request->server->get('REMOTE_ADDR');
         $useragent           = $request->server->get('HTTP_USER_AGENT');
         $referer             = $request->server->get('HTTP_REFERER');
-        if ($this->isInRobotsIpsList($ip)) {
+    
+        $robotsIp = $this->getIpFromRobotsList($ip);
+        if (null !== $robotsIp) {
+            if ($robotsIp->isPassed()) {
+                return;
+            }
+        
             $gRecaptchaResponse = $request->get('g-recaptcha-response');
             if (!empty($gRecaptchaResponse)) {
                 $result = $this->reCaptcha
@@ -104,19 +110,12 @@ class RequestSubscriber implements EventSubscriberInterface
     private function getRobotsCkeckResponse(string $uri)
     {
         $content  = $this->twig->render('robots-check.html.twig', [
-            'uri'       => $uri,
+            'uri' => $uri,
         ]);
         $response = new Response();
         $response->setContent($content);
         
         return $response;
-    }
-    
-    private function isInRobotsIpsList(string $ip): bool
-    {
-        $ipList = $this->getIpFromRobotsList($ip);
-    
-        return null !== $ipList && !$ipList->isPassed();
     }
     
     private function getIpFromRobotsList($ip): ?RobotsIp
@@ -146,7 +145,8 @@ class RequestSubscriber implements EventSubscriberInterface
     
     private function saveIpToRobotsList(string $ip, ?string $referer = null, ?string $useragent = null): void
     {
-        if (!$this->isInRobotsIpsList($ip)) {
+        $ipList = $this->getIpFromRobotsList($ip);
+        if (null === $ipList) {
             $robotsIp = (new RobotsIp())
                 ->setIp($ip)
                 ->setReferer($referer)
