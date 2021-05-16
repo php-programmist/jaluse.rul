@@ -92,13 +92,13 @@ class RobotsIp
     }
     
     /**
-     * @param string $referer
+     * @param string|null $referer
      *
      * @return $this
      */
-    public function setReferer(string $referer): self
+    public function setReferer(?string $referer): self
     {
-        $this->referer = $referer;
+        $this->referer = $referer ?? '';
         
         return $this;
     }

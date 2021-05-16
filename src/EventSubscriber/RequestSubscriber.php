@@ -3,8 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Entity\RobotsIp;
-use App\Service\RecaptchaValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use ReCaptcha\ReCaptcha;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -24,39 +24,25 @@ class RequestSubscriber implements EventSubscriberInterface
         'my.mail.ru',
     ];
     
-    /**
-     * @var Environment
-     */
-    private $twig;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-    /**
-     * @var string
-     */
-    private $recaptchaPublicKey;
-    /**
-     * @var RecaptchaValidator
-     */
-    private $validator;
+    private const SESSION_KEY_PASSED_CHECK = 'check.passed';
+    
+    private Environment $twig;
+    private EntityManagerInterface $entityManager;
+    private ReCaptcha $reCaptcha;
     
     /**
      * @param Environment            $twig
      * @param EntityManagerInterface $entityManager
-     * @param RecaptchaValidator     $validator
-     * @param string                 $recaptchaPublicKey
+     * @param ReCaptcha              $reCaptcha
      */
     public function __construct(
         Environment $twig,
         EntityManagerInterface $entityManager,
-        RecaptchaValidator $validator,
-        string $recaptchaPublicKey
+        ReCaptcha $reCaptcha
     ) {
-        $this->twig               = $twig;
-        $this->entityManager      = $entityManager;
-        $this->recaptchaPublicKey = $recaptchaPublicKey;
-        $this->validator          = $validator;
+        $this->twig          = $twig;
+        $this->entityManager = $entityManager;
+        $this->reCaptcha     = $reCaptcha;
     }
     
     /**
@@ -75,31 +61,41 @@ class RequestSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
+        $session = $request->getSession();
         if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
             return;
         }
-        
+    
         $robotsCheckResponse = $this->getRobotsCkeckResponse($request->getUri());
         $ip                  = $request->server->get('REMOTE_ADDR');
+        $useragent           = $request->server->get('HTTP_USER_AGENT');
+        $referer             = $request->server->get('HTTP_REFERER');
         if ($this->isInRobotsIpsList($ip)) {
-            if ($this->validator->isValid(0.9)) { //Каптча пройдена успешно
-                $this->removeIpToRobotsList($ip);
-    
-                return;
+            $gRecaptchaResponse = $request->get('g-recaptcha-response');
+            if (!empty($gRecaptchaResponse)) {
+                $result = $this->reCaptcha
+                    ->setExpectedHostname($request->getHost())
+                    ->setScoreThreshold(0.8)
+                    ->verify($gRecaptchaResponse, $request->getClientIp());
+                if ($result->isSuccess()) { //Каптча пройдена успешно
+                    $this->removeIpToRobotsList($ip);
+                    $session->set(self::SESSION_KEY_PASSED_CHECK, true);
+                
+                    return;
+                }
             }
+        
             $event->setResponse($robotsCheckResponse);
-            
+        
             return;
         }
-        
-        $referer = $request->server->get('HTTP_REFERER');
-        if (empty($referer)) {
+    
+        if ($session->get(self::SESSION_KEY_PASSED_CHECK)) {
+            //Проверка каптчи пройдена ранне
             return;
         }
-        
-        $host = parse_url($referer, PHP_URL_HOST);
-        
-        if ($this->isFromSocial($host)) {
+    
+        if ($this->isFromSocial($referer) || $this->isSuspicious($referer, $useragent)) {
             $this->saveIpToRobotsList($ip, $referer);
             $event->setResponse($robotsCheckResponse);
         }
@@ -109,7 +105,6 @@ class RequestSubscriber implements EventSubscriberInterface
     {
         $content  = $this->twig->render('robots-check.html.twig', [
             'uri'       => $uri,
-            'publicKey' => $this->recaptchaPublicKey,
         ]);
         $response = new Response();
         $response->setContent($content);
@@ -129,8 +124,15 @@ class RequestSubscriber implements EventSubscriberInterface
             ->findOneBy(['ip' => $ip]);
     }
     
-    private function isFromSocial(string $host): bool
+    private function isFromSocial(?string $referer): bool
     {
+        if (null === $referer) {
+            return false;
+        }
+        $host = parse_url($referer, PHP_URL_HOST);
+        if (empty($host)) {
+            return false;
+        }
         foreach (self::SOCIAL_REFERRERS as $ref) {
             if (strpos($host, $ref) !== false) {
                 return true;
@@ -158,5 +160,12 @@ class RequestSubscriber implements EventSubscriberInterface
             $this->entityManager->remove($robotsIp);
             $this->entityManager->flush();
         }
+    }
+    
+    private function isSuspicious(?string $referrer, ?string $useragent): bool
+    {
+        return empty($referrer)
+               && !preg_match('#(yandex|google|mail|bing)#i', $useragent)
+               && stripos($useragent, 'android') !== false;
     }
 }
