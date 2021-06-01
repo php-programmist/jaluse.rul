@@ -60,24 +60,39 @@ class Product extends Page
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
      */
     private $category;
-
+    
     /**
      * @ORM\Column(type="integer",nullable=true)
      */
     private $discount = 0;
-
+    
     /**
      * @ORM\Column(type="integer")
      */
     private $matrix_id;
     
-    private $min_price=0;
-
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected ?string $imageSmall = null;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected ?string $imageBig = null;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected ?string $imageCatalog = null;
+    
+    private $min_price = 0;
+    
     public function getPrice(): ?float
     {
         return $this->price;
     }
-
+    
     public function setPrice(float $price): self
     {
         $this->price = $price;
@@ -226,28 +241,39 @@ class Product extends Page
         return $this;
     }
     
-    public function getImageSmall()
+    public function getImageSmall(): string
     {
-        $segments = explode('/', $this->getUri());
-        $file_name = array_pop($segments).'.jpg';
-        $folder = array_pop($segments);
-        return '/img/products/'.$folder.'/small/'.$file_name;
-    }
-    
-    public function getImageBig()
-    {
-        $segments = explode('/', $this->getUri());
-        $file_name = array_pop($segments).'.jpg';
-        $folder = array_pop($segments);
-        return '/img/products/'.$folder.'/big/'.$file_name;
-    }
-    
-    public function getImageCatalog()
-    {
+        if (null !== $this->imageSmall) {
+            return $this->imageSmall;
+        }
         $segments  = explode('/', $this->getUri());
         $file_name = array_pop($segments) . '.jpg';
         $folder    = array_pop($segments);
+        
+        return '/img/products/' . $folder . '/small/' . $file_name;
+    }
     
+    public function getImageBig(): string
+    {
+        if (null !== $this->imageBig) {
+            return $this->imageBig;
+        }
+        $segments  = explode('/', $this->getUri());
+        $file_name = array_pop($segments) . '.jpg';
+        $folder    = array_pop($segments);
+        
+        return '/img/products/' . $folder . '/big/' . $file_name;
+    }
+    
+    public function getImageCatalog(): string
+    {
+        if (null !== $this->imageCatalog) {
+            return $this->imageCatalog;
+        }
+        $segments  = explode('/', $this->getUri());
+        $file_name = array_pop($segments) . '.jpg';
+        $folder    = array_pop($segments);
+        
         return '/img/products/' . $folder . '/catalog/' . $file_name;
     }
     
@@ -333,7 +359,44 @@ class Product extends Page
         if (!empty($this->getDescription())) {
             return $this->getDescription();
         }
+        
         return sprintf('%s купить от производителя в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ %s по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.',
-            $this->getName(),$this->getName());
+            $this->getName(), $this->getName());
+    }
+    
+    /**
+     * @param string|null $imageSmall
+     *
+     * @return $this
+     */
+    public function setImageSmall(?string $imageSmall): self
+    {
+        $this->imageSmall = $imageSmall;
+        
+        return $this;
+    }
+    
+    /**
+     * @param string|null $imageBig
+     *
+     * @return $this
+     */
+    public function setImageBig(?string $imageBig): self
+    {
+        $this->imageBig = $imageBig;
+        
+        return $this;
+    }
+    
+    /**
+     * @param string|null $imageCatalog
+     *
+     * @return $this
+     */
+    public function setImageCatalog(?string $imageCatalog): self
+    {
+        $this->imageCatalog = $imageCatalog;
+        
+        return $this;
     }
 }
