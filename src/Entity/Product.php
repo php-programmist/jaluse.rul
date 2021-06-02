@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @Vich\Uploadable
  */
 class Product extends Page
 {
@@ -35,27 +39,27 @@ class Product extends Page
      * @ORM\Column(type="float",nullable=true)
      */
     private $price;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Color", inversedBy="products")
      */
     private $color;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="products")
      */
     private $type;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Material", inversedBy="products")
      */
     private $material;
-
+    
     /**
      * @ORM\Column(type="boolean")
      */
     private $popular;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
      */
@@ -72,19 +76,36 @@ class Product extends Page
     private $matrix_id;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="image_small")
      */
-    protected ?string $imageSmall = null;
+    protected ?string $imageSmallName = null;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Vich\UploadableField(mapping="product_images_small", fileNameProperty="imageSmallName")
+     * @var File
      */
-    protected ?string $imageBig = null;
+    protected $imageSmallFile;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, name="image_big")
+     */
+    protected ?string $imageBigName = null;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Vich\UploadableField(mapping="product_images_big", fileNameProperty="imageBigName")
+     * @var File
      */
-    protected ?string $imageCatalog = null;
+    protected $imageBigFile;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, name="image_catalog")
+     */
+    protected ?string $imageCatalogName = null;
+    
+    /**
+     * @Vich\UploadableField(mapping="product_images_catalog", fileNameProperty="imageCatalogName")
+     * @var File
+     */
+    protected $imageCatalogFile;
     
     private $min_price = 0;
     
@@ -96,67 +117,67 @@ class Product extends Page
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
+        
         return $this;
     }
-
+    
     public function getColor(): ?Color
     {
         return $this->color;
     }
-
+    
     public function setColor(?Color $color): self
     {
         $this->color = $color;
-
+        
         return $this;
     }
-
+    
     public function getType(): ?Type
     {
         return $this->type;
     }
-
+    
     public function setType(?Type $type): self
     {
         $this->type = $type;
-
+        
         return $this;
     }
-
+    
     public function getMaterial(): ?Material
     {
         return $this->material;
     }
-
+    
     public function setMaterial(?Material $material): self
     {
         $this->material = $material;
-
+        
         return $this;
     }
-
+    
     public function getPopular(): ?bool
     {
         return $this->popular;
     }
-
+    
     public function setPopular(bool $popular): self
     {
         $this->popular = $popular;
-
+        
         return $this;
     }
-
+    
     public function getCategory(): ?Category
     {
         return $this->category;
     }
-
+    
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
+        
         return $this;
     }
     
@@ -165,6 +186,7 @@ class Product extends Page
         if ($this->getColor()) {
             return $this->getColor()->getId();
         }
+        
         return 0;
     }
     
@@ -173,6 +195,7 @@ class Product extends Page
         if ($this->getColor()) {
             return $this->getColor()->getName();
         }
+        
         return 'Не указан';
     }
     
@@ -181,6 +204,7 @@ class Product extends Page
         if ($this->getType()) {
             return $this->getType()->getName();
         }
+        
         return 'Не указан';
     }
     
@@ -189,6 +213,7 @@ class Product extends Page
         if ($this->getType() && $this->getType()->getId() === self::ISOLITE_TYPE_ID) {
             return 'Горизонтальные';
         }
+        
         return $this->getTypeName();
     }
     
@@ -197,7 +222,7 @@ class Product extends Page
         if ($this->getMaterial()) {
             return $this->getMaterial()->getName();
         }
-    
+        
         return 'Не указан';
     }
     
@@ -228,53 +253,53 @@ class Product extends Page
         
         return '';
     }
-
+    
     public function getDiscount(): ?int
     {
         return $this->discount;
     }
-
+    
     public function setDiscount(int $discount): self
     {
         $this->discount = $discount;
-
+        
         return $this;
     }
     
     public function getImageSmall(): string
     {
-        if (null !== $this->imageSmall) {
-            return $this->imageSmall;
+        if (null !== $this->imageSmallName) {
+            $file_name = $this->imageSmallName;
+        } else {
+            $segments  = explode('/', $this->getUri());
+            $file_name = array_pop($segments) . '.jpg';
         }
-        $segments  = explode('/', $this->getUri());
-        $file_name = array_pop($segments) . '.jpg';
-        $folder    = array_pop($segments);
         
-        return '/img/products/' . $folder . '/small/' . $file_name;
+        return '/' . $this->productImgSmallFolder() . $file_name;
     }
     
     public function getImageBig(): string
     {
-        if (null !== $this->imageBig) {
-            return $this->imageBig;
+        if (null !== $this->imageBigName) {
+            $file_name = $this->imageBigName;
+        } else {
+            $segments  = explode('/', $this->getUri());
+            $file_name = array_pop($segments) . '.jpg';
         }
-        $segments  = explode('/', $this->getUri());
-        $file_name = array_pop($segments) . '.jpg';
-        $folder    = array_pop($segments);
         
-        return '/img/products/' . $folder . '/big/' . $file_name;
+        return '/' . $this->productImgBigFolder() . $file_name;
     }
     
     public function getImageCatalog(): string
     {
-        if (null !== $this->imageCatalog) {
-            return $this->imageCatalog;
+        if (null !== $this->imageCatalogName) {
+            $file_name = $this->imageCatalogName;
+        } else {
+            $segments  = explode('/', $this->getUri());
+            $file_name = array_pop($segments) . '.jpg';
         }
-        $segments  = explode('/', $this->getUri());
-        $file_name = array_pop($segments) . '.jpg';
-        $folder    = array_pop($segments);
         
-        return '/img/products/' . $folder . '/catalog/' . $file_name;
+        return '/' . $this->productImgCatalogFolder() . $file_name;
     }
     
     public function getCardImageUrl(): string
@@ -295,7 +320,7 @@ class Product extends Page
     public function setMatrixId(int $matrix_id): self
     {
         $this->matrix_id = $matrix_id;
-
+        
         return $this;
     }
     
@@ -304,15 +329,15 @@ class Product extends Page
         if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
             return $this->getMaterialName();
         }
-    
+        
         if ($this->getType()->getId() === self::ISOLITE_TYPE_ID) {
             return 'Жалюзи Isolite';
         }
-    
+        
         if ($this->getType()) {
             return $this->getMaterialName().' жалюзи';
         }
-    
+        
         return 'Не установлен';
     }
     
@@ -321,11 +346,11 @@ class Product extends Page
         if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
             return 'ткань';
         }
-    
+        
         if ($this->getType()) {
             return $this->getMaterialName();
         }
-    
+        
         return 'Не установлен';
     }
     
@@ -339,10 +364,10 @@ class Product extends Page
         return $this->getCalculationType() === 'simple' ? '100 x 100 см' : '40 x 50 см';
     }
     
-    
     public function setMinPrice(int $min_price): self
     {
         $this->min_price = $min_price;
+        
         return $this;
     }
     
@@ -351,6 +376,7 @@ class Product extends Page
         if ( ! $this->getType()) {
             return 'simple';
         }
+        
         return $this->getType()->getCalculationType();
     }
     
@@ -365,38 +391,156 @@ class Product extends Page
     }
     
     /**
-     * @param string|null $imageSmall
+     * @return string|null
+     */
+    public function getImageSmallName(): ?string
+    {
+        return $this->imageSmallName;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getImageBigName(): ?string
+    {
+        return $this->imageBigName;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getImageCatalogName(): ?string
+    {
+        return $this->imageCatalogName;
+    }
+    
+    /**
+     * @param string|null $imageSmallName
      *
      * @return $this
      */
-    public function setImageSmall(?string $imageSmall): self
+    public function setImageSmallName(?string $imageSmallName): self
     {
-        $this->imageSmall = $imageSmall;
+        $this->imageSmallName = $imageSmallName;
         
         return $this;
     }
     
     /**
-     * @param string|null $imageBig
+     * @param string|null $imageBigName
      *
      * @return $this
      */
-    public function setImageBig(?string $imageBig): self
+    public function setImageBigName(?string $imageBigName): self
     {
-        $this->imageBig = $imageBig;
+        $this->imageBigName = $imageBigName;
         
         return $this;
     }
     
     /**
-     * @param string|null $imageCatalog
+     * @param string|null $imageCatalogName
      *
      * @return $this
      */
-    public function setImageCatalog(?string $imageCatalog): self
+    public function setImageCatalogName(?string $imageCatalogName): self
     {
-        $this->imageCatalog = $imageCatalog;
+        $this->imageCatalogName = $imageCatalogName;
         
         return $this;
     }
+    
+    /**
+     * @return File|null
+     */
+    public function getImageSmallFile(): ?File
+    {
+        return $this->imageSmallFile;
+    }
+    
+    /**
+     * @param File|null $imageSmallFile
+     *
+     * @return $this
+     */
+    public function setImageSmallFile(File $imageSmallFile = null): self
+    {
+        $this->imageSmallFile = $imageSmallFile;
+        if ($imageSmallFile) {
+            $this->modified_at = new DateTime('now');
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * @return File|null
+     */
+    public function getImageBigFile(): ?File
+    {
+        return $this->imageBigFile;
+    }
+    
+    /**
+     * @param File|null $imageBigFile
+     *
+     * @return $this
+     */
+    public function setImageBigFile(File $imageBigFile = null): self
+    {
+        $this->imageBigFile = $imageBigFile;
+        if ($imageBigFile) {
+            $this->modified_at = new DateTime('now');
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * @return File|null
+     */
+    public function getImageCatalogFile(): ?File
+    {
+        return $this->imageCatalogFile;
+    }
+    
+    /**
+     * @param File|null $imageCatalogFile
+     *
+     * @return $this
+     */
+    public function setImageCatalogFile(File $imageCatalogFile = null): self
+    {
+        $this->imageCatalogFile = $imageCatalogFile;
+        if ($imageCatalogFile) {
+            $this->modified_at = new DateTime('now');
+        }
+        
+        return $this;
+    }
+    
+    public function productImgFolder(): string
+    {
+        $segments = explode('/', $this->getUri());
+        array_pop($segments);
+        $folder = array_pop($segments);
+        
+        return 'img/products/' . $folder . '/';
+    }
+    
+    public function productImgSmallFolder(): string
+    {
+        return $this->productImgFolder() . 'small/';
+    }
+    
+    public function productImgBigFolder(): string
+    {
+        return $this->productImgFolder() . 'big/';
+    }
+    
+    public function productImgCatalogFolder(): string
+    {
+        return $this->productImgFolder() . 'catalog/';
+    }
+    
 }

@@ -78,6 +78,9 @@ easy_admin:
                     - { property: 'popular', label: 'Популярный'}
                     - { property: 'published', label: 'Опубликован'}
                     - { property: 'yml', label: 'YML' }
+                    - { property: 'imageSmallFile', type: 'vich_image', label: 'Маленькое изображение' }
+                    - { property: 'imageBigFile', type: 'vich_image', label: 'Большое изображение' }
+                    - { property: 'imageCatalogFile', type: 'vich_image', label: 'Изображение в каталоге' }
                     - { type: 'tab' , label: 'SEO' }
                     - { property: 'title', label: 'Заголовок'}
                     - { property: 'description', label: 'Мета-описание'}
