@@ -10,6 +10,7 @@ class SlugHelper
         $string = mb_strtolower($string);
         $string = htmlspecialchars_decode($string);
         $string = preg_replace('/(\s)/', ' ', $string);
+        $string = trim($string);
         $trans  = [
             'а' => 'a',
             'б' => 'b',
