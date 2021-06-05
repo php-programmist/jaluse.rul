@@ -1,6 +1,6 @@
-<div class="recommended_products row">
+<div class="recommended_products">
     {% for item in items %}
-        <div class="col-sm-4 col-md-3 col-12">
+        <div class="product_wrapper">
             <div class="product">
                 <div class="product-info margin-top-20" onclick="window.location='/{{ item.uri }}/'">
                     <p class="calc">
@@ -31,5 +31,6 @@
             
             </div>
         </div>
+    
     {% endfor %}
 </div>
