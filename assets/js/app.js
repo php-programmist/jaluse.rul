@@ -8,6 +8,7 @@ import './components/swiper_sliders';
 import './blocks/seo-block';
 import './blocks/popup-banner';
 import './blocks/manimate';
+import './blocks/mobile-menu';
 
 import LazyLoad from './libs/lazyload.min'
 

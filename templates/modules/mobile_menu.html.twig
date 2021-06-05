@@ -1,0 +1,164 @@
+{% set menu = [
+    {
+        name: 'Жалюзи',
+        path: '/zhalyuzi/',
+        children: [
+        {
+            name: 'Вертикальные жалюзи',
+            path: '/zhalyuzi/vertikalnye/',
+            children: [
+            {
+                name: 'Пластиковые',
+                path: '/zhalyuzi/vertikalnye/plastikovyie/',
+            },
+            {
+                name: 'Тканевые',
+                path: '/zhalyuzi/vertikalnye/tkanevye/',
+            }
+        ]
+        },
+        {
+            name: 'Горизонтальные жалюзи',
+            path: '/zhalyuzi/gorizontalnye/',
+            children: [
+            {
+                name: 'Алюминиевые',
+                path: '/zhalyuzi/gorizontalnye/alyuminievye/',
+            },
+            {
+                name: 'Деревянные',
+                path: '/zhalyuzi/gorizontalnye/derevyannye/',
+            }
+        ]
+        },
+        {
+            name: 'Плиссе',
+            path: '/zhalyuzi/plisse/',
+        },
+        {
+            name: 'Жалюзи на окна ПВХ',
+            path: '/zhalyuzi/',
+        },
+    ]
+    },
+    {
+        name: 'Рулонные шторы',
+        path: '/rulonnyie-shtoryi/den-noch-uni-2/',
+        children: [
+        {
+            name: 'Кассетные «День Ночь»',
+            path: '/rulonnyie-shtoryi/den-noch-uni-2/',
+        },
+        {
+            name: 'Кассетные UNI',
+            path: '/rulonnyie-shtoryi/uni/',
+        },
+        {
+            name: 'Мини',
+            path: '/rulonnyie-shtoryi/mini/',
+        },
+        {
+            name: 'Мини «День Ночь»',
+            path: '/rulonnyie-shtoryi/den-noch/',
+        },
+        {
+            name: 'Стандартные',
+            path: '/rulonnyie-shtoryi/standartnye-rulonnye-shtory/',
+        }
+    ]
+    },
+    {
+        name: 'Римские шторы',
+        path: '/rimskies/',
+    },
+    {
+        name: 'Маркизы',
+        path: '/markizyi/',
+    },
+    {
+        name: 'Рольставни',
+        path: '/rolstavni/',
+    },
+    {
+        name: 'Шторы ПВХ',
+        path: '/shtory-dlya-besedok-i-verand/shtory-pvh/',
+    },
+    {
+        name: '+7 (495) 984-38-48',
+        path: 'tel:74959843848',
+    },
+    {
+        name: 'Доставка',
+        path: '/dostavka/',
+    },
+    {
+        name: 'Оплата',
+        path: '/pay/',
+    },
+    {
+        name: 'Услуги',
+        path: '/uslugi/',
+    },
+    {
+        name: 'Контакты',
+        path: '/kontaktyi/',
+    },
+] %}
+
+<div class="mobile-menu">
+    <div class="container">
+        <div class="mobile-menu-left-area">
+            <a href="tel:+74959843848">
+                <i class="ion-android-call"></i>
+            </a>
+        </div>
+        <div class="mobile-menu-nav-icon" data-menu-visible="#mobile-menu-container">
+            <i class="ion-navicon"></i>
+        </div>
+        
+        <ul class="nav-visible mobile-menu-container" id="mobile-menu-container">
+            {% for firstLevelItem in menu %}
+                <li>
+                    <div class="mobile-menu-item">
+                        <a href="{{ firstLevelItem.path }}">
+                            <span class="h6">{{ firstLevelItem.name }}</span>
+                        
+                        </a>
+                        {% if firstLevelItem.children is defined %}
+                            <i class="ion-android-arrow-dropdown"></i>
+                        {% endif %}
+                    </div>
+                    {% if firstLevelItem.children is defined %}
+                        <ul class="drop-down">
+                            {% for secondLevelItem in firstLevelItem.children %}
+                                <li>
+                                    <div class="mobile-menu-item">
+                                        <a href="{{ secondLevelItem.path }}">
+                                            {{ secondLevelItem.name }}
+                                        </a>
+                                        {% if secondLevelItem.children is defined %}
+                                            <i class="ion-android-arrow-dropright"></i>
+                                        {% endif %}
+                                    </div>
+                                    {% if secondLevelItem.children is defined %}
+                                        <ul class="drop-down-lower">
+                                            {% for thirdLevelItem in secondLevelItem.children %}
+                                                <li>
+                                                    <div class="mobile-menu-item">
+                                                        <a href="{{ thirdLevelItem.path }}">
+                                                            {{ thirdLevelItem.name }}
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
