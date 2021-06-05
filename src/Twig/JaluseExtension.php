@@ -37,10 +37,10 @@ class JaluseExtension extends AbstractExtension
             return 'рассчитывается индивидуально';
         }
         if ($product->getType()->getCalculationType() === 'simple') {
-            return $min_price . ' рублей за м<sup>2</sup>';
+            return sprintf('<span class="price">%s</span> <small>руб. за м<sup>2</sup></small>', $min_price);
         }
     
-        return 'от ' . $min_price . ' рублей за изделие';
+        return sprintf('от <span class="price">%s</span> <small>руб. за изделие</small>', $min_price);
     }
     
     public function rub_price(float $usdPrice): int

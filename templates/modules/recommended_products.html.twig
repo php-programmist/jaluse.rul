@@ -1,0 +1,35 @@
+<div class="recommended_products row">
+    {% for item in items %}
+        <div class="col-sm-4 col-md-3 col-12">
+            <div class="product">
+                <div class="product-info margin-top-20" onclick="window.location='/{{ item.uri }}/'">
+                    <p class="calc">
+                        <i class="ion-ios-calculator"></i>
+                    </p>
+                    <div class="product-image">
+                        
+                        <img {{ lazy_load(asset(item.cardImageUrl) | imagine_filter('catalog_thumb')) }}
+                                alt="{{ item.name }}">
+                    
+                    </div>
+                    
+                    <ul class="icons hidden-xs">
+                        <li><span class="btn">РАССЧИТАТЬ СТОИМОСТЬ</span></li>
+                    </ul>
+                </div>
+                
+                <input class="quantity" name="quantity" type="hidden" value="1">
+                <div itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
+                    <p class="product-name">
+                        <a class="title" itemprop="url" href="/{{ item.uri }}/">{{ item.name }}</a>
+                    </p>
+                    
+                    <p class="price-wrapper">
+                        <small>Цена от</small> {{ min_price(item) }}
+                    </p>
+                </div>
+            
+            </div>
+        </div>
+    {% endfor %}
+</div>
