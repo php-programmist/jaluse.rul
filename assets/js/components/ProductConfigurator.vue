@@ -75,19 +75,20 @@
 				flex-wrap: wrap;
 			}
 			.dimension_wrapper{
-				display: flex;
-				flex-direction: column;
-			}
+        display: flex;
+        flex-direction: column;
+        max-width: 50%;
+      }
 			input{
-				max-width: 300px;
-				margin-right: 15px;
-				padding: 5px;
-				outline: none!important;
-				border: 1px solid rgba(0,0,0, .1);
-				&:focus{
-					border: 1px solid #2aa5cc;
-				}
-			}
+        margin-right: 15px;
+        padding: 5px;
+        outline: none !important;
+        border: 1px solid rgba(0, 0, 0, .1);
+
+        &:focus {
+          border: 1px solid #2aa5cc;
+        }
+      }
 			
 		}
 		&__control{
