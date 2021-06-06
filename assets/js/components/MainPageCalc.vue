@@ -1,9 +1,9 @@
 <template>
-	<div class="calc-wrap">
-		<div class="row">
-			<div class="col-lg-7 col-md-6 calc-parametr">
-				<form action="#">
-					<div class="calc-parametr-typewrap">
+  <div class="calc-wrap">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 calc-parametr">
+        <form action="#">
+          <div class="calc-parametr-typewrap">
             <div class="minzag">Выберите тип {{ rulonnyie_only ? 'рулонных штор' : 'жалюзи' }}</div>
             <div class="row">
               <div class="type_selector">
@@ -15,83 +15,88 @@
               </div>
               <transition name="slide-fade">
                 <div class="material_selector" v-show="materials.length > 0">
-									<v-drop-down-selector
-											:items="materials"
-											default_name="Выбрать изделие"
-											v-model="material"
-											@input="getProducts"
-									></v-drop-down-selector>
-								</div>
-							</transition>
-						</div>
-					
-					</div>
-					<div class="calc-parametr-color">
-						<div class="minzag colorzag" @click="toggleColorSelector()">Цвет:</div>
-						<transition name="slide">
-							<div class="bgcolor-wrap" v-show="color_opened">
-								<div
-										v-for="(color,index) in availableColors"
-										:key="color.id"
-										class="bgcolor-wrap-color"
-										:class="{colorActive:colorsIds.includes(color.id)}"
-										:title="color.name"
-										:style="'background-color:'+color.hex"
-										@click="toggleColorId(color.id)"
-								></div>
-							</div>
-						</transition>
-					</div>
-					<v-category-selector :categories="categories" v-model="category" @input="getProducts"></v-category-selector>
-					<div class="calc-parametr-minimages">
-						<div
-								class="minimages-wrap"
-								v-for="(product,index) in products"
-								:key="product.id"
-						>
-							<div class="minimages" @click="setActiveProductIndex(index)">
-								<img :src="product.imageSmall" alt="">
-							</div>
-						</div>
-					</div>
-					<v-product-configurator v-model="productConfigs"></v-product-configurator>
-					
-				</form>
-			</div>
-			<div class="col-lg-5 col-md-6 calc-vivod align-self-center">
-				<div class="calc-vivod-imgwrap">
-					<img :src="currentProduct.imageBig" alt="*">
-				</div>
-				<div class="product-name">
-					{{currentProduct.name}}
-				</div>
-				<v-price-renderer :prices="prices"></v-price-renderer>
-				<div class="calc-vivod-opis">
-					<div class="row">
-            <div class="calc-vivod-opis-text col-sm-6">
-
-              <div><b>Размеры: </b><span>{{ productConfigs.width }}</span> ММ X <span>{{ productConfigs.height }}</span>ММ
-              </div>
-              <div><b>Цвет: {{ currentProduct.colorName }}</b></div>
-            </div>
-            <div class="calc-vivod-opis-text col-sm-6 d-none d-md-block">
-              <div><b>Управление: </b><span>{{ productConfigs.controlType }}</span></div>
-              <div><b>Подтип: </b><span>{{ currentProduct.materialName }}</span></div>
+                  <v-drop-down-selector
+                      :items="materials"
+                      default_name="Выбрать изделие"
+                      v-model="material"
+                      @input="getProducts"
+                  ></v-drop-down-selector>
+                </div>
+              </transition>
             </div>
 
           </div>
-				</div>
-				<v-order-form
-						text="Заказать"
-						:product="currentProduct"
-						:productConfigs="productConfigs"
-						:prices="prices"
-				></v-order-form>
-				<v-consultation-form text="Получить консультацию"></v-consultation-form>
-			</div>
-		</div>
-	
-	</div>
+          <div class="calc-parametr-color">
+            <div class="minzag colorzag" @click="toggleColorSelector()">Цвет:</div>
+            <transition name="slide">
+              <div class="bgcolor-wrap" v-show="color_opened">
+                <div
+                    v-for="(color,index) in availableColors"
+                    :key="color.id"
+                    class="bgcolor-wrap-color"
+                    :class="{colorActive:colorsIds.includes(color.id)}"
+                    :title="color.name"
+                    :style="'background-color:'+color.hex"
+                    @click="toggleColorId(color.id)"
+                ></div>
+              </div>
+            </transition>
+          </div>
+          <v-category-selector :categories="categories" v-model="category" @input="getProducts"></v-category-selector>
+          <div class="calc-parametr-minimages">
+            <div
+                class="minimages-wrap"
+                v-for="(product,index) in products"
+                :key="product.id"
+            >
+              <div class="minimages" @click="setActiveProductIndex(index)">
+                <img :src="product.imageSmall" alt="">
+              </div>
+            </div>
+          </div>
+          <v-product-configurator v-model="productConfigs"></v-product-configurator>
+
+        </form>
+      </div>
+      <div class="col-lg-5 col-md-6 calc-vivod align-self-center">
+        <div class="calc-vivod-imgwrap">
+          <img :src="currentProduct.imageBig" alt="*">
+        </div>
+        <div class="product-name">
+          {{ currentProduct.name }}
+        </div>
+        <div class="w-100">
+          <v-price-renderer :prices="prices"></v-price-renderer>
+          <div class="calc-vivod-opis">
+            <div class="row">
+              <div class="calc-vivod-opis-text col-sm-6">
+
+                <div><b>Размеры: </b><span>{{ productConfigs.width }}</span> ММ X
+                  <span>{{ productConfigs.height }}</span>ММ
+                </div>
+                <div><b>Цвет: {{ currentProduct.colorName }}</b></div>
+              </div>
+              <div class="calc-vivod-opis-text col-sm-6 d-none d-md-block">
+                <div><b>Управление: </b><span>{{ productConfigs.controlType }}</span></div>
+                <div><b>Подтип: </b><span>{{ currentProduct.materialName }}</span></div>
+              </div>
+
+            </div>
+          </div>
+
+          <v-order-form
+              text="Заказать"
+              :product="currentProduct"
+              :productConfigs="productConfigs"
+              :prices="prices"
+          ></v-order-form>
+          <v-consultation-form text="Получить консультацию"></v-consultation-form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -154,196 +159,220 @@ export default {
           this.categories = response.data.categories;
           this.category = this.categories[0];
           const matrices = response.data.matrices;
-					const priceConfigs = response.data.priceConfigs;
-					this.price_calculator = new PriceCalculator(priceConfigs, matrices);
-					this.getProducts();
-				});
+          const priceConfigs = response.data.priceConfigs;
+          this.price_calculator = new PriceCalculator(priceConfigs, matrices);
+          this.getProducts();
+        });
 
   },
-		
-		computed: {
-			materials() {
-				return this.type.id > 0 ? this.type.materials : [];
-			},
-			availableColors() {
-				return this.colors.filter(color => this.availableColorsIds.includes(color.id));
-				
-			},
-			currentProduct() {
-				if (this.products.length === 0 || typeof this.products[this.product_index] == 'undefined') {
-					return {
-						"price": 0,
-						"imageSmall": '',
-						"imageBig": '',
-						"colorId": 0,
-						"colorName": "",
-						"materialName": "",
-						"discount": 0,
-						"id": 0,
-						"name": "",
-						"uri": ""
-					};
-				}
-				return this.products[this.product_index];
-			},
-			prices() {
-				if (!this.price_calculator || typeof this.price_calculator.getAllPrices === 'undefined') {
-					return {basePrice: 0, discountedPrice: 0, priceWithDelivery: 0, currentDiscount: 0};
-				}
-				
-				return this.price_calculator.getAllPrices(this.currentProduct, this.productConfigs);
-				
-			}
-			
-		},
-		watch:{
-			type(newVal,oldVal){
-				if (newVal.id > 0 && oldVal.id > 0) {
-					this.material = {id:0};
-				}
-				if (newVal.id > 0) {
-					this.getProducts();
-				}
-			}
-		},
-		methods: {
-			toggleColorSelector() {
-				this.color_opened = !this.color_opened;
-			},
-			toggleColorId(colorId) {
-				if (this.colorsIds.includes(colorId)) {
-					this.colorsIds = this.colorsIds.filter(value => value !== colorId);
-					this.getProducts();
-				} else {
-					this.colorsIds.push(colorId);
-					this.getProducts();
-				}
-			},
-			setActiveProductIndex(index) {
-				this.product_index = index;
-			},
-			getProducts() {
-				this.product_index = 0;
-				let query = '/api/calc/getProducts?';
-				query += 'category=' + this.category.id;
-				if (this.type.id > 0) {
-					query += '&type=' + this.type.id;
-				}else{
-					query += '&type=' + this.types[0].id;
-				}
-				if (this.material.id > 0) {
-					query += '&material=' + this.material.id;
-				}
-				if (this.colorsIds.length > 0) {
-					query += '&color=' + this.colorsIds.join(',');
-				}
-				axios.get(query)
-					.then(response => {
-						this.products = response.data.products;
-						this.setAvailableColorsIds(response.data.colors);
-					});
-			},
-			setAvailableColorsIds(array) {
-				this.availableColorsIds = array.map(item => parseInt(item));
-			}
-		}
-	};
+
+  computed: {
+    materials() {
+      return this.type.id > 0 ? this.type.materials : [];
+    },
+    availableColors() {
+      return this.colors.filter(color => this.availableColorsIds.includes(color.id));
+
+    },
+    currentProduct() {
+      if (this.products.length === 0 || typeof this.products[this.product_index] == 'undefined') {
+        return {
+          "price": 0,
+          "imageSmall": '',
+          "imageBig": '',
+          "colorId": 0,
+          "colorName": "",
+          "materialName": "",
+          "discount": 0,
+          "id": 0,
+          "name": "",
+          "uri": ""
+        };
+      }
+      return this.products[this.product_index];
+    },
+    prices() {
+      if (!this.price_calculator || typeof this.price_calculator.getAllPrices === 'undefined') {
+        return {basePrice: 0, discountedPrice: 0, priceWithDelivery: 0, currentDiscount: 0};
+      }
+
+      return this.price_calculator.getAllPrices(this.currentProduct, this.productConfigs);
+
+    }
+
+  },
+  watch: {
+    type(newVal, oldVal) {
+      if (newVal.id > 0 && oldVal.id > 0) {
+        this.material = {id: 0};
+      }
+      if (newVal.id > 0) {
+        this.getProducts();
+      }
+    }
+  },
+  methods: {
+    toggleColorSelector() {
+      this.color_opened = !this.color_opened;
+    },
+    toggleColorId(colorId) {
+      if (this.colorsIds.includes(colorId)) {
+        this.colorsIds = this.colorsIds.filter(value => value !== colorId);
+        this.getProducts();
+      } else {
+        this.colorsIds.push(colorId);
+        this.getProducts();
+      }
+    },
+    setActiveProductIndex(index) {
+      this.product_index = index;
+    },
+    getProducts() {
+      this.product_index = 0;
+      let query = '/api/calc/getProducts?';
+      query += 'category=' + this.category.id;
+      if (this.type.id > 0) {
+        query += '&type=' + this.type.id;
+      } else {
+        query += '&type=' + this.types[0].id;
+      }
+      if (this.material.id > 0) {
+        query += '&material=' + this.material.id;
+      }
+      if (this.colorsIds.length > 0) {
+        query += '&color=' + this.colorsIds.join(',');
+      }
+      axios.get(query)
+          .then(response => {
+            this.products = response.data.products;
+            this.setAvailableColorsIds(response.data.colors);
+          });
+    },
+    setAvailableColorsIds(array) {
+      this.availableColorsIds = array.map(item => parseInt(item));
+    }
+  }
+};
 </script>
 
 <style lang="scss">
-	.slide-enter-active {
-		-moz-transition-duration: 0.5s;
-		-webkit-transition-duration: 0.5s;
-		-o-transition-duration: 0.5s;
-		transition-duration: 0.5s;
-		-moz-transition-timing-function: ease-in;
-		-webkit-transition-timing-function: ease-in;
-		-o-transition-timing-function: ease-in;
-		transition-timing-function: ease-in;
-	}
-	
-	.slide-leave-active {
-		-moz-transition-duration: 0.3s;
-		-webkit-transition-duration: 0.3s;
-		-o-transition-duration: 0.3s;
-		transition-duration: 0.3s;
-		-moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-		-webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-		-o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-	}
-	
-	.slide-enter-to, .slide-leave {
-		max-height: 500px;
-		overflow: hidden;
-	}
-	
-	.slide-enter, .slide-leave-to {
-		overflow: hidden;
-		max-height: 0;
-	}
-	
-	.slide-fade-enter-active {
-		transition: all .3s ease;
-	}
-	
-	.slide-fade-leave-active {
-		transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-	}
-	
-	.slide-fade-enter, .slide-fade-leave-to {
-		transform: translateX(30px);
-		opacity: 0;
-	}
-	$text-grey: rgba(54, 54, 54, 0.8);
-	.calc-vivod {
-		&-imgwrap {
-			text-align: center;
-			img {
-				max-width: 100%;
-			}
-		}
-		&-opis {
-			margin-bottom: 20px;
-			&-text {
-				
-				font-size: 14px;
-				div {
-					
-					font-size: 14px;
-					b {
-						text-transform: uppercase;
-					}
-				}
-				i {
-					margin-left: 20px;
-					margin-top: 20px;
-					display: block;
-					margin-bottom: 20px;
-					
-				}
-			}
-			&-cena {
-				font-size: 14px;
-				a {
-					display: block;
-					color: $text-grey;
-					text-align: right;
-					text-decoration: underline;
-					margin-top: 10px;
-				}
-				.price {
-					font-weight: bold;
-					font-size: 16px;
-					margin-top: 10px;
-					b {
-						font-size: 36px;
-						display: inline-block;
-						margin-right: 5px;
-					}
-				}
-				
-			}
-		}
-	}
+.slide-enter-active {
+  -moz-transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -moz-transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+}
+
+.slide-leave-active {
+  -moz-transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slide-enter-to, .slide-leave {
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.slide-enter, .slide-leave-to {
+  overflow: hidden;
+  max-height: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+$text-grey: rgba(54, 54, 54, 0.8);
+.calc-vivod {
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+
+  .product-name {
+    font-weight: bold;
+    @media (max-width: 768px) {
+      order: -1;
+    }
+  }
+
+  &-imgwrap {
+    text-align: center;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &-opis {
+    margin-bottom: 20px;
+
+    &-text {
+
+      font-size: 14px;
+
+      div {
+
+        font-size: 14px;
+
+        b {
+          text-transform: uppercase;
+        }
+      }
+
+      i {
+        margin-left: 20px;
+        margin-top: 20px;
+        display: block;
+        margin-bottom: 20px;
+
+      }
+    }
+
+    &-cena {
+      font-size: 14px;
+
+      a {
+        display: block;
+        color: $text-grey;
+        text-align: right;
+        text-decoration: underline;
+        margin-top: 10px;
+      }
+
+      .price {
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 10px;
+
+        b {
+          font-size: 36px;
+          display: inline-block;
+          margin-right: 5px;
+        }
+      }
+
+    }
+  }
+}
 </style>
