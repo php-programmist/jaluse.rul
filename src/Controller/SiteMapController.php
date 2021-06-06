@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Page;
 use App\Model\SiteMapModel;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
