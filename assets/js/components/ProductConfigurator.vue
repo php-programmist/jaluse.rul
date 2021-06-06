@@ -14,19 +14,19 @@
 			</div>
 		</div>
 		<div class="calc-parametr__control">
-			<div class="bigzag">Выберите тип управления:</div>
-			<input type="radio" id="controlTypeManual" value="Ручное" v-model="controlType">
-			<label for="controlTypeManual">Ручное</label>
-			<input type="radio" id="controlTypeAuto" value="Электропривод" v-model="controlType">
-			<label for="controlTypeAuto">Электропривод</label>
-			<div>
-				<b>Количество изделий:</b>
-				<select v-model="number" @input="triggerEvent">
-					<option v-for="i in 10" :value="i">{{i}}</option>
-				</select>
-			</div>
-			<i>Изготовим за 1-3 рабочих дня</i>
-		</div>
+      <div class="bigzag d-none d-md-block">Выберите тип управления:</div>
+      <input class="d-none d-md-inline" type="radio" id="controlTypeManual" value="Ручное" v-model="controlType">
+      <label class="d-none d-md-inline" for="controlTypeManual">Ручное</label>
+      <input class="d-none d-md-inline" type="radio" id="controlTypeAuto" value="Электропривод" v-model="controlType">
+      <label class="d-none d-md-inline" for="controlTypeAuto">Электропривод</label>
+      <div class="mt-4 mt-md-0">
+        <b>Количество изделий:</b>
+        <select v-model="number" @input="triggerEvent">
+          <option v-for="i in 10" :value="i">{{ i }}</option>
+        </select>
+      </div>
+      <i class="d-none d-md-block">Изготовим за 1-3 рабочих дня</i>
+    </div>
 	</div>
 </template>
 
