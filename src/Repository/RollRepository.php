@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Roll;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Roll|null find($id, $lockMode = null, $lockVersion = null)
