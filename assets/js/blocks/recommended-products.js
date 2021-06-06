@@ -4,30 +4,24 @@ import $ from 'jquery';
 
 $('.recommended_products').slick({
 	slidesToShow: 4,
-	slidesToScroll: 4,
-	lazyLoad: 'ondemand',
-	autoplay: false,
-	autoplaySpeed: 2000,
+	slidesToScroll: 1,
 	responsive: [
 		{
 			breakpoint: 992,
 			settings: {
-				slidesToShow: 3,
-				slidesToScroll: 3
+				slidesToShow: 3
 			}
 		},
 		{
 			breakpoint: 767,
 			settings: {
-				slidesToShow: 2,
-				slidesToScroll: 2
+				slidesToShow: 2
 			}
 		},
 		{
 			breakpoint: 567,
 			settings: {
-				slidesToShow: 1,
-				slidesToScroll: 1
+				slidesToShow: 1
 			}
 		}
 	

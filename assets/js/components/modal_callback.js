@@ -51,13 +51,13 @@ const modal_callback = $('#modal-callback');
 const modal_close = modal_callback.find('.modal_close');
 const modal_overlay = modal_callback.find('.overlay');
 const modal_title = modal_callback.find('.modal-title');
-$('.modal-open').on('click', function (event) {
+$('body').on('click', '.js-modal-open', function (event) {
 	event.preventDefault();
 	let title = $(this).data('title');
 	if (!title) {
 		title = 'Заказать звонок';
 	}
-	modal_title.html(title+':');
+	modal_title.html(title + ':');
 	modal_callback.addClass('is-visible');
 });
 modal_close.on('click', () => {
