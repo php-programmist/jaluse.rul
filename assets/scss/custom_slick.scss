@@ -1,7 +1,7 @@
 .slick-prev,
 .slick-next {
-  width: 24px;
-  height: 36px;
+  width: 30px;
+  height: 50px;
   position: absolute;
   cursor: pointer;
   display: block;
@@ -9,7 +9,7 @@
   top: 50%;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
-  border:0;
+  border: 0;
   text-indent: -9999px;
   z-index: 2;
   border: none!important;
@@ -23,11 +23,18 @@
   background: url(/img/slick-prev.svg) center no-repeat transparent;
   -webkit-background-size: cover;
   background-size: cover;
-  left: 0;
+  left: -30px;
+  @media screen and (max-width: 768px) {
+    left: -15px;
+  }
+
 }
 .slick-next {
   background: url(/img/slick-next.svg) center no-repeat transparent;
-  right: 0;
+  right: -30px;
   -webkit-background-size: cover;
   background-size: cover;
+  @media screen and (max-width: 768px) {
+    right: -15px;
+  }
 }
