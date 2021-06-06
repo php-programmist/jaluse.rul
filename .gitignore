@@ -28,3 +28,7 @@ yarn-error.log
 /public/media/cache/
 ###< liip/imagine-bundle ###
 /sql/
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
