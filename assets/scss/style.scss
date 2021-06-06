@@ -559,15 +559,20 @@ p{
     }
     &-minimages{
       margin-top: 10px;
+      @media screen and (max-width: 768px) {
+        max-height: 200px;
+        overflow: auto;
+      }
 
-      .minimages-wrap{
+      .minimages-wrap {
         width: 80px;
         display: inline-block;
 
-        img{
+        img {
           max-width: 100%;
         }
-        .minimages{
+
+        .minimages {
           width: 70px;
           border: 1px solid #ccc;
           display: inline-block;
