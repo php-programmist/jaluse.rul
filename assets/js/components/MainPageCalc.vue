@@ -68,17 +68,18 @@
 				<v-price-renderer :prices="prices"></v-price-renderer>
 				<div class="calc-vivod-opis">
 					<div class="row">
-						<div class="calc-vivod-opis-text col-sm-6">
-							
-							<div><b>Размеры: </b><span>{{productConfigs.width}}</span> ММ X <span>{{productConfigs.height}}</span>ММ</div>
-							<div><b>Цвет: {{currentProduct.colorName}}</b></div>
-						</div>
-						<div class="calc-vivod-opis-text col-sm-6">
-							<div><b>Управление: </b><span>{{productConfigs.controlType}}</span></div>
-							<div><b>Подтип: </b><span>{{currentProduct.materialName}}</span></div>
-						</div>
-					
-					</div>
+            <div class="calc-vivod-opis-text col-sm-6">
+
+              <div><b>Размеры: </b><span>{{ productConfigs.width }}</span> ММ X <span>{{ productConfigs.height }}</span>ММ
+              </div>
+              <div><b>Цвет: {{ currentProduct.colorName }}</b></div>
+            </div>
+            <div class="calc-vivod-opis-text col-sm-6 d-none d-md-block">
+              <div><b>Управление: </b><span>{{ productConfigs.controlType }}</span></div>
+              <div><b>Подтип: </b><span>{{ currentProduct.materialName }}</span></div>
+            </div>
+
+          </div>
 				</div>
 				<v-order-form
 						text="Заказать"
