@@ -105,20 +105,22 @@
 	.calc-parametr-typewrap {
 		
 		&-type {
-			background-color: #fff;
-			cursor: pointer;
-			position: relative;
-			min-width: 200px;
-			border: 1px solid rgba(0, 0, 0, .1);
-			margin-left: 15px;
-			margin-top: 5px;
-			.type-text {
-				padding: 10px 40px 10px 20px;
-				position: relative;
-				&:before {
-					content: '';
-					position: absolute;
-					width: 0%;
+      background-color: #fff;
+      cursor: pointer;
+      position: relative;
+      min-width: 170px;
+      border: 1px solid rgba(0, 0, 0, .1);
+      margin-left: 15px;
+      margin-top: 5px;
+
+      .type-text {
+        padding: 10px 40px 10px 20px;
+        position: relative;
+
+        &:before {
+          content: '';
+          position: absolute;
+          width: 0%;
 					height: 2px;
 					background: $orang;
 					bottom: 0;
@@ -149,14 +151,14 @@
 				}
 			}
 			.type-body {
-				position: absolute;
-				top: 44px;
-				left: 0;
-				background: #fff;
-				z-index: 4;
-				width: 100%;
-				min-width: 200px;
-			}
+        position: absolute;
+        top: 44px;
+        left: 0;
+        background: #fff;
+        z-index: 4;
+        width: 100%;
+        min-width: 170px;
+      }
 		}
 	}
 </style>
