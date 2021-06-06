@@ -2,35 +2,30 @@
     {% for item in items %}
         <div class="product_wrapper">
             <div class="product">
-                <div class="product-info margin-top-20" onclick="window.location='/{{ item.uri }}/'">
-                    <p class="calc">
-                        <i class="ion-ios-calculator"></i>
-                    </p>
-                    <div class="product-image">
-                        
+                <a href="/{{ item.uri }}/" target="_blank">
+                    {% if needWrapper ?? true %}
+                    <div class="product__image_wrapper">
+                        {% endif %}
                         <img {{ lazy_load(asset(item.cardImageUrl) | imagine_filter('catalog_thumb')) }}
                                 alt="{{ item.name }}">
-                    
+                        {% if needWrapper ?? true %}
                     </div>
-                    
-                    <ul class="icons hidden-xs">
-                        <li><span class="btn">РАССЧИТАТЬ СТОИМОСТЬ</span></li>
-                    </ul>
-                </div>
-                
-                <input class="quantity" name="quantity" type="hidden" value="1">
-                <div itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
-                    <p class="product-name">
-                        <a class="title" itemprop="url" href="/{{ item.uri }}/">{{ item.name }}</a>
-                    </p>
-                    
-                    <p class="price-wrapper">
-                        <small>Цена от</small> {{ min_price(item) }}
-                    </p>
-                </div>
+                    {% endif %}
             
+                </a>
+                <div class="product__name">
+                    <a href="/{{ item.uri }}/" target="_blank">{{ item.name }}</a>
+                </div>
+                <div class="product__price">
+                    {{ min_price(item) }}
+                </div>
+                <div class="d-flex justify-content-center flex-wrap">
+                    <button class="mbtn mbtn_orange modal-open" data-title="Рассчитать">Рассчитать</button>
+                    <button class="mbtn modal-open modal-open" data-title="Консультация">Консультация</button>
+            
+                </div>
             </div>
         </div>
-    
+
     {% endfor %}
 </div>
