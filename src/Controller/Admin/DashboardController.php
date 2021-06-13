@@ -50,7 +50,8 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
                         ->setTitle('Админ-панель')
-                        ->renderContentMaximized();
+                        ->renderContentMaximized()
+                        ->disableUrlSignatures();
     }
     
     public function configureCrud(): Crud
@@ -63,7 +64,7 @@ class DashboardController extends AbstractDashboardController
         $submenu1 = [
             MenuItem::linktoRoute('Товары', 'fas fa-file-alt', 'admin_product_import_index'),
         ];
-        
+        yield MenuItem::section('Страницы');
         yield MenuItem::linkToCrud('Каталоги', 'fas fa-file-alt', Catalog::class);
         yield MenuItem::linkToCrud('Товары', 'fas fa-file-alt', Product::class);
         yield MenuItem::linkToCrud('Помещения', 'fas fa-file-alt', Location::class);
@@ -71,10 +72,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Рольставни', 'fas fa-file-alt', Roll::class);
         yield MenuItem::linkToCrud('Римские шторы', 'fas fa-file-alt', Roman::class);
         yield MenuItem::linkToCrud('Простые страницы', 'fas fa-file-alt', Simple::class);
+        yield MenuItem::section('Характеристики товаров');
         yield MenuItem::linkToCrud('Типы', 'fas fa-file-alt', Type::class);
         yield MenuItem::linkToCrud('Цвета', 'fas fa-file-alt', Color::class);
         yield MenuItem::linkToCrud('Подтипы', 'fas fa-file-alt', Material::class);
         yield MenuItem::linkToCrud('Категории', 'fas fa-file-alt', Category::class);
+        yield MenuItem::section('Технические ссылки');
         yield MenuItem::linkToCrud('Настройки', 'fas fa-cogs', Config::class);
         yield MenuItem::linktoRoute('Генератор', 'fas fa-cogs', 'admin_generator_index');
         yield MenuItem::subMenu('Импорт', 'fas fa-file-import')->setSubItems($submenu1);
