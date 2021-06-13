@@ -1,0 +1,4 @@
+form:
+    label:
+        delete: 'Удалить?'
+        type: 'Тип'
