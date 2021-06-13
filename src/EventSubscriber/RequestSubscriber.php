@@ -71,7 +71,6 @@ class RequestSubscriber implements EventSubscriberInterface
             return;
         }
     
-        $robotsCheckResponse = $this->getRobotsCkeckResponse($request->getUri());
         $ip                  = $request->server->get('REMOTE_ADDR');
         $useragent           = $request->server->get('HTTP_USER_AGENT');
         $referer             = $request->server->get('HTTP_REFERER');
@@ -96,14 +95,14 @@ class RequestSubscriber implements EventSubscriberInterface
                 }
             }
         
-            $event->setResponse($robotsCheckResponse);
+            $event->setResponse($this->getRobotsCkeckResponse($request->getUri()));
         
             return;
         }
     
         if ($this->isFromSocial($referer) || $this->isSuspicious($referer, $useragent)) {
             $this->saveIpToRobotsList($ip, $referer, $useragent);
-            $event->setResponse($robotsCheckResponse);
+            $event->setResponse($this->getRobotsCkeckResponse($request->getUri()));
         }
     }
     
