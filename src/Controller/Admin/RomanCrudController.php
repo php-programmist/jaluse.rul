@@ -41,7 +41,7 @@ class RomanCrudController extends AbstractCrudController
                 'ratingCount',
                 'price',
             ])
-            ->setPaginatorPageSize(500);
+            ->setPaginatorPageSize(100);
     }
     
     public function configureFields(string $pageName): iterable

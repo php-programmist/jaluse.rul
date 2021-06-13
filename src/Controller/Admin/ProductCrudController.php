@@ -51,7 +51,7 @@ class ProductCrudController extends AbstractCrudController
                 'imageBigName',
                 'imageCatalogName',
             ])
-            ->setPaginatorPageSize(500);
+            ->setPaginatorPageSize(100);
     }
     
     public function configureFilters(Filters $filters): Filters

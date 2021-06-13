@@ -19,7 +19,7 @@ class ConfigCrudController extends AbstractCrudController
     {
         return $crud
             ->setSearchFields(['id', 'name', 'value', 'title'])
-            ->setPaginatorPageSize(500);
+            ->setPaginatorPageSize(100);
     }
     
     public function configureFields(string $pageName): iterable

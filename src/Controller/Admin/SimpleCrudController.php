@@ -39,7 +39,7 @@ class SimpleCrudController extends AbstractCrudController
                 'ratingValue',
                 'ratingCount',
             ])
-            ->setPaginatorPageSize(500);
+            ->setPaginatorPageSize(100);
     }
     
     public function configureFields(string $pageName): iterable

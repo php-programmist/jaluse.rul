@@ -20,7 +20,7 @@ class ColorCrudController extends AbstractCrudController
     {
         return $crud
             ->setSearchFields(['id', 'name', 'alias', 'hex'])
-            ->setPaginatorPageSize(500);
+            ->setPaginatorPageSize(100);
     }
     
     public function configureFields(string $pageName): iterable
