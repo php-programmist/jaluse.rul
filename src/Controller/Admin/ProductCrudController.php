@@ -3,11 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Field\VichImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -30,6 +30,9 @@ class ProductCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setEntityLabelInSingular('Товар')
+            ->setEntityLabelInPlural('Товары')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Редактирование товара #<b>%entity_id%</b>')
             ->setSearchFields([
                 'id',
                 'name',
@@ -37,21 +40,7 @@ class ProductCrudController extends AbstractCrudController
                 'title',
                 'description',
                 'content',
-                'seoImage',
-                'ourWorksFolder',
-                'cardImage',
-                'cardDescription',
-                'geoProductType',
-                'ratingValue',
-                'ratingCount',
-                'price',
-                'discount',
-                'matrix_id',
-                'imageSmallName',
-                'imageBigName',
-                'imageCatalogName',
-            ])
-            ->setPaginatorPageSize(100);
+            ]);
     }
     
     public function configureFilters(Filters $filters): Filters
@@ -72,41 +61,19 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name             = TextField::new('name', 'Название');
-        $uri              = TextField::new('uri');
         $price            = NumberField::new('price', 'Цена');
-        $discount         = IntegerField::new('discount');
-        $parent           = AssociationField::new('parent');
-        $type             = AssociationField::new('type');
-        $material         = AssociationField::new('material');
-        $color            = AssociationField::new('color');
-        $category         = AssociationField::new('category');
+        $discount         = IntegerField::new('discount', 'Скидка');
+        $type             = AssociationField::new('type', 'Тип');
+        $material         = AssociationField::new('material', 'Подтип');
+        $color            = AssociationField::new('color', 'Цвет');
+        $category         = AssociationField::new('category', 'Категория');
         $popular          = Field::new('popular', 'Популярный');
         $published        = Field::new('published', 'Опубликован');
         $yml              = Field::new('yml', 'YML');
-        $imageSmallFile   = Field::new('imageSmallFile', 'Маленькое изображение');
-        $imageBigFile     = Field::new('imageBigFile', 'Большое изображение');
-        $imageCatalogFile = Field::new('imageCatalogFile', 'Изображение в каталоге');
-        $title            = TextField::new('title');
-        $description      = TextareaField::new('description');
-        $showSeoText      = Field::new('showSeoText');
-        $content          = TextareaField::new('content');
-        $seoImageFile     = Field::new('seoImageFile', 'SEO-Изображение');
+        $imageSmallFile   = VichImageField::new('imageSmallFile', 'Маленькое изображение');
+        $imageBigFile     = VichImageField::new('imageBigFile', 'Большое изображение');
+        $imageCatalogFile = VichImageField::new('imageCatalogFile', 'Изображение в каталоге');
         $id               = IntegerField::new('id', 'ID');
-        $turbo            = Field::new('turbo');
-        $createdAt        = DateTimeField::new('created_at');
-        $modifiedAt       = DateTimeField::new('modified_at');
-        $seoImage         = TextField::new('seoImage');
-        $ourWorksFolder   = TextField::new('ourWorksFolder');
-        $cardImage        = TextField::new('cardImage');
-        $cardDescription  = TextareaField::new('cardDescription');
-        $geoProductType   = TextField::new('geoProductType');
-        $ratingValue      = NumberField::new('ratingValue');
-        $ratingCount      = IntegerField::new('ratingCount');
-        $matrixId         = IntegerField::new('matrix_id');
-        $imageSmallName   = TextField::new('imageSmallName');
-        $imageBigName     = TextField::new('imageBigName');
-        $imageCatalogName = TextField::new('imageCatalogName');
-        $pages            = AssociationField::new('pages');
         $path             = UrlField::new('path', 'Ссылка');
         $imageSmall       = ImageField::new('imageSmall', 'Изображение');
         $parentName       = TextareaField::new('parent.name', 'Родитель');
@@ -114,7 +81,7 @@ class ProductCrudController extends AbstractCrudController
         $materialName     = TextareaField::new('material.name', 'Подтип');
         $colorName        = TextareaField::new('color.name', 'Цвет');
         $categoryName     = TextareaField::new('category.name', 'Категория');
-        
+    
         if (Crud::PAGE_INDEX === $pageName) {
             return [
                 $id,
@@ -131,86 +98,23 @@ class ProductCrudController extends AbstractCrudController
                 $published,
                 $yml,
             ];
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
+        }
+    
+        if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
             return [
-                $id,
-                $name,
-                $uri,
-                $title,
-                $description,
-                $published,
-                $yml,
-                $turbo,
-                $showSeoText,
-                $createdAt,
-                $modifiedAt,
-                $content,
-                $seoImage,
-                $ourWorksFolder,
-                $cardImage,
-                $cardDescription,
-                $geoProductType,
-                $ratingValue,
-                $ratingCount,
-                $price,
-                $popular,
-                $discount,
-                $matrixId,
-                $imageSmallName,
-                $imageBigName,
-                $imageCatalogName,
-                $parent,
-                $pages,
-                $color,
-                $type,
-                $material,
-                $category,
-            ];
-        } elseif (Crud::PAGE_NEW === $pageName) {
-            return [
-                $name,
-                $uri,
+                ...DashboardController::getMainBlock(),
                 $price,
                 $discount,
-                $parent,
                 $type,
                 $material,
                 $color,
                 $category,
                 $popular,
-                $published,
                 $yml,
                 $imageSmallFile,
                 $imageBigFile,
                 $imageCatalogFile,
-                $title,
-                $description,
-                $showSeoText,
-                $content,
-                $seoImageFile,
-            ];
-        } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [
-                $name,
-                $uri,
-                $price,
-                $discount,
-                $parent,
-                $type,
-                $material,
-                $color,
-                $category,
-                $popular,
-                $published,
-                $yml,
-                $imageSmallFile,
-                $imageBigFile,
-                $imageCatalogFile,
-                $title,
-                $description,
-                $showSeoText,
-                $content,
-                $seoImageFile,
+                ...DashboardController::getSeoBlock(),
             ];
         }
     }

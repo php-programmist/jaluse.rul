@@ -19,25 +19,25 @@ class MaterialCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'name'])
-            ->setPaginatorPageSize(100);
+            ->setEntityLabelInSingular('Подтип')
+            ->setEntityLabelInPlural('Подтипы')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Редактирование подтипа #<b>%entity_id%</b>')
+            ->setSearchFields(['id', 'name']);
     }
     
     public function configureFields(string $pageName): iterable
     {
         $name     = TextField::new('name', 'Название');
-        $type     = AssociationField::new('type');
+        $type     = AssociationField::new('type', 'Тип');
         $products = AssociationField::new('products', 'Кол-во товаров');
         $id       = IntegerField::new('id', 'ID');
         $catalogs = AssociationField::new('catalogs', 'Кол-во каталогов');
-        
+    
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $products, $catalogs];
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $products, $catalogs, $type];
-        } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $type, $products];
-        } elseif (Crud::PAGE_EDIT === $pageName) {
+        }
+    
+        if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
             return [$name, $type, $products];
         }
     }

@@ -19,8 +19,10 @@ class CategoryCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'name'])
-            ->setPaginatorPageSize(100);
+            ->setEntityLabelInSingular('Категория')
+            ->setEntityLabelInPlural('Категории')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Редактирование категории #<b>%entity_id%</b>')
+            ->setSearchFields(['id', 'name']);
     }
     
     public function configureFields(string $pageName): iterable
@@ -28,14 +30,12 @@ class CategoryCrudController extends AbstractCrudController
         $name     = TextField::new('name', 'Название');
         $products = AssociationField::new('products', 'Кол-во товаров');
         $id       = IntegerField::new('id', 'ID');
-        
+    
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $products];
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $products];
-        } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $products];
-        } elseif (Crud::PAGE_EDIT === $pageName) {
+        }
+    
+        if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
             return [$name, $products];
         }
     }

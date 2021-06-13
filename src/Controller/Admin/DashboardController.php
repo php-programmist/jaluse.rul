@@ -14,11 +14,18 @@ use App\Entity\Roll;
 use App\Entity\Roman;
 use App\Entity\Simple;
 use App\Entity\Type;
+use App\Field\CKEditorField;
+use App\Field\VichImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,7 +63,10 @@ class DashboardController extends AbstractDashboardController
     
     public function configureCrud(): Crud
     {
-        return Crud::new();
+        return Crud::new()
+                   ->setPaginatorPageSize(100)
+                   ->setPaginatorRangeSize(10)
+                   ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
     
     public function configureMenuItems(): iterable
@@ -81,5 +91,55 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Настройки', 'fas fa-cogs', Config::class);
         yield MenuItem::linktoRoute('Генератор', 'fas fa-cogs', 'admin_generator_index');
         yield MenuItem::subMenu('Импорт', 'fas fa-file-import')->setSubItems($submenu1);
+    }
+    
+    public static function getMainBlock(): array
+    {
+        $name      = TextField::new('name', 'Название');
+        $uri       = TextField::new('uri', 'Ссылка');
+        $parent    = AssociationField::new('parent', 'Родитель');
+        $published = Field::new('published', 'Опубликован');
+        $mainPanel = FormField::addPanel('Основные')->collapsible();
+        
+        return [
+            $mainPanel,
+            $name,
+            $uri,
+            $parent,
+            $published,
+        ];
+    }
+    
+    public static function getSeoBlock(): array
+    {
+        $title        = TextField::new('title', 'Заголовок');
+        $description  = TextareaField::new('description', 'Мета-описание');
+        $showSeoText  = Field::new('showSeoText', 'SEO-текст');
+        $content      = CKEditorField::new('content', 'SEO-текст');
+        $seoImageFile = VichImageField::new('seoImageFile', 'SEO-Изображение');
+        $seoPanel     = FormField::addPanel('SEO')->collapsible();
+        
+        return [
+            $seoPanel,
+            $title,
+            $description,
+            $showSeoText,
+            $content,
+            $seoImageFile,
+        ];
+    }
+    
+    public static function getCardBlock(): array
+    {
+        $cardDescription = CKEditorField::new('cardDescription', 'Описание в карточке');
+        $cardImageFile   = VichImageField::new('cardImageFile', 'Изображение в карточке');
+        
+        $cardPanel = FormField::addPanel('Карточка')->collapsible();
+        
+        return [
+            $cardPanel,
+            $cardDescription,
+            $cardImageFile,
+        ];
     }
 }
