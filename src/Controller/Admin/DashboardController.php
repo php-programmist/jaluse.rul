@@ -49,7 +49,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-                        ->setTitle('Админ-панель');
+                        ->setTitle('Админ-панель')
+                        ->renderContentMaximized();
     }
     
     public function configureCrud(): Crud
