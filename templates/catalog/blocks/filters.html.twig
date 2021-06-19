@@ -18,7 +18,7 @@
                 <a
                         href="{{ path('catalog_filter_color',{token: catalog.uri, color: color.alias}) }}#content"
                         style="background-color: {{ color.hex }}"
-                        class="bgcolor-wrap-color"
+                        class="bgcolor-wrap-color {{ selectedColor|default(false) and selectedColor.id == color.id ? 'colorActive' }}"
                         title="{{ color.name }}"
                 >&nbsp;</a>
             {% endfor %}

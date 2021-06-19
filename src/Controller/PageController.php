@@ -16,10 +16,7 @@ use App\Service\CatalogManager;
 use App\Service\CategoryManager;
 use App\Service\ColorManager;
 use App\Service\ConfigService;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,8 +27,6 @@ class PageController extends AbstractController
     protected ProductRepository $product_repository;
     protected ConfigService $configs;
     private CatalogManager $catalogManager;
-    private PaginatorInterface $paginator;
-    private ?Request $request = null;
     private ColorManager $colorManager;
     private CategoryManager $categoryManager;
     
@@ -40,17 +35,13 @@ class PageController extends AbstractController
         ProductRepository $product_repository,
         ConfigService $configs,
         CatalogManager $catalogManager,
-        PaginatorInterface $paginator,
         ColorManager $colorManager,
-        RequestStack $requestStack,
         CategoryManager $categoryManager
     ) {
         $this->page_repository    = $page_repository;
         $this->product_repository = $product_repository;
         $this->configs            = $configs;
         $this->catalogManager     = $catalogManager;
-        $this->paginator          = $paginator;
-        $this->request            = $requestStack->getCurrentRequest();
         $this->colorManager       = $colorManager;
         $this->categoryManager    = $categoryManager;
     }
@@ -60,7 +51,23 @@ class PageController extends AbstractController
      */
     public function colorFilter(string $token, string $color): Response
     {
+        $catalog          = $this->catalogManager->findCatalogByUriOrFail($token);
+        $selectedColor    = $this->colorManager->findColorByAliasOrFail($color);
+        $filters          = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+        $filters['color'] = $selectedColor->getId();
     
+        return $this->render('page/color-filtered-catalog.html.twig', [
+            'page'               => $catalog,
+            'catalog'            => $catalog,
+            'selectedColor'      => $selectedColor,
+            'products'           => $this->catalogManager->getProductsPaginator($filters),
+            'colors'             => $this->colorManager->getAllColors(),
+            'categories'         => $this->categoryManager->getAllCategories(),
+            'items'              => $this->catalogManager->getPopular($catalog),
+            'catalogsLinks'      => $this->catalogManager->getCatalogsLinks($catalog),
+            'force_show_filters' => false,
+            'show_calc'          => false,
+        ]);
     }
     
     /**
@@ -68,7 +75,7 @@ class PageController extends AbstractController
      */
     public function categoryFilter(string $token, string $category): Response
     {
-    
+        $catalog = $this->catalogManager->findCatalogByUriOrFail($token);
     }
     
     /**
@@ -152,22 +159,12 @@ class PageController extends AbstractController
         }
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
-    
-        $order      = $this->request->query->get('order', 'price');
-        $orderParts = explode('-', $order);
-        $orderBy    = $orderParts[0];
-        $orderDir   = $orderParts[1] ?? 'asc';
-    
-        $products = $this->paginator->paginate(
-            $this->catalogManager->getProductsQuery($catalog, $orderBy, $orderDir),
-            $this->request->query->getInt('page', 1),
-            $this->request->query->getInt('limit', 16)
-        );
+        $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
     
         return $this->render($template, [
             'page'               => $catalog,
             'catalog'            => $catalog,
-            'products'           => $products,
+            'products'           => $this->catalogManager->getProductsPaginator($filters),
             'colors'             => $this->colorManager->getAllColors(),
             'categories'         => $this->categoryManager->getAllCategories(),
             'items'              => $this->catalogManager->getPopular($catalog),
@@ -184,4 +181,5 @@ class PageController extends AbstractController
             'items' => [],
         ]);
     }
+    
 }

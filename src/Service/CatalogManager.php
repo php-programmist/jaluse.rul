@@ -5,19 +5,39 @@ namespace App\Service;
 use App\Entity\Catalog;
 use App\Entity\Product;
 use App\Entity\Type;
+use App\Repository\CatalogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CatalogManager
 {
     private EntityManagerInterface $entityManager;
+    private PaginatorInterface $paginator;
+    private ?Request $request;
+    private CatalogRepository $catalogRepository;
     
     /**
      * @param EntityManagerInterface $entityManager
+     * @param RequestStack           $requestStack
+     * @param PaginatorInterface     $paginator
+     * @param CatalogRepository      $catalogRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        RequestStack $requestStack,
+        PaginatorInterface $paginator,
+        CatalogRepository $catalogRepository
+    ) {
         $this->entityManager = $entityManager;
+        
+        $this->paginator         = $paginator;
+        $this->request           = $requestStack->getCurrentRequest();
+        $this->catalogRepository = $catalogRepository;
     }
     
     /**
@@ -28,32 +48,30 @@ class CatalogManager
      */
     public function getPopular(Catalog $catalog, int $limit = 0): array
     {
-        $filters             = [];
+        $filters             = $this->getBasicFiltersByCatalog($catalog);
         $filters['category'] = 1;
-        if ($catalog->getType()) {
-            $filters['type'] = $catalog->getType()->getId();
-        } else {
-            $filters['type'] = 178; //isolite
-        }
-        if ($catalog->getMaterial()) {
-            $filters['material'] = $catalog->getMaterial()->getId();
-        }
-        
         return $this->entityManager
             ->getRepository(Product::class)
             ->getPopular($filters, $limit);
     }
     
     /**
-     * @param Catalog $catalog
-     * @param string  $orderBy
-     * @param string  $orderDir
+     * @param array  $filters
+     * @param string $orderBy
+     * @param string $orderDir
      *
      * @return Query
      */
-    public function getProductsQuery(Catalog $catalog, string $orderBy, string $orderDir): Query
+    public function getProductsQuery(array $filters, string $orderBy, string $orderDir): Query
     {
-        $filters = [];
+        return $this->entityManager
+            ->getRepository(Product::class)
+            ->getProductsQB($filters, $orderBy, $orderDir)
+            ->getQuery();
+    }
+    
+    public function getBasicFiltersByCatalog(Catalog $catalog): array
+    {
         if ($catalog->getType()) {
             $filters['type'] = $catalog->getType()->getId();
         } else {
@@ -63,10 +81,7 @@ class CatalogManager
             $filters['material'] = $catalog->getMaterial()->getId();
         }
         
-        return $this->entityManager
-            ->getRepository(Product::class)
-            ->getProductsQB($filters, $orderBy, $orderDir)
-            ->getQuery();
+        return $filters;
     }
     
     public function getCatalogsLinks(Catalog $catalog): array
@@ -123,9 +138,37 @@ class CatalogManager
             } else {
                 $links[$siblingMaterial->getName()] = $siblingMaterial->getCatalogs()->first()->getPath();
             }
-            
+    
+        }
+    
+        return $links;
+    }
+    
+    /**
+     * @param array $filters
+     *
+     * @return PaginationInterface
+     */
+    public function getProductsPaginator(array $filters): PaginationInterface
+    {
+        $order      = $this->request->query->get('order', 'price');
+        $orderParts = explode('-', $order);
+        $orderBy    = $orderParts[0];
+        $orderDir   = $orderParts[1] ?? 'asc';
+        
+        return $this->paginator->paginate(
+            $this->getProductsQuery($filters, $orderBy, $orderDir),
+            $this->request->query->getInt('page', 1),
+            $this->request->query->getInt('limit', 16)
+        );
+    }
+    
+    public function findCatalogByUriOrFail(string $uri): Catalog
+    {
+        if (!$catalog = $this->catalogRepository->findOneBy(['uri' => $uri])) {
+            throw new NotFoundHttpException();
         }
         
-        return $links;
+        return $catalog;
     }
 }
