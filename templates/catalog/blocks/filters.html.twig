@@ -9,7 +9,11 @@
         </ul>
     </div>
 {% endif %}
-
+{% if selectedColor|default(false) or selectedCategory|default(false) %}
+    <div class="my-3">
+        <a class="mbtn py-2" href="/{{ page.uri }}/">Сбросить фильтры</a>
+    </div>
+{% endif %}
 <div class="color_selector">
     <div class="calc-parametr-color">
         <div class="colorzag">Цвет:</div>
