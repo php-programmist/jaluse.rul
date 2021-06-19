@@ -56,18 +56,11 @@ class PageController extends AbstractController
         $filters          = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         $filters['color'] = $selectedColor->getId();
     
-        return $this->render('page/color-filtered-catalog.html.twig', [
-            'page'               => $catalog,
-            'catalog'            => $catalog,
-            'selectedColor'      => $selectedColor,
-            'products'           => $this->catalogManager->getProductsPaginator($filters),
-            'colors'             => $this->colorManager->getAllColors(),
-            'categories'         => $this->categoryManager->getAllCategories(),
-            'items'              => $this->catalogManager->getPopular($catalog),
-            'catalogsLinks'      => $this->catalogManager->getCatalogsLinks($catalog),
-            'force_show_filters' => false,
-            'show_calc'          => false,
-        ]);
+        return $this->render('page/color-filtered-catalog.html.twig',
+            array_merge(
+                $this->getCatalogRenderParams($catalog, $filters),
+                ['selectedColor' => $selectedColor]
+            ));
     }
     
     /**
@@ -75,7 +68,16 @@ class PageController extends AbstractController
      */
     public function categoryFilter(string $token, string $category): Response
     {
-        $catalog = $this->catalogManager->findCatalogByUriOrFail($token);
+        $catalog             = $this->catalogManager->findCatalogByUriOrFail($token);
+        $selectedCategory    = $this->categoryManager->findCategoryByNameOrFail($category);
+        $filters             = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+        $filters['category'] = $selectedCategory->getId();
+    
+        return $this->render('page/category-filtered-catalog.html.twig',
+            array_merge(
+                $this->getCatalogRenderParams($catalog, $filters),
+                ['selectedCategory' => $selectedCategory]
+            ));
     }
     
     /**
@@ -161,17 +163,14 @@ class PageController extends AbstractController
         $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
         $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
     
-        return $this->render($template, [
-            'page'               => $catalog,
-            'catalog'            => $catalog,
-            'products'           => $this->catalogManager->getProductsPaginator($filters),
-            'colors'             => $this->colorManager->getAllColors(),
-            'categories'         => $this->categoryManager->getAllCategories(),
-            'items'              => $this->catalogManager->getPopular($catalog),
-            'catalogsLinks'      => $this->catalogManager->getCatalogsLinks($catalog),
-            'force_show_filters' => $force_show_filters,
-            'show_calc'          => $show_calc,
-        ]);
+        return $this->render($template,
+            array_merge(
+                $this->getCatalogRenderParams($catalog, $filters),
+                [
+                    'force_show_filters' => $force_show_filters,
+                    'show_calc'          => $show_calc,
+                ]
+            ));
     }
     
     private function location(Location $location)
@@ -182,4 +181,16 @@ class PageController extends AbstractController
         ]);
     }
     
+    private function getCatalogRenderParams(Catalog $catalog, array $filters): array
+    {
+        return [
+            'page'          => $catalog,
+            'catalog'       => $catalog,
+            'products'      => $this->catalogManager->getProductsPaginator($filters),
+            'colors'        => $this->colorManager->getAllColors(),
+            'categories'    => $this->categoryManager->getAllCategories(),
+            'items'         => $this->catalogManager->getPopular($catalog),
+            'catalogsLinks' => $this->catalogManager->getCatalogsLinks($catalog),
+        ];
+    }
 }

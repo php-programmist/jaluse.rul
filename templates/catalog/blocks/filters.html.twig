@@ -28,7 +28,9 @@
 <div class="categories">
     <div class="calc-parametr-categori">
         {% for category in categories %}
-            <a href="{{ path('catalog_filter_category', {'token': catalog.uri, 'category': category.name|lower }) }}#content">
+            <a
+                    class="{{ selectedCategory|default(false) and selectedCategory.id == category.id ? 'activ' }}"
+                    href="{{ path('catalog_filter_category', {'token': catalog.uri, 'category': category.name|lower }) }}#content">
                 {{ category.name }}
             </a>
         {% endfor %}
