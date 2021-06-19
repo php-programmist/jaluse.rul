@@ -24,18 +24,11 @@
 
 {% block body %}
     {% block location_block %}{% endblock %}
-    <div class="container-fluid catalog-container">
+    <div id="content" class="container-fluid catalog-container">
         {{ include('modules/rating_schema.html.twig') }}
         {% if showCatalog is not defined or showCatalog %}
             <h2>{% block content_h2 %}{{ page.name }}{% endblock %}</h2>
-            <div id="app">
-                <v-category-page-calc
-                        type_id="{{ page.type.id??0 }}"
-                        material_id="{{ page.material.id??0 }}"
-                        force_show_filters="{{ force_show_filters ?? 0 }}"
-                >
-                </v-category-page-calc>
-            </div>
+            {{ include('catalog/blocks/catalog.html.twig') }}
         {% endif %}
     </div>
     {% if items|default(null) is not empty %}

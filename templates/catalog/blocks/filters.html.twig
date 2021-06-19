@@ -1,0 +1,37 @@
+{% if catalogsLinks|length > 0 %}
+    <div class="catalogs_links py-3">
+        <ul>
+            {% for name, link in catalogsLinks %}
+                <li {{ link != app.request.pathinfo ? 'class = "not-active"' }}>
+                    <a href="{{ link }}#content">{{ name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<div class="color_selector">
+    <div class="calc-parametr-color">
+        <div class="colorzag">Цвет:</div>
+        <div class="bgcolor-wrap">
+            {% for color in colors %}
+                <a
+                        href="{{ path('catalog_filter_color',{token: catalog.uri, color: color.alias}) }}#content"
+                        style="background-color: {{ color.hex }}"
+                        class="bgcolor-wrap-color"
+                        title="{{ color.name }}"
+                >&nbsp;</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="categories">
+    <div class="calc-parametr-categori">
+        {% for category in categories %}
+            <a href="{{ path('catalog_filter_category', {'token': catalog.uri, 'category': category.name|lower }) }}#content">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+    
+    </div>
+</div>

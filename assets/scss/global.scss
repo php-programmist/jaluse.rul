@@ -20,6 +20,10 @@ ul{
       top: 50%;
       transform: translateY(-50%);
     }
+
+    &.not-active:before {
+      display: none;
+    }
   }
 }
 

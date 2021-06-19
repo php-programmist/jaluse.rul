@@ -1,0 +1,22 @@
+.calc-parametr-categori {
+  margin: 0;
+  padding: 15px 0 0;
+  @media (max-width: 991px) {
+    font-size: 14px;
+  }
+
+  a {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #cccccc;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all .5s;
+    margin: 0 5px 0 0;
+
+    &.activ {
+      background-color: #cccccc;
+    }
+  }
+
+}

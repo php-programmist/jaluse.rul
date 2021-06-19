@@ -13,41 +13,62 @@ use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use App\Repository\PageRepository;
 use App\Repository\ProductRepository;
 use App\Service\CatalogManager;
+use App\Service\CategoryManager;
+use App\Service\ColorManager;
 use App\Service\ConfigService;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
 {
-    /**
-     * @var PageRepository
-     */
-    protected $page_repository;
-    /**
-     * @var ProductRepository
-     */
-    protected $product_repository;
-    /**
-     * @var ConfigService
-     */
-    protected $configs;
-    /**
-     * @var CatalogManager
-     */
-    private $catalogManager;
+    protected PageRepository $page_repository;
+    protected ProductRepository $product_repository;
+    protected ConfigService $configs;
+    private CatalogManager $catalogManager;
+    private PaginatorInterface $paginator;
+    private ?Request $request = null;
+    private ColorManager $colorManager;
+    private CategoryManager $categoryManager;
     
     public function __construct(
         PageRepository $page_repository,
         ProductRepository $product_repository,
         ConfigService $configs,
-        CatalogManager $catalogManager
+        CatalogManager $catalogManager,
+        PaginatorInterface $paginator,
+        ColorManager $colorManager,
+        RequestStack $requestStack,
+        CategoryManager $categoryManager
     ) {
         $this->page_repository    = $page_repository;
         $this->product_repository = $product_repository;
         $this->configs            = $configs;
-        $this->catalogManager = $catalogManager;
+        $this->catalogManager     = $catalogManager;
+        $this->paginator          = $paginator;
+        $this->request            = $requestStack->getCurrentRequest();
+        $this->colorManager       = $colorManager;
+        $this->categoryManager    = $categoryManager;
+    }
+    
+    /**
+     * @Route("/{token}/color/{color}/", name="catalog_filter_color", requirements={"token"= ".+"})
+     */
+    public function colorFilter(string $token, string $color): Response
+    {
+    
+    }
+    
+    /**
+     * @Route("/{token}/sort/{category}/", name="catalog_filter_category", requirements={"token"= ".+"})
+     */
+    public function categoryFilter(string $token, string $category): Response
+    {
+    
     }
     
     /**
@@ -58,38 +79,38 @@ class PageController extends AbstractController
         if (!$page = $this->page_repository->findOneBy(['uri' => $token])) {
             throw new NotFoundHttpException();
         }
-    
+        
         if ($page instanceof Product) {
             return $this->product($page);
         }
-    
+        
         if ($page instanceof Catalog) {
             return $this->catalog($page);
         }
-    
+        
         if ($page instanceof Location) {
             return $this->location($page);
         }
-    
+        
         if ($page instanceof Markiz) {
             return $this->render('simple_catalog/markizyi/item.html.twig', [
                 'page' => $page,
             ]);
         }
-    
+        
         if ($page instanceof Roll) {
             return $this->render('simple_catalog/item.html.twig', [
                 'page' => $page,
             ]);
         }
-    
+        
         if ($page instanceof Roman) {
             return $this->render('simple_catalog/item.html.twig', [
                 'page' => $page,
                 'area' => true,
             ]);
         }
-    
+        
         if ($page instanceof Geo) {
             return $this->render('page/geo.html.twig', [
                 'page'          => $page,
@@ -98,7 +119,7 @@ class PageController extends AbstractController
                 'rulonnyieOnly' => $page->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE,
             ]);
         }
-    
+        
         throw new NotFoundHttpException('Page is instance of ' . get_class($page));
     }
     
@@ -132,9 +153,25 @@ class PageController extends AbstractController
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
     
+        $order      = $this->request->query->get('order', 'price');
+        $orderParts = explode('-', $order);
+        $orderBy    = $orderParts[0];
+        $orderDir   = $orderParts[1] ?? 'asc';
+    
+        $products = $this->paginator->paginate(
+            $this->catalogManager->getProductsQuery($catalog, $orderBy, $orderDir),
+            $this->request->query->getInt('page', 1),
+            $this->request->query->getInt('limit', 16)
+        );
+    
         return $this->render($template, [
             'page'               => $catalog,
+            'catalog'            => $catalog,
+            'products'           => $products,
+            'colors'             => $this->colorManager->getAllColors(),
+            'categories'         => $this->categoryManager->getAllCategories(),
             'items'              => $this->catalogManager->getPopular($catalog),
+            'catalogsLinks'      => $this->catalogManager->getCatalogsLinks($catalog),
             'force_show_filters' => $force_show_filters,
             'show_calc'          => $show_calc,
         ]);

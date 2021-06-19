@@ -59,9 +59,31 @@ class ProductRepository extends ServiceEntityRepository
         if ($limit) {
             $query->setMaxResults($limit);
         }
-        
+    
         return $query->getQuery()
                      ->getResult();
+    }
+    
+    public function getProductsQB(array $filters, string $orderBy, string $orderDir): QueryBuilder
+    {
+        $allowedOrderBy  = [
+            'name',
+            'price',
+        ];
+        $allowedOrderDir = [
+            'asc',
+            'desc',
+        ];
+        if (!in_array($orderBy, $allowedOrderBy)) {
+            $orderBy = 'price';
+        }
+        if (!in_array($orderDir, $allowedOrderDir)) {
+            $orderDir = 'asc';
+        }
+        
+        return $this->getFilteredQB($filters)
+                    ->orderBy('p.' . $orderBy, $orderDir)
+                    ->addOrderBy('p.matrix_id', 'desc');
     }
     
     /**
@@ -79,24 +101,24 @@ class ProductRepository extends ServiceEntityRepository
                       ->andWhere('p.price IS NOT NULL OR p.matrix_id IS NOT NULL')
                       ->addOrderBy('p.price', 'ASC')
                       ->addOrderBy('p.matrix_id', 'ASC');
-    
+        
         if (!empty($filters['category'])) {
             $query->andWhere('p.category = :category')
                   ->setParameter('category', $filters['category']);
         } else {
             $query->andWhere('p.category = 1');
         }
-    
+        
         if (!empty($filters['type'])) {
             $query->andWhere('p.type = :type')
                   ->setParameter('type', $filters['type']);
         }
-    
+        
         if (!empty($filters['material'])) {
             $query->andWhere('p.material = :material')
                   ->setParameter('material', $filters['material']);
         }
-    
+        
         if (!empty($filters['color'])) {
             $query->andWhere('p.color IN(:color)')
                   ->setParameter('color', explode(',', $filters['color']));

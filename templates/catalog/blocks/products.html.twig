@@ -1,0 +1,22 @@
+<div class="products">
+    
+    {% for product in products %}
+        <div class="product">
+            <a href="/{{ product.uri }}/" target="_blank">
+                <img {{ lazy_load(asset(product.cardImageUrl) | imagine_filter('catalog_thumb')) }}
+                        alt="{{ product.name }}">
+            </a>
+            <div class="product__name"><a href="/{{ product.uri }}/" target="_blank">{{ product.name }}</a></div>
+            <div class="product__price">{{ min_price(product) }}</div>
+            <div class="d-flex justify-content-center flex-wrap">
+                <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать</button>
+                <button class="mbtn js-modal-open" data-title="Консультация">Консультация</button>
+            
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+<div class="text-center">
+    {{ knp_pagination_render(products) }}
+</div>
