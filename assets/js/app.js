@@ -9,6 +9,7 @@ import './blocks/seo-block';
 import './blocks/popup-banner';
 import './blocks/manimate';
 import './blocks/mobile-menu';
+import './blocks/recommended-products';
 
 import LazyLoad from './libs/lazyload.min'
 
