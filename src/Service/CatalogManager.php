@@ -75,7 +75,7 @@ class CatalogManager
         if ($catalog->getType()) {
             $filters['type'] = $catalog->getType()->getId();
         } else {
-            $filters['type'] = 178; //isolite
+            $filters['type'] = '178,86,132'; //isolite, вертикальные и горизонтальные
         }
         if ($catalog->getMaterial()) {
             $filters['material'] = $catalog->getMaterial()->getId();

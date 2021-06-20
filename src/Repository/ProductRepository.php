@@ -110,8 +110,8 @@ class ProductRepository extends ServiceEntityRepository
         }
         
         if (!empty($filters['type'])) {
-            $query->andWhere('p.type = :type')
-                  ->setParameter('type', $filters['type']);
+            $query->andWhere('p.type IN(:type)')
+                  ->setParameter('type', explode(',', $filters['type']));
         }
         
         if (!empty($filters['material'])) {
