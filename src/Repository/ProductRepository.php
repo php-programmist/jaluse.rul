@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -27,7 +29,7 @@ class ProductRepository extends ServiceEntityRepository
      *
      * @return Product[] Returns an array of Product objects
      */
-    public function findFiltered($filters = [], $offset = 0, $limit = 0)
+    public function findFiltered(array $filters = [], int $offset = 0, int $limit = 0): array
     {
         $query = $this->getFilteredQB($filters);
         if ($limit) {
@@ -41,6 +43,10 @@ class ProductRepository extends ServiceEntityRepository
                      ->getResult();
     }
     
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function countFiltered(array $filters = []): int
     {
         $query = $this->getFilteredQB($filters);
@@ -91,7 +97,7 @@ class ProductRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function getFilteredQB($filters = [])
+    public function getFilteredQB(array $filters = []): QueryBuilder
     {
         $query = $this->createQueryBuilder('p')
                       ->leftJoin('p.type', 't')
@@ -102,22 +108,7 @@ class ProductRepository extends ServiceEntityRepository
                       ->addOrderBy('p.price', 'ASC')
                       ->addOrderBy('p.matrix_id', 'ASC');
         
-        if (!empty($filters['category'])) {
-            $query->andWhere('p.category = :category')
-                  ->setParameter('category', $filters['category']);
-        } else {
-            $query->andWhere('p.category = 1');
-        }
-        
-        if (!empty($filters['type'])) {
-            $query->andWhere('p.type IN(:type)')
-                  ->setParameter('type', explode(',', $filters['type']));
-        }
-        
-        if (!empty($filters['material'])) {
-            $query->andWhere('p.material = :material')
-                  ->setParameter('material', $filters['material']);
-        }
+        $this->addFilterConditions($filters, $query);
         
         if (!empty($filters['color'])) {
             $query->andWhere('p.color IN(:color)')
@@ -127,30 +118,15 @@ class ProductRepository extends ServiceEntityRepository
         return $query;
     }
     
-    public function getAvailableColors($filters = [])
+    public function getAvailableColors($filters = []): array
     {
         $query = $this->createQueryBuilder('p')
                       ->leftJoin('p.type', 't')
                       ->innerJoin('p.color', 'c')
                       ->select('c.id')
                       ->andWhere('t.show_main_page_calc = 1');
-    
-        if (!empty($filters['category'])) {
-            $query->andWhere('p.category = :category')
-                  ->setParameter('category', $filters['category']);
-        } else {
-            $query->andWhere('p.category = 1');
-        }
-    
-        if (!empty($filters['type'])) {
-            $query->andWhere('p.type = :type')
-                  ->setParameter('type', $filters['type']);
-        }
-    
-        if (!empty($filters['material'])) {
-            $query->andWhere('p.material = :material')
-                  ->setParameter('material', $filters['material']);
-        }
+        
+        $this->addFilterConditions($filters, $query);
         
         $result = $query->distinct()
                         ->getQuery()
@@ -245,4 +221,27 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @param              $filters
+     * @param QueryBuilder $query
+     */
+    private function addFilterConditions($filters, QueryBuilder $query): void
+    {
+        if (!empty($filters['category'])) {
+            $query->andWhere('p.category = :category')
+                  ->setParameter('category', $filters['category']);
+        } else {
+            $query->andWhere('p.category = 1');
+        }
+        
+        if (!empty($filters['type'])) {
+            $query->andWhere('p.type IN(:type)')
+                  ->setParameter('type', explode(',', $filters['type']));
+        }
+        
+        if (!empty($filters['material'])) {
+            $query->andWhere('p.material = :material')
+                  ->setParameter('material', $filters['material']);
+        }
+    }
 }

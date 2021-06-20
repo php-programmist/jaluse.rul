@@ -187,7 +187,7 @@ class PageController extends AbstractController
             'page'          => $catalog,
             'catalog'       => $catalog,
             'products'      => $this->catalogManager->getProductsPaginator($filters),
-            'colors'        => $this->colorManager->getAllColors(),
+            'colors'        => $this->colorManager->getAvailableColors($filters),
             'categories'    => $this->categoryManager->getAllCategories(),
             'items'         => $this->catalogManager->getPopular($catalog),
             'catalogsLinks' => $this->catalogManager->getCatalogsLinks($catalog),
