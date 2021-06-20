@@ -51,6 +51,9 @@ class ImportManager
                 "D" => $price,
                 "E" => $categoryName,
             ] = $row;
+            if (empty($productName)) {
+                break;
+            }
             $product = $productRepo->findOneBy(['name' => $productName, 'parent' => $productImport->getCatalog()]);
             if (null === $product) {
                 $product = (new Product())
@@ -58,7 +61,7 @@ class ImportManager
                     ->setParent($productImport->getCatalog())
                     ->setUri($this->generateProductUri($productImport, $productName));
                 $this->entityManager->persist($product);
-                
+        
                 $created[] = $product->getPath();
             } else {
                 $updated[] = $product->getPath();
@@ -95,7 +98,10 @@ class ImportManager
     {
         $catalogName = preg_replace('/\s+/', ' ', $productImport->getCatalog()->getName());
         $nameForSlug = str_replace($catalogName, '', $productName);
-        
+        if (!empty($productImport->getRemoveFromName())) {
+            $nameForSlug = str_replace($productImport->getRemoveFromName(), '', $productName);
+        }
+    
         return $productImport->getCatalog()->getUri() . '/' . SlugHelper::makeSlug($nameForSlug);
     }
     

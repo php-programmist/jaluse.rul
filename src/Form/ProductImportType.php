@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,6 +28,10 @@ class ProductImportType extends AbstractType
                 'attr'         => [
                     'class' => 'chosen',
                 ],
+            ])
+            ->add('removeFromName', TextType::class, [
+                'label' => 'Удалить из названия',
+                'help'  => 'Указанный фрагмент будет удален из названия товара при генерации URL',
             ])
             ->add('type', EntityType::class, [
                 'label'        => 'Тип',

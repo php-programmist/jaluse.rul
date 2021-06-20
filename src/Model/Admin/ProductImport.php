@@ -25,6 +25,8 @@ class ProductImport
     
     private ?UploadedFile $imagesCatalog = null;
     
+    private ?string $removeFromName = null;
+    
     /**
      * @return UploadedFile|null
      */
@@ -181,6 +183,26 @@ class ProductImport
     public function setMaterial(?Material $material): self
     {
         $this->material = $material;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getRemoveFromName(): ?string
+    {
+        return $this->removeFromName;
+    }
+    
+    /**
+     * @param string|null $removeFromName
+     *
+     * @return $this
+     */
+    public function setRemoveFromName(?string $removeFromName): self
+    {
+        $this->removeFromName = $removeFromName;
         
         return $this;
     }
