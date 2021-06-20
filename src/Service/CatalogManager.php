@@ -155,12 +155,15 @@ class CatalogManager
         $orderParts = explode('-', $order);
         $orderBy    = $orderParts[0];
         $orderDir   = $orderParts[1] ?? 'asc';
-        
-        return $this->paginator->paginate(
+    
+        $pagination = $this->paginator->paginate(
             $this->getProductsQuery($filters, $orderBy, $orderDir),
             $this->request->query->getInt('page', 1),
             $this->request->query->getInt('limit', 16)
         );
+        $pagination->setParam('_fragment', 'content');
+    
+        return $pagination;
     }
     
     public function findCatalogByUriOrFail(string $uri): Catalog
