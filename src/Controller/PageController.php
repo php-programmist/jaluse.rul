@@ -17,6 +17,8 @@ use App\Service\CategoryManager;
 use App\Service\ColorManager;
 use App\Service\ConfigService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,6 +31,7 @@ class PageController extends AbstractController
     private CatalogManager $catalogManager;
     private ColorManager $colorManager;
     private CategoryManager $categoryManager;
+    private ?Request $request;
     
     public function __construct(
         PageRepository $page_repository,
@@ -36,7 +39,8 @@ class PageController extends AbstractController
         ConfigService $configs,
         CatalogManager $catalogManager,
         ColorManager $colorManager,
-        CategoryManager $categoryManager
+        CategoryManager $categoryManager,
+        RequestStack $requestStack
     ) {
         $this->page_repository    = $page_repository;
         $this->product_repository = $product_repository;
@@ -44,6 +48,7 @@ class PageController extends AbstractController
         $this->catalogManager     = $catalogManager;
         $this->colorManager       = $colorManager;
         $this->categoryManager    = $categoryManager;
+        $this->request            = $requestStack->getCurrentRequest();
     }
     
     /**
@@ -55,6 +60,10 @@ class PageController extends AbstractController
         $selectedColor    = $this->colorManager->findColorByAliasOrFail($color);
         $filters          = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         $filters['color'] = $selectedColor->getId();
+    
+        if ($this->request->query->getBoolean('products-only', false)) {
+            return $this->renderProducts($filters);
+        }
     
         return $this->render('page/color-filtered-catalog.html.twig',
             array_merge(
@@ -72,6 +81,10 @@ class PageController extends AbstractController
         $selectedCategory    = $this->categoryManager->findCategoryByNameOrFail($category);
         $filters             = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         $filters['category'] = $selectedCategory->getId();
+    
+        if ($this->request->query->getBoolean('products-only', false)) {
+            return $this->renderProducts($filters);
+        }
     
         return $this->render('page/category-filtered-catalog.html.twig',
             array_merge(
@@ -163,6 +176,10 @@ class PageController extends AbstractController
         $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
         $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
     
+        if ($this->request->query->getBoolean('products-only', false)) {
+            return $this->renderProducts($filters);
+        }
+    
         return $this->render($template,
             array_merge(
                 $this->getCatalogRenderParams($catalog, $filters),
@@ -192,5 +209,13 @@ class PageController extends AbstractController
             'items'         => $this->catalogManager->getPopular($catalog),
             'catalogsLinks' => $this->catalogManager->getCatalogsLinks($catalog),
         ];
+    }
+    
+    private function renderProducts(array $filters): Response
+    {
+        return $this->render('catalog/blocks/products.html.twig', [
+            'products' => $this->catalogManager->getProductsPaginator($filters),
+            'lazy_off' => true,
+        ]);
     }
 }

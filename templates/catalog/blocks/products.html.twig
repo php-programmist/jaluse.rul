@@ -3,7 +3,7 @@
     {% for product in products %}
         <div class="product">
             <a href="/{{ product.uri }}/" target="_blank">
-                <img {{ lazy_load(asset(product.imageCatalog)) }}
+                <img {{ lazy_load(asset(product.imageCatalog),{},lazy_off|default(false)) }}
                         alt="{{ product.name }}">
             </a>
             <div class="product__name"><a href="/{{ product.uri }}/" target="_blank">{{ product.name }}</a></div>
@@ -11,12 +11,18 @@
             <div class="d-flex justify-content-center flex-wrap">
                 <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать</button>
                 <button class="mbtn js-modal-open" data-title="Консультация">Консультация</button>
-        
             </div>
         </div>
     {% endfor %}
 
 </div>
-<div class="text-center">
+<div class="text-center pagination-wrapper">
+    {% set paginationData = products.paginationData %}
+    {% if paginationData.current < paginationData.last %}
+        {% set routeParams = products.params|merge({'page': paginationData.next, 'products-only': true}) %}
+        <button class="mbtn js-load-next-products my-3"
+                data-url="{{ path(products.route,routeParams) }}">Показать еще...
+        </button>
+    {% endif %}
     {{ knp_pagination_render(products) }}
 </div>

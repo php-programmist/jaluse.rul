@@ -54,8 +54,15 @@
     text-align: center;
     margin: 5px;
   }
-  .mbtn{
+
+  .mbtn {
     width: 98%;
-    margin:5px 1%;
+    margin: 5px 1%;
+  }
+}
+
+.pagination-wrapper {
+  .pagination {
+    justify-content: center;
   }
 }
