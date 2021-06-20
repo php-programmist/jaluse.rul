@@ -1,24 +1,18 @@
 {% extends 'page/catalog.html.twig' %}
 
 {% block title %}
-    {%- if page.title -%}
-        {{ page.title }} {{ selectedColor.name }}
-    {%- else -%}
-        {{ page.name ~" "~ selectedColor.name }} купить в Москве. Каталог и цены | Мастерская Жалюзи
-    {%- endif -%}
+    {{ page.name ~" "~ selectedColor.name|lower }} купить в Москве. Каталог и цены | Мастерская Жалюзи
 {% endblock %}
 {% block description %}
-    {{ page.name ~" "~ selectedColor.name }} купить недорого в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐{{ page.name ~" "~ selectedColor.name }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.
+    {{ page.name ~" "~ selectedColor.name|lower }} купить недорого в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐{{ page.name ~" "~ selectedColor.name|lower }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.
 {% endblock %}
-{% block h1 %}{{ page.name ~" "~ selectedColor.name }} в Москве{% endblock %}
-
+{% block h1 %}{{ page.name ~" "~ selectedColor.name|lower }} в Москве{% endblock %}
 {% block body %}
     <div id="content" class="container-fluid catalog-container">
         {{ include('modules/rating_schema.html.twig') }}
-        {% if showCatalog is not defined or showCatalog %}
-            <h2>{% block content_h2 %}{{ page.name }}{% endblock %}</h2>
-            {{ include('catalog/blocks/catalog.html.twig') }}
-        {% endif %}
+        <h2>{% block content_h2 %}{{ page.name ~" "~ selectedColor.name|lower }}{% endblock %}</h2>
+        {{ include('catalog/blocks/catalog.html.twig') }}
+    
     </div>
     
     {% block rating_block %}
