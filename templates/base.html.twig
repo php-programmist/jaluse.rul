@@ -11,6 +11,7 @@
     <meta property="og:keywords" content="{{ block('keywords') }}" />
     <meta property="og:description" content="{{ block('description') }}" />
     <meta property="og:url" content="{{ app.request.uri }}" />
+    <link rel="canonical" href="{{ app.request.schemeAndHttpHost~app.request.pathinfo }}" />
     {% if page is defined -%}
         <meta http-equiv="Last-Modified" content="{{ page.modifiedAt|date('D, d M Y H:i:s') }} GMT">
     {% endif %}
