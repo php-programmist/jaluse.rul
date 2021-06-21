@@ -64,5 +64,10 @@
 .pagination-wrapper {
   .pagination {
     justify-content: center;
+    flex-wrap: wrap;
+
+    li {
+      margin-left: 0;
+    }
   }
 }
