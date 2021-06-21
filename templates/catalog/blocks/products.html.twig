@@ -19,7 +19,7 @@
 <div class="text-center pagination-wrapper">
     {% set paginationData = products.paginationData %}
     {% if paginationData.current < paginationData.last %}
-        {% set routeParams = products.params|merge({'page': paginationData.next, 'products-only': true}) %}
+        {% set routeParams = products.params|merge({'page': paginationData.next}) %}
         <button class="mbtn js-load-next-products my-3"
                 data-url="{{ path(products.route,routeParams) }}">Показать еще...
         </button>

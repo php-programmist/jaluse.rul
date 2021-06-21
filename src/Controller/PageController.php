@@ -61,7 +61,7 @@ class PageController extends AbstractController
         $filters          = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         $filters['color'] = $selectedColor->getId();
     
-        if ($this->request->query->getBoolean('products-only', false)) {
+        if ($this->request->isXmlHttpRequest()) {
             return $this->renderProducts($filters);
         }
     
@@ -82,7 +82,7 @@ class PageController extends AbstractController
         $filters             = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         $filters['category'] = $selectedCategory->getId();
     
-        if ($this->request->query->getBoolean('products-only', false)) {
+        if ($this->request->isXmlHttpRequest()) {
             return $this->renderProducts($filters);
         }
     
@@ -176,7 +176,7 @@ class PageController extends AbstractController
         $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
         $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
     
-        if ($this->request->query->getBoolean('products-only', false)) {
+        if ($this->request->isXmlHttpRequest()) {
             return $this->renderProducts($filters);
         }
     
