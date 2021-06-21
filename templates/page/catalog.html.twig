@@ -17,9 +17,9 @@
         {{ page.name }} купить в Москве. Каталог и цены | Мастерская Жалюзи
     {%- endif -%}
 {% endblock %}
-{% block description %}
+{% block description -%}
    {{ page.descriptionComputed }}
-{% endblock %}
+{%- endblock %}
 {% block h1 %}{{ page.name }} в Москве{% endblock %}
 
 {% block body %}

@@ -1,11 +1,11 @@
 {% extends 'page/catalog.html.twig' %}
 
-{% block title %}
+{% block title -%}
     {{ page.name ~" "~ selectedColor.name|lower }} купить в Москве. Каталог и цены | Мастерская Жалюзи
-{% endblock %}
-{% block description %}
+{%- endblock %}
+{% block description -%}
     {{ page.name ~" "~ selectedColor.name|lower }} купить недорого в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐{{ page.name ~" "~ selectedColor.name|lower }} по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.
-{% endblock %}
+{%- endblock %}
 {% block h1 %}{{ page.name ~" "~ selectedColor.name|lower }} в Москве{% endblock %}
 {% block body %}
     <div id="content" class="container-fluid catalog-container">
