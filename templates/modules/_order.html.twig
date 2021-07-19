@@ -2,7 +2,9 @@
     <div class="container">
         <div class="catalog-header">
             <div class="row">
-                <div class="col-md-3 col-6 catalog-header-button catalog-header-active" id="catalog-header-button1">Вертикальные</div>
+                <div class="col-md-3 col-6 catalog-header-button catalog-header-active"
+                     id="catalog-header-button1">Вертикальные
+                </div>
                 <div class="col-md-3 col-6 catalog-header-button" id="catalog-header-button2">Горизонтальные</div>
                 <div class="col-md-3 col-6 catalog-header-button" id="catalog-header-button3">Плиссе</div>
                 <div class="col-md-3 col-6 catalog-header-button" id="catalog-header-button4">Рулонные</div>
@@ -11,29 +13,34 @@
         <div class="catalog-body catalog-body1">
             <div class="row">
                 <div class="col-lg-6">
-                    {% set new_price = rub_price(9.49) %}
-                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб за м<sup>2</sup></div>
+                    {% set new_price = catalog_min_price('zhalyuzi/vertikalnye') %}
+                    <div class="zagcena"><b>Цена</b> от {{ discounted_price(new_price) }} руб за м<sup>2</sup></div>
                     <p>Жалюзи состоят из вертикальных ламелей (пластиковые или тканевые) и крепятся к карнизу. Ручное и автоматическое управление на выбор. Ламели могут сдвигаться в бок и поворачиваться вокруг своей оси.</p>
                     <p class="catalog-vidi">Виды:
                         <a href="/zhalyuzi/vertikalnye/tkanevye/">тканевые</a>,
                         <a href="/zhalyuzi/vertikalnye/plastikovyie/">пластиковые</a>
                     </p>
-
+                
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
-                            <div class="col-6"><b>2 года</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
-                            <div class="col-6"><b>200</b> <p>Цвета и фактуры</p></div>
+                            <div class="col-6 "><b>3-7 дней</b>
+                                <p>Изготовление</p></div>
+                            <div class="col-6"><b>2 года</b>
+                                <p>Гарантия</p></div>
+                            <div class="col-6"><b>7%</b>
+                                <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>200</b>
+                                <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
-
+                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
+                    
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b>
+                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
+                                    <p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
                                     <p>С доставкой</p></div>
                             </div>
                         </div>
@@ -43,7 +50,7 @@
                             </a>
                             <a href="/zhalyuzi/vertikalnye/" class="catalogbtn2">Подробнее...</a>
                         </div>
-
+                
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -55,7 +62,8 @@
                         </div>
                         <div class="slider-nav1">
                             {% for i in 1..7 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/vertical/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/vertical/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -65,30 +73,35 @@
         <div class="catalog-body catalog-body2">
             <div class="row">
                 <div class="col-lg-6">
-                    {% set new_price = rub_price(13) %}
-                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб за м<sup>2</sup></div>
+                    {% set new_price = catalog_min_price('zhalyuzi/gorizontalnye') %}
+                    <div class="zagcena"><b>Цена</b> от {{ discounted_price(new_price) }} руб за м<sup>2</sup></div>
                     <p>Жалюзи состоят из горизонтальных ламелей (алюминиевые и деревянные). Горизонтальные жалюзи имеют 2 типа управления — механическое и автоматическое. Ширина ламели от 16 мм до 50 мм и могут поворачиваться на 180° вокруг своей оси.</p>
                     <p class="catalog-vidi">Виды:
                         <a href="/zhalyuzi/gorizontalnye/alyuminievye/">алюминиевые</a>,
                         <a href="/zhalyuzi/gorizontalnye/derevyannye/">деревянные</a>,
                         <a href="/zhalyuzi/isolite/">Isolite</a>
                     </p>
-
+                
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
-                            <div class="col-6"><b>2 года</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
-                            <div class="col-6"><b>95</b> <p>Цвета и фактуры</p></div>
+                            <div class="col-6 "><b>3-7 дней</b>
+                                <p>Изготовление</p></div>
+                            <div class="col-6"><b>2 года</b>
+                                <p>Гарантия</p></div>
+                            <div class="col-6"><b>7%</b>
+                                <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>95</b>
+                                <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
-
+                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
+                    
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b>
+                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
+                                    <p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
                                     <p>С доставкой</p></div>
                             </div>
                         </div>
@@ -98,7 +111,7 @@
                             </a>
                             <a href="/zhalyuzi/gorizontalnye/" class="catalogbtn2">Подробнее...</a>
                         </div>
-
+                
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -110,7 +123,8 @@
                         </div>
                         <div class="slider-nav2">
                             {% for i in 1..6 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/horizontal/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/horizontal/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -120,26 +134,30 @@
         <div class="catalog-body catalog-body3">
             <div class="row">
                 <div class="col-lg-6">
-                    {% set new_price = rub_price(92.06) %}
-                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб за м<sup>2</sup></div>
+                    {% set new_price = catalog_min_price('zhalyuzi/plisse') %}
+                    <div class="zagcena"><b>Цена</b> от {{ discounted_price(new_price) }} руб за м<sup>2</sup></div>
                     <p>Шторы плиссе – это огромное разнообразие моделей сложных форм и одновременно стильный дизайн вашего интерьера. Шторы плиссе чаще используются для оформления круглых, мансардных и панорамных окон.</p>
-
-
+                
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
-                            <div class="col-6"><b>1 год</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
-                            <div class="col-6"><b>300</b> <p>Цвета и фактуры</p></div>
+                            <div class="col-6 "><b>3-7 дней</b>
+                                <p>Изготовление</p></div>
+                            <div class="col-6"><b>1 год</b>
+                                <p>Гарантия</p></div>
+                            <div class="col-6"><b>7%</b>
+                                <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>300</b>
+                                <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
-
+                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
+                    
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b>
+                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
+                                    <p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
                                     <p>С доставкой</p></div>
                             </div>
                         </div>
@@ -149,7 +167,7 @@
                             </a>
                             <a href="/zhalyuzi/plisse/" class="catalogbtn2">Подробнее...</a>
                         </div>
-
+                
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -161,7 +179,8 @@
                         </div>
                         <div class="slider-nav3">
                             {% for i in 1..6 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/plisse/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/plisse/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -171,8 +190,8 @@
         <div class="catalog-body catalog-body4">
             <div class="row">
                 <div class="col-lg-6">
-                    {% set new_price = rub_price(30.69) %}
-                    <div class="zagcena"><b>Цена</b> от {{ new_price }} руб</div>
+                    {% set new_price = catalog_min_price('rulonnyie-shtoryi') %}
+                    <div class="zagcena"><b>Цена</b> от {{ discounted_price(new_price) }} руб</div>
                     <p>Рулонные шторы представляют собой цельное полотно с возможностью регулирования по высоте цепочкой или пультом управления. Преимуществом таких изделий является возможность изготовления рулонных штор больших размеров.</p>
                     <p class="catalog-vidi">Виды:
                         <a href="/katalog/rulonnyie-shtoryi/den-noch-uni-2/">Кассетные «День Ночь»</a>,
@@ -180,22 +199,27 @@
                         <a href="/rulonnyie-shtoryi/mini/">Мини</a>,
                         <a href="/rulonnyie-shtoryi/den-noch/">Мини «День Ночь»</a>,
                         <a href="/rulonnyie-shtoryi/standartnye-rulonnye-shtory/">Стандартные</a></p>
-
+                
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b> <p>Изготовление</p></div>
-                            <div class="col-6"><b>2 года</b> <p>Гарантия</p></div>
-                            <div class="col-6"><b>7%</b> <p>Скидка при заказе сегодня</p></div>
-                            <div class="col-6"><b>200</b> <p>Цвета и фактуры</p></div>
+                            <div class="col-6 "><b>3-7 дней</b>
+                                <p>Изготовление</p></div>
+                            <div class="col-6"><b>2 года</b>
+                                <p>Гарантия</p></div>
+                            <div class="col-6"><b>7%</b>
+                                <p>Скидка при заказе сегодня</p></div>
+                            <div class="col-6"><b>200</b>
+                                <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
                     <div class="catalog-body-price">
-                        <div class="starcena">{{ (new_price/0.93)|round }}₽ <span>-7%</span></div>
-
+                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
+                    
                         <div class="new-cenawrap">
                             <div class="row">
-                                <div class="col-6 bigcena"><b>{{ new_price }}₽</b><p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ new_price+500 }}₽</b>
+                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
+                                    <p>При самовывозе</p></div>
+                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
                                     <p>С доставкой</p></div>
                             </div>
                         </div>
@@ -205,7 +229,7 @@
                             </a>
                             <a href="/rulonnyie-shtoryi/" class="catalogbtn2">Подробнее...</a>
                         </div>
-
+                
                     </div>
                 </div>
                 <div class="col-lg-6">

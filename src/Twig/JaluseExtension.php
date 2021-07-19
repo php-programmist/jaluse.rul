@@ -4,19 +4,19 @@ namespace App\Twig;
 
 use App\Entity\Product;
 use App\Service\CalculationService;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class JaluseExtension extends AbstractExtension
 {
-    /**
-     * @var CalculationService
-     */
-    protected $calculation_service;
+    protected CalculationService $calculation_service;
+    private AdapterInterface $cache;
     
-    public function __construct(CalculationService $calculation_service)
+    public function __construct(CalculationService $calculation_service, AdapterInterface $cache)
     {
         $this->calculation_service = $calculation_service;
+        $this->cache               = $cache;
     }
     
     public function getFunctions(): array
@@ -24,6 +24,9 @@ class JaluseExtension extends AbstractExtension
         return [
             new TwigFunction('min_price', [$this, 'min_price'], ['is_safe' => ['html']]),
             new TwigFunction('rub_price', [$this, 'rub_price']),
+            new TwigFunction('catalog_min_price', [$this, 'catalog_min_price']),
+            new TwigFunction('discounted_price', [$this, 'discounted_price']),
+            new TwigFunction('price_with_delivery', [$this, 'price_with_delivery']),
         ];
     }
 
@@ -41,6 +44,29 @@ class JaluseExtension extends AbstractExtension
         }
     
         return sprintf('от <span class="price">%s</span> <small>руб. за изделие</small>', $min_price);
+    }
+    
+    public function catalog_min_price(string $catalogUri): int
+    {
+        $key  = sprintf('catalog_min_price.%s', str_replace('/', '_', $catalogUri));
+        $item = $this->cache->getItem($key);
+        if (!$item->isHit()) {
+            $value = $this->calculation_service->getCatalogMinPriceByUri($catalogUri);
+            $item->set($value);
+            $this->cache->save($item);
+        }
+        
+        return $item->get();
+    }
+    
+    public function discounted_price(int $basePrice, int $discount = 7): int
+    {
+        return round($basePrice * (1 - $discount / 100));
+    }
+    
+    public function price_with_delivery(int $basePrice, int $discount = 7, int $deliveryCost = 500): int
+    {
+        return $this->discounted_price($basePrice, $discount) + $deliveryCost;
     }
     
     public function rub_price(float $usdPrice): int

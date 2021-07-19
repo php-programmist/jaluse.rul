@@ -29,6 +29,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *     Roman::TYPE = "Roman",
  *     Roll::TYPE = "Roll",
  *     Markiz::TYPE = "Markiz",
+ *     Geo::TYPE = "Geo",
  * })
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()

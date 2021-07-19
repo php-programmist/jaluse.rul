@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class Geo extends Page
 {
-    
+    public const TYPE = 'geo';
     /**
      * @var AbstractGeoProduct
      */
