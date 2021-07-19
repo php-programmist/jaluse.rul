@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Color;
+use App\Entity\Material;
 use App\Entity\Product;
+use App\Entity\Type;
 use App\Helper\SlugHelper;
 use App\Model\Admin\ProductImport;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,10 +38,8 @@ class ImportManager
             ->toArray(null, true, true, true);
         $created     = [];
         $updated     = [];
-        
-        $productRepo  = $this->entityManager->getRepository(Product::class);
-        $colorRepo    = $this->entityManager->getRepository(Color::class);
-        $categoryRepo = $this->entityManager->getRepository(Category::class);
+    
+        $productRepo = $this->entityManager->getRepository(Product::class);
         foreach ($sheetData as $row_number => $row) {
             if ($row_number < $productImport->getFirstRow()) {
                 continue;
@@ -56,36 +56,19 @@ class ImportManager
             }
             $product = $productRepo->findOneBy(['name' => $productName, 'parent' => $productImport->getCatalog()]);
             if (null === $product) {
-                $product = (new Product())
-                    ->setName($productName)
-                    ->setParent($productImport->getCatalog())
-                    ->setUri($this->generateProductUri($productImport, $productName));
-                $this->entityManager->persist($product);
-        
+                $product   = $this->initProduct($productName, $productImport);
                 $created[] = $product->getPath();
             } else {
                 $updated[] = $product->getPath();
             }
-            
-            $color = $colorRepo->findOneBy(['name' => $colorName]);
-            if (null === $color) {
-                throw new RuntimeException(sprintf('Цвет "%s" не найден', $colorName));
-            }
-            
-            $category = $categoryRepo->findOneBy(['name' => $categoryName]);
-            if (null === $category) {
-                throw new RuntimeException(sprintf('Категория "%s" не найдена', $categoryName));
-            }
-            
-            $product
-                ->setImageSmallName($imageName)
-                ->setImageBigName($imageName)
-                ->setImageCatalogName($imageName)
-                ->setPrice($price)
-                ->setColor($color)
-                ->setCategory($category)
-                ->setType($productImport->getType())
-                ->setMaterial($productImport->getMaterial());
+    
+            $this->setColor($colorName, $product);
+            $this->setCategory($categoryName, $product);
+            $this->setImages($imageName, $product);
+            $this->setPrice($price, $product);
+            $this->setType($productImport->getType(), $product);
+            $this->setMaterial($productImport->getMaterial(), $product);
+    
         }
         $this->entityManager->flush();
         
@@ -137,5 +120,72 @@ class ImportManager
         $folder   = array_pop($segments);
         
         return $this->projectDir . '/public_html/img/products/' . $folder . '/';
+    }
+    
+    private function setColor($colorName, $product): void
+    {
+        if (!empty($colorName)) {
+            $colorRepo = $this->entityManager->getRepository(Color::class);
+            $color     = $colorRepo->findOneBy(['name' => $colorName]);
+            if (null === $color) {
+                throw new RuntimeException(sprintf('Цвет "%s" не найден', $colorName));
+            }
+            $product->setColor($color);
+        }
+    }
+    
+    private function setCategory($categoryName, $product): void
+    {
+        if (!empty($categoryName)) {
+            $category = $this->entityManager
+                ->getRepository(Category::class)
+                ->findOneBy(['name' => $categoryName]);
+            if (null === $category) {
+                throw new RuntimeException(sprintf('Категория "%s" не найдена', $categoryName));
+            }
+            $product->setCategory($category);
+        }
+    }
+    
+    private function initProduct($productName, ProductImport $productImport): Product
+    {
+        $product = (new Product())
+            ->setName($productName)
+            ->setParent($productImport->getCatalog())
+            ->setUri($this->generateProductUri($productImport, $productName));
+        $this->entityManager->persist($product);
+        
+        return $product;
+    }
+    
+    private function setImages($imageName, $product): void
+    {
+        if (!empty($imageName)) {
+            $product
+                ->setImageSmallName($imageName)
+                ->setImageBigName($imageName)
+                ->setImageCatalogName($imageName);
+        }
+    }
+    
+    private function setPrice($price, $product): void
+    {
+        if (!empty($price)) {
+            $product->setPrice($price);
+        }
+    }
+    
+    private function setType(?Type $type, $product): void
+    {
+        if ($type !== null) {
+            $product->setType($type);
+        }
+    }
+    
+    private function setMaterial(?Material $material, $product): void
+    {
+        if (null !== $material) {
+            $product->setMaterial($material);
+        }
     }
 }

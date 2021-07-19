@@ -24,24 +24,31 @@ class ProductImportType extends AbstractType
             ->add('catalog', EntityType::class, [
                 'label'        => 'Каталог',
                 'class'        => Catalog::class,
-                'choice_label' => 'name',
+                'choice_label' => function (Catalog $catalog) {
+                    return sprintf('%s (%s)', $catalog->getName(), $catalog->getPath());
+                },
                 'attr'         => [
                     'class' => 'chosen',
                 ],
             ])
             ->add('removeFromName', TextType::class, [
-                'label' => 'Удалить из названия',
-                'help'  => 'Указанный фрагмент будет удален из названия товара при генерации URL',
+                'label'    => 'Удалить из названия',
+                'help'     => 'Указанный фрагмент будет удален из названия товара при генерации URL',
+                'required' => false,
             ])
             ->add('type', EntityType::class, [
                 'label'        => 'Тип',
                 'class'        => Type::class,
                 'choice_label' => 'name',
+                'placeholder'  => '-- Не указано --',
+                'required'     => false,
             ])
             ->add('material', EntityType::class, [
                 'label'        => 'Подтип',
                 'class'        => Material::class,
                 'choice_label' => 'name',
+                'placeholder'  => '-- Не указано --',
+                'required'     => false,
             ])
             ->add('imagesSmall', FileType::class, [
                 'label'    => 'zip-файл c маленькими изображениями',
