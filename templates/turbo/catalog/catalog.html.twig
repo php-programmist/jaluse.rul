@@ -3,11 +3,11 @@
     <div class="products">
         {% for item in catalog %}
             <div class="product">
-                <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/" target="_blank">
+                <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/">
                     <img src="{{ app.request.schemeAndHttpHost }}{{ asset(item.cardImageUrl) }}" alt="{{ item.name }}">
                 </a>
                 <div class="product__name">
-                    <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/" target="_blank">{{ item.name }}</a>
+                    <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/">{{ item.name }}</a>
                 </div>
                 <div class="product__price">
                     {% if area??false %}

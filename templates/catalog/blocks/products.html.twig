@@ -1,11 +1,11 @@
 <div class="products">
     {% for product in products %}
         <div class="product">
-            <a href="/{{ product.uri }}/" target="_blank">
+            <a href="/{{ product.uri }}/">
                 <img {{ lazy_load(asset(product.imageCatalog),{},lazy_off|default(false)) }}
                         alt="{{ product.name }}">
             </a>
-            <div class="product__name"><a href="/{{ product.uri }}/" target="_blank">{{ product.name }}</a></div>
+            <div class="product__name"><a href="/{{ product.uri }}/">{{ product.name }}</a></div>
             <div class="product__price">{{ min_price(product) }}</div>
             <div class="d-flex justify-content-center flex-wrap">
                 <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать</button>
