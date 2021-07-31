@@ -26,12 +26,14 @@ class CatalogManager
      * @param RequestStack           $requestStack
      * @param PaginatorInterface     $paginator
      * @param CatalogRepository      $catalogRepository
+     * @param ConfigService          $configs
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         RequestStack $requestStack,
         PaginatorInterface $paginator,
-        CatalogRepository $catalogRepository
+        CatalogRepository $catalogRepository,
+        private ConfigService $configs
     ) {
         $this->entityManager = $entityManager;
         
@@ -159,7 +161,7 @@ class CatalogManager
         $pagination = $this->paginator->paginate(
             $this->getProductsQuery($filters, $orderBy, $orderDir),
             $this->request->query->getInt('page', 1),
-            $this->request->query->getInt('limit', 16)
+            $this->request->query->getInt('limit', $this->configs->getCached('calc.products_catalog_limit'))
         );
         $pagination->setParam('_fragment', 'content');
     
