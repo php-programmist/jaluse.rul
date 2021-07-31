@@ -1,0 +1,13 @@
+{% if page is defined %}
+    {% set calcLink = page.calcLink %}
+    {% if calcLink is not null %}
+        <div class="calculator_label" style="cursor: pointer;" onclick="location.href='{{ calcLink }}#content';">
+            <div class="calculator_label__button_wrapper">
+                <a href="{{ calcLink }}#content" class="scroll-to" data-offset="130">
+                    <i class="fa fa-calculator fa-lg"></i>
+                    Калькулятор
+                </a>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

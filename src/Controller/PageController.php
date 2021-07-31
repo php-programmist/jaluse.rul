@@ -144,8 +144,6 @@ class PageController extends AbstractController
         }
         
         if ($page instanceof Calculator) {
-            dump($page->getSelectedType(), $page->getSelectedMaterial());
-            
             return $this->render('page/calculator.html.twig', [
                 'page'              => $page,
                 'type_filter'       => $page->getTypeFilter(),

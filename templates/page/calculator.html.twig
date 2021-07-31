@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
-{% block title page.title %}
+{% block title page.titleComputed %}
 {% block h1 page.name %}
-{% block description page.description %}
+{% block description page.descriptionComputed %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="block3 calcblock">
+    <div class="block3 calcblock" id="content">
         <div class="container">
             <div class="zag">{{ page.name }}</div>
             <div id="app-calc">

@@ -50,31 +50,31 @@ abstract class Page implements TurboPageInterface
      * @ORM\Column(type="integer")
      */
     protected $id;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
     protected $uri;
-
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $title = null;
-
+    
     /**
      * @ORM\Column(type="text", length=255, nullable=true)
      */
     protected $description = null;
-
+    
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $published =1;
+    protected $published = 1;
     
     /**
      * @ORM\Column(type="boolean", options={"default": 0})
@@ -100,22 +100,22 @@ abstract class Page implements TurboPageInterface
      * @ORM\Column(type="datetime")
      */
     protected $modified_at;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Page", inversedBy="pages")
      */
     protected $parent;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="parent")
      */
     protected $pages;
-
+    
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $content;
-
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -126,12 +126,12 @@ abstract class Page implements TurboPageInterface
      * @var File
      */
     protected $seoImageFile;
-
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $ourWorksFolder;
-
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -166,116 +166,117 @@ abstract class Page implements TurboPageInterface
     {
         return $this->id;
     }
-
+    
     public function getName(): ?string
     {
         return $this->name;
     }
-
+    
     public function setName(string $name)
     {
         $this->name = $name;
-
+    
         return $this;
     }
-
+    
     public function getUri(): ?string
     {
         return $this->uri;
     }
-
+    
     public function getPath(): string
     {
-        if ($this->uri === '/' ) {
+        if ($this->uri === '/') {
             return '/';
         }
-        return '/'.$this->uri.'/';
+        
+        return '/' . $this->uri . '/';
     }
-
+    
     public function setUri(string $uri)
     {
         $this->uri = trim($uri);
-
+    
         return $this;
     }
-
+    
     public function setPath(string $path)
     {
         return $this->setUri($path);
     }
-
+    
     public function getTitle(): ?string
     {
         return $this->title;
     }
-
+    
     public function setTitle(?string $title)
     {
         $this->title = $title;
-
+    
         return $this;
     }
-
+    
     public function getDescription(): ?string
     {
         return $this->description;
     }
-
+    
     public function setDescription(?string $description)
     {
         $this->description = $description;
-
+    
         return $this;
     }
-
+    
     public function getPublished(): ?bool
     {
         return $this->published;
     }
-
+    
     public function setPublished(bool $published)
     {
         $this->published = $published;
-
+    
         return $this;
     }
-
+    
     public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->created_at;
     }
-
+    
     public function setCreatedAt(DateTimeInterface $created_at): Page
     {
         $this->created_at = $created_at;
-
+    
         return $this;
     }
-
+    
     public function getModifiedAt(): ?DateTimeInterface
     {
         return $this->modified_at;
     }
-
+    
     public function setModifiedAt(DateTimeInterface $modified_at)
     {
         $this->modified_at = $modified_at;
-
+    
         return $this;
     }
-
+    
     public function getParent()
     {
         return $this->parent;
     }
-
+    
     public function setParent(?self $parent)
     {
         $this->parent = $parent;
-
+    
         return $this;
     }
-
+    
     /**
      * @return Collection|self[]
      */
@@ -283,17 +284,17 @@ abstract class Page implements TurboPageInterface
     {
         return $this->pages;
     }
-
+    
     public function addPage(self $page)
     {
         if (!$this->pages->contains($page)) {
             $this->pages[] = $page;
             $page->setParent($this);
         }
-
+    
         return $this;
     }
-
+    
     public function removePage(self $page)
     {
         if ($this->pages->contains($page)) {
@@ -303,20 +304,19 @@ abstract class Page implements TurboPageInterface
                 $page->setParent(null);
             }
         }
-
+    
         return $this;
     }
-
-
+    
     public function getContent(): ?string
     {
         return $this->content;
     }
-
+    
     public function setContent(?string $content): self
     {
         $this->content = $content;
-
+    
         return $this;
     }
     
@@ -324,16 +324,16 @@ abstract class Page implements TurboPageInterface
     {
         return (string)$this->getName();
     }
-
+    
     public function getSeoImage(): ?string
     {
         return $this->seoImage;
     }
-
+    
     public function setSeoImage(?string $seoImage): self
     {
         $this->seoImage = $seoImage;
-
+    
         return $this;
     }
     
@@ -365,33 +365,35 @@ abstract class Page implements TurboPageInterface
         return $this->cardImageFile;
     }
     
-    public function getSeoFirstPart():string
+    public function getSeoFirstPart(): string
     {
         if (empty($this->getContent())) {
             return '';
         }
-        $parts = preg_split('#<hr.*?>#',$this->getContent(),2);
+        $parts = preg_split('#<hr.*?>#', $this->getContent(), 2);
+        
         return $parts[0];
     }
     
-    public function getSeoSecondPart():string
+    public function getSeoSecondPart(): string
     {
         if (empty($this->getContent())) {
             return '';
         }
-        $parts = preg_split('#<hr.*?>#',$this->getContent(),2);
-        return $parts[1]??'';
+        $parts = preg_split('#<hr.*?>#', $this->getContent(), 2);
+        
+        return $parts[1] ?? '';
     }
-
+    
     public function getOurWorksFolder(): ?string
     {
         return $this->ourWorksFolder;
     }
-
+    
     public function setOurWorksFolder(?string $ourWorksFolder): self
     {
         $this->ourWorksFolder = $ourWorksFolder;
-
+    
         return $this;
     }
     
@@ -407,41 +409,43 @@ abstract class Page implements TurboPageInterface
     
     public function getSeoImageUrl()
     {
-        if ( ! $this->getSeoImage()) {
+        if (!$this->getSeoImage()) {
             return '';
         }
-        return '/'.$this->getSeoImgFolder(). $this->getSeoImage();
+    
+        return '/' . $this->getSeoImgFolder() . $this->getSeoImage();
     }
-
+    
     public function getCardImage(): ?string
     {
         return $this->cardImage;
     }
-
+    
     public function setCardImage(?string $cardImage): self
     {
         $this->cardImage = $cardImage;
-
+    
         return $this;
     }
     
-    public function getCardImageUrl():string
+    public function getCardImageUrl(): string
     {
-        if ( ! $this->getCardImage()) {
+        if (!$this->getCardImage()) {
             return '';
         }
-        return '/'.$this->getCardImgFolder(). $this->getCardImage();
+        
+        return '/' . $this->getCardImgFolder() . $this->getCardImage();
     }
-
+    
     public function getCardDescription(): ?string
     {
         return $this->cardDescription;
     }
-
+    
     public function setCardDescription(?string $cardDescription): self
     {
         $this->cardDescription = $cardDescription;
-
+    
         return $this;
     }
     
@@ -461,7 +465,7 @@ abstract class Page implements TurboPageInterface
     
     public function getCardHeader(): string
     {
-        return $this->getName().' цена';
+        return $this->getName() . ' цена';
     }
     
     public function getTextComputed(): string
@@ -556,12 +560,47 @@ abstract class Page implements TurboPageInterface
     public function setShowSeoText(bool $showSeoText): self
     {
         $this->showSeoText = $showSeoText;
-        
+    
         return $this;
     }
     
     public function getTurboContentTemplate(): string
     {
         return 'turbo/content.html.twig';
+    }
+    
+    public function getCalcLink(): ?string
+    {
+        if ($this instanceof Calculator) {
+            return null;
+        }
+        $calculator  = null;
+        $currentPage = $this;
+        while (
+            null !== $currentPage
+            && null === ($calculator = $this->getCalculator($currentPage->getPages()))
+        ) {
+            $currentPage = $this->getParent();
+        }
+        
+        return $calculator?->getPath();
+    }
+    
+    /**
+     * @param Collection $children
+     *
+     * @return Calculator|null
+     */
+    private function getCalculator(Collection $children): ?Calculator
+    {
+        $calculator = null;
+        foreach ($children as $child) {
+            if ($child instanceof Calculator) {
+                $calculator = $child;
+                break;
+            }
+        }
+        
+        return $calculator;
     }
 }

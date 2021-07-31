@@ -44,4 +44,23 @@ class Calculator extends Page
         
         return $type;
     }
+    
+    public function getDescriptionComputed(): string
+    {
+        if (!empty($this->getDescription())) {
+            return $this->getDescription();
+        }
+        
+        return sprintf('%s.⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐  Расчет жалюзи по калькулятору в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.',
+            $this->getName());
+    }
+    
+    public function getTitleComputed(): string
+    {
+        if (!empty($this->getTitle())) {
+            return $this->getTitle();
+        }
+        
+        return sprintf('%s. Расчет жалюзи по калькулятору', $this->getName());
+    }
 }
