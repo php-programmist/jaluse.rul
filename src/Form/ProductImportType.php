@@ -8,6 +8,7 @@ use App\Entity\Type;
 use App\Model\Admin\ProductImport;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,6 +20,7 @@ class ProductImportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('matrix', CheckboxType::class, ['label' => 'Расчет цены по матрице?'])
             ->add('xlsFile', FileType::class, ['label' => 'Файл xlsx с товарами'])
             ->add('firstRow', NumberType::class, ['label' => 'Начать со строки'])
             ->add('catalog', EntityType::class, [

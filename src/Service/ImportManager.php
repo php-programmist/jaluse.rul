@@ -38,7 +38,6 @@ class ImportManager
             ->toArray(null, true, true, true);
         $created     = [];
         $updated     = [];
-    
         $productRepo = $this->entityManager->getRepository(Product::class);
         foreach ($sheetData as $row_number => $row) {
             if ($row_number < $productImport->getFirstRow()) {
@@ -65,7 +64,13 @@ class ImportManager
             $this->setColor($colorName, $product);
             $this->setCategory($categoryName, $product);
             $this->setImages($imageName, $product);
-            $this->setPrice($price, $product);
+    
+            if ($productImport->isMatrix()) {
+                $this->setMatrix($price, $product);
+            } else {
+                $this->setPrice($price, $product);
+            }
+    
             $this->setType($productImport->getType(), $product);
             $this->setMaterial($productImport->getMaterial(), $product);
     
@@ -186,6 +191,13 @@ class ImportManager
     {
         if (null !== $material) {
             $product->setMaterial($material);
+        }
+    }
+    
+    private function setMatrix(mixed $matrixId, Product $product): void
+    {
+        if (!empty($matrixId)) {
+            $product->setMatrixId($matrixId);
         }
     }
 }

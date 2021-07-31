@@ -27,6 +27,8 @@ class ProductImport
     
     private ?string $removeFromName = null;
     
+    private bool $matrix = false;
+    
     /**
      * @return UploadedFile|null
      */
@@ -203,6 +205,26 @@ class ProductImport
     public function setRemoveFromName(?string $removeFromName): self
     {
         $this->removeFromName = $removeFromName;
+        
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isMatrix(): bool
+    {
+        return $this->matrix;
+    }
+    
+    /**
+     * @param bool $matrix
+     *
+     * @return $this
+     */
+    public function setMatrix(bool $matrix): self
+    {
+        $this->matrix = $matrix;
         
         return $this;
     }
