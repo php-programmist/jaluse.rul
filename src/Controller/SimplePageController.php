@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\LocationRepository;
 use App\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -135,32 +134,6 @@ class SimplePageController extends AbstractController
         $page = $this->page_repository->findOneBy(['uri'=>'rekvizity']);
         return $this->render('simple_page/rekvizity.html.twig', [
             'page' => $page,
-        ]);
-    }
-    
-    /**
-     * @Route("/zakaz-zhalyuzi/kalkulyator-zhalyuzi/", name="simple_page_kalkulyator_zhalyuzi")
-     */
-    public function kalkulyator_zhalyuzi()
-    {
-        $type_filter = [86, 132, 178];
-        $page = $this->page_repository->findOneBy(['uri'=>'zakaz-zhalyuzi/kalkulyator-zhalyuzi']);
-        return $this->render('simple_page/calculator.html.twig', [
-            'page' => $page,
-            'type_filter' => $type_filter,
-        ]);
-    }
-    
-    /**
-     * @Route("/rulonnyie-shtoryi/kalkulyator/", name="simple_page_kalkulyator_rulonnyie")
-     */
-    public function kalkulyator_rulonnyie()
-    {
-        $type_filter = [133, 175];
-        $page = $this->page_repository->findOneBy(['uri'=>'rulonnyie-shtoryi/kalkulyator']);
-        return $this->render('simple_page/calculator.html.twig', [
-            'page' => $page,
-            'type_filter' => $type_filter,
         ]);
     }
 }

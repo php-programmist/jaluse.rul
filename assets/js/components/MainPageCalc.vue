@@ -119,8 +119,8 @@ export default {
       products: [],
       categories: [],
       category: {id: 0},
-      type: {id: 0},
-      material: {id: 0},
+      type: this.getPreSelectedType(),
+      material: this.getPreSelectedMaterial(),
       product_index: 0,
       type_opened: false,
       material_opened: false,
@@ -129,7 +129,7 @@ export default {
       productConfigs: {}
     };
   },
-  props: ["type_filter", "rulonnyie_only"],
+  props: ["type_filter", "rulonnyie_only", "selected_type", "selected_material"],
   components: {
     'v-consultation-form': ConsultationForm,
     'v-order-form': OrderForm,
@@ -154,6 +154,12 @@ export default {
           this.types = response.data.types;
           if (typeof this.type_filter !== 'undefined') {
             this.types = this.types.filter(type => this.type_filter.includes(type.id));
+          }
+          if (typeof this.selected_type !== 'undefined' && parseInt(this.selected_type) > 0) {
+            this.type = this.types.filter(type => parseInt(type.id) === parseInt(this.selected_type)).shift();
+          }
+          if (typeof this.selected_material !== 'undefined' && parseInt(this.selected_material) > 0) {
+            this.material = this.type.materials.filter(material => parseInt(material.id) === parseInt(this.selected_material)).shift();
           }
           this.colors = response.data.colors;
           this.categories = response.data.categories;
@@ -203,7 +209,7 @@ export default {
   },
   watch: {
     type(newVal, oldVal) {
-      if (newVal.id > 0 && oldVal.id > 0) {
+      if (newVal.id > 0 && oldVal.id > 0 && newVal.id !== oldVal.id) {
         this.material = {id: 0};
       }
       if (newVal.id > 0) {
@@ -250,6 +256,20 @@ export default {
     },
     setAvailableColorsIds(array) {
       this.availableColorsIds = array.map(item => parseInt(item));
+    },
+    getPreSelectedType() {
+      let id = 0
+      if (typeof this.selected_type !== 'undefined') {
+        id = parseInt(this.selected_type);
+      }
+      return {id};
+    },
+    getPreSelectedMaterial() {
+      let id = 0
+      if (typeof this.selected_material !== 'undefined') {
+        id = parseInt(this.selected_material);
+      }
+      return {id};
     }
   }
 };

@@ -30,6 +30,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *     Roll::TYPE = "Roll",
  *     Markiz::TYPE = "Markiz",
  *     Geo::TYPE = "Geo",
+ *     Calculator::TYPE = "Calculator",
  * })
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Calculator;
 use App\Entity\Catalog;
 use App\Entity\Geo;
 use App\Entity\Location;
@@ -60,11 +61,11 @@ class PageController extends AbstractController
         $selectedColor    = $this->colorManager->findColorByAliasOrFail($color);
         $filters          = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         $filters['color'] = $selectedColor->getId();
-    
+        
         if ($this->request->isXmlHttpRequest()) {
             return $this->renderProducts($filters);
         }
-    
+        
         return $this->render('page/color-filtered-catalog.html.twig',
             array_merge(
                 $this->getCatalogRenderParams($catalog, $filters),
@@ -81,11 +82,11 @@ class PageController extends AbstractController
         $selectedCategory    = $this->categoryManager->findCategoryByNameOrFail($category);
         $filters             = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         $filters['category'] = $selectedCategory->getId();
-    
+        
         if ($this->request->isXmlHttpRequest()) {
             return $this->renderProducts($filters);
         }
-    
+        
         return $this->render('page/category-filtered-catalog.html.twig',
             array_merge(
                 $this->getCatalogRenderParams($catalog, $filters),
@@ -142,6 +143,17 @@ class PageController extends AbstractController
             ]);
         }
         
+        if ($page instanceof Calculator) {
+            dump($page->getSelectedType(), $page->getSelectedMaterial());
+            
+            return $this->render('page/calculator.html.twig', [
+                'page'              => $page,
+                'type_filter'       => $page->getTypeFilter(),
+                'selected_type'     => $page->getSelectedType(),
+                'selected_material' => $page->getSelectedMaterial(),
+            ]);
+        }
+        
         throw new NotFoundHttpException('Page is instance of ' . get_class($page));
     }
     
@@ -156,7 +168,7 @@ class PageController extends AbstractController
         }
         $limit = 12;
         $items = $this->product_repository->getPopularSiblings($product, $limit);
-    
+        
         return $this->render($template, [
             'page'  => $product,
             'items' => $items,
@@ -175,11 +187,11 @@ class PageController extends AbstractController
         $force_show_filters = $catalog->getUri() === 'zhalyuzi';
         $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
         $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
-    
+        
         if ($this->request->isXmlHttpRequest()) {
             return $this->renderProducts($filters);
         }
-    
+        
         return $this->render($template,
             array_merge(
                 $this->getCatalogRenderParams($catalog, $filters),

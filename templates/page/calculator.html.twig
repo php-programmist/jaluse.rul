@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title page.title %}
+{% block h1 page.name %}
+{% block description page.description %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('catalog') }}
+    {{ encore_entry_link_tags('simple_catalog') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('catalog') }}
+    {{ encore_entry_script_tags('simple_catalog') }}
+{% endblock %}
+
+{% block body %}
+    <div class="block3 calcblock">
+        <div class="container">
+            <div class="zag">{{ page.name }}</div>
+            <div id="app-calc">
+                <main-page-calc
+                        :type_filter="{{ type_filter|json_encode }}"
+                        :selected_type="{{ selected_type }}"
+                        :selected_material="{{ selected_material }}"
+                ></main-page-calc>
+            </div>
+        </div>
+    </div>
+    {{ include('modules/_employees.html.twig') }}
+    {{ include('modules/_clients.html.twig') }}
+{% endblock %}

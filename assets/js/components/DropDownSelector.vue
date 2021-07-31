@@ -20,29 +20,29 @@
 
 <script>
 	export default {
-		name: "v-drop-down-selector",
-		data() {
-			return {
-				selector_opened: false,
-				selectedItem: {id: 0, name: ''}
-			};
-		},
-		props: ["items", "default_name"],
-		methods: {
-			changeItem(item) {
-				this.selectedItem = item;
-				this.selector_opened = false;
-				this.triggerEvent();
-			},
-			triggerEvent() {
-				this.$emit('input', this.selectedItem);
-			}
-		},
-		watch:{
-			items(newVal,oldVal){
-				this.selectedItem = {id: 0, name: ''};
-			}
-		},
+    name: "v-drop-down-selector",
+    data() {
+      return {
+        selector_opened: false,
+        selectedItem: this.value
+      };
+    },
+    props: ["items", "default_name", "value"],
+    methods: {
+      changeItem(item) {
+        this.selectedItem = item;
+        this.selector_opened = false;
+        this.triggerEvent();
+      },
+      triggerEvent() {
+        this.$emit('input', this.selectedItem);
+      }
+    },
+    /*watch:{
+      items(newVal,oldVal){
+        this.selectedItem = {id: 0, name: ''};
+      }
+    },*/
 		computed: {
 			itemName() {
 				return this.selectedItem.name ? this.selectedItem.name : this.default_name;
