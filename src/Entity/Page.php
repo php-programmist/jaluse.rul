@@ -571,18 +571,22 @@ abstract class Page implements TurboPageInterface
     
     public function getCalcLink(): ?string
     {
-        if ($this instanceof Calculator) {
+        if (!$this instanceof Catalog && !$this instanceof Product) {
             return null;
         }
-        $calculator  = null;
         $currentPage = $this;
-        while (
-            null !== $currentPage
-            && null === ($calculator = $this->getCalculator($currentPage->getPages()))
-        ) {
-            $currentPage = $this->getParent();
+    
+        for ($i = 1 ; $i <= 4 ; $i++) {
+            $calculator = $this->getCalculator($currentPage->getPages());
+            if (null !== $calculator) {
+                break;
+            }
+            $currentPage = $currentPage->getParent();
+            if (!$currentPage instanceof Catalog) {
+                break;
+            }
         }
-        
+    
         return $calculator?->getPath();
     }
     
