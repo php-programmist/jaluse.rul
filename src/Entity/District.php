@@ -23,7 +23,7 @@ class District extends Geo
             return $this->title;
         }
         
-        return $this->getGeoProduct()->getNameNominative() . ' на окна купить в районе ' . $this->getName();
+        return $this->getGeoProduct()->getNameNominative() . ' на окна купить в районе ' . $this->getName() . ' | Каталог и цены';
     }
     
     public function getDescription(): ?string

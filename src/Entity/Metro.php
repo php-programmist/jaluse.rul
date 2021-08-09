@@ -23,7 +23,7 @@ class Metro extends Geo
             return $this->title;
         }
         
-        return $this->getGeoProduct()->getNameNominative() . ' на окна 🚩 метро ' . $this->getName();
+        return $this->getGeoProduct()->getNameNominative() . ' на окна купить 🚩 метро ' . $this->getName() . ' | Каталог и цены';
     }
     
     public function getDescription(): ?string

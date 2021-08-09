@@ -22,7 +22,7 @@ class City extends Geo
             return $this->title;
         }
         
-        return $this->getGeoProduct()->getNameNominative() . ' на окна купить ' . $this->getName();
+        return $this->getGeoProduct()->getNameNominative() . ' на окна купить ' . $this->getName() . ' | Каталог и цены';
     }
     
     public function getDescription(): ?string
