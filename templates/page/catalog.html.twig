@@ -40,17 +40,20 @@
     {% block catalog_card %}
         {{ include('modules/_catalog_card.html.twig') }}
     {% endblock %}
-
+    
     {% block rating_block %}
         {{ include('modules/rating.html.twig') }}
     {% endblock %}
-
+    
     {{ include('modules/_seo_block.html.twig') }}
     {% if show_calc is not defined or show_calc %}
         {{ include('modules/_calculator.html.twig') }}
     {% endif %}
-
+    
     {{ include('modules/_our_works.html.twig') }}
+    
+    {% block recommended_block %}{% endblock %}
+    
     {{ include('modules/_employees.html.twig') }}
     {{ include('modules/_clients.html.twig') }}
 {% endblock %}

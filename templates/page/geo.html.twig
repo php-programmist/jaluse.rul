@@ -21,7 +21,18 @@
                 Цена {{ page.geoProduct.price }}
             </div>
         {% endblock %}
+        {% block buttons %}
+            <div class="d-flex">
+                <a class="mbtn" href="/zhalyuzi/#content">Каталог</a>
+                <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать
+                </button>
+                <button class="mbtn js-modal-open" data-title="Консультация">Консультация</button>
+            </div>
+        {% endblock %}
     {% endembed %}
 {% endblock location_block %}
 {% block rating_block %}{% endblock %}
 {% block catalog_card %}{% endblock %}
+{% block recommended_block %}
+    {{ include('modules/recommended-main-page.html.twig') }}
+{% endblock %}

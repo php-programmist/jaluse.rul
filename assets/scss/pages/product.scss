@@ -52,6 +52,9 @@
           min-height: 40px;
           margin-right: 1%;
           font-weight: bold;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
         .mbtn2{
           background-color: $orang;
