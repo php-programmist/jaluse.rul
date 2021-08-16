@@ -20,7 +20,7 @@ class ProductImportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('matrix', CheckboxType::class, ['label' => 'Расчет цены по матрице?'])
+            ->add('matrix', CheckboxType::class, ['label' => 'Расчет цены по матрице?', 'required' => false])
             ->add('xlsFile', FileType::class, ['label' => 'Файл xlsx с товарами'])
             ->add('firstRow', NumberType::class, ['label' => 'Начать со строки'])
             ->add('catalog', EntityType::class, [
