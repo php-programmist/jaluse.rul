@@ -58,9 +58,6 @@
   .mbtn {
     width: 98%;
     margin: 5px 1%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 
@@ -72,5 +69,19 @@
     li {
       margin-left: 0;
     }
+  }
+}
+
+.catalog_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .mbtn {
+    width: 50%;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
