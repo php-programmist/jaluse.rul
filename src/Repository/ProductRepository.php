@@ -89,6 +89,7 @@ class ProductRepository extends ServiceEntityRepository
         
         return $this->getFilteredQB($filters)
                     ->orderBy('p.' . $orderBy, $orderDir)
+                    ->addOrderBy('p.id', 'asc')
                     ->addOrderBy('p.matrix_id', 'desc');
     }
     
