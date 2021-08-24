@@ -231,8 +231,6 @@ class ProductRepository extends ServiceEntityRepository
         if (!empty($filters['category'])) {
             $query->andWhere('p.category = :category')
                   ->setParameter('category', $filters['category']);
-        } else {
-            $query->andWhere('p.category = 1');
         }
         
         if (!empty($filters['type'])) {
