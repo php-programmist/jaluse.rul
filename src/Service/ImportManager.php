@@ -50,6 +50,8 @@ class ImportManager
                 "D" => $price,
                 "E" => $categoryName,
             ] = $row;
+            $popular = isset($row['F']) ? (bool)$row['F'] : null;
+    
             if (empty($productName)) {
                 break;
             }
@@ -64,6 +66,7 @@ class ImportManager
             $this->setColor($colorName, $product);
             $this->setCategory($categoryName, $product);
             $this->setImages($imageName, $product);
+            $this->setPopular($popular, $product);
     
             if ($productImport->isMatrix()) {
                 $this->setMatrix($price, $product);
@@ -136,6 +139,13 @@ class ImportManager
                 throw new RuntimeException(sprintf('Цвет "%s" не найден', $colorName));
             }
             $product->setColor($color);
+        }
+    }
+    
+    private function setPopular(?bool $popular, Product $product): void
+    {
+        if (null !== $popular && null === $product->getId()) {
+            $product->setPopular($popular);
         }
     }
     
