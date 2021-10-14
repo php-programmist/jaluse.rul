@@ -571,6 +571,9 @@ abstract class Page implements TurboPageInterface
     
     public function getCalcLink(): ?string
     {
+        if (1 === $this->getId()) {
+            return '/zhalyuzi/kalkulyator/';
+        }
         if (!$this instanceof Catalog && !$this instanceof Product) {
             return null;
         }
