@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "4f18aa12aee30f5a9f1d9b17ffe57b9a",
+  "content-hash": "df87803d692bf858059d7ef501edf423",
   "packages": [
     {
       "name": "composer/package-versions-deprecated",
@@ -15,16 +15,16 @@
         "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c"
       },
       "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/c6522afe5540d5fc46675043d3ed5a45a740b27c",
-                "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1.0 || ^2.0",
-                "php": "^7 || ^8"
-            },
-            "replace": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/c6522afe5540d5fc46675043d3ed5a45a740b27c",
+        "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c",
+        "shasum": ""
+      },
+      "require": {
+        "composer-plugin-api": "^1.1.0 || ^2.0",
+        "php": "^7 || ^8"
+      },
+      "replace": {
                 "ocramius/package-versions": "1.11.99"
             },
             "require-dev": {
@@ -1423,15 +1423,15 @@
             ],
             "description": "a PHP SQL highlighting library",
             "homepage": "https://github.com/doctrine/sql-formatter/",
-            "keywords": [
-                "highlight",
-                "sql"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/sql-formatter/issues",
-                "source": "https://github.com/doctrine/sql-formatter/tree/1.1.x"
-            },
-            "time": "2020-07-30T16:57:33+00:00"
+          "keywords": [
+            "highlight",
+            "sql"
+          ],
+          "support": {
+            "issues": "https://github.com/doctrine/sql-formatter/issues",
+            "source": "https://github.com/doctrine/sql-formatter/tree/1.1.x"
+          },
+          "time": "2020-07-30T16:57:33+00:00"
         },
     {
       "name": "easycorp/easyadmin-bundle",
@@ -1488,16 +1488,16 @@
         "symfony/dom-crawler": "^4.4|^5.0",
         "symfony/phpunit-bridge": "^4.4|^5.0"
       },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                  "dev-master": "3.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "EasyCorp\\Bundle\\EasyAdminBundle\\": "src/"
-                }
+      "type": "symfony-bundle",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "3.0.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "EasyCorp\\Bundle\\EasyAdminBundle\\": "src/"
+        }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2825,15 +2825,15 @@
             },
             "funding": [
                 {
-                    "url": "https://github.com/mnapoli",
-                    "type": "github"
+                  "url": "https://github.com/mnapoli",
+                  "type": "github"
                 },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/myclabs/php-enum",
-                    "type": "tidelift"
-                }
+              {
+                "url": "https://tidelift.com/funding/github/packagist/myclabs/php-enum",
+                "type": "tidelift"
+              }
             ],
-            "time": "2021-02-15T16:11:48+00:00"
+          "time": "2021-02-15T16:11:48+00:00"
         },
     {
       "name": "nikic/php-parser",
@@ -2891,29 +2891,29 @@
       },
       "time": "2021-05-03T19:11:20+00:00"
     },
-        {
-            "name": "php-programmist/yandex-turbo-rss-generator-bundle",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-programmist/yandex-turbo-rss-generator-bundle.git",
-                "reference": "1c374325b9d29198788eff1484865dd0dee7f1a8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-programmist/yandex-turbo-rss-generator-bundle/zipball/1c374325b9d29198788eff1484865dd0dee7f1a8",
-                "reference": "1c374325b9d29198788eff1484865dd0dee7f1a8",
-                "shasum": ""
-            },
+    {
+      "name": "php-programmist/yandex-turbo-rss-generator-bundle",
+      "version": "v1.0.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-programmist/yandex-turbo-rss-generator-bundle.git",
+        "reference": "92540d08472d8adbf7728761cf9f05fece57141e"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-programmist/yandex-turbo-rss-generator-bundle/zipball/92540d08472d8adbf7728761cf9f05fece57141e",
+        "reference": "92540d08472d8adbf7728761cf9f05fece57141e",
+        "shasum": ""
+      },
             "require": {
-                "doctrine/dbal": "^2.10",
-                "php": "^7.2.5",
-                "symfony/config": "^4.4 || ^5.0",
-                "symfony/dependency-injection": "^4.4 || ^5.0",
-                "symfony/filesystem": "^4.4 || ^5.0",
-                "symfony/http-kernel": "^4.4 || ^5.0",
-                "symfony/twig-bundle": "^4.4 || ^5.0",
-                "symfony/yaml": "^4.4 || ^5.0"
+              "doctrine/dbal": "^2.10",
+              "php": "^7.2.5 || 8.*",
+              "symfony/config": "^4.4 || ^5.0",
+              "symfony/dependency-injection": "^4.4 || ^5.0",
+              "symfony/filesystem": "^4.4 || ^5.0",
+              "symfony/http-kernel": "^4.4 || ^5.0",
+              "symfony/twig-bundle": "^4.4 || ^5.0",
+              "symfony/yaml": "^4.4 || ^5.0"
             },
             "require-dev": {
                 "squizlabs/php_codesniffer": "^3.5",
@@ -2939,9 +2939,9 @@
             "description": "Bundle for Sumfony 4-5 for generation RSS feed for Yandex Turbo pages.",
             "support": {
                 "issues": "https://github.com/php-programmist/yandex-turbo-rss-generator-bundle/issues",
-                "source": "https://github.com/php-programmist/yandex-turbo-rss-generator-bundle/tree/v1.0.1"
+              "source": "https://github.com/php-programmist/yandex-turbo-rss-generator-bundle/tree/v1.0.2"
             },
-            "time": "2020-04-13T17:26:53+00:00"
+      "time": "2021-10-16T09:23:01+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -7034,14 +7034,14 @@
                 "source": "https://github.com/symfony/polyfill-php81/tree/v1.23.0"
             },
             "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                  "type": "github"
-                },
+              {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+              },
+              {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+              },
               {
                 "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                 "type": "tidelift"
@@ -7139,16 +7139,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/symfony/process/zipball/53e36cb1c160505cdaf1ef201501669c4c317191",
-                "reference": "53e36cb1c160505cdaf1ef201501669c4c317191",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-php80": "^1.15"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
+        "reference": "53e36cb1c160505cdaf1ef201501669c4c317191",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=7.2.5",
+        "symfony/polyfill-php80": "^1.15"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
                     "Symfony\\Component\\Process\\": ""
                 },
                 "exclude-from-classmap": [
@@ -8720,14 +8720,14 @@
                 "source": "https://github.com/symfony/twig-pack/tree/v1.0.1"
             },
             "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                  "type": "github"
-                },
+              {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+              },
+              {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+              },
               {
                 "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                 "type": "tidelift"
@@ -8819,16 +8819,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/symfony/validator/zipball/111e71ac585a47358e808bc687dcaf66e568470a",
-                "reference": "111e71ac585a47358e808bc687dcaf66e568470a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1",
-                "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-mbstring": "~1.0",
-                "symfony/polyfill-php73": "~1.0",
-                "symfony/polyfill-php80": "^1.15",
+        "reference": "111e71ac585a47358e808bc687dcaf66e568470a",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=7.2.5",
+        "symfony/deprecation-contracts": "^2.1",
+        "symfony/polyfill-ctype": "~1.8",
+        "symfony/polyfill-mbstring": "~1.0",
+        "symfony/polyfill-php73": "~1.0",
+        "symfony/polyfill-php80": "^1.15",
                 "symfony/translation-contracts": "^1.1|^2"
             },
             "conflict": {
@@ -12142,13 +12142,13 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4.0",
-        "ext-ctype": "*",
-        "ext-curl": "*",
-        "ext-iconv": "*",
-        "ext-json": "*",
-        "ext-zip": "*",
-        "ext-pdo": "*"
+      "php": "^8.0",
+      "ext-ctype": "*",
+      "ext-curl": "*",
+      "ext-iconv": "*",
+      "ext-json": "*",
+      "ext-zip": "*",
+      "ext-pdo": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

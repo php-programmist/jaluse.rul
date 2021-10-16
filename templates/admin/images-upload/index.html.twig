@@ -1,0 +1,16 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title 'Загрузка изображений' %}
+
+{% block content %}
+    <div class="content">
+        <div class="container py-3">
+            <div class="p-3 uploader-wrapper" data-url="{{ path('admin_upload_images') }}">
+                {{ include('admin/global/_drop_zone.html.twig', {files: getFilesFromFolder('/img/articles')} ) }}
+            
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('js/jquery.dm-uploader.js') }}"></script>
+    <script src="{{ asset('js/uploader-init.js') }}"></script>
+{% endblock %}

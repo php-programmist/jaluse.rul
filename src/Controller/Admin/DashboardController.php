@@ -47,8 +47,9 @@ class DashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()
-            ->addCssFile('css/admin.css')
-            ->addCssFile('css/chosen.css')
+                     ->addCssFile('css/admin.css')
+                     ->addCssFile('css/chosen.css')
+                     ->addCssFile('css/jquery.dm-uploader.css')
             ->addJsFile('js/cache_clear.js')
             ->addJsFile('js/chosen.jquery.min.js')
             ->addJsFile('js/chosen-select.js');
@@ -92,6 +93,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Технические ссылки');
         yield MenuItem::linkToCrud('Настройки', 'fas fa-cogs', Config::class);
         yield MenuItem::linktoRoute('Генератор', 'fas fa-cogs', 'admin_generator_index');
+        yield MenuItem::linktoRoute('Загрузка изображений', 'fas fa-image', 'admin_upload_images_index');
         yield MenuItem::subMenu('Импорт', 'fas fa-file-import')->setSubItems($submenu1);
     }
     
