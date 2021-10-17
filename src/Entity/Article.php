@@ -69,7 +69,7 @@ class Article extends Page
     public function setViews(int $views): self
     {
         $this->views = $views;
-        
+    
         return $this;
     }
     
@@ -78,4 +78,8 @@ class Article extends Page
         return parent::getUri() ?? 'articles/...';
     }
     
+    public function incrementViews(): void
+    {
+        $this->views++;
+    }
 }

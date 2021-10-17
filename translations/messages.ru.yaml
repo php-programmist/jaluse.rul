@@ -2,3 +2,5 @@ form:
     label:
         delete: 'Удалить?'
         type: 'Тип'
+articles:
+    counter_text: '%count% просмотр|%count% просмотра|%count% просмотров|]10000,Inf[%count% просмотров'

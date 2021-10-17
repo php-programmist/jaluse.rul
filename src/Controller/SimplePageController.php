@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Repository\PageRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SimplePageController extends AbstractController
@@ -131,9 +134,34 @@ class SimplePageController extends AbstractController
      */
     public function rekvizity()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'rekvizity']);
+        $page = $this->page_repository->findOneBy(['uri' => 'rekvizity']);
+        
         return $this->render('simple_page/rekvizity.html.twig', [
             'page' => $page,
+        ]);
+    }
+    
+    /**
+     * @Route("/articles/", name="articles_index")
+     */
+    public function articles(
+        PageRepository $pageRepository,
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        Request $request
+    ) {
+        $page = $pageRepository->findOneBy(['uri' => 'articles']);
+        
+        $query      = $em->createQuery("SELECT a FROM App\Entity\Article as a WHERE a.published = 1 ORDER BY a.id DESC");
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            30 /*limit per page*/
+        );
+        
+        return $this->render('articles/index.html.twig', [
+            'page'     => $page,
+            'articles' => $pagination,
         ]);
     }
 }

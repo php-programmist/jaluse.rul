@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Calculator;
 use App\Entity\Catalog;
 use App\Entity\Geo;
@@ -149,6 +150,15 @@ class PageController extends AbstractController
                 'type_filter'       => $page->getTypeFilter(),
                 'selected_type'     => $page->getSelectedType(),
                 'selected_material' => $page->getSelectedMaterial(),
+            ]);
+        }
+        
+        if ($page instanceof Article) {
+            $page->incrementViews();
+            $this->getDoctrine()->getManager()->flush();
+            
+            return $this->render('articles/item.html.twig', [
+                'page' => $page,
             ]);
         }
         
