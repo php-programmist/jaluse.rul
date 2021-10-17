@@ -18,6 +18,11 @@ class Article extends Page
      */
     private Collection $products;
     
+    /**
+     * @ORM\Column(type="integer", options={"default": 0})
+     */
+    private int $views = 0;
+    
     public function __construct()
     {
         parent::__construct();
@@ -37,13 +42,33 @@ class Article extends Page
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
         }
-        
+    
         return $this;
     }
     
     public function removeProduct(Product $product): self
     {
         $this->products->removeElement($product);
+        
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+    
+    /**
+     * @param int $views
+     *
+     * @return $this
+     */
+    public function setViews(int $views): self
+    {
+        $this->views = $views;
         
         return $this;
     }
