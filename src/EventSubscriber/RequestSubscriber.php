@@ -100,7 +100,7 @@ class RequestSubscriber implements EventSubscriberInterface
             return;
         }
     
-        if ($this->isFromSocial($referer) || $this->isSuspicious($referer, $useragent)) {
+        if ($this->isFromSocial($referer) /*|| $this->isSuspicious($referer, $useragent)*/) {
             $this->saveIpToRobotsList($ip, $referer, $useragent);
             $event->setResponse($this->getRobotsCkeckResponse($request->getUri()));
         }
