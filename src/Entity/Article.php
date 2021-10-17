@@ -72,4 +72,10 @@ class Article extends Page
         
         return $this;
     }
+    
+    public function getUri(): ?string
+    {
+        return parent::getUri() ?? 'articles/...';
+    }
+    
 }

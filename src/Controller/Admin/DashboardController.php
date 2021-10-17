@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Article;
 use App\Entity\Calculator;
 use App\Entity\Catalog;
 use App\Entity\Category;
@@ -47,9 +48,9 @@ class DashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()
-                     ->addCssFile('css/admin.css')
-                     ->addCssFile('css/chosen.css')
-                     ->addCssFile('css/jquery.dm-uploader.css')
+            ->addCssFile('css/admin.css')
+            ->addCssFile('css/chosen.css')
+            ->addCssFile('css/jquery.dm-uploader.css')
             ->addJsFile('js/cache_clear.js')
             ->addJsFile('js/chosen.jquery.min.js')
             ->addJsFile('js/chosen-select.js');
@@ -85,6 +86,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Римские шторы', 'fas fa-file-alt', Roman::class);
         yield MenuItem::linkToCrud('Простые страницы', 'fas fa-file-alt', Simple::class);
         yield MenuItem::linkToCrud('Калькуляторы', 'fas fa-calculator', Calculator::class);
+        yield MenuItem::linkToCrud('Статьи', 'fas fa-file', Article::class);
         yield MenuItem::section('Характеристики товаров');
         yield MenuItem::linkToCrud('Типы', 'fas fa-file-alt', Type::class);
         yield MenuItem::linkToCrud('Цвета', 'fas fa-file-alt', Color::class);
