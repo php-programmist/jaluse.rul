@@ -9,3 +9,4 @@ fos_ck_editor:
             autoParagraph: false
             extraPlugins: [ 'image2','div', 'uploadimage', 'justify' ]
             imageUploadUrl: '/admin/upload-images/cke'
+            filebrowserUploadUrl: '/admin/upload-images/cke'
