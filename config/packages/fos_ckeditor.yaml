@@ -7,3 +7,5 @@ fos_ck_editor:
         simple_config:
             allowedContent: true
             autoParagraph: false
+            extraPlugins: [ 'image2','div', 'uploadimage', 'justify' ]
+            imageUploadUrl: '/admin/upload-images/cke'

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class ImagesUploadController extends AbstractController
 {
@@ -23,8 +24,11 @@ class ImagesUploadController extends AbstractController
     /**
      * @Route("/admin/upload-images", name="admin_upload_images", methods={"POST"})
      */
-    public function uploadImages(Request $request): JsonResponse
+    public function uploadImages(Request $request, Security $security): JsonResponse
     {
+        if (!$security->isGranted('ROLE_ADMIN')) {
+            return new JsonResponse(['status' => 'ERROR', 'message' => 'Ошибка прав доступа']);
+        }
         /** @var UploadedFile */
         $image_file   = $request->files->get('file');
         $root_folder  = $request->server->get('DOCUMENT_ROOT');
@@ -39,6 +43,33 @@ class ImagesUploadController extends AbstractController
             }
         } catch (Exception $e){
             $response = ['status' => 'ERROR', 'message' => $e->getMessage()];
+        }
+        
+        return new JsonResponse($response);
+    }
+    
+    /**
+     * @Route("/admin/upload-images/cke", name="admin_upload_images_cke", methods={"POST"})
+     */
+    public function uploadImagesCke(Request $request, Security $security): JsonResponse
+    {
+        if (!$security->isGranted('ROLE_ADMIN')) {
+            return new JsonResponse(['uploaded' => 0, 'error' => ['message' => 'Ошибка прав доступа']]);
+        }
+        /** @var UploadedFile */
+        $image_file   = $request->files->get('upload');
+        $root_folder  = $request->server->get('DOCUMENT_ROOT');
+        $file_name    = $image_file->getClientOriginalName();
+        $imagesFolder = '/img/articles';
+        $folder       = $root_folder . $imagesFolder;
+        try{
+            if ($image_file->move($folder, $file_name)) {
+                $response = ['uploaded' => 1, 'fileName' => $file_name, 'url' => $imagesFolder . '/' . $file_name];
+            } else {
+                $response = ['uploaded' => 0, 'error' => ['message' => 'Ошибка при сохранении файла на диск']];
+            }
+        } catch (Exception $e){
+            $response = ['uploaded' => 0, 'error' => ['message' => $e->getMessage()]];
         }
         
         return new JsonResponse($response);
