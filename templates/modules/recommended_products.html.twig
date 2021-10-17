@@ -22,7 +22,7 @@
                 <div class="d-flex justify-content-center flex-wrap">
                     <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать</button>
                     <button class="mbtn js-modal-open" data-title="Консультация">Консультация</button>
-    
+
                 </div>
             </div>
         </div>
@@ -30,6 +30,8 @@
     {% endfor %}
 </div>
 
-<div class="catalog_button">
-    <a class="mbtn" href="/zhalyuzi/#content">Каталог</a>
-</div>
+{% if not hideCatalog|default(false) %}
+    <div class="catalog_button">
+        <a class="mbtn" href="/zhalyuzi/#content">Каталог</a>
+    </div>
+{% endif %}

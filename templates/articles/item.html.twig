@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block title page.title %}
+{% block h1 page.name %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('simple_catalog') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('simple_catalog') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="content">
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>{{ page.name }}</h2>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-6">{{ page.createdAt|date('d.m.Y') }}</div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="views_counter">
+                                    {{ 'articles.counter_text'|trans({'%count%': page.views}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seo-block">
+                    <div class="container">
+                        {{ page.content }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if page.products|length > 0 %}
+        <div class="container">
+            <h2 class="text-center">Товары к статье:</h2>
+            {{ include('modules/recommended_products.html.twig', {items: page.products, hideCatalog: true}) }}
+        </div>
+    {% endif %}
+{% endblock %}
