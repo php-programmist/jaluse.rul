@@ -25,41 +25,46 @@
 <body itemscope="itemscope" itemtype="https://schema.org/Product">
 {{ include('modules/_header.html.twig') }}
 
-<!--УТП начало-->
-<div class="block1">
-    <div class="b1fonwrap">
-        <div {{ lazy_load_bg('/img/slide2.jpg',['b1fon','b1fon2']) }}></div>
-    </div>
-    <div class="block1-wrap">
-        <div class="container">
-            <div class="row">
-                <h1 class="col-12" itemprop="name">
-                    {%- block h1 -%}
-                        {{ page.h1 ?? 'ЖАЛЮЗИ НА ОКНА ОТ ПРОИЗВОДИТЕЛЯ' }}
-                    {%- endblock -%}
-                </h1>
-                <div itemprop="description" class="d-none">{{ block('description') }}</div>
-                <div class="col-xl-6 offset-xl-1 col-lg-6 utp-wrap align-self-center">
-                    {%- block utp -%}
-                        <div class="utp-block scroll-item"><span>Гарантия {% block warranty '2' %} года</span></div>
-                        <div class="utp-block scroll-item"><span>Бесплатный выезд и замер (c 9:00 до 18:00)</span></div>
-                        <div class="utp-block scroll-item"><span>Изготовление и установка 1-3 дня</span></div>
-                        <div class="utp-block scroll-item"><span>Замер и монтаж круглосуточно, 24/7</span></div>
-                    {%- endblock utp -%}
-                </div>
-                <div class="col-lg-6 col-xl-4 align-self-center form-wrap">
-                    <form action="{{ path('mail.callback_consultation') }}" method="post" class="phone_callback">
-                        <span class="zag2">БЕСПЛАТНЫЙ ЗАМЕР И КОНСУЛЬТАЦИЯ</span>
-                        <input type="text" placeholder="Имя" name="name" required="" />
-                        <input type="text" class="phone-field" name="phone" placeholder="Номер телефона" required="" />
-                        <input type="submit" class="form-btn" value="Узнать стоимость" />
-                    </form>
+
+{%- block header -%}
+    <!--УТП начало-->
+    <div class="block1">
+        <div class="b1fonwrap">
+            <div {{ lazy_load_bg('/img/slide2.jpg',['b1fon','b1fon2']) }}></div>
+        </div>
+        <div class="block1-wrap">
+            <div class="container">
+                <div class="row">
+                    <h1 class="col-12" itemprop="name">
+                        {%- block h1 -%}
+                            {{ page.h1 ?? 'ЖАЛЮЗИ НА ОКНА ОТ ПРОИЗВОДИТЕЛЯ' }}
+                        {%- endblock h1 -%}
+                    </h1>
+                    <div itemprop="description" class="d-none">{{ block('description') }}</div>
+                    <div class="col-xl-6 offset-xl-1 col-lg-6 utp-wrap align-self-center">
+                        {%- block utp -%}
+                            <div class="utp-block scroll-item"><span>Гарантия {% block warranty '2' %} года</span></div>
+                            <div class="utp-block scroll-item"><span>Бесплатный выезд и замер (c 9:00 до 18:00)</span></div>
+                            <div class="utp-block scroll-item"><span>Изготовление и установка 1-3 дня</span></div>
+                            <div class="utp-block scroll-item"><span>Замер и монтаж круглосуточно, 24/7</span></div>
+                        {%- endblock utp -%}
+                    </div>
+                    <div class="col-lg-6 col-xl-4 align-self-center form-wrap">
+                        <form action="{{ path('mail.callback_consultation') }}" method="post" class="phone_callback">
+                            <span class="zag2">БЕСПЛАТНЫЙ ЗАМЕР И КОНСУЛЬТАЦИЯ</span>
+                            <input type="text" placeholder="Имя" name="name" required="" />
+                            <input type="text" class="phone-field" name="phone" placeholder="Номер телефона"
+                                   required="" />
+                            <input type="submit" class="form-btn" value="Узнать стоимость" />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!--УТП БЛОК КОНЕЦ-->
+    <!--УТП БЛОК КОНЕЦ-->
+{%- endblock header -%}
+
 {% block body %}
 
 {% endblock %}
