@@ -17,10 +17,12 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="card mt-3">
                                 <div class="card-header">
-                                    <h3>{{ article.name }}</h3>
+                                    <h3><a href="{{ article.path }}">{{ article.name }}</a></h3>
                                     <p>{{ article.createdAt|date('d.m.Y') }}</p>
                                 </div>
-                                <img class="card-img" src="{{ article.cardImageUrl }}" alt="{{ article.name }}">
+                                <a href="{{ article.path }}">
+                                    <img class="card-img" src="{{ article.cardImageUrl }}" alt="{{ article.name }}">
+                                </a>
                                 <div class="card-body">
                                     <div class="card-text">{{ article.cardDescription|raw }}</div>
                                 </div>
