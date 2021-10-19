@@ -13,6 +13,7 @@ class MatrixService
         'combo-uni',
         'combo-small',
         'standart',
+        'standart-day-night',
     ];
     const BASE_FOLDER = '/csv/matrix/';
     
