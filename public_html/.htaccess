@@ -135,6 +135,7 @@ RewriteRule zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/klaudia-grin3/$ /zhalyuzi
 RewriteRule uni/porto-blekaut-temno-bezhevyj2/$ /zhalyuzi/rulonnaya-kassetnaya-sistema-uni1/porto-blekaut-temno-bezhevyj1/ [R=301,L]
 RewriteRule rulonnyie-shtoryi/den-noch-uni-2/rulonnyie-shtoryi-den-noch-toskana-33/$ /rulonnyie-shtoryi/den-noch-uni-2/rulonnyie-shtoryi-den-noch-toskana-34/ [R=301,L]
 RewriteRule rulonnyie-shtoryi/den-noch/6043/$ /rulonnyie-shtoryi/den-noch/6042/ [R=301,L]
+RewriteRule zhalyuzi/zhalyuzi-s-elektroprivodom/$ /zhalyuzi/pomeshheniya/zhalyuzi-s-elektroprivodom/ [R=301,L]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
