@@ -108,7 +108,7 @@
       background-color: #fff;
       cursor: pointer;
       position: relative;
-      min-width: 170px;
+      min-width: 260px;
       border: 1px solid rgba(0, 0, 0, .1);
       margin-left: 15px;
       margin-top: 5px;
@@ -120,14 +120,14 @@
         &:before {
           content: '';
           position: absolute;
-          width: 0%;
-					height: 2px;
-					background: $orang;
-					bottom: 0;
-					left: 0;
-					transition: all .5s
-					
-				}
+          width: 0;
+          height: 2px;
+          background: $orang;
+          bottom: 0;
+          left: 0;
+          transition: all .5s
+
+        }
 				&:hover {
 					background-color: #f0f0f0;
 					&:before {
@@ -145,7 +145,6 @@
 					height: 15px;
 					top: 15px;
 					right: 10px;
-					position: absolute;
 					background: url(/img/down-arrow.svg) center no-repeat;
 					background-size: cover;
 				}
@@ -157,7 +156,7 @@
         background: #fff;
         z-index: 4;
         width: 100%;
-        min-width: 170px;
+        min-width: 260px;
       }
 		}
 	}
