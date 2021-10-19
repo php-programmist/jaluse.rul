@@ -1,24 +1,25 @@
 <template>
-	<span>
+	<span class="mbtn-wrapper">
 		<button class="mbtn mbtn2" @click="$refs.consultation.visible = true">{{ text }}</button>
 		<v-popup-contact-form :header="text" ref="consultation" @sendForm="sendConsultation"></v-popup-contact-form>
 	</span>
 </template>
 
 <script>
-	import PopupContactForm from './PopupContactForm'
-	import axios from 'axios';
-	export default {
-		data() {
-			return {};
-		},
-		components: {
-			'v-popup-contact-form':PopupContactForm
-		},
-		props: ["text"],
-		methods:{
-			sendConsultation(data) {
-				const {name, phone} = data;
+import PopupContactForm from './PopupContactForm'
+import axios from 'axios';
+
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    'v-popup-contact-form': PopupContactForm
+  },
+  props: ["text"],
+  methods: {
+    sendConsultation(data) {
+      const {name, phone} = data;
 				const body = {
 					name,
 					phone
