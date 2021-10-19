@@ -136,6 +136,17 @@ RewriteRule uni/porto-blekaut-temno-bezhevyj2/$ /zhalyuzi/rulonnaya-kassetnaya-s
 RewriteRule rulonnyie-shtoryi/den-noch-uni-2/rulonnyie-shtoryi-den-noch-toskana-33/$ /rulonnyie-shtoryi/den-noch-uni-2/rulonnyie-shtoryi-den-noch-toskana-34/ [R=301,L]
 RewriteRule rulonnyie-shtoryi/den-noch/6043/$ /rulonnyie-shtoryi/den-noch/6042/ [R=301,L]
 RewriteRule zhalyuzi/zhalyuzi-s-elektroprivodom/$ /zhalyuzi/pomeshheniya/zhalyuzi-s-elektroprivodom/ [R=301,L]
+RewriteRule kakie-zhalyuzi-vyibrat/ / [R=301,L]
+RewriteRule karnizyi-dlya-shtor/ / [R=301,L]
+RewriteRule kupit-zhalyuzi-na-okna-v-internet-magazine/ / [R=301,L]
+RewriteRule metallicheskie/ / [R=301,L]
+RewriteRule moskitnye-setki/ / [R=301,L]
+RewriteRule obratnaja-sviaz/skidki/ / [R=301,L]
+RewriteRule raznoe/ / [R=301,L]
+RewriteRule termopechat/ / [R=301,L]
+RewriteRule texnicheskie/ / [R=301,L]
+RewriteRule stoimost-zhalyuzi-na-plastikovyie-okna/ / [R=301,L]
+RewriteRule somfy/ / [R=301,L]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
