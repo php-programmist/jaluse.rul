@@ -65,6 +65,10 @@
     <!--УТП БЛОК КОНЕЦ-->
 {%- endblock header -%}
 
+{% block breadcrumbs_block %}
+    {{ breadcrumbs(page|default(null)) }}
+{% endblock %}
+
 {% block body %}
 
 {% endblock %}

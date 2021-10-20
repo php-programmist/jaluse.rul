@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <ul class="breadcrumps__block mt-2">
+        {% for item in items %}
+            {% if not loop.first %}
+                <li class="breadcrumps__list">
+                    <img src="/img/chevron-right.svg" alt=">">
+                </li>
+            {% endif %}
+            
+            <li class="breadcrumps__list">
+                {% if loop.last %}
+                    <span>{{ item.name }}</span>
+                {% else %}
+                    <a href="{{ item.link }}">{{ item.name }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

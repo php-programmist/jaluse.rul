@@ -1,0 +1,25 @@
+.breadcrumps__block {
+  list-style-type: none;
+  padding-left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.breadcrumps__list {
+  margin-right: 10px;
+  margin-left: 0;
+
+  &:before {
+    content: none;
+  }
+}
+
+.breadcrumps__block {
+  list-style-type: none;
+}
+
+.breadcrumps__list span {
+  color: #c6c6c6;
+}
