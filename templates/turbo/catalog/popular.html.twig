@@ -10,7 +10,7 @@
                     <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/">{{ item.name }}</a>
                 </div>
                 <div class="product__price">
-                    {{ min_price(item) }}
+                    {{ min_price(item, false, true) }}
                 </div>
                 <button
                         formaction="tel:{{ phone }}"

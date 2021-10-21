@@ -17,7 +17,7 @@
                     <a href="/{{ item.uri }}/" target="_blank">{{ item.name }}</a>
                 </div>
                 <div class="product__price">
-                    {{ min_price(item) }}
+                    {{ min_price(item, false, true) }}
                 </div>
                 <div class="d-flex justify-content-center flex-wrap">
                     <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать</button>

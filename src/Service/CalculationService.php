@@ -15,6 +15,7 @@ class CalculationService
     private array $matrices = [];
     private EntityManagerInterface $entityManager;
     private LoggerInterface $logger;
+    private int $discountGlobal;
     
     public function __construct(
         ConfigService $config_service,
@@ -24,8 +25,17 @@ class CalculationService
     ) {
         $this->matrix_service = $matrix_service;
         $this->usd_rate       = $config_service->getCached('calc.usd_rate');
+        $this->discountGlobal = $config_service->getCached('calc.discount_global');
         $this->entityManager  = $entityManager;
         $this->logger         = $logger;
+    }
+    
+    public function getMinDiscountedPrice(Product $product): int
+    {
+        return $this->getDiscountedPrice(
+            $this->getMinPrice($product),
+            $product->getDiscount() ? : null
+        );
     }
     
     public function getMinPrice(Product $product): int
@@ -137,5 +147,12 @@ class CalculationService
     public function setRubPriceForProduct(Product $product): Product
     {
         return $product->setPrice($this->getRubPrice($product->getPrice()));
+    }
+    
+    public function getDiscountedPrice(float $basePrice, ?int $discount = null): int
+    {
+        $discount ??= $this->discountGlobal;
+        
+        return round($basePrice * (1 - $discount / 100));
     }
 }

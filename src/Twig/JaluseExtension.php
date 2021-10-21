@@ -30,10 +30,13 @@ class JaluseExtension extends AbstractExtension
         ];
     }
 
-    public function min_price(Product $product, bool $digitsOnly = false)
+    public function min_price(Product $product, bool $digitsOnly = false, bool $discounted = false)
     {
-        $min_price = $this->calculation_service->getMinPrice($product);
-        if ($digitsOnly){
+        $min_price = $discounted
+            ? $this->calculation_service->getMinDiscountedPrice($product)
+            : $this->calculation_service->getMinPrice($product);
+    
+        if ($digitsOnly) {
             return $min_price;
         }
         if (!$min_price || !$product->getType()) {
@@ -61,7 +64,7 @@ class JaluseExtension extends AbstractExtension
     
     public function discounted_price(int $basePrice, int $discount = 7): int
     {
-        return round($basePrice * (1 - $discount / 100));
+        return $this->calculation_service->getDiscountedPrice($basePrice, $discount);
     }
     
     public function price_with_delivery(int $basePrice, int $discount = 7, int $deliveryCost = 500): int
