@@ -5,7 +5,7 @@
                 <div class="cart-left col-lg-6">
                     {% block image %}{% endblock %}
                 </div>
-
+    
                 <div class="cart-right col-lg-6 col-md-10 offset-lg-0 offset-md-1">
                     <h2 class="card-zag">{% block header %}{% endblock %}</h2>
                     <div class="card-haract">
@@ -14,10 +14,16 @@
                     <div class="cart-footer">
                         {% block footer %}{% endblock %}
                         {% block buttons %}
-                            <div class="d-flex">
-                                <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать
-                                </button>
-                                <button class="mbtn js-modal-open" data-title="Консультация">Консультация</button>
+                            <div class="button-wrapper">
+                                <div class="mbtn-wrapper">
+                                    <button class="mbtn mbtn_orange js-modal-open"
+                                            data-title="Рассчитать">Рассчитать стоимость
+                                    </button>
+                                </div>
+                                <div class="mbtn-wrapper">
+                                    <button class="mbtn js-modal-open" data-title="Консультация">Получить консультацию
+                                    </button>
+                                </div>
                             </div>
                         {% endblock %}
                     </div>
