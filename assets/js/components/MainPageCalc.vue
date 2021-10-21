@@ -84,14 +84,16 @@
 
             </div>
           </div>
+          <div class="button-wrapper">
+            <v-order-form
+                text="Заказать"
+                :product="currentProduct"
+                :productConfigs="productConfigs"
+                :prices="prices"
+            ></v-order-form>
+            <v-consultation-form text="Получить консультацию"></v-consultation-form>
+          </div>
 
-          <v-order-form
-              text="Заказать"
-              :product="currentProduct"
-              :productConfigs="productConfigs"
-              :prices="prices"
-          ></v-order-form>
-          <v-consultation-form text="Получить консультацию"></v-consultation-form>
         </div>
 
       </div>
