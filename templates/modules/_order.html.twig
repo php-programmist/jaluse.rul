@@ -20,10 +20,10 @@
                         <a href="/zhalyuzi/vertikalnye/tkanevye/">тканевые</a>,
                         <a href="/zhalyuzi/vertikalnye/plastikovyie/">пластиковые</a>
                     </p>
-                
+    
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b>
+                            <div class="col-6 "><b>1-3 дней</b>
                                 <p>Изготовление</p></div>
                             <div class="col-6"><b>2 года</b>
                                 <p>Гарантия</p></div>
@@ -33,31 +33,14 @@
                                 <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
-                    <div class="catalog-body-price">
-                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
-                    
-                        <div class="new-cenawrap">
-                            <div class="row">
-                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
-                                    <p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
-                                    <p>С доставкой</p></div>
-                            </div>
-                        </div>
-                        <div class="catalog-btn-wrap">
-                            <a href="#" class="catalogbtn js-modal-open">
-                                Заказать со скидкой 7%
-                            </a>
-                            <a href="/zhalyuzi/vertikalnye/" class="catalogbtn2">Подробнее...</a>
-                        </div>
-                
-                    </div>
+                    {{ include('modules/_order/catalog-body-price.html.twig', {price: new_price, link: '/zhalyuzi/vertikalnye/'}) }}
                 </div>
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for1">
                             {% for i in 1..7 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/vertical/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/vertical/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                         <div class="slider-nav1">
@@ -81,10 +64,10 @@
                         <a href="/zhalyuzi/gorizontalnye/derevyannye/">деревянные</a>,
                         <a href="/zhalyuzi/isolite/">Isolite</a>
                     </p>
-                
+    
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b>
+                            <div class="col-6 "><b>1-3 дней</b>
                                 <p>Изготовление</p></div>
                             <div class="col-6"><b>2 года</b>
                                 <p>Гарантия</p></div>
@@ -94,31 +77,15 @@
                                 <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
-                    <div class="catalog-body-price">
-                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
-                    
-                        <div class="new-cenawrap">
-                            <div class="row">
-                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
-                                    <p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
-                                    <p>С доставкой</p></div>
-                            </div>
-                        </div>
-                        <div class="catalog-btn-wrap">
-                            <a href="#" class="catalogbtn js-modal-open">
-                                Заказать со скидкой 7%
-                            </a>
-                            <a href="/zhalyuzi/gorizontalnye/" class="catalogbtn2">Подробнее...</a>
-                        </div>
-                
-                    </div>
+    
+                    {{ include('modules/_order/catalog-body-price.html.twig', {price: new_price, link: '/zhalyuzi/gorizontalnye/'}) }}
                 </div>
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for2">
                             {% for i in 1..6 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/horizontal/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/horizontal/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                         <div class="slider-nav2">
@@ -137,10 +104,10 @@
                     {% set new_price = catalog_min_price('zhalyuzi/plisse') %}
                     <div class="zagcena"><b>Цена</b> от {{ discounted_price(new_price) }} руб за м<sup>2</sup></div>
                     <p>Шторы плиссе – это огромное разнообразие моделей сложных форм и одновременно стильный дизайн вашего интерьера. Шторы плиссе чаще используются для оформления круглых, мансардных и панорамных окон.</p>
-                
+    
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b>
+                            <div class="col-6 "><b>1-3 дней</b>
                                 <p>Изготовление</p></div>
                             <div class="col-6"><b>1 год</b>
                                 <p>Гарантия</p></div>
@@ -150,31 +117,15 @@
                                 <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
-                    <div class="catalog-body-price">
-                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
-                    
-                        <div class="new-cenawrap">
-                            <div class="row">
-                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
-                                    <p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
-                                    <p>С доставкой</p></div>
-                            </div>
-                        </div>
-                        <div class="catalog-btn-wrap">
-                            <a href="#" class="catalogbtn js-modal-open">
-                                Заказать со скидкой 7%
-                            </a>
-                            <a href="/zhalyuzi/plisse/" class="catalogbtn2">Подробнее...</a>
-                        </div>
-                
-                    </div>
+    
+                    {{ include('modules/_order/catalog-body-price.html.twig', {price: new_price, link: '/zhalyuzi/plisse/'}) }}
                 </div>
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for3">
                             {% for i in 1..6 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/plisse/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/plisse/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                         <div class="slider-nav3">
@@ -204,7 +155,7 @@
     
                     <div class="catalog-body-opis">
                         <div class="row">
-                            <div class="col-6 "><b>3-7 дней</b>
+                            <div class="col-6 "><b>1-3 дней</b>
                                 <p>Изготовление</p></div>
                             <div class="col-6"><b>2 года</b>
                                 <p>Гарантия</p></div>
@@ -214,36 +165,21 @@
                                 <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
-                    <div class="catalog-body-price">
-                        <div class="starcena">{{ new_price }}₽ <span>-7%</span></div>
-                    
-                        <div class="new-cenawrap">
-                            <div class="row">
-                                <div class="col-6 bigcena"><b>{{ discounted_price(new_price) }}₽</b>
-                                    <p>При самовывозе</p></div>
-                                <div class="col-6 cena"><b>{{ price_with_delivery(new_price) }}₽</b>
-                                    <p>С доставкой</p></div>
-                            </div>
-                        </div>
-                        <div class="catalog-btn-wrap">
-                            <a href="#" class="catalogbtn js-modal-open">
-                                Заказать со скидкой 7%
-                            </a>
-                            <a href="/rulonnyie-shtoryi/" class="catalogbtn2">Подробнее...</a>
-                        </div>
-                
-                    </div>
+    
+                    {{ include('modules/_order/catalog-body-price.html.twig', {price: new_price, link: '/rulonnyie-shtoryi/'}) }}
                 </div>
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
                         <div class="slider-for4">
                             {% for i in 1..6 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/rulonnyie/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/rulonnyie/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                         <div class="slider-nav4">
                             {% for i in 1..6 %}
-                                <div class="img"><img {{ slick_lazy_load('img/catalog/rulonnyie/'~i~'.jpg') }} alt="*"></div>
+                                <div class="img"><img {{ slick_lazy_load('img/catalog/rulonnyie/'~i~'.jpg') }} alt="*">
+                                </div>
                             {% endfor %}
                         </div>
                     </div>

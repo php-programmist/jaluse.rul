@@ -1,0 +1,21 @@
+<div class="catalog-body-price">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <div class="starcena">
+                {{ price }}₽ <span>-7%</span>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="new-cenawrap">
+                <div class="bigcena"><b>{{ discounted_price(price) }}₽</b></div>
+            </div>
+        </div>
+    </div>
+    <div class="catalog-btn-wrap">
+        <a href="#" class="catalogbtn js-modal-open">
+            Заказать со скидкой 7%
+        </a>
+        <a href="{{ link }}" class="catalogbtn2">Подробнее...</a>
+    </div>
+
+</div>
