@@ -1,19 +1,18 @@
 <template>
 	<div class="calc-vivod-price">
-		<div class="starcena">{{prices.basePrice}}₽ <span>-{{prices.currentDiscount}}%</span></div>
-		
-		<div class="new-cenawrap">
-			<div class="row">
-				<div class="col-6 bigcena"><b>{{prices.discountedPrice}}₽</b>
-					<p>При самовывозе</p>
-				</div>
-				<div class="col-6 cena"><b>{{prices.priceWithDelivery}}₽</b>
-					<p>С доставкой</p>
-				</div>
-			</div>
-		</div>
-	
-	</div>
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <div class="starcena">{{ prices.basePrice }}₽ <span>-{{ prices.currentDiscount }}%</span></div>
+      </div>
+      <div class="col-md-6 col-12">
+        <div class="new-cenawrap">
+          <div class="row">
+            <div class="col-6 bigcena"><b>{{ prices.discountedPrice }}₽</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
