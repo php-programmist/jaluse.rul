@@ -83,13 +83,15 @@
 				margin-bottom: 15px;
 			}
 			.dimension_row{
-				display: flex;
-				flex-wrap: wrap;
-			}
-			.dimension_wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+			.dimension_wrapper {
         display: flex;
         flex-direction: column;
         max-width: 50%;
+        min-width: 150px;
       }
 			input{
         margin-right: 15px;
