@@ -35,26 +35,32 @@ class Type
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Material", mappedBy="type")
+     * @ORM\OrderBy({"ordering" = "ASC", "id" = "ASC", })
      */
     private $materials;
-
+    
     /**
      * @ORM\Column(type="boolean")
      */
     private $show_main_page_calc;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $calculation_type;
-
+    
+    /**
+     * @ORM\Column(type="integer", options={"default": 0})
+     */
+    private int $ordering = 0;
+    
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->products  = new ArrayCollection();
         $this->materials = new ArrayCollection();
-        $this->catalogs = new ArrayCollection();
+        $this->catalogs  = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -182,11 +188,31 @@ class Type
     {
         return $this->calculation_type;
     }
-
+    
     public function setCalculationType(string $calculation_type): self
     {
         $this->calculation_type = $calculation_type;
-
+        
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getOrdering(): int
+    {
+        return $this->ordering;
+    }
+    
+    /**
+     * @param int $ordering
+     *
+     * @return $this
+     */
+    public function setOrdering(int $ordering): self
+    {
+        $this->ordering = $ordering;
+        
         return $this;
     }
 }

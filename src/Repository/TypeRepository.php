@@ -45,10 +45,11 @@ class TypeRepository extends ServiceEntityRepository
     public function findWithMaterials()
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.show_main_page_calc = true')
-            ->leftJoin('t.materials','m')
-            ->addSelect('m')
-            ->orderBy('t.id', 'ASC')
+                    ->andWhere('t.show_main_page_calc = true')
+                    ->leftJoin('t.materials', 'm')
+                    ->addSelect('m')
+                    ->addOrderBy('t.ordering', 'ASC')
+                    ->addOrderBy('t.id', 'ASC')
             ->getQuery()
             ->getResult()
         ;

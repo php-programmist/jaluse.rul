@@ -35,13 +35,14 @@ class TypeCrudController extends AbstractCrudController
         $showMainPageCalc = BooleanField::new('showMainPageCalc', 'Калькулятор на главной');
         $calculationType  = TextField::new('calculationType', 'Тип расчета');
         $catalogs         = AssociationField::new('catalogs', 'Кол-во каталогов');
+        $ordering         = IntegerField::new('ordering', 'Сортировка');
     
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $products, $materials, $catalogs, $showMainPageCalc];
+            return [$id, $name, $products, $materials, $catalogs, $showMainPageCalc, $ordering];
         }
     
         if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
-            return [$name, $materials, $showMainPageCalc, $calculationType, $products];
+            return [$name, $materials, $showMainPageCalc, $calculationType, $products, $ordering];
         }
     }
 }

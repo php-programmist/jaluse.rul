@@ -31,19 +31,24 @@ class Material
      * @ORM\OneToMany(targetEntity="App\Entity\Catalog", mappedBy="material")
      */
     private $catalogs;
-
+    
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Type", inversedBy="materials")
      */
     private $type;
-
+    
+    /**
+     * @ORM\Column(type="integer", options={"default": 0})
+     */
+    private int $ordering = 0;
+    
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->type = new ArrayCollection();
+        $this->type     = new ArrayCollection();
         $this->catalogs = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -143,13 +148,33 @@ class Material
 
         return $this;
     }
-
+    
     public function removeType(Type $type): self
     {
         if ($this->type->contains($type)) {
             $this->type->removeElement($type);
         }
-
+        
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getOrdering(): int
+    {
+        return $this->ordering;
+    }
+    
+    /**
+     * @param int $ordering
+     *
+     * @return $this
+     */
+    public function setOrdering(int $ordering): self
+    {
+        $this->ordering = $ordering;
+        
         return $this;
     }
 }

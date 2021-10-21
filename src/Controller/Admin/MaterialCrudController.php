@@ -32,13 +32,14 @@ class MaterialCrudController extends AbstractCrudController
         $products = AssociationField::new('products', 'Кол-во товаров');
         $id       = IntegerField::new('id', 'ID');
         $catalogs = AssociationField::new('catalogs', 'Кол-во каталогов');
+        $ordering = IntegerField::new('ordering', 'Сортировка');
     
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $products, $catalogs];
+            return [$id, $name, $products, $catalogs, $ordering];
         }
     
         if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
-            return [$name, $type, $products];
+            return [$name, $type, $products, $ordering];
         }
     }
 }
