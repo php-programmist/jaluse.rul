@@ -54,7 +54,8 @@
               </div>
             </div>
           </div>
-          <v-product-configurator v-model="productConfigs"></v-product-configurator>
+          <v-product-configurator v-model="productConfigs"
+                                  :calculationType="currentProduct.calculationType"></v-product-configurator>
 
         </form>
       </div>

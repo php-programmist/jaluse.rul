@@ -32,33 +32,45 @@
 
 <script>
 	export default {
-		data() {
-			return {
-				width: 1000,
-				height: 1000,
-				controlType: 'Ручное',
-				number: 1
-			};
-		},
-		methods: {
-			triggerEvent() {
-				this.$emit('input', {
-					width: this.width,
-					height: this.height,
-					controlType: this.controlType,
-					number: this.number
-				});
-			}
-		},
-		mounted() {
-			this.triggerEvent();
-		},
-		updated() {
-			this.$nextTick(() => {
-				this.triggerEvent()
-			});
-		}
-	}
+    data() {
+      return {
+        width: 1000,
+        height: 1000,
+        controlType: 'Ручное',
+        number: 1
+      };
+    },
+    props: ["calculationType"],
+    methods: {
+      triggerEvent() {
+        this.$emit('input', {
+          width: this.width,
+          height: this.height,
+          controlType: this.controlType,
+          number: this.number
+        });
+      }
+    },
+    mounted() {
+      this.triggerEvent();
+    },
+    updated() {
+      this.$nextTick(() => {
+        this.triggerEvent()
+      });
+    },
+    watch: {
+      calculationType: function (newVal, oldVal) {
+        if (newVal === 'matrix') {
+          this.width = 400;
+          this.height = 500;
+        } else if (oldVal === 'matrix' && newVal === 'simple') {
+          this.width = 1000;
+          this.height = 1000;
+        }
+      }
+    }
+  }
 </script>
 
 <style lang="scss" scoped>

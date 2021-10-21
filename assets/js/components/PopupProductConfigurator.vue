@@ -6,7 +6,8 @@
 			<div id="raschet">
 				<div class="modal_close" @click="visible=false">×</div>
 				<div class="product-configurator-popup__wrapper">
-					<v-product-configurator v-model="productConfigs"></v-product-configurator>
+					<v-product-configurator v-model="productConfigs"
+                                  :calculationType="product.calculationType"></v-product-configurator>
 					<v-price-renderer :prices="prices"></v-price-renderer>
 					<v-order-form
 							text="Заказать"
@@ -23,21 +24,20 @@
 </template>
 
 <script>
-	import PriceRenderer from './PriceRenderer'
-	import ProductConfigurator from './ProductConfigurator'
-	import OrderForm from './OrderForm';
-	import ConsultationForm from './ConsultationForm';
-	export default {
-		data() {
-			return {
-				visible: false,
-				productConfigs:{}
-			};
-		},
-		props: ["price_calculator","product",],
-		methods:{
-		
-		},
+import PriceRenderer from './PriceRenderer'
+import ProductConfigurator from './ProductConfigurator'
+import OrderForm from './OrderForm';
+import ConsultationForm from './ConsultationForm';
+
+export default {
+  data() {
+    return {
+      visible: false,
+      productConfigs: {}
+    };
+  },
+  props: ["price_calculator", "product",],
+  methods: {},
 		components: {
 			'v-price-renderer': PriceRenderer,
 			'v-product-configurator': ProductConfigurator,
