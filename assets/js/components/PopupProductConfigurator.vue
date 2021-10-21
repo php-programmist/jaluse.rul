@@ -6,17 +6,20 @@
 			<div id="raschet">
 				<div class="modal_close" @click="visible=false">×</div>
 				<div class="product-configurator-popup__wrapper">
-					<v-product-configurator v-model="productConfigs"
+          <v-product-configurator v-model="productConfigs"
                                   :calculationType="product.calculationType"></v-product-configurator>
-					<v-price-renderer :prices="prices"></v-price-renderer>
-					<v-order-form
-							text="Заказать"
-							:product="product"
-							:productConfigs="productConfigs"
-							:prices="prices"
-					></v-order-form>
-					<v-consultation-form text="Консультация"></v-consultation-form>
-				</div>
+          <v-price-renderer :prices="prices"></v-price-renderer>
+          <div class="button-wrapper">
+            <v-order-form
+                text="Заказать"
+                :product="product"
+                :productConfigs="productConfigs"
+                :prices="prices"
+            ></v-order-form>
+            <v-consultation-form text="Консультация"></v-consultation-form>
+          </div>
+
+        </div>
 			</div>
 		</div>
 	</div>

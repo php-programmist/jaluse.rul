@@ -1,24 +1,25 @@
 <template>
-	<span>
-		<button class="mbtn" @click="$refs.order.visible = true">{{ text }}</button>
-		<v-popup-contact-form :header="text" ref="order" @sendForm="sendOrder"></v-popup-contact-form>
-	</span>
+	<div class="mbtn-wrapper">
+    <button class="mbtn" @click="$refs.order.visible = true">{{ text }}</button>
+    <v-popup-contact-form :header="text" ref="order" @sendForm="sendOrder"></v-popup-contact-form>
+  </div>
 </template>
 
 <script>
-	import PopupContactForm from './PopupContactForm'
-	import axios from 'axios';
-	export default {
-		data() {
-			return {};
-		},
-		components: {
-			'v-popup-contact-form':PopupContactForm
-		},
-		props: ["text","product","productConfigs","prices"],
-		methods:{
-			sendOrder(data) {
-				const {name, phone} = data;
+import PopupContactForm from './PopupContactForm'
+import axios from 'axios';
+
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    'v-popup-contact-form': PopupContactForm
+  },
+  props: ["text", "product", "productConfigs", "prices"],
+  methods: {
+    sendOrder(data) {
+      const {name, phone} = data;
 				const body = {
 					name,
 					phone,

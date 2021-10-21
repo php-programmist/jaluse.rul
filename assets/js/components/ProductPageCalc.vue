@@ -1,32 +1,32 @@
 <template>
-	<span>
-		<button class="mbtn" @click="showProductConfigurator">Рассчитать стоимость</button>
-		<v-consultation-form text="Получить консультацию"></v-consultation-form>
-		<v-popup-product-configurator
-				ref="product_configurator"
-				:price_calculator="price_calculator"
-				:product="product"
-		></v-popup-product-configurator>
-	</span>
+	<div class="button-wrapper">
+    <button class="mbtn" @click="showProductConfigurator">Рассчитать стоимость</button>
+    <v-consultation-form text="Получить консультацию"></v-consultation-form>
+    <v-popup-product-configurator
+        ref="product_configurator"
+        :price_calculator="price_calculator"
+        :product="product"
+    ></v-popup-product-configurator>
+  </div>
 </template>
 
 <script>
-	import axios from 'axios';
-	import ConsultationForm from './ConsultationForm';
-	import PopupProductConfigurator from './PopupProductConfigurator';
-	import PriceCalculator from './PriceCalculator';
-	
-	export default {
-		data() {
-			return {
-				price_calculator: {},
-				product: {},
-			};
-		},
-		props: ["product_id"],
-		components: {
-			'v-consultation-form': ConsultationForm,
-			'v-popup-product-configurator': PopupProductConfigurator
+import axios from 'axios';
+import ConsultationForm from './ConsultationForm';
+import PopupProductConfigurator from './PopupProductConfigurator';
+import PriceCalculator from './PriceCalculator';
+
+export default {
+  data() {
+    return {
+      price_calculator: {},
+      product: {},
+    };
+  },
+  props: ["product_id"],
+  components: {
+    'v-consultation-form': ConsultationForm,
+    'v-popup-product-configurator': PopupProductConfigurator
 		},
 		created() {
 			axios.get('/api/calc/getInitData')
