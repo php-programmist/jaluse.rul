@@ -64,8 +64,12 @@ class CalculationService
         }
     }
     
-    public function getRubPrice(float $usdPrice): int
+    public function getRubPrice(?float $usdPrice): int
     {
+        if (null === $usdPrice) {
+            return 0;
+        }
+    
         return round($this->usd_rate * $usdPrice);
     }
     

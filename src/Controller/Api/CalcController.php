@@ -94,7 +94,7 @@ class CalcController extends AbstractController
             $types        = $this->getInitTypeData();
             $colors       = $this->getInitColors();
             $categories   = $this->getInitCategories();
-            $matrices     = $this->matrix_service->getAllMatrices();
+            $matrices     = $this->matrix_service->getAllMatricesWithRubPrices();
             $priceConfigs = $this->configs->getGroup('calc');
     
             $response = compact('types', 'colors', 'categories', 'priceConfigs', 'matrices');

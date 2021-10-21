@@ -27,15 +27,19 @@ class MatrixService
      */
     protected $cache;
     
+    private float $usd_rate;
+    
     public function __construct(
         ParameterBagInterface $params,
         FilesExplorerService $explorer_service,
-        AdapterInterface $cache
+        AdapterInterface $cache,
+        ConfigService $config_service
     ) {
         
         $this->project_dir      = $params->get('kernel.project_dir');
         $this->explorer_service = $explorer_service;
         $this->cache            = $cache;
+        $this->usd_rate         = $config_service->getCached('calc.usd_rate');
     }
     
     public function getAllMatrices(): array
@@ -43,6 +47,22 @@ class MatrixService
         $matrices = [];
         foreach (self::FOLDERS as $folder) {
             $matrices[$folder] = $this->getMatrixSet($folder);
+        }
+        
+        return $matrices;
+    }
+    
+    public function getAllMatricesWithRubPrices(): array
+    {
+        $matrices = $this->getAllMatrices();
+        foreach ($matrices as &$type) {
+            foreach ($type as &$category) {
+                foreach ($category as &$width) {
+                    foreach ($width as &$usdPrice) {
+                        $usdPrice = round($this->usd_rate * $usdPrice);
+                    }
+                }
+            }
         }
         
         return $matrices;
