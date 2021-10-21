@@ -105,7 +105,7 @@ class CalculationService
             } elseif ($page instanceof Catalog) {
                 $minPriceCandidate = $this->getCatalogMinPrice($page);
             }
-            
+    
             if (
                 $minPriceCandidate > 0
                 && ($minPriceCandidate < $minPrice || 0 === $minPrice)
@@ -113,7 +113,25 @@ class CalculationService
                 $minPrice = $minPriceCandidate;
             }
         }
-        
+    
         return $minPrice;
+    }
+    
+    /**
+     * @param Product[] $products
+     *
+     * @return Product[]
+     */
+    public function setRubPriceForProducts(array $products): array
+    {
+        return array_map(
+            fn(Product $product) => $this->setRubPriceForProduct($product),
+            $products
+        );
+    }
+    
+    public function setRubPriceForProduct(Product $product): Product
+    {
+        return $product->setPrice($this->getRubPrice($product->getPrice()));
     }
 }

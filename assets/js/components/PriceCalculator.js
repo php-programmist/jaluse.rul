@@ -1,6 +1,5 @@
 export default class PriceCalculator {
 	constructor(priceConfigs,matrices) {
-		this.usd_rate = parseFloat(priceConfigs.usd_rate);
 		this.delivery_cost = parseInt(priceConfigs.delivery_cost);
 		this.discount_global = parseInt(priceConfigs.discount_global);
 		this.matrices = matrices;
@@ -32,7 +31,7 @@ export default class PriceCalculator {
 			if (area < 1000000) {
 				area = 1000000;
 			}
-			return this.basePrice = parseInt(this.number * this.product.price * this.usd_rate * area / 1000000);
+			return this.basePrice = parseInt(this.number * this.product.price * area / 1000000);
 		}else if(this.product.calculationType === 'matrix'){
 			const matrix_folder = this.product.matrixFolder;
 			const matrix_name = this.product.matrixId;
@@ -43,7 +42,7 @@ export default class PriceCalculator {
 					if (this.width <= width) {
 						for(let height in matrix[width]){
 							if (this.height <= height) {
-								return this.basePrice = parseInt(this.number * matrix[width][height] * this.usd_rate);
+								return this.basePrice = parseInt(this.number * matrix[width][height]);
 							}
 						}
 					}
