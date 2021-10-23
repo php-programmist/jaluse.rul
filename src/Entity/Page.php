@@ -471,7 +471,8 @@ abstract class Page implements TurboPageInterface
     
     public function getTextComputed(): string
     {
-        return str_replace(['<p>', '</p>', '<span>', '</span>'], ['<ul>', '</ul>', '<li>', '</li>'],
+        return str_replace(['<p>', '</p>', '<span>', '</span>', '<b>', '</b>'],
+            ['<div>', '</div>', '', '<br />' . PHP_EOL, '<strong>', '</strong>'],
             (string)$this->getCardDescription());
     }
     
