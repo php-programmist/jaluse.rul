@@ -68,16 +68,23 @@ p{
   color: $white;
   position: relative;
   overflow: hidden;
+  @media (max-width: 576px) {
+    background: url("/img/mobile-headrer-bg.jpg");
+    background-size: cover;
+  }
 
-  .b1fonwrap{
+  .b1fonwrap {
     width: 100%;
     position: absolute;
-    .slick-arrow{
+
+    .slick-arrow {
       opacity: 0;
     }
+
     left: 0;
     top: 0;
-    .b1fon{
+
+    .b1fon {
       width: 100%;
       min-height: 674px;
 
