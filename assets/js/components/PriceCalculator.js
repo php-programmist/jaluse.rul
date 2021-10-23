@@ -31,7 +31,7 @@ export default class PriceCalculator {
 			if (area < 1000000) {
 				area = 1000000;
 			}
-			return this.basePrice = parseInt(this.number * this.product.price * area / 1000000);
+			return this.basePrice = Math.round(this.number * this.product.price * area / 1000000);
 		}else if(this.product.calculationType === 'matrix'){
 			const matrix_folder = this.product.matrixFolder;
 			const matrix_name = this.product.matrixId;
@@ -42,7 +42,7 @@ export default class PriceCalculator {
 					if (this.width <= width) {
 						for(let height in matrix[width]){
 							if (this.height <= height) {
-								return this.basePrice = parseInt(this.number * matrix[width][height]);
+								return this.basePrice = Math.round(this.number * matrix[width][height]);
 							}
 						}
 					}
@@ -53,7 +53,7 @@ export default class PriceCalculator {
 		return this.basePrice = 0;
 	}
 	getDiscountedPrice() {
-		return this.discountedPrice = parseInt(this.basePrice * (100 - this.currentDiscount) / 100);
+		return this.discountedPrice = Math.round(this.basePrice * (100 - this.currentDiscount) / 100);
 	}
 	
 	getPriceWithDelivery() {
