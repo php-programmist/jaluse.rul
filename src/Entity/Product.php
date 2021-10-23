@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CatalogCalcTrait;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -13,6 +14,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Product extends Page
 {
+    use CatalogCalcTrait;
+    
     public const TYPE = 'product';
     const RULON_TYPE_ID = 133;
     const ISOLITE_TYPE_ID = 178;

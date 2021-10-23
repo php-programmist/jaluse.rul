@@ -1,0 +1,11 @@
+{% if page.calcLink is not empty %}
+    <button
+            formaction="{{ app.request.schemeAndHttpHost }}{{ page.calcLink }}"
+            data-background-color="blue"
+            data-color="white"
+            data-turbo="false"
+            data-primary="true"
+    >
+        Калькулятор
+    </button>
+{% endif %}

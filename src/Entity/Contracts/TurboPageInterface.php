@@ -19,4 +19,6 @@ interface TurboPageInterface
     public function getModifyDate(): ?DateTimeInterface;
     
     public function getTurboContentTemplate(): string;
+    
+    public function getCalcLink(): ?string;
 }

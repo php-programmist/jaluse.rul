@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CatalogCalcTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,21 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Catalog extends Page
 {
+    use CatalogCalcTrait;
+    
     public const TYPE = 'catalog';
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $matrix_folder;
-
+    
     public function getMatrixFolder(): ?string
     {
         return $this->matrix_folder;
     }
-
+    
     public function setMatrixFolder(?string $matrix_folder): self
     {
         $this->matrix_folder = $matrix_folder;
-
+        
         return $this;
     }
     
@@ -41,7 +44,7 @@ class Catalog extends Page
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
-
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -68,6 +71,7 @@ class Catalog extends Page
         if ($parent && $parent instanceof Catalog) {
             return $parent->getType();
         }
+        
         return null;
     }
     
@@ -89,16 +93,16 @@ class Catalog extends Page
         
         return $this;
     }
-
+    
     public function getRecommendedTitle(): ?string
     {
         return $this->recommendedTitle;
     }
-
+    
     public function setRecommendedTitle(?string $recommendedTitle): self
     {
         $this->recommendedTitle = $recommendedTitle;
-
+        
         return $this;
     }
     

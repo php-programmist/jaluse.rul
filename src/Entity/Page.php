@@ -572,43 +572,6 @@ abstract class Page implements TurboPageInterface
     
     public function getCalcLink(): ?string
     {
-        if (1 === $this->getId()) {
-            return '/zhalyuzi/kalkulyator/';
-        }
-        if (!$this instanceof Catalog && !$this instanceof Product) {
-            return null;
-        }
-        $currentPage = $this;
-    
-        for ($i = 1 ; $i <= 4 ; $i++) {
-            $calculator = $this->getCalculator($currentPage->getPages());
-            if (null !== $calculator) {
-                break;
-            }
-            $currentPage = $currentPage->getParent();
-            if (!$currentPage instanceof Catalog) {
-                break;
-            }
-        }
-    
-        return $calculator?->getPath();
-    }
-    
-    /**
-     * @param Collection $children
-     *
-     * @return Calculator|null
-     */
-    private function getCalculator(Collection $children): ?Calculator
-    {
-        $calculator = null;
-        foreach ($children as $child) {
-            if ($child instanceof Calculator) {
-                $calculator = $child;
-                break;
-            }
-        }
-        
-        return $calculator;
+        return '/zhalyuzi/kalkulyator/';
     }
 }

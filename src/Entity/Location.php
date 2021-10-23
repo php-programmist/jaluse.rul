@@ -49,4 +49,11 @@ class Location extends Page
         
         return 'от 664 руб/м2';
     }
+    
+    public function getCalcLink(): ?string
+    {
+        return str_contains($this->getUri(), 'rulonnyie-shtoryi')
+            ? '/rulonnyie-shtoryi/kalkulyator/'
+            : '/zhalyuzi/kalkulyator/';
+    }
 }
