@@ -33,8 +33,8 @@ class ImagesUploadController extends AbstractController
         $image_file   = $request->files->get('file');
         $root_folder  = $request->server->get('DOCUMENT_ROOT');
         $file_name    = $image_file->getClientOriginalName();
-        $imagesFolder = '/img/articles';
-        $folder       = $root_folder . $imagesFolder;
+        $imagesFolder = $request->query->get('folder');
+        $folder       = $root_folder . '/' . $imagesFolder;
         try{
             if ($image_file->move($folder, $file_name)) {
                 $response = ['status' => 'OK', 'message' => $imagesFolder . '/' . $file_name];

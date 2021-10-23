@@ -16,6 +16,7 @@ use App\Entity\Roll;
 use App\Entity\Roman;
 use App\Entity\Simple;
 use App\Entity\Type;
+use App\Entity\WorkExample;
 use App\Field\CKEditorField;
 use App\Field\VichImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -77,6 +78,8 @@ class DashboardController extends AbstractDashboardController
         $submenu1 = [
             MenuItem::linktoRoute('Товары', 'fas fa-file-alt', 'admin_product_import_index'),
         ];
+    
+        yield MenuItem::linkToCrud('Примеры работ', 'fas fa-briefcase', WorkExample::class);
         yield MenuItem::section('Страницы');
         yield MenuItem::linkToCrud('Каталоги', 'fas fa-file-alt', Catalog::class);
         yield MenuItem::linkToCrud('Товары', 'fas fa-file-alt', Product::class);
@@ -95,7 +98,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Технические ссылки');
         yield MenuItem::linkToCrud('Настройки', 'fas fa-cogs', Config::class);
         yield MenuItem::linktoRoute('Генератор', 'fas fa-cogs', 'admin_generator_index');
-        yield MenuItem::linktoRoute('Загрузка изображений', 'fas fa-image', 'admin_upload_images_index');
         yield MenuItem::subMenu('Импорт', 'fas fa-file-import')->setSubItems($submenu1);
     }
     
