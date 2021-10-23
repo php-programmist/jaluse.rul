@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Traits\CatalogCalcTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,6 +51,17 @@ class Catalog extends Page
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $recommendedTitle;
+    
+    /**
+     * @ORM\OneToMany(targetEntity=WorkExample::class, mappedBy="catalog")
+     */
+    private Collection $workExamples;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->workExamples = new ArrayCollection();
+    }
     
     public function getPrice(): ?float
     {
@@ -121,12 +134,42 @@ class Catalog extends Page
         if (in_array($this->getUri(), ['markizyi', 'rulonnyie-shtoryi'])) {
             return 'рублей за изделие';
         }
-        
+    
         return parent::getUnits();
     }
     
     public function getTurboContentTemplate(): string
     {
         return 'turbo/catalog/content.html.twig';
+    }
+    
+    /**
+     * @return Collection|WorkExample[]
+     */
+    public function getWorkExamples(): Collection
+    {
+        return $this->workExamples;
+    }
+    
+    public function addWorkExample(WorkExample $workExample): self
+    {
+        if (!$this->workExamples->contains($workExample)) {
+            $this->workExamples[] = $workExample;
+            $workExample->setCatalog($this);
+        }
+        
+        return $this;
+    }
+    
+    public function removeWorkExample(WorkExample $workExample): self
+    {
+        if ($this->workExamples->removeElement($workExample)) {
+            // set the owning side to null (unless already changed)
+            if ($workExample->getCatalog() === $this) {
+                $workExample->setCatalog(null);
+            }
+        }
+        
+        return $this;
     }
 }

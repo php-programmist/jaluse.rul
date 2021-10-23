@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Traits\CatalogCalcTrait;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -111,6 +113,17 @@ class Product extends Page
     protected $imageCatalogFile;
     
     private $min_price = 0;
+    
+    /**
+     * @ORM\OneToMany(targetEntity=WorkExample::class, mappedBy="product")
+     */
+    private Collection $workExamples;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->workExamples = new ArrayCollection();
+    }
     
     public function getPrice(): ?float
     {
@@ -544,6 +557,36 @@ class Product extends Page
     public function productImgCatalogFolder(): string
     {
         return $this->productImgFolder() . 'catalog/';
+    }
+    
+    /**
+     * @return Collection|WorkExample[]
+     */
+    public function getWorkExamples(): Collection
+    {
+        return $this->workExamples;
+    }
+    
+    public function addWorkExample(WorkExample $workExample): self
+    {
+        if (!$this->workExamples->contains($workExample)) {
+            $this->workExamples[] = $workExample;
+            $workExample->setProduct($this);
+        }
+        
+        return $this;
+    }
+    
+    public function removeWorkExample(WorkExample $workExample): self
+    {
+        if ($this->workExamples->removeElement($workExample)) {
+            // set the owning side to null (unless already changed)
+            if ($workExample->getProduct() === $this) {
+                $workExample->setProduct(null);
+            }
+        }
+        
+        return $this;
     }
     
 }
