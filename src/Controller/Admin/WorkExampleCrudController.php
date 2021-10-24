@@ -43,7 +43,6 @@ class WorkExampleCrudController extends AbstractCrudController
         $location    = TextField::new('location', 'Помещение');
         $makeDays    = IntegerField::new('makeDays', 'Срок изготовления');
         $installDays = IntegerField::new('installDays', 'Срок установки');
-        $totalPrice  = IntegerField::new('totalPrice', 'Общая стоимость работ');
         
         $product = AssociationField::new('product', 'Товар')->autocomplete();
         $catalog = AssociationField::new('catalog', 'Каталог');
