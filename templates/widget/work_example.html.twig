@@ -1,0 +1,71 @@
+{% if items is not empty %}
+    <div class="job">
+        {% for item in items %}
+            <div class="row row--job" data-job-id="{{ loop.index }}">
+                <div class="job_col col-12 col-lg-6">
+                    <div class="job_pad">
+                        <h2 class="job_title">{{ item.name }}</h2>
+                        
+                        <div class="description">
+                            <p class="job_text"><span class="bold">Адрес монтажа</span>: {{ item.address }}</p>
+                            <p class="job_text"><span class="bold">Вид изделия</span>: {{ item.type }}</p>
+                            <p class="job_text"><span class="bold">Коллекция</span>: {{ item.collection }}</p>
+                            <p class="job_text"><span class="bold">Цвет</span>: {{ item.color }}</p>
+                            <p class="job_text"><span class="bold">Количество окон</span>: {{ item.number }}</p>
+                            <p class="job_text"><span class="bold">Где устанавливали</span>: {{ item.place }}</p>
+                            <p class="job_text"><span class="bold">Помещение</span>: {{ item.location }}</p>
+                            <p class="job_text"><span class="bold">Срок изготовления</span>: {{ item.makeDays }} дней
+                            </p>
+                            <p class="job_text"><span class="bold">Срок установки</span>: {{ item.installDays }} день
+                            </p>
+                            <p class="job_text"><span class="bold">Выезд и замер</span>: Бесплатный</p>
+                        </div>
+                        <p class="job_text">В стоимость включены изделия + работы по установке</p>
+                        <div class="job_price">Общая стоимость работ: {{ item.totalPrice|number_format(0, '.', ' ') }} ₽</div>
+                        <div class="work_example_button_wrapper d-lg-none">
+                            <div class="job_next mbtn">Следующая работа</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="job_col col-12 col-lg-6">
+                    <div class="fotorama" data-autoplay="true">
+                        {% for image in item.images %}
+                            <a href="{{ asset(image) }}"></a>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="row col-12 d-none d-lg-flex">
+                    <div class="work_example_button_wrapper col-lg-2">
+                        <a href="{{ item.product.path }}" class="mbtn">Хочу такие же</a>
+                    </div>
+                    <div class="work_example_button_wrapper col-lg-2">
+                        <a href="{{ item.catalog.path }}" class="mbtn mbtn_orange">Каталог</a>
+                    </div>
+                    <div class="work_example_button_wrapper col-lg-2">
+                        <div class="mbtn mbtn js-modal-open">Консультация</div>
+                    </div>
+                    <div class="work_example_button_wrapper col-lg-3">
+                        <div class="job_prev mbtn mbtn_orange">Предыдущая работа</div>
+                    </div>
+                    <div class="work_example_button_wrapper col-lg-3">
+                        <div class="job_next mbtn">Следующая работа</div>
+                    </div>
+                </div>
+                
+                <div class="row col-12 d-lg-none pl-4">
+                    <div class="work_example_button_wrapper col-12">
+                        <a href="{{ item.product.path }}" class="mbtn">Хочу такие же</a>
+                    </div>
+                    <div class="work_example_button_wrapper col-12">
+                        <div class="mbtn mbtn mbtn_orange js-modal-open">Консультация</div>
+                    </div>
+                    <div class="work_example_button_wrapper col-12">
+                        <div class="job_prev mbtn">Предыдущая работа</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+

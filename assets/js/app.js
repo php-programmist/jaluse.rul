@@ -10,6 +10,7 @@ import './blocks/popup-banner';
 import './blocks/manimate';
 import './blocks/mobile-menu';
 import './blocks/recommended-products';
+import './blocks/example-works';
 
 import LazyLoad from './libs/lazyload.min'
 

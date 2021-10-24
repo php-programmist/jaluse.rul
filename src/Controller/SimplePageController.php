@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SimplePageController extends AbstractController
@@ -158,10 +159,22 @@ class SimplePageController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             30 /*limit per page*/
         );
-        
+    
         return $this->render('articles/index.html.twig', [
             'page'     => $page,
             'articles' => $pagination,
+        ]);
+    }
+    
+    /**
+     * @Route("/work-examples/", name="simple_page_work-examples")
+     */
+    public function workExamples(): Response
+    {
+        $page = $this->page_repository->findOneBy(['uri' => 'work-examples']);
+        
+        return $this->render('simple_page/work-examples.html.twig', [
+            'page' => $page,
         ]);
     }
 }

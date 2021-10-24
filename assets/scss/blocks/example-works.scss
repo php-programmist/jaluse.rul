@@ -1,0 +1,215 @@
+@import "~fotorama/fotorama.css";
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.job {
+  max-width: 1440px;
+  margin: 10px auto;
+}
+
+.job h2 {
+  font-size: 36px;
+  margin-bottom: 24px;
+}
+
+.job h3 {
+  text-transform: none;
+  font-weight: bold;
+}
+
+.job__materials li, .job__dates li {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.job .top-title {
+  font-size: 0.8rem;
+  color: #838383;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.job_text {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.row--job {
+  margin-bottom: 40px;
+}
+
+.job_col {
+  word-wrap: break-word;
+  padding-left: .21875%;
+  padding-right: .21875%;
+  width: 49.5625%;
+  background-color: #f6f7fa;
+}
+
+
+.job_pad {
+  padding: 15px;
+  font-size: 18px;
+}
+
+.job .description {
+  line-height: 30px;
+  margin: 24px auto 10px;
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: 10px;
+}
+
+.job_price {
+  font-size: 1.3rem;
+}
+
+.job_all-price {
+  font-size: 1.5rem;
+}
+
+.job_title {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #2e2e2e;
+}
+
+.job_dedline {
+  margin-bottom: 20px;
+  font-size: 2.1875rem;
+  color: #343434;
+}
+
+.job_col-btn--1 {
+  text-align: right;
+}
+
+.job_prev {
+  min-width: 140px;
+}
+
+.job_next {
+  min-width: 140px;
+}
+
+.fotorama__arr {
+  position: absolute;
+  top: 50%;
+  margin-top: -16px;
+}
+
+.fotorama__arr {
+  display: inline-block;
+  width: 54px;
+  height: 54px;
+  -webkit-box-shadow: 0 16px 35px rgba(0, 0, 0, .25);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, .25);
+  background-color: #136ecb !important;
+  /* background-image: -o-linear-gradient(31deg, #79ccff 0, #79ccff 1%, #45a2e8 100%) !important; */
+  background-image: linear-gradient(59deg, #79ccff 0, #79ccff 1%, #45a2e8 100%) !important;
+  color: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-position: left;
+}
+
+.fotorama__arr::after {
+  content: '';
+  display: block;
+  background-image: url(/img/arrow.png);
+  width: 20px;
+  height: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.fotorama__arr--next::after {
+  -webkit-transform: translate(-50%, -50%) rotate(180deg);
+  -ms-transform: translate(-50%, -50%) rotate(180deg);
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.job_col-btn {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  margin-left: .21875%;
+  margin-right: .21875%;
+  width: 49.5625%;
+}
+
+.job_prev {
+  min-width: 140px;
+}
+
+.job_next {
+  min-width: 140px;
+  background-image: -o-linear-gradient(31deg, #0971ce 0, #3094ed 99%, #3094ed 100%);
+  background-image: linear-gradient(59deg, #0971ce 0, #3094ed 99%, #3094ed 100%);
+}
+
+.btn-blue {
+  display: inline-block;
+  padding: 15px 50px;
+  background-color: #6270ff;
+  background-image: -o-linear-gradient(31deg, #3094ed 0, #3094ed 1%, #0971ce 100%);
+  background-image: linear-gradient(59deg, #3094ed 0, #3094ed 1%, #0971ce 100%);
+  -webkit-box-shadow: 0 16px 35px rgba(0, 0, 0, .25);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, .25);
+  font-size: .75rem;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.btn-grey {
+  background-color: #838383;
+  background-image: none;
+}
+
+.work_example_button_wrapper {
+  padding: 5px;
+
+  .mbtn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .job_col {
+    width: 99.5625%
+  }
+
+}
+
+@media screen and (max-width: 576px) {
+  .job .description {
+    display: none;
+  }
+  .job_all-price {
+    font-size: 19px
+  }
+  .job h3 {
+    font-size: 24px;
+    font-weight: normal;
+  }
+}

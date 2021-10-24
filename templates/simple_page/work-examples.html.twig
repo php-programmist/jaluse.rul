@@ -1,0 +1,21 @@
+{% extends 'header-less-base.html.twig' %}
+{% block title page.title %}
+{% block h1 page.name %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 content">
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{{ page.name }}</h1>
+                    </div>
+                </div>
+                <div class="content">
+                    {{ work_example() }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

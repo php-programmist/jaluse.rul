@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Contracts\HasExamplesInterface;
 use App\Entity\Traits\CatalogCalcTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CatalogRepository")
  */
-class Catalog extends Page
+class Catalog extends Page implements HasExamplesInterface
 {
     use CatalogCalcTrait;
     
@@ -134,7 +135,7 @@ class Catalog extends Page
         if (in_array($this->getUri(), ['markizyi', 'rulonnyie-shtoryi'])) {
             return 'рублей за изделие';
         }
-    
+        
         return parent::getUnits();
     }
     
@@ -144,7 +145,7 @@ class Catalog extends Page
     }
     
     /**
-     * @return Collection|WorkExample[]
+     * @return Collection<WorkExample>
      */
     public function getWorkExamples(): Collection
     {

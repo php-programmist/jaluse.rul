@@ -1,7 +1,7 @@
 @import "~bootstrap";
 @import "~slick-carousel/slick/slick.scss";
 @import '~font-awesome';
-@import "libs/ionicons";
+@import "libs/ionicons.css";
 @import "custom_slick";
 @import "variables";
 
@@ -79,5 +79,9 @@ ul{
       width: 100%;
     }
   }
+}
+
+.bold {
+  font-weight: bold;
 }
 
