@@ -66,7 +66,6 @@ class WorkExampleCrudController extends AbstractCrudController
                 $location,
                 $makeDays,
                 $installDays,
-                $totalPrice,
             ];
         }
     }
