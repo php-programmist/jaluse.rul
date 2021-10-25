@@ -7,4 +7,6 @@
 <p class="job_text"><span class="bold">Помещение</span>: {{ item.location }}</p>
 <p class="job_text"><span class="bold">Срок изготовления</span>: {{ item.makeDays }} дня</p>
 <p class="job_text"><span class="bold">Срок установки</span>: {{ item.installDays }} день</p>
-<p class="job_text"><span class="bold">Выезд и замер</span>: Бесплатный</p>
+<p class="job_text"><span
+            class="bold">Выезд и замер</span>: {{ item.measuringPrice > 0 ? (item.measuringPrice~' руб.') : 'Бесплатный' }}
+</p>

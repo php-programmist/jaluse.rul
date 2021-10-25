@@ -58,11 +58,11 @@ class WorkExample
     private ?string $location = null;
     
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", options={"default": 3})
      */
     private int $makeDays = 3;
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", options={"default": 1})
      */
     private int $installDays = 1;
     
@@ -70,6 +70,11 @@ class WorkExample
      * @ORM\Column(type="integer", nullable=true)
      */
     private int $totalPrice = 0;
+    
+    /**
+     * @ORM\Column(type="integer", options={"default": 0})
+     */
+    private int $measuringPrice = 0;
     
     /**
      * @ORM\Column(type="integer")
@@ -359,4 +364,25 @@ class WorkExample
         
         return $this;
     }
+    
+    /**
+     * @return int
+     */
+    public function getMeasuringPrice(): int
+    {
+        return $this->measuringPrice;
+    }
+    
+    /**
+     * @param int $measuringPrice
+     *
+     * @return $this
+     */
+    public function setMeasuringPrice(int $measuringPrice): self
+    {
+        $this->measuringPrice = $measuringPrice;
+        
+        return $this;
+    }
+    
 }
