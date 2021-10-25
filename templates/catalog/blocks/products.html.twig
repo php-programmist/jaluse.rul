@@ -3,7 +3,9 @@
         <div class="product">
             <a href="/{{ product.uri }}/">
                 <img {{ lazy_load(asset(product.imageCatalog),{},lazy_off|default(false)) }}
-                        alt="{{ product.name }}">
+                        alt="{{ product.imageAlt }}"
+                        title="{{ product.imageTitle }}"
+                >
             </a>
             <div class="product__name"><a href="/{{ product.uri }}/">{{ product.name }}</a></div>
             <div class="product__price">{{ min_price(product, false, true) }}</div>

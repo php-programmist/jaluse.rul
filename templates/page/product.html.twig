@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block description %}
-   {{ page.descriptionComputed }}
+    {{ page.descriptionComputed }}
 {% endblock %}
 
 {% block h1 %}{{ page.name }}{% endblock %}
@@ -27,7 +27,12 @@
 {% block body %}
     {{ include('modules/rating_schema.html.twig') }}
     {% embed 'embedded/card.html.twig' %}
-        {% block image %}<img src="{{ page.imageBig }}" alt="*">{% endblock image %}
+        {% block image %}
+            <img src="{{ page.imageBig }}"
+                 alt="{{ page.imageAlt }}"
+                 title="{{ page.imageTitle }}"
+            >
+        {% endblock image %}
         {% block header %}{{ page.cardHeader }}{% endblock header %}
         {% block content %}
             <div><b>Вид:</b> {{ page.typeNameForPage }}</div>
@@ -41,7 +46,7 @@
             <div><b>Выезд и замер:</b> бесплатный при оформлении заказа и оплате.</div>
             <div><b>Доставка и установка:</b> по Москве и области.</div>
         {% endblock content %}
-
+        
         {% block footer %}
             <div class="cart-footer-zag">Цена {{ min_price(page, false, true) }}</div>
             <div class="cart-footer-orang">(Гарантия 2 года)</div>
@@ -57,6 +62,6 @@
         <h2>Рекомендуемые образцы:</h2>
         {{ include('modules/_catalog_complex.html.twig') }}
     </div>
-
+    
     {{ include('modules/_seo_block.html.twig') }}
 {% endblock %}

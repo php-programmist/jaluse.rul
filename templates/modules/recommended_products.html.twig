@@ -7,7 +7,9 @@
                     <div class="product__image_wrapper">
                         {% endif %}
                         <img {{ lazy_load(asset(item.cardImageUrl) | imagine_filter('catalog_thumb')) }}
-                                alt="{{ item.name }}">
+                                alt="{{ item.imageAlt }}"
+                                title="{{ item.imageTitle }}"
+                        >
                         {% if needWrapper ?? true %}
                     </div>
                     {% endif %}

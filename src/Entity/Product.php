@@ -352,7 +352,7 @@ class Product extends Page implements HasExamplesInterface
         }
         
         if ($this->getType()) {
-            return $this->getMaterialName().' жалюзи';
+            return $this->getMaterialName() . ' жалюзи';
         }
         
         return 'Не установлен';
@@ -371,12 +371,12 @@ class Product extends Page implements HasExamplesInterface
         return 'Не установлен';
     }
     
-    public function getMinPrice():?int
+    public function getMinPrice(): ?int
     {
         return $this->min_price;
     }
     
-    public function getMinSize():string
+    public function getMinSize(): string
     {
         return $this->getCalculationType() === 'simple' ? '100 x 100 см' : '40 x 50 см';
     }
@@ -390,7 +390,7 @@ class Product extends Page implements HasExamplesInterface
     
     public function getCalculationType()
     {
-        if ( ! $this->getType()) {
+        if (!$this->getType()) {
             return 'simple';
         }
         
@@ -586,8 +586,18 @@ class Product extends Page implements HasExamplesInterface
                 $workExample->setProduct(null);
             }
         }
-        
+    
         return $this;
+    }
+    
+    public function getImageAlt(): string
+    {
+        return sprintf('%s цена. Купить в «Мастерская Жалюзи»', $this->getName() ?? '');
+    }
+    
+    public function getImageTitle(): string
+    {
+        return $this->getName() ?? '';
     }
     
 }
