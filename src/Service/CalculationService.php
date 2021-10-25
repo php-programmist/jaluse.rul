@@ -85,14 +85,17 @@ class CalculationService
     
     public function getCatalogMinPriceByUri(string $catalogUri): int
     {
+        if ($catalogUri === 'zhalyuzi') {
+            $catalogUri = 'zhalyuzi/vertikalnye';
+        }
         /** @var Catalog $catalog */
         $catalog = $this->entityManager->getRepository(Catalog::class)->findOneBy(['uri' => $catalogUri]);
         if (null === $catalog) {
             $this->logger->error('Не найден каталог - ' . $catalogUri);
-            
+        
             return 0;
         }
-        
+    
         $minPrice = $this->getCatalogMinPrice($catalog);
         
         if (0 === $minPrice) {
