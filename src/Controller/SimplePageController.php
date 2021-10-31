@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\PageRepository;
+use App\Service\CatalogManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,13 +23,13 @@ class SimplePageController extends AbstractController
         $this->page_repository = $page_repository;
     }
     
-    
     /**
      * @Route("/kontaktyi/", name="simple_page_kontaktyi")
      */
     public function kontaktyi()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'kontaktyi']);
+        $page = $this->page_repository->findOneBy(['uri' => 'kontaktyi']);
+    
         return $this->render('simple_page/kontaktyi.html.twig', [
             'page' => $page,
         ]);
@@ -39,7 +40,8 @@ class SimplePageController extends AbstractController
      */
     public function o_kompanii()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'o-kompanii']);
+        $page = $this->page_repository->findOneBy(['uri' => 'o-kompanii']);
+    
         return $this->render('simple_page/o_kompanii.html.twig', [
             'page' => $page,
         ]);
@@ -50,7 +52,8 @@ class SimplePageController extends AbstractController
      */
     public function zakaz_zhalyuzi()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'zakaz-zhalyuzi']);
+        $page = $this->page_repository->findOneBy(['uri' => 'zakaz-zhalyuzi']);
+    
         return $this->render('simple_page/zakaz_zhalyuzi.html.twig', [
             'page' => $page,
         ]);
@@ -61,7 +64,8 @@ class SimplePageController extends AbstractController
      */
     public function video_jaluse()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'video-jaluse']);
+        $page = $this->page_repository->findOneBy(['uri' => 'video-jaluse']);
+    
         return $this->render('simple_page/video_jaluse.html.twig', [
             'page' => $page,
         ]);
@@ -72,7 +76,8 @@ class SimplePageController extends AbstractController
      */
     public function optom()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'optom']);
+        $page = $this->page_repository->findOneBy(['uri' => 'optom']);
+    
         return $this->render('simple_page/optom.html.twig', [
             'page' => $page,
         ]);
@@ -91,7 +96,8 @@ class SimplePageController extends AbstractController
      */
     public function pay()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'pay']);
+        $page = $this->page_repository->findOneBy(['uri' => 'pay']);
+    
         return $this->render('simple_page/pay.html.twig', [
             'page' => $page,
         ]);
@@ -102,7 +108,8 @@ class SimplePageController extends AbstractController
      */
     public function dostavka()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'dostavka']);
+        $page = $this->page_repository->findOneBy(['uri' => 'dostavka']);
+    
         return $this->render('simple_page/dostavka.html.twig', [
             'page' => $page,
         ]);
@@ -113,7 +120,8 @@ class SimplePageController extends AbstractController
      */
     public function uslugi()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'uslugi']);
+        $page = $this->page_repository->findOneBy(['uri' => 'uslugi']);
+    
         return $this->render('simple_page/uslugi.html.twig', [
             'page' => $page,
         ]);
@@ -124,7 +132,8 @@ class SimplePageController extends AbstractController
      */
     public function yuridicheskimLicam()
     {
-        $page = $this->page_repository->findOneBy(['uri'=>'yuridicheskim-licam']);
+        $page = $this->page_repository->findOneBy(['uri' => 'yuridicheskim-licam']);
+    
         return $this->render('simple_page/yuridicheskim-licam.html.twig', [
             'page' => $page,
         ]);
@@ -175,6 +184,25 @@ class SimplePageController extends AbstractController
         
         return $this->render('simple_page/work-examples.html.twig', [
             'page' => $page,
+        ]);
+    }
+    
+    /**
+     * @Route("/catalog-search/", name="simple_page_catalog-search")
+     */
+    public function catalogSearch(Request $request, CatalogManager $catalogManager): Response
+    {
+        $page              = $this->page_repository->findOneBy(['uri' => 'catalog-search']);
+        $filters['search'] = $request->query->get('search', '');
+        
+        if ($request->isXmlHttpRequest()) {
+            return $catalogManager->renderProducts($filters);
+        }
+        
+        return $this->render('catalog-search/index.html.twig', [
+            'page'     => $page,
+            'search'   => $filters['search'],
+            'products' => $catalogManager->getProductsPaginator($filters),
         ]);
     }
 }

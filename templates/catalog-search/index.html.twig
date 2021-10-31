@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('catalog') }}
+    {{ encore_entry_link_tags('simple_catalog') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('catalog') }}
+    {{ encore_entry_script_tags('simple_catalog') }}
+{% endblock %}
+
+{% block title %}
+    {%- if page.title -%}
+        {{ page.title }}
+    {%- endif -%}
+{% endblock %}
+{% block description -%}
+    {{ page.description }}
+{%- endblock %}
+{% block h1 %}{{ page.name }} в Москве{% endblock %}
+
+{% block body %}
+    <div id="content" class="container-fluid catalog-container">
+        {% if products is defined and products|length > 0 %}
+            <div class="row catalog-calculator">
+                <div class="col-12">
+                    <h2>Вы искали: "{{ search }}"</h2>
+                    {{ include('catalog/blocks/products.html.twig') }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+    {{ include('modules/_employees.html.twig') }}
+    {{ include('modules/_clients.html.twig') }}
+{% endblock %}

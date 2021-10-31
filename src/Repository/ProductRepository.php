@@ -232,15 +232,21 @@ class ProductRepository extends ServiceEntityRepository
             $query->andWhere('p.category = :category')
                   ->setParameter('category', $filters['category']);
         }
-        
+    
         if (!empty($filters['type'])) {
             $query->andWhere('p.type IN(:type)')
                   ->setParameter('type', explode(',', $filters['type']));
         }
-        
+    
         if (!empty($filters['material'])) {
             $query->andWhere('p.material = :material')
                   ->setParameter('material', $filters['material']);
+        }
+    
+        if (!empty($filters['search'])) {
+            $query
+                ->andWhere('LOWER(p.name) like :search')
+                ->setParameter('search', '%' . mb_strtolower(trim($filters['search'])) . '%');
         }
     }
 }

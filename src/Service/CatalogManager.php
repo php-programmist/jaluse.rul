@@ -12,7 +12,9 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Twig\Environment;
 
 class CatalogManager
 {
@@ -27,13 +29,15 @@ class CatalogManager
      * @param PaginatorInterface     $paginator
      * @param CatalogRepository      $catalogRepository
      * @param ConfigService          $configs
+     * @param Environment            $twig
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         RequestStack $requestStack,
         PaginatorInterface $paginator,
         CatalogRepository $catalogRepository,
-        private ConfigService $configs
+        private ConfigService $configs,
+        private Environment $twig
     ) {
         $this->entityManager = $entityManager;
         
@@ -175,5 +179,15 @@ class CatalogManager
         }
         
         return $catalog;
+    }
+    
+    public function renderProducts(array $filters): Response
+    {
+        $html = $this->twig->render('catalog/blocks/products.html.twig', [
+            'products' => $this->getProductsPaginator($filters),
+            'lazy_off' => true,
+        ]);
+        
+        return (new Response())->setContent($html);
     }
 }

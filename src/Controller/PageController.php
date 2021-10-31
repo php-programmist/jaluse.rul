@@ -64,7 +64,7 @@ class PageController extends AbstractController
         $filters['color'] = $selectedColor->getId();
         
         if ($this->request->isXmlHttpRequest()) {
-            return $this->renderProducts($filters);
+            return $this->catalogManager->renderProducts($filters);
         }
         
         return $this->render('page/color-filtered-catalog.html.twig',
@@ -85,7 +85,7 @@ class PageController extends AbstractController
         $filters['category'] = $selectedCategory->getId();
         
         if ($this->request->isXmlHttpRequest()) {
-            return $this->renderProducts($filters);
+            return $this->catalogManager->renderProducts($filters);
         }
         
         return $this->render('page/category-filtered-catalog.html.twig',
@@ -197,7 +197,7 @@ class PageController extends AbstractController
         $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         
         if ($this->request->isXmlHttpRequest()) {
-            return $this->renderProducts($filters);
+            return $this->catalogManager->renderProducts($filters);
         }
         
         return $this->render($template,
@@ -229,13 +229,5 @@ class PageController extends AbstractController
             'items'         => $this->catalogManager->getPopular($catalog),
             'catalogsLinks' => $this->catalogManager->getCatalogsLinks($catalog),
         ];
-    }
-    
-    private function renderProducts(array $filters): Response
-    {
-        return $this->render('catalog/blocks/products.html.twig', [
-            'products' => $this->catalogManager->getProductsPaginator($filters),
-            'lazy_off' => true,
-        ]);
     }
 }
