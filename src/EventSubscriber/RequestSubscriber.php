@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\RobotsIp;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -151,7 +152,10 @@ class RequestSubscriber implements EventSubscriberInterface
                 ->setReferer($referer)
                 ->setUserAgent($useragent);
             $this->entityManager->persist($robotsIp);
-            $this->entityManager->flush();
+            try{
+                $this->entityManager->flush();
+            } catch (Exception){
+            }
         }
     }
     
