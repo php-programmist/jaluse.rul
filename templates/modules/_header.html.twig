@@ -7,10 +7,8 @@
                     <a href="/"><img {{ lazy_load('/img/logo/logo.png') }} alt="*"></a>
                 </div>
                 <div class="header-n1-modphone col-1 align-self-center">
-                    <a href="javascript:void(0)" class="js-search_input_toggle mr-1">
-                        <img width="24" height="24" {{ lazy_load('/img/social/search.png') }} alt="Поиск">
-                    </a>
-                    
+                    <a href="javascript:void(0)" class="js-search_input_toggle search_input_toggle mr-1">🔎</a>
+        
                     <a href="tel:88007757238">
                         <img {{ lazy_load('/img/phone.webp') }} alt="#">
                     </a>
@@ -57,17 +55,12 @@
                                        target="_blank"></a>
                                 </div>
                             </div>
-                            <div class="social_icons">
-                                <div class="social_icons__icon_search social_icons__icon">
-                                    <a href="#"
-                                       class="js-search_input_toggle"
-                                       title="Поиск товаров"
-                                    ></a>
-                                </div>
+                            <div class="social_icons pt-1">
+                                <a href="javascript:void(0)" class="js-search_input_toggle search_input_toggle">🔎</a>
                             </div>
                         </div>
                     </div>
-                
+
                 </div>
                 <div class="headerpoisk col-3 align-self-center">8(800)775-72-38</div>
                 <div class="headermbtn col-2 align-self-center"><img {{ lazy_load('/img/burger.webp') }} alt="*"
@@ -217,12 +210,7 @@
                     <a href="tel:74959843848">+7 (495) 984-38-48</a>
                 </div>
                 <div class="vip-menu-wrap menu-wrap social_icons header-search">
-                    <div class="social_icons__icon_search social_icons__icon">
-                        <a href="javascript:void(0)"
-                           class="js-search_input_toggle"
-                           title="Поиск товаров"
-                        ></a>
-                    </div>
+                    <a href="javascript:void(0)" class="js-search_input_toggle search_input_toggle">🔎</a>
                 </div>
                 <div class="menu-wrap menu-none"><a href="{{ path('simple_page_dostavka') }}">Доставка</a></div>
                 <div class="menu-wrap menu-none"><a href="{{ path('simple_page_pay') }}">Оплата</a></div>
