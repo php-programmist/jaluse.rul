@@ -1,0 +1,24 @@
+<ul class="search_results">
+    {% for product in products %}
+        <li class="search_product">
+            <a
+                    class="search-result-link"
+                    href="/{{ product.uri }}/"
+            >
+                <span class="search-result-image">
+                    <img src="{{ asset(product.imageSmall) }}"
+                         alt="{{ product.imageAlt }}"
+                         title="{{ product.imageTitle }}"
+                    />
+                </span>
+                <span class="search-result-data">
+                    <span class="title">{{ product.name }}</span>
+                    <span class="description">{{ product.parent.name }}</span>
+                    <span class="price">{{ min_price(product, false, true) }}</span>
+                </span>
+            </a>
+        </li>
+    {% else %}
+        <p>Ничего не найдено...</p>
+    {% endfor %}
+</ul>

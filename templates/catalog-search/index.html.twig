@@ -21,15 +21,18 @@
 {% block h1 %}{{ page.name }} в Москве{% endblock %}
 
 {% block body %}
-    <div id="content" class="container-fluid catalog-container">
-        {% if products is defined and products|length > 0 %}
-            <div class="row catalog-calculator">
-                <div class="col-12">
-                    <h2>Вы искали: "{{ search }}"</h2>
+    <div id="content" class="container catalog-container">
+        <div class="row catalog-calculator">
+            <div class="col-12">
+                <h2>Вы искали: "{{ search }}"</h2>
+                {% if products|length > 0 %}
                     {{ include('catalog/blocks/products.html.twig') }}
-                </div>
+                {% else %}
+                    <p>Ничего не найдено...</p>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
+    
     </div>
     
     {{ include('modules/_employees.html.twig') }}

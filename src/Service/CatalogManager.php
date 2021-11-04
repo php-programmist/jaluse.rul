@@ -155,7 +155,7 @@ class CatalogManager
      *
      * @return PaginationInterface
      */
-    public function getProductsPaginator(array $filters): PaginationInterface
+    public function getProductsPaginator(array $filters, ?int $limit = null): PaginationInterface
     {
         $order      = $this->request->query->get('order', 'price');
         $orderParts = explode('-', $order);
@@ -165,7 +165,7 @@ class CatalogManager
         $pagination = $this->paginator->paginate(
             $this->getProductsQuery($filters, $orderBy, $orderDir),
             $this->request->query->getInt('page', 1),
-            $this->request->query->getInt('limit', $this->configs->getCached('calc.products_catalog_limit'))
+            $limit ?? $this->configs->getCached('calc.products_catalog_limit')
         );
         $pagination->setParam('_fragment', 'content');
     

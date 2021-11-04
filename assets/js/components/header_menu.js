@@ -11,6 +11,7 @@ $(window).scroll(function () {
 			$('.header-n1').css({display: 'none'});
 			$('.header-n2').css({background: 'rgba(0,0,0, 0.7)'});
 			$('.headern2phone').css({display: 'inline-block'});
+			$('.header-search').css({display: 'inline-block'});
 			//$('.vip-menu').css({top: '47px'});
 			
 		}
@@ -18,6 +19,7 @@ $(window).scroll(function () {
 			$('.header-n1').css({display: 'block'});
 			$('.header-n2').css({background: 'rgba(0,0,0, 1)'});
 			$('.headern2phone').css({display: 'none'});
+			$('.header-search').css({display: 'none'});
 			//$('.vip-menu').css({top: 0});
 		}
 	}

@@ -306,10 +306,16 @@
     background-size: contain;
     width: 40px;
     height: 40px;
-    margin: -4px;
 
     &_whatsapp {
       background-image: url('/img/social/whatsapp.png');
+    }
+
+    &_search {
+      background-image: url('/img/social/search.png');
+      width: 30px;
+      height: 30px;
+      transform: translateY(5px);
     }
 
     &_insta {
@@ -324,5 +330,11 @@
       display: block;
       height: 100%;
     }
+  }
+}
+
+.header-search {
+  .social_icons__icon_search {
+    transform: translateY(8px);
   }
 }

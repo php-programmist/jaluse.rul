@@ -1,0 +1,16 @@
+<div class="search_input_container">
+    <div class="container">
+        <form class="search_form" action="{{ path('simple_page_catalog-search') }}" method="get">
+            <input
+                    type="text"
+                    name="search"
+                    class="search_input"
+                    value="{{ app.request.query.get('search') }}"
+            >
+            <a href="javascript:void(0)" class="search_input_btn search_input_submit">🔎</a>
+            <a href="javascript:void(0)" class="search_input_btn search_input_close">&times;</a>
+        </form>
+        <div class="search_results_container"></div>
+    </div>
+
+</div>

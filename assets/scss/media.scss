@@ -246,8 +246,8 @@
     display: none;
   }
   .header-n1-modphone {
-    display: block;
-    text-align: right;
+    display: flex;
+    justify-content: space-evenly;
   }
   .header-n1 .headerpoisk {
     text-align: right;
