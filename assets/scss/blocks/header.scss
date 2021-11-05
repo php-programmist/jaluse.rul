@@ -301,6 +301,12 @@
 
 .social_icons {
   transform: translateX(-13px);
+
+  .search_input_toggle {
+    margin-bottom: 4px;
+    margin-left: 5px;
+  }
+
   &__icon {
     -webkit-background-size: contain;
     background-size: contain;
@@ -324,6 +330,10 @@
 
     &_facebook {
       background-image: url('/img/social/facebook.png');
+    }
+
+    &_youtube {
+      background-image: url('/img/social/youtube.png');
     }
 
     a {
