@@ -49,18 +49,32 @@ p{
   cursor: pointer;
   background: $blue;
   color: $white;
-  padding-left: 10px;
-  padding-right: 10px;
-  transition: all 3s;
+  padding: 10px;
+  transition: all 1s;
   border-radius: 5px;
   min-height: 40px;
   font-weight: bold;
-  &:hover{
+
+  &:hover {
     opacity: 9;
     transition: all 3s;
   }
-  &_orange{
+
+  &_orange {
     background: $orange;
+  }
+}
+
+.three-button-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  .mbtn {
+    min-width: 150px;
+    text-align: center;
+    display: block;
+    margin-top: 1em;
   }
 }
 
