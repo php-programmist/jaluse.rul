@@ -33,6 +33,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *     Calculator::TYPE = "Calculator",
  *     Article::TYPE = "Article",
  * })
+ * @ORM\Table(indexes={
+ *     @ORM\Index(name="IDX_NAME_FULLTEXT", columns={"name"}, flags={"fulltext"})
+ * })
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()
  */

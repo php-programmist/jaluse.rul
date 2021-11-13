@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Helper\SearchHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -245,8 +246,8 @@ class ProductRepository extends ServiceEntityRepository
     
         if (!empty($filters['search'])) {
             $query
-                ->andWhere('LOWER(p.name) like :search')
-                ->setParameter('search', '%' . mb_strtolower(trim($filters['search'])) . '%');
+                ->andWhere('MATCH_AGAINST(p.name,:search) > 0')
+                ->setParameter('search', SearchHelper::prepareFullTextSearch($filters['search']));
         }
     }
 }
