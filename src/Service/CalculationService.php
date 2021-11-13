@@ -3,7 +3,10 @@
 namespace App\Service;
 
 use App\Entity\Catalog;
+use App\Entity\Markiz;
 use App\Entity\Product;
+use App\Entity\Roll;
+use App\Entity\Roman;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -108,19 +111,19 @@ class CalculationService
     private function getCatalogMinPrice(Catalog $catalog): int
     {
         $minPrice = 0;
-        if (null === $catalog->getType()) {
-            $this->logger->error(sprintf('У каталога %s отсутствует тип', $catalog->getUri()));
-            
-            return 0;
+        if (null !== $catalog->getPrice()) {
+            return $catalog->getPrice();
         }
-        
+    
         foreach ($catalog->getPages() as $page) {
             $minPriceCandidate = 0;
-            
+        
             if ($page instanceof Product) {
                 $minPriceCandidate = $this->getMinPrice($page);
             } elseif ($page instanceof Catalog) {
                 $minPriceCandidate = $this->getCatalogMinPrice($page);
+            } elseif ($page instanceof Markiz || $page instanceof Roll || $page instanceof Roman) {
+                $minPriceCandidate = $page->getPrice();
             }
     
             if (
