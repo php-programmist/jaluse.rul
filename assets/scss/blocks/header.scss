@@ -63,10 +63,11 @@
       &-ssil3:before {
         background-position: -202px 0
       }
-      &-pay{
-        &:before{
+
+      &-portfolio {
+        &:before {
           content: "";
-          background: url(/img/oplata.png) no-repeat;
+          background: url(/img/portfolio.png) no-repeat;
           padding: 14px 15px;
 
         }
