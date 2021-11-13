@@ -12,16 +12,19 @@
 {% endblock %}
 {% block breadcrumbs_block %}{% endblock %}
 {% block body %}
-
-{{ include('modules/_order.html.twig') }}
-{{ include('modules/rating.html.twig') }}
-{{ include('modules/_calculator.html.twig') }}
-{{ include('modules/recommended-main-page.html.twig') }}
-{{ include('modules/_advantages.html.twig') }}
-{{ include('modules/_employees.html.twig') }}
-{{ include('modules/_our_works.html.twig') }}
-{{ include('modules/_clients.html.twig') }}
-{{ include('modules/_locations.html.twig') }}
+    
+    {{ include('modules/_order.html.twig') }}
+    {{ include('modules/rating.html.twig') }}
+    {{ include('modules/_calculator.html.twig') }}
+    {{ include('modules/recommended-main-page.html.twig') }}
+    {{ include('modules/_advantages.html.twig') }}
+    {{ include('modules/_employees.html.twig') }}
+    <div class="mt-2">
+        <h2 class="text-center">Примеры работ</h2>
+        {{ work_example() }}
+    </div>
+    {{ include('modules/_clients.html.twig') }}
+    {{ include('modules/_locations.html.twig') }}
 
 
 {% endblock %}
