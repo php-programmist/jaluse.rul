@@ -35,7 +35,7 @@ class WorkExampleService
     public function getByPage(?Page $page): array
     {
         if ($page instanceof HasExamplesInterface) {
-            $items = $page->getWorkExamples();
+            $items = $page->getWorkExamplesOfPage()->toArray();
             foreach ($items as $item) {
                 $item->setImages($this->files_explorer->getImagesFromFolder($item->getImgFolder()));
             }

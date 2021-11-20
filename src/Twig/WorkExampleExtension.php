@@ -35,6 +35,9 @@ class WorkExampleExtension extends AbstractExtension
     public function render(Environment $twig, ?Page $page = null, bool $withFilters = false): string
     {
         $items = $this->workExampleService->getByPage($page);
+        if (0 === count($items)) {
+            return '';
+        }
         if ($withFilters) {
             $html = $twig->render('modules/work_example/work_example_with_filters.html.twig', [
                 'items' => $items,

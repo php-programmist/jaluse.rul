@@ -1,0 +1,7 @@
+{% set html = work_example(page, false) %}
+{% if html is not empty %}
+    <div class="container mt-2">
+        <h2 class="text-center">Примеры работ</h2>
+        {{ html|raw }}
+    </div>
+{% endif %}

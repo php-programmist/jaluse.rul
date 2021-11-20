@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\Contracts\HasExamplesInterface;
 use App\Entity\Traits\CatalogCalcTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CatalogRepository")
  */
-class Catalog extends Page implements HasExamplesInterface
+class Catalog extends Page
 {
     use CatalogCalcTrait;
     

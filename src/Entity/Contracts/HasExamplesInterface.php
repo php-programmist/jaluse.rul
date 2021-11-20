@@ -10,5 +10,5 @@ interface HasExamplesInterface
     /**
      * @return Collection<WorkExample>
      */
-    public function getWorkExamples(): Collection;
+    public function getWorkExamplesOfPage(): Collection;
 }

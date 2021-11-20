@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Contracts\HasExamplesInterface;
 use App\Entity\Contracts\TurboPageInterface;
 use App\Entity\Traits\RatingTrait;
 use App\Model\GeoProduct\ZhalyuziGeoProduct;
@@ -39,7 +40,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()
  */
-abstract class Page implements TurboPageInterface
+abstract class Page implements TurboPageInterface, HasExamplesInterface
 {
     use RatingTrait;
     
@@ -185,7 +186,7 @@ abstract class Page implements TurboPageInterface
     public function setName(string $name)
     {
         $this->name = $name;
-    
+        
         return $this;
     }
     
@@ -206,7 +207,7 @@ abstract class Page implements TurboPageInterface
     public function setUri(string $uri)
     {
         $this->uri = trim($uri);
-    
+        
         return $this;
     }
     
@@ -223,7 +224,7 @@ abstract class Page implements TurboPageInterface
     public function setTitle(?string $title)
     {
         $this->title = $title;
-    
+        
         return $this;
     }
     
@@ -235,7 +236,7 @@ abstract class Page implements TurboPageInterface
     public function setDescription(?string $description)
     {
         $this->description = $description;
-    
+        
         return $this;
     }
     
@@ -247,7 +248,7 @@ abstract class Page implements TurboPageInterface
     public function setPublished(bool $published)
     {
         $this->published = $published;
-    
+        
         return $this;
     }
     
@@ -259,7 +260,7 @@ abstract class Page implements TurboPageInterface
     public function setCreatedAt(DateTimeInterface $created_at): Page
     {
         $this->created_at = $created_at;
-    
+        
         return $this;
     }
     
@@ -271,7 +272,7 @@ abstract class Page implements TurboPageInterface
     public function setModifiedAt(DateTimeInterface $modified_at)
     {
         $this->modified_at = $modified_at;
-    
+        
         return $this;
     }
     
@@ -283,7 +284,7 @@ abstract class Page implements TurboPageInterface
     public function setParent(?self $parent)
     {
         $this->parent = $parent;
-    
+        
         return $this;
     }
     
@@ -301,7 +302,7 @@ abstract class Page implements TurboPageInterface
             $this->pages[] = $page;
             $page->setParent($this);
         }
-    
+        
         return $this;
     }
     
@@ -314,7 +315,7 @@ abstract class Page implements TurboPageInterface
                 $page->setParent(null);
             }
         }
-    
+        
         return $this;
     }
     
@@ -326,7 +327,7 @@ abstract class Page implements TurboPageInterface
     public function setContent(?string $content): self
     {
         $this->content = $content;
-    
+        
         return $this;
     }
     
@@ -343,7 +344,7 @@ abstract class Page implements TurboPageInterface
     public function setSeoImage(?string $seoImage): self
     {
         $this->seoImage = $seoImage;
-    
+        
         return $this;
     }
     
@@ -403,7 +404,7 @@ abstract class Page implements TurboPageInterface
     public function setOurWorksFolder(?string $ourWorksFolder): self
     {
         $this->ourWorksFolder = $ourWorksFolder;
-    
+        
         return $this;
     }
     
@@ -422,7 +423,7 @@ abstract class Page implements TurboPageInterface
         if (!$this->getSeoImage()) {
             return '';
         }
-    
+        
         return '/' . $this->getSeoImgFolder() . $this->getSeoImage();
     }
     
@@ -434,7 +435,7 @@ abstract class Page implements TurboPageInterface
     public function setCardImage(?string $cardImage): self
     {
         $this->cardImage = $cardImage;
-    
+        
         return $this;
     }
     
@@ -455,7 +456,7 @@ abstract class Page implements TurboPageInterface
     public function setCardDescription(?string $cardDescription): self
     {
         $this->cardDescription = $cardDescription;
-    
+        
         return $this;
     }
     
@@ -526,7 +527,7 @@ abstract class Page implements TurboPageInterface
     public function setTurbo(bool $turbo): self
     {
         $this->turbo = $turbo;
-    
+        
         return $this;
     }
     
@@ -571,7 +572,7 @@ abstract class Page implements TurboPageInterface
     public function setShowSeoText(bool $showSeoText): self
     {
         $this->showSeoText = $showSeoText;
-    
+        
         return $this;
     }
     

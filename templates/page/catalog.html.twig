@@ -31,6 +31,9 @@
             {{ include('catalog/blocks/catalog.html.twig') }}
         {% endif %}
     </div>
+    
+    {{ include('modules/work_example/without-filters.html.twig') }}
+    
     {% if items|default(null) is not empty %}
         <div class="container">
             <h2>{{ page.recommendedTitle }}:</h2>

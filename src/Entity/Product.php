@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\Contracts\HasExamplesInterface;
 use App\Entity\Traits\CatalogCalcTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @Vich\Uploadable
  */
-class Product extends Page implements HasExamplesInterface
+class Product extends Page
 {
     use CatalogCalcTrait;
     
