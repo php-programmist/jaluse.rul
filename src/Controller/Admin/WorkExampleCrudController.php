@@ -31,33 +31,40 @@ class WorkExampleCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        $id          = IntegerField::new('id', 'ID');
-        $name        = TextField::new('name', 'Название');
-        $position    = IntegerField::new('position', 'Порядок');
-        $address     = TextField::new('address', 'Адрес монтажа');
-        $type        = TextField::new('type', 'Вид изделия');
-        $collection  = TextField::new('collection', 'Коллекция');
-        $color       = TextField::new('color', 'Цвет');
-        $number      = IntegerField::new('number', 'Количество окон');
-        $place       = TextField::new('place', 'Где устанавливали');
-        $location    = TextField::new('location', 'Помещение');
-        $makeDays    = IntegerField::new('makeDays', 'Срок изготовления');
-        $installDays = IntegerField::new('installDays', 'Срок установки');
+        $id             = IntegerField::new('id', 'ID');
+        $name           = TextField::new('name', 'Название');
+        $position       = IntegerField::new('position', 'Порядок');
+        $address        = TextField::new('address', 'Адрес монтажа');
+        $type           = TextField::new('type', 'Вид изделия');
+        $collection     = TextField::new('collection', 'Коллекция');
+        $color          = TextField::new('color', 'Цвет');
+        $number         = IntegerField::new('number', 'Количество окон');
+        $place          = TextField::new('place', 'Где устанавливали');
+        $location       = TextField::new('location', 'Помещение');
+        $makeDays       = IntegerField::new('makeDays', 'Срок изготовления');
+        $installDays    = IntegerField::new('installDays', 'Срок установки');
         $measuringPrice = IntegerField::new('measuringPrice', 'Выезд и замер');
-        
-        $product = AssociationField::new('product', 'Товар')->autocomplete();
-        $catalog = AssociationField::new('catalog', 'Каталог');
-        
+    
+        $product         = AssociationField::new('product', 'Товар')->autocomplete();
+        $catalog         = AssociationField::new('catalog', 'Каталог');
+        $pages           = AssociationField::new('pages',
+            'Страницы')->autocomplete()->setCrudController(PageCrudController::class);
+        $productType     = AssociationField::new('productType', 'Категория');
+        $productMaterial = AssociationField::new('productMaterial', 'Подкатегория');
+    
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $product, $catalog, $position];
         }
-        
+    
         if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
             return [
                 $name,
                 $position,
                 $product,
                 $catalog,
+                $pages,
+                $productType,
+                $productMaterial,
                 $address,
                 $type,
                 $collection,

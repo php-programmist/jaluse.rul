@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -93,6 +95,26 @@ class WorkExample
      */
     private ?Catalog $catalog = null;
     
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="workExamples")
+     */
+    private ?Type $productType = null;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity=Material::class, inversedBy="workExamples")
+     */
+    private ?Material $productMaterial = null;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity=Page::class, inversedBy="workExamplesOfPage")
+     */
+    private Collection $pages;
+    
+    public function __construct()
+    {
+        $this->pages = new ArrayCollection();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -134,7 +156,7 @@ class WorkExample
         return $this;
     }
     
-    public function getImgFolder()
+    public function getImgFolder(): string
     {
         return self::IMAGES_PATH . '/' . $this->getId();
     }
@@ -381,6 +403,54 @@ class WorkExample
     public function setMeasuringPrice(int $measuringPrice): self
     {
         $this->measuringPrice = $measuringPrice;
+        
+        return $this;
+    }
+    
+    public function getProductType(): ?Type
+    {
+        return $this->productType;
+    }
+    
+    public function setProductType(?Type $productType): self
+    {
+        $this->productType = $productType;
+        
+        return $this;
+    }
+    
+    public function getProductMaterial(): ?Material
+    {
+        return $this->productMaterial;
+    }
+    
+    public function setProductMaterial(?Material $productMaterial): self
+    {
+        $this->productMaterial = $productMaterial;
+        
+        return $this;
+    }
+    
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+    
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+        }
+        
+        return $this;
+    }
+    
+    public function removePage(Page $page): self
+    {
+        $this->pages->removeElement($page);
         
         return $this;
     }

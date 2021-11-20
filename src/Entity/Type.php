@@ -54,11 +54,17 @@ class Type
      */
     private int $ordering = 0;
     
+    /**
+     * @ORM\OneToMany(targetEntity=WorkExample::class, mappedBy="productType")
+     */
+    private Collection $workExamples;
+    
     public function __construct()
     {
-        $this->products  = new ArrayCollection();
-        $this->materials = new ArrayCollection();
-        $this->catalogs  = new ArrayCollection();
+        $this->products     = new ArrayCollection();
+        $this->materials    = new ArrayCollection();
+        $this->catalogs     = new ArrayCollection();
+        $this->workExamples = new ArrayCollection();
     }
     
     public function getId(): ?int
@@ -212,6 +218,36 @@ class Type
     public function setOrdering(int $ordering): self
     {
         $this->ordering = $ordering;
+        
+        return $this;
+    }
+    
+    /**
+     * @return Collection|WorkExample[]
+     */
+    public function getWorkExamples(): Collection
+    {
+        return $this->workExamples;
+    }
+    
+    public function addWorkExample(WorkExample $workExample): self
+    {
+        if (!$this->workExamples->contains($workExample)) {
+            $this->workExamples[] = $workExample;
+            $workExample->setProductType($this);
+        }
+        
+        return $this;
+    }
+    
+    public function removeWorkExample(WorkExample $workExample): self
+    {
+        if ($this->workExamples->removeElement($workExample)) {
+            // set the owning side to null (unless already changed)
+            if ($workExample->getProductType() === $this) {
+                $workExample->setProductType(null);
+            }
+        }
         
         return $this;
     }

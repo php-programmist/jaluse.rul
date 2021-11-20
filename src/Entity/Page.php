@@ -158,12 +158,18 @@ abstract class Page implements TurboPageInterface
      */
     protected $geoProductType = ZhalyuziGeoProduct::TYPE;
     
+    /**
+     * @ORM\ManyToMany(targetEntity=WorkExample::class, mappedBy="pages")
+     */
+    private Collection $workExamplesOfPage;
+    
     public function __construct()
     {
         $this->created_at  = new DateTimeImmutable();
         $this->modified_at = new DateTimeImmutable();
         $this->pages       = new ArrayCollection();
         $this->generateRatingAndCount();
+        $this->workExamplesOfPage = new ArrayCollection();
     }
     
     public function getId(): ?int
@@ -577,5 +583,32 @@ abstract class Page implements TurboPageInterface
     public function getCalcLink(): ?string
     {
         return '/zhalyuzi/kalkulyator/';
+    }
+    
+    /**
+     * @return Collection|WorkExample[]
+     */
+    public function getWorkExamplesOfPage(): Collection
+    {
+        return $this->workExamplesOfPage;
+    }
+    
+    public function addWorkExamplesOfPage(WorkExample $workExamplesOfPage): self
+    {
+        if (!$this->workExamplesOfPage->contains($workExamplesOfPage)) {
+            $this->workExamplesOfPage[] = $workExamplesOfPage;
+            $workExamplesOfPage->addPage($this);
+        }
+        
+        return $this;
+    }
+    
+    public function removeWorkExamplesOfPage(WorkExample $workExamplesOfPage): self
+    {
+        if ($this->workExamplesOfPage->removeElement($workExamplesOfPage)) {
+            $workExamplesOfPage->removePage($this);
+        }
+        
+        return $this;
     }
 }
