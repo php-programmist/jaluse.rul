@@ -455,7 +455,7 @@ class WorkExample
         return $this;
     }
     
-    public function getFilters(): string
+    public function getFilters(): array
     {
         $filters = [];
         if (null !== $this->getProductType()) {
@@ -464,12 +464,12 @@ class WorkExample
                 $filters[] = 'На пластиковые окна';
             }
         }
-        
+    
         if (null !== $this->getProductMaterial()) {
             $filters[] = $this->getProductMaterial()->getName();
         }
-        
-        return implode(',', $filters);
+    
+        return $filters;
     }
     
 }

@@ -39,8 +39,10 @@ class WorkExampleExtension extends AbstractExtension
             return '';
         }
         if ($withFilters) {
-            $html = $twig->render('modules/work_example/work_example_with_filters.html.twig', [
-                'items' => $items,
+            $possibleFilters = $this->workExampleService->getPossibleFilters($items);
+            $html            = $twig->render('modules/work_example/work_example_with_filters.html.twig', [
+                'items'           => $items,
+                'possibleFilters' => $possibleFilters,
             ]);
         } else {
             $html = $twig->render('widget/work_example.html.twig', [

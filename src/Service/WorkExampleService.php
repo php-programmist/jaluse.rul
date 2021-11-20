@@ -42,7 +42,23 @@ class WorkExampleService
         } else {
             $items = $this->getAll();
         }
-        
+    
         return $items;
+    }
+    
+    /**
+     * @param array<WorkExample> $items
+     *
+     * @return array
+     */
+    public function getPossibleFilters(array $items): array
+    {
+        $toMerge = [];
+        foreach ($items as $item) {
+            $toMerge[] = $item->getFilters();
+        }
+        $filters = array_merge(...$toMerge);
+        
+        return array_unique($filters);
     }
 }
