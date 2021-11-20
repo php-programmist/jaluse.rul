@@ -11,6 +11,9 @@
 
 .job {
   margin: 10px auto;
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 25px;
 }
 
 .job h2 {
@@ -212,13 +215,11 @@
 }
 
 .work_example_with_filters_container {
-  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  padding: 25px;
   margin: 10px;
 }
 
 .work_example_filters_container {
+  padding-top: 10px;
   @media screen and (max-width: 992px) {
     position: relative;
     display: flex;
@@ -227,9 +228,11 @@
 }
 
 .work_example_filters {
-  width: 175px;
+  width: 230px;
   float: right;
-  margin-top: 20px;
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 25px;
 
   @media screen and (max-width: 992px) {
     float: none;
@@ -238,8 +241,8 @@
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 215px;
-    top: 20px;
+    width: 245px;
+    top: 50px;
     display: none;
   }
 
