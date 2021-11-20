@@ -8,6 +8,8 @@ $(document).ready(function () {
 	jobs.current = $('.row--job');
 	jobs.current.h = $(jobs.current).height();
 	jobs.current.number = $(jobs.current).attr('data-job-id') * 1;
+	jobs.filter = '';
+	jobs.max = jobs.current.length;
 	
 	jQuery('.fotorama').fotorama({
 		width: '100%',
@@ -20,8 +22,25 @@ $(document).ready(function () {
 		thumbwidth: 170,
 	});
 	
-	$(jobs.current).hide();
-	$('.row--job[data-job-id=' + 1 + ']').show();
+	function initJobs() {
+		let jobIndex = 1;
+		jobs.max = 0;
+		jobs.current.each(function () {
+			const item = $(this);
+			const filters = item.data('filters').split(',');
+			if (jobs.filter === '' || filters.indexOf(jobs.filter) > -1) {
+				item.attr('data-job-id', jobIndex);
+				jobIndex++;
+				jobs.max++;
+			} else {
+				item.attr('data-job-id', -1);
+			}
+		});
+		
+		$(jobs.current).hide();
+		$('.row--job[data-job-id=' + 1 + ']').show();
+	}
+	
 	
 	jobs.next.click(function () {
 		const n = jobs.current.number + 1;
@@ -44,16 +63,30 @@ $(document).ready(function () {
 	});
 	
 	jobs.updateButtons = function () {
-		if (jobs.current.number == 1) {
+		if (jobs.current.number === 1) {
 			jobs.prev.addClass('btn-grey');
 		} else {
 			jobs.prev.removeClass('btn-grey');
 		}
-		if (jobs.current.number == jobs.current.length) {
+		if (jobs.current.number === jobs.max) {
 			jobs.next.addClass('btn-grey');
 		} else {
 			jobs.next.removeClass('btn-grey');
 		}
 	};
 	jobs.updateButtons();
+	initJobs();
+	
+	$('.work_example_filters__item').click(function (e) {
+		e.preventDefault();
+		$('.work_example_filters__item').removeClass('active');
+		$(this).addClass('active');
+		jobs.filter = $(this).data('value') || e.target.innerHTML;
+		initJobs();
+	});
+	
+	$('.work_example_filters_toggler').click(function (e) {
+		e.preventDefault();
+		$('.work_example_filters').slideToggle();
+	});
 });

@@ -32,12 +32,19 @@ class WorkExampleExtension extends AbstractExtension
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function render(Environment $twig, ?Page $page = null): string
+    public function render(Environment $twig, ?Page $page = null, bool $withFilters = false): string
     {
         $items = $this->workExampleService->getByPage($page);
-        
-        return $twig->render('widget/work_example.html.twig', [
-            'items' => $items,
-        ]);
+        if ($withFilters) {
+            $html = $twig->render('modules/work_example/work_example_with_filters.html.twig', [
+                'items' => $items,
+            ]);
+        } else {
+            $html = $twig->render('widget/work_example.html.twig', [
+                'items' => $items,
+            ]);
+        }
+    
+        return $html;
     }
 }

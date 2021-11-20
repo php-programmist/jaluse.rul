@@ -444,7 +444,7 @@ class WorkExample
         if (!$this->pages->contains($page)) {
             $this->pages[] = $page;
         }
-        
+    
         return $this;
     }
     
@@ -453,6 +453,23 @@ class WorkExample
         $this->pages->removeElement($page);
         
         return $this;
+    }
+    
+    public function getFilters(): string
+    {
+        $filters = [];
+        if (null !== $this->getProductType()) {
+            $filters[] = $this->getProductType()->getName();
+            if (in_array($this->getProductType()->getName(), ['Вертикальные', ['Горизонтальные']], true)) {
+                $filters[] = 'На пластиковые окна';
+            }
+        }
+        
+        if (null !== $this->getProductMaterial()) {
+            $filters[] = $this->getProductMaterial()->getName();
+        }
+        
+        return implode(',', $filters);
     }
     
 }
