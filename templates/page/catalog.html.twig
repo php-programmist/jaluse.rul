@@ -34,6 +34,10 @@
     
     {{ include('modules/work_example/without-filters.html.twig') }}
     
+    {% if show_calc is not defined or show_calc %}
+        {{ include('modules/catalog_calculator.html.twig') }}
+    {% endif %}
+    
     {% if items|default(null) is not empty %}
         <div class="container">
             <h2>{{ page.recommendedTitle }}:</h2>
@@ -49,9 +53,6 @@
     {% endblock %}
     
     {{ include('modules/_seo_block.html.twig') }}
-    {% if show_calc is not defined or show_calc %}
-        {{ include('modules/_calculator.html.twig') }}
-    {% endif %}
     
     {{ include('modules/_our_works.html.twig') }}
     

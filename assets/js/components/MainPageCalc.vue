@@ -4,17 +4,17 @@
       <div class="col-lg-7 col-md-6 calc-parametr">
         <form action="#">
           <div class="calc-parametr-typewrap">
-            <div class="minzag">Выберите тип {{ rulonnyie_only ? 'рулонных штор' : 'жалюзи' }}</div>
+            <div class="minzag">Выберите тип</div>
             <div class="row">
-              <div class="type_selector">
+              <div class="type_selector" v-show="!type_hidden">
                 <v-drop-down-selector
                     :items="types"
-                    :default_name="rulonnyie_only?'Рулонные':'Выбрать вид'"
+                    :default_name="'Выбрать вид'"
                     v-model="type"
                 ></v-drop-down-selector>
               </div>
               <transition name="slide-fade">
-                <div class="material_selector" v-show="materials.length > 0">
+                <div class="material_selector" v-show="materials.length > 0 && !material_hidden">
                   <v-drop-down-selector
                       :items="materials"
                       default_name="Выбрать изделие"
@@ -126,13 +126,15 @@ export default {
       material: this.getPreSelectedMaterial(),
       product_index: 0,
       type_opened: false,
+      type_hidden: false,
       material_opened: false,
+      material_hidden: false,
       color_opened: false,
       price_calculator: null,
       productConfigs: {}
     };
   },
-  props: ["type_filter", "rulonnyie_only", "selected_type", "selected_material"],
+  props: ["type_filter", "available_types", "selected_type", "selected_material"],
   components: {
     'v-consultation-form': ConsultationForm,
     'v-order-form': OrderForm,
@@ -142,27 +144,24 @@ export default {
     'v-drop-down-selector': DropDownSelector,
   },
   created() {
-    if (this.rulonnyie_only) {
-      this.type = {
-        "id": 133,
-        "name": "Рулонные",
-        "materials": [{"id": 191, "name": "Мини «День Ночь»"}, {"id": 192, "name": "Кассетные «День Ночь»"}, {
-          "id": 193,
-          "name": "Мини"
-        }, {"id": 194, "name": "Кассетные UNI"}, {"id": 195, "name": "Стандартные"}]
-      };
-    }
     axios.get('/api/calc/getInitData')
         .then(response => {
-          this.types = response.data.types;
+          if (typeof this.available_types !== 'undefined' && null !== this.available_types) {
+            this.types = response.data.types.filter(type => this.available_types.indexOf(type.id) > -1)
+          } else {
+            this.types = response.data.types;
+          }
+
           if (typeof this.type_filter !== 'undefined') {
             this.types = this.types.filter(type => this.type_filter.includes(type.id));
           }
           if (typeof this.selected_type !== 'undefined' && parseInt(this.selected_type) > 0) {
             this.type = this.types.filter(type => parseInt(type.id) === parseInt(this.selected_type)).shift();
+            this.type_hidden = true;
           }
           if (typeof this.selected_material !== 'undefined' && parseInt(this.selected_material) > 0) {
             this.material = this.type.materials.filter(material => parseInt(material.id) === parseInt(this.selected_material)).shift();
+            this.material_hidden = true;
           }
           this.colors = response.data.colors;
           this.categories = response.data.categories;

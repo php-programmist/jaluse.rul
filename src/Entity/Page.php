@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Contracts\HasExamplesInterface;
 use App\Entity\Contracts\TurboPageInterface;
 use App\Entity\Traits\RatingTrait;
+use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use DateTime;
 use DateTimeImmutable;
@@ -542,6 +543,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function getGeoProductType(): string
     {
         return $this->geoProductType;
+    }
+    
+    public function getGeoProductCalculatorSelectedType(): ?int
+    {
+        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 133 : null;
     }
     
     /**

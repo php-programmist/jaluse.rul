@@ -1,0 +1,14 @@
+<!--третий блок (калькулятор) начало-->
+<div class="block3 calcblock">
+    <div class="container">
+        <div class="zag">{{ page.h1 }} калькулятор:</div>
+        <div id="app-calc">
+            <main-page-calc
+                    :available_types="{{ available_types|default(null)|json_encode }}"
+                    :selected_type="{{ selected_type|default(0) }}"
+                    :selected_material="{{ selected_material|default(0) }}"
+            ></main-page-calc>
+        </div>
+    </div>
+</div>
+<!--третий блок (калькулятор) конец-->

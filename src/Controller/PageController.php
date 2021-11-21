@@ -11,7 +11,6 @@ use App\Entity\Markiz;
 use App\Entity\Product;
 use App\Entity\Roll;
 use App\Entity\Roman;
-use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use App\Repository\PageRepository;
 use App\Repository\ProductRepository;
 use App\Service\CatalogManager;
@@ -140,7 +139,7 @@ class PageController extends AbstractController
                 'page'          => $page,
                 'show_calc'     => true,
                 'showCatalog'   => false,
-                'rulonnyieOnly' => $page->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE,
+                'selected_type' => $page->getGeoProductCalculatorSelectedType(),
             ]);
         }
         
@@ -192,20 +191,27 @@ class PageController extends AbstractController
         if (strpos($catalog->getUri(), 'rulonnyie-shtoryi') === 0) {
             $template = 'catalog/rulonnyie-shtoryi/index.html.twig';
         }
-        $force_show_filters = $catalog->getUri() === 'zhalyuzi';
-        $show_calc          = in_array($catalog->getUri(), ['zhalyuzi', 'rulonnyie-shtoryi']);
-        $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
-        
+        $force_show_filters = false;
+        $available_types    = null;
+        if ($catalog->getUri() === 'zhalyuzi') {
+            $force_show_filters = true;
+            $available_types    = [86, 132];
+        }
+        $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+    
         if ($this->request->isXmlHttpRequest()) {
             return $this->catalogManager->renderProducts($filters);
         }
-        
+    
         return $this->render($template,
             array_merge(
                 $this->getCatalogRenderParams($catalog, $filters),
                 [
                     'force_show_filters' => $force_show_filters,
-                    'show_calc'          => $show_calc,
+                    'show_calc'          => true,
+                    'selected_type'      => $catalog->getType()?->getId(),
+                    'selected_material'  => $catalog->getMaterial()?->getId(),
+                    'available_types'    => $available_types,
                 ]
             ));
     }
