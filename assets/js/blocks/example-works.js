@@ -79,6 +79,9 @@ $(document).ready(function () {
 	
 	$('.work_example_filters__item').click(function (e) {
 		e.preventDefault();
+		if (document.documentElement.clientWidth < 992) {
+			$('.work_example_filters').slideUp();
+		}
 		$('.work_example_filters__item').removeClass('active');
 		$(this).addClass('active');
 		jobs.filter = $(this).data('value') || e.target.innerHTML;
