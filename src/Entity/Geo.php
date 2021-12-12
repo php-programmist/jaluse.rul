@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\EntityListeners({"App\EntityListener\GeoListener"})
  */
 abstract class Geo extends Page
 {

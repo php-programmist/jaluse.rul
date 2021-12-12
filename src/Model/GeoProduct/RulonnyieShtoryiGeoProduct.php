@@ -9,6 +9,6 @@ class RulonnyieShtoryiGeoProduct extends AbstractGeoProduct
     protected $nameNominative = 'Рулонные шторы';
     protected $nameGenitive = 'рулонных штор';
     protected $cardImage = '/img/pomesheniia.jpg';
-    protected $price = 'от 1432 рублей за изделие';
+    protected $price = ''; //Заполняется из настроек geo.rulonnyie-shtoryi
     
 }

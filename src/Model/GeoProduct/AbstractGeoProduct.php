@@ -61,13 +61,18 @@ abstract class AbstractGeoProduct
         if (null === $class) {
             throw new LogicException(sprintf('%s - неверный тип наследника класса AbstractGeoProduct', $type));
         }
-        
+    
         return new $class();
     }
     
     public function getPrice(): string
     {
         return $this->price;
+    }
+    
+    public function setPrice(string $price)
+    {
+        $this->price = $price;
     }
     
 }
