@@ -56,7 +56,18 @@ class CatalogCrudController extends AbstractCrudController
         $recommendedTitle = TextField::new('recommendedTitle', 'Заголовок рекомендуемых товаров');
     
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $path, $parent, $published, $showSeoText, $typeName, $materialName, $seoImageUrl];
+            return [
+                $id,
+                $name,
+                $path,
+                $parent,
+                $published,
+                $showSeoText,
+                $typeName,
+                $materialName,
+                $price,
+                $seoImageUrl,
+            ];
         }
     
         if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
