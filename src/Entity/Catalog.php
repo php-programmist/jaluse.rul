@@ -131,10 +131,10 @@ class Catalog extends Page
     
     public function getUnits(): string
     {
-        if (in_array($this->getUri(), ['markizyi', 'rulonnyie-shtoryi'])) {
-            return 'рублей за изделие';
+        if (in_array(explode('/', $this->getUri())[0], ['markizyi', 'rulonnyie-shtoryi'])) {
+            return 'руб за изделие';
         }
-        
+    
         return parent::getUnits();
     }
     
