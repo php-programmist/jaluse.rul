@@ -40,3 +40,7 @@ services:
     App\EntityListener\GeoListener:
         tags:
             - 'doctrine.orm.entity_listener'
+
+    App\EntityListener\LocationListener:
+        tags:
+            - 'doctrine.orm.entity_listener'
