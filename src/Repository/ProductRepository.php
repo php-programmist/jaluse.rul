@@ -91,7 +91,7 @@ class ProductRepository extends ServiceEntityRepository
         $builder = $this->getFilteredQB($filters)
                         ->orderBy('p.' . $orderBy, $orderDir);
         if ($orderBy === 'price') {
-            $builder->orderBy('p.matrix_id', $orderDir);
+            $builder->addOrderBy('p.matrix_id', $orderDir);
         }
     
         return $builder
