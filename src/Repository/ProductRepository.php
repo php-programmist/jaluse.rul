@@ -87,11 +87,15 @@ class ProductRepository extends ServiceEntityRepository
         if (!in_array($orderDir, $allowedOrderDir)) {
             $orderDir = 'asc';
         }
-        
-        return $this->getFilteredQB($filters)
-                    ->orderBy('p.' . $orderBy, $orderDir)
-                    ->addOrderBy('p.id', 'asc')
-                    ->addOrderBy('p.matrix_id', 'desc');
+    
+        $builder = $this->getFilteredQB($filters)
+                        ->orderBy('p.' . $orderBy, $orderDir);
+        if ($orderBy === 'price') {
+            $builder->orderBy('p.matrix_id', $orderDir);
+        }
+    
+        return $builder
+            ->addOrderBy('p.id', 'asc');
     }
     
     /**
