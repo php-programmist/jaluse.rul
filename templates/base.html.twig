@@ -30,7 +30,7 @@
     <!--УТП начало-->
     <div class="block1">
         <div class="b1fonwrap">
-            <div {{ lazy_load_bg('/img/slide2.jpg',['b1fon','b1fon2']) }}></div>
+            <div {{ lazy_load_bg('/img/banner.jpg',['b1fon','b1fon2']) }}></div>
         </div>
         <div class="block1-wrap">
             <div class="container">
@@ -49,7 +49,7 @@
                             <div class="utp-block scroll-item"><span>Замер и монтаж круглосуточно, 24/7</span></div>
                         {%- endblock utp -%}
                     </div>
-                    <div class="col-lg-6 col-xl-4 align-self-center form-wrap">
+                    <div class="col-lg-6 col-xl-4 align-self-center form-wrap hide-mobile">
                         <form action="{{ path('mail.callback_consultation') }}" method="post" class="phone_callback">
                             <span class="zag2">БЕСПЛАТНЫЙ ЗАМЕР И КОНСУЛЬТАЦИЯ</span>
                             <input type="text" placeholder="Имя" name="name" required="" />

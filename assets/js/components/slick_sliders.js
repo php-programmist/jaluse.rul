@@ -1,13 +1,15 @@
 import $ from 'jquery';
 import 'slick-carousel';
 
-$('.b1fonwrap').slick({
-	slidesToShow: 1,
-	slidesToScroll: 1,
-	lazyLoad: 'ondemand',
-	fade: true,
-	autoplay: true
-});
+if (document.documentElement.clientWidth <= 576) {
+	$('.rabotniki-slider').slick({
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		lazyLoad: 'ondemand',
+		fade: true,
+		autoplay: false,
+	});
+}
 
 $('.slider-for1').slick({
 	slidesToShow: 1,

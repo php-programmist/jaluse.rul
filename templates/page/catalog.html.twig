@@ -39,7 +39,7 @@
     {% endif %}
     
     {% if items|default(null) is not empty %}
-        <div class="container">
+        <div class="container hide-mobile">
             <h2>{{ page.recommendedTitle }}:</h2>
             {{ include('modules/recommended_products.html.twig') }}
         </div>

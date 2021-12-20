@@ -85,3 +85,9 @@ ul{
   font-weight: bold;
 }
 
+.hide-mobile {
+  @media (max-width: 576px) {
+    display: none;
+  }
+}
+

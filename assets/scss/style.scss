@@ -83,8 +83,8 @@ p{
   position: relative;
   overflow: hidden;
   @media (max-width: 576px) {
-    background: url("/img/mobile-headrer-bg.jpg");
-    background-size: cover;
+    background: none;
+    color: $black;
   }
 
   .b1fonwrap {
@@ -230,10 +230,13 @@ p{
   }
 
 }
-.zag{
+.zag {
   font-weight: bold;
   font-size: 32px;
   margin-bottom: 30px;
+  @media (max-width: 576px) {
+    font-size: 30px;
+  }
 }
 .block2{
   margin-top: 20px;
