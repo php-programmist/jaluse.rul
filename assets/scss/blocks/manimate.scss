@@ -9,6 +9,9 @@
 .scroll-item {
   opacity: 0;
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  @media screen and (max-width: 576px) {
+    opacity: 1;
+  }
 }
 
 .scroll-item.animation-class {
@@ -87,6 +90,9 @@
 
 .rating .scroll-item {
   transform: translateY(-30px);
+  @media screen and (max-width: 576px) {
+    transform: translateY(0);
+  }
 }
 
 .rating .scroll-item.animation-class {

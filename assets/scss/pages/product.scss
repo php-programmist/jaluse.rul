@@ -19,11 +19,17 @@
         display: block;
         line-height: 1.4;
         margin-bottom: 20px;
-
+        @media screen and (max-width: 576px) {
+          font-size: 28px;
+        }
       }
-      .card-haract{
+      .card-haract {
         margin-bottom: 25px;
-        div{
+        @media screen and (max-width: 576px) {
+          font-size: 14px;
+        }
+
+        div {
           line-height: 1.5;
         }
       }

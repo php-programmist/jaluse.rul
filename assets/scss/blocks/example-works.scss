@@ -24,8 +24,8 @@
     font-size: 18px;
   }
   @media screen and (max-width: 576px) {
-    font-size: 16px;
     font-weight: bold;
+    margin-top: 0;
   }
 }
 
@@ -72,6 +72,9 @@
 .job_pad {
   padding: 15px;
   font-size: 18px;
+  @media screen and (max-width: 576px) {
+    padding-top: 5px;
+  }
 }
 
 .job .description {

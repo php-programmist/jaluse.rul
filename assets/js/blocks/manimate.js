@@ -10,7 +10,9 @@ const scrollAnimation = () => {
     }
   });
 };
-scrollAnimation();
-window.addEventListener('scroll', () => {
+if (document.documentElement.clientWidth > 576) {
   scrollAnimation();
-});
+  window.addEventListener('scroll', () => {
+    scrollAnimation();
+  });
+}
