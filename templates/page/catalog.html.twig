@@ -25,11 +25,11 @@
 {% block body %}
     <div id="content" class="container-fluid catalog-container">
         {{ include('modules/rating_schema.html.twig') }}
-        {% block location_block %}{% endblock %}
         {% if (showCatalog is not defined or showCatalog) and (products is defined and products|length > 0) %}
             <h2>{% block content_h2 %}{{ page.name }}{% endblock %}</h2>
             {{ include('catalog/blocks/catalog.html.twig') }}
         {% endif %}
+        {% block location_block %}{% endblock %}
     </div>
     
     {% set work_example_block = include('modules/work_example/without-filters.html.twig') %}

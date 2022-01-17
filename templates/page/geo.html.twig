@@ -11,7 +11,6 @@
 {% block content_h2 %}{% endblock %}
 {% block description %}{{ page.description }}{% endblock %}
 {% block location_block %}
-    {{ include('modules/rating.html.twig') }}
     {% embed 'embedded/card.html.twig' %}
         {% block image %}<img {{ lazy_load(page.cardImageUrl) }} alt="{{ page.name }}">{% endblock image %}
         {% block header %}{{ page.cardHeader }}{% endblock header %}
@@ -30,6 +29,8 @@
             </div>
         {% endblock %}
     {% endembed %}
+    
+    {{ include('modules/rating.html.twig') }}
 {% endblock location_block %}
 {% block rating_block %}{% endblock %}
 {% block catalog_card %}{% endblock %}

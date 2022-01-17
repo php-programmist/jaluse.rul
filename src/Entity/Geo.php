@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Model\GeoProduct\AbstractGeoProduct;
+use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,5 +44,21 @@ abstract class Geo extends Page
     public function getCardImageUrl(): string
     {
         return $this->getGeoProduct()->getCardImage();
+    }
+    
+    public function getTypeFilter(): string
+    {
+        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? '133' : '86,132,178';
+    }
+    
+    public function isShowCatalog(): bool
+    {
+        return $this instanceof City
+               || in_array($this->getUri(), ['moskovskoy-oblasti', 'rulonnyie-shtoryi/moskovskoy-oblasti']);
+    }
+    
+    public function getBaseCatalogUri(): string
+    {
+        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'zhalyuzi';
     }
 }

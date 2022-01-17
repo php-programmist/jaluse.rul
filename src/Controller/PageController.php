@@ -167,12 +167,7 @@ class PageController extends AbstractController
         }
         
         if ($page instanceof Geo) {
-            return $this->render('page/geo.html.twig', [
-                'page'          => $page,
-                'show_calc'     => true,
-                'showCatalog'   => false,
-                'selected_type' => $page->getGeoProductCalculatorSelectedType(),
-            ]);
+            return $this->geo($page);
         }
         
         if ($page instanceof Calculator) {
@@ -225,7 +220,7 @@ class PageController extends AbstractController
         }
         $force_show_filters = false;
         $available_types    = null;
-        $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+        $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
     
         if ($this->request->isXmlHttpRequest()) {
             return $this->catalogManager->renderProducts($filters);
@@ -263,5 +258,32 @@ class PageController extends AbstractController
             'items'         => $this->catalogManager->getPopular($catalog),
             'catalogsLinks' => $this->catalogManager->getCatalogsLinks($catalog),
         ];
+    }
+    
+    private function geo(Geo $page): Response
+    {
+        $params = [
+            'page'          => $page,
+            'show_calc'     => true,
+            'showCatalog'   => $page->isShowCatalog(),
+            'lazyProducts'  => true,
+            'selected_type' => $page->getGeoProductCalculatorSelectedType(),
+        ];
+        
+        if ($params['showCatalog']) {
+            $filters['type'] = $page->getTypeFilter();
+            if ($this->request->query->get('products_only', false)) {
+                return $this->catalogManager->renderProducts($filters);
+            }
+            $params['products'] = $this->catalogManager->getProductsPaginator($filters);
+            
+            /** @var Catalog $catalog */
+            $catalog                 = $this->page_repository->findOneBy(['uri' => $page->getBaseCatalogUri()]);
+            $params['catalog']       = $catalog;
+            $params['catalogsLinks'] = $this->catalogManager->getCatalogsLinks($catalog);
+            $params['colors']        = $this->colorManager->getAvailableColors($filters);
+        }
+        
+        return $this->render('page/geo.html.twig', $params);
     }
 }
