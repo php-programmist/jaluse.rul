@@ -89,7 +89,7 @@ class CalculationService
     public function getCatalogMinPriceByUri(string $catalogUri): int
     {
         if ($catalogUri === 'zhalyuzi') {
-            $catalogUri = 'zhalyuzi/vertikalnye';
+            $catalogUri = 'zhalyuzi/gorizontalnye';
         }
         /** @var Catalog $catalog */
         $catalog = $this->entityManager->getRepository(Catalog::class)->findOneBy(['uri' => $catalogUri]);

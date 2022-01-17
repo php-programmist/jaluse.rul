@@ -53,6 +53,38 @@ class PageController extends AbstractController
     }
     
     /**
+     * @Route("/zhalyuzi/", name="catalog_zhalyuzi")
+     */
+    public function zhalyuzi()
+    {
+        /** @var Catalog $catalog */
+        $catalog = $this->page_repository->findOneBy(['uri' => 'zhalyuzi']);
+        
+        $force_show_filters = true;
+        $available_types    = [132, 133, 175, 178]; //Все, кроме вертикальных
+        
+        $filters = ['type' => '132,178']; //Горизонтальные и Isolite
+        if ($this->request->isXmlHttpRequest()) {
+            return $this->catalogManager->renderProducts($filters);
+        }
+        $params = array_merge(
+            $this->getCatalogRenderParams($catalog, $filters),
+            [
+                'force_show_filters' => $force_show_filters,
+                'show_calc'          => true,
+                'selected_type'      => $catalog->getType()?->getId(),
+                'selected_material'  => $catalog->getMaterial()?->getId(),
+                'available_types'    => $available_types,
+            ]
+        );
+        
+        unset($params['catalogsLinks']['Вертикальные']);
+        $params['catalogsLinks']['Римские шторы'] = '/rimskies/';
+        
+        return $this->render('catalog/zhalyuzi/index.html.twig', $params);
+    }
+    
+    /**
      * @Route("/{token}/color/{color}/", name="catalog_filter_color", requirements={"token"= ".+"})
      */
     public function colorFilter(string $token, string $color): Response
@@ -193,10 +225,6 @@ class PageController extends AbstractController
         }
         $force_show_filters = false;
         $available_types    = null;
-        if ($catalog->getUri() === 'zhalyuzi') {
-            $force_show_filters = true;
-            $available_types    = [86, 132];
-        }
         $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
     
         if ($this->request->isXmlHttpRequest()) {
