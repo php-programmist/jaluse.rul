@@ -3,12 +3,12 @@ import $ from 'jquery';
 
 function initBanner() {
 	let banner_shown = getCookie("banner_shown");
-	var screen_width = document.documentElement.clientWidth;
-	if (banner_shown!=="1" && screen_width > 768) {
+	const screen_width = document.documentElement.clientWidth;
+	if (banner_shown !== "1" && screen_width > 992) {
 		setTimeout(() => {
 			$('.baner-wraper').slideDown();
 			document.cookie = "banner_shown=1; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT";
-		}, 35000);
+		}, 60000);
 	}
 }
 function getCookie(name) {
