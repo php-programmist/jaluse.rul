@@ -18,6 +18,7 @@ use App\Service\CategoryManager;
 use App\Service\ColorManager;
 use App\Service\ConfigService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -132,6 +133,11 @@ class PageController extends AbstractController
     public function index($token)
     {
         if (!$page = $this->page_repository->findOneBy(['uri' => $token])) {
+            //Переадресовываем на раздел выше, если не была найдена страница
+            $redirectUri = $this->getUriForRedirect($token);
+            if (null !== $redirectUri) {
+                return new RedirectResponse('/' . $redirectUri . '/');
+            }
             throw new NotFoundHttpException();
         }
         
@@ -276,14 +282,29 @@ class PageController extends AbstractController
                 return $this->catalogManager->renderProducts($filters);
             }
             $params['products'] = $this->catalogManager->getProductsPaginator($filters);
-            
+    
             /** @var Catalog $catalog */
             $catalog                 = $this->page_repository->findOneBy(['uri' => $page->getBaseCatalogUri()]);
             $params['catalog']       = $catalog;
             $params['catalogsLinks'] = $this->catalogManager->getCatalogsLinks($catalog);
             $params['colors']        = $this->colorManager->getAvailableColors($filters);
         }
-        
+    
         return $this->render('page/geo.html.twig', $params);
+    }
+    
+    public function getUriForRedirect(string $requestedUri): ?string
+    {
+        $parts = explode('/', $requestedUri);
+        if (count($parts) < 2) {
+            return null;
+        }
+        array_pop($parts);
+        $redirectUri = implode('/', $parts);
+        if (null === $this->page_repository->findOneBy(['uri' => $redirectUri])) {
+            return $this->getUriForRedirect($redirectUri);
+        }
+        
+        return $redirectUri;
     }
 }
