@@ -7,14 +7,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MatrixService
 {
-    const FOLDERS = [
-        'mini',
-        'uni',
-        'combo-uni',
-        'combo-small',
-        'standart',
-        'standart-day-night',
-    ];
     const BASE_FOLDER = '/csv/matrix/';
     
     protected $project_dir;
@@ -45,10 +37,14 @@ class MatrixService
     public function getAllMatrices(): array
     {
         $matrices = [];
-        foreach (self::FOLDERS as $folder) {
+        $folders  = scandir($this->project_dir . self::BASE_FOLDER);
+        foreach ($folders as $folder) {
+            if (in_array($folder, ['.', '..'])) {
+                continue;
+            }
             $matrices[$folder] = $this->getMatrixSet($folder);
         }
-        
+    
         return $matrices;
     }
     
@@ -75,6 +71,7 @@ class MatrixService
             $matrices = $this->getAllMatrices();
             $item->set($matrices);
             $this->cache->save($item);
+    
         }
         
         return $item->get();
