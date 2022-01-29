@@ -31,7 +31,7 @@
         </div>
     </div>
 {% endif %}
-{% if categories is defined and categories|length > 0 %}
+{% if categories is defined and categories|length > 0 and not catalog.type.hideCategories %}
     <div class="categories">
         <div class="calc-parametr-categori">
             {% for category in categories %}
