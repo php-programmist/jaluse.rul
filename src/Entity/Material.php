@@ -17,12 +17,22 @@ class Material
      * @ORM\Column(type="integer")
      */
     private $id;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
-
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $cardMaterialName = null;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $cardTypeName = null;
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="material")
      */
@@ -210,6 +220,46 @@ class Material
                 $workExample->setProductMaterial(null);
             }
         }
+    
+        return $this;
+    }
+    
+    /**
+     * @return ?string
+     */
+    public function getCardMaterialName(): ?string
+    {
+        return $this->cardMaterialName ?? $this->name;
+    }
+    
+    /**
+     * @param ?string $cardMaterialName
+     *
+     * @return $this
+     */
+    public function setCardMaterialName(?string $cardMaterialName): self
+    {
+        $this->cardMaterialName = $cardMaterialName;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getCardTypeName(): ?string
+    {
+        return $this->cardTypeName ?? $this->name;
+    }
+    
+    /**
+     * @param string|null $cardTypeName
+     *
+     * @return $this
+     */
+    public function setCardTypeName(?string $cardTypeName): self
+    {
+        $this->cardTypeName = $cardTypeName;
         
         return $this;
     }

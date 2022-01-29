@@ -233,15 +233,6 @@ class Product extends Page
         return $this->getTypeName();
     }
     
-    public function getMaterialName()
-    {
-        if ($this->getMaterial()) {
-            return $this->getMaterial()->getName();
-        }
-        
-        return 'Не указан';
-    }
-    
     public function getCategoryName()
     {
         if ($this->getCategory()) {
@@ -342,32 +333,24 @@ class Product extends Page
     
     public function getTypeForPage()
     {
-        if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
-            return $this->getMaterialName();
+        if (null !== $this->getMaterial()) {
+            return $this->getMaterial()->getCardTypeName();
         }
-        
-        if ($this->getType()->getId() === self::ISOLITE_TYPE_ID) {
-            return 'Жалюзи Isolite';
+    
+        if (null !== $this->getType()) {
+            return $this->getType()->getCardTypeName();
         }
-        
-        if ($this->getType()) {
-            return $this->getMaterialName() . ' жалюзи';
-        }
-        
+    
         return 'Не установлен';
     }
     
     public function getMaterialForPage()
     {
-        if ($this->getType() && $this->getType()->getId() === self::RULON_TYPE_ID) {
-            return 'ткань';
+        if (null !== $this->getMaterial()) {
+            return $this->getMaterial()->getCardMaterialName();
         }
-        
-        if ($this->getType()) {
-            return $this->getMaterialName();
-        }
-        
-        return 'Не установлен';
+    
+        return 'Не указан';
     }
     
     public function getMinPrice(): ?int

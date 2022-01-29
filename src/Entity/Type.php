@@ -16,18 +16,23 @@ class Type
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
-
+    private ?int $id = null;
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
-
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $cardTypeName = null;
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="type")
      */
     private $products;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Catalog", mappedBy="type")
      */
@@ -152,7 +157,7 @@ class Type
     }
     public function __toString()
     {
-        return $this->getName();
+        return (string)$this->getName();
     }
 
     /**
@@ -273,6 +278,26 @@ class Type
     public function setHideCategories(bool $hideCategories): self
     {
         $this->hideCategories = $hideCategories;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getCardTypeName(): ?string
+    {
+        return $this->cardTypeName ?? $this->name;
+    }
+    
+    /**
+     * @param string|null $cardTypeName
+     *
+     * @return $this
+     */
+    public function setCardTypeName(?string $cardTypeName): self
+    {
+        $this->cardTypeName = $cardTypeName;
         
         return $this;
     }

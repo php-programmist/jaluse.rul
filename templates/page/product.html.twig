@@ -39,7 +39,9 @@
             <div><b>Тип:</b> {{ page.typeForPage }}</div>
             <div><b>Материал:</b> {{ page.materialForPage }}</div>
             <div><b>Цвет:</b> {{ page.colorName }}.</div>
-            <div><b>Категория:</b> {{ page.categoryName }}</div>
+            {% if not (page.type.hideCategories|default(false)) %}
+                <div><b>Категория:</b> {{ page.categoryName }}</div>
+            {% endif %}
             <div><b>Размер:</b> на ваш выбор.</div>
             <div><b>Управление:</b> ручное и автоматическое.</div>
             <div><b>Срок изготовления и установки:</b> 1-5 дней.</div>
