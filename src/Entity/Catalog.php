@@ -118,7 +118,7 @@ class Catalog extends Page
     
     public function getRecommendedTitle(): ?string
     {
-        return $this->recommendedTitle;
+        return $this->recommendedTitle ?? 'Рекомендуемые ' . $this->name;
     }
     
     public function setRecommendedTitle(?string $recommendedTitle): self
