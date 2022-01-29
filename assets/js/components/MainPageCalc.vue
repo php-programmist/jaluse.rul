@@ -42,7 +42,12 @@
               </div>
             </transition>
           </div>
-          <v-category-selector :categories="categories" v-model="category" @input="getProducts"></v-category-selector>
+          <v-category-selector
+              v-show="isShowCategories"
+              :categories="categories"
+              v-model="category"
+              @input="getProducts"
+          ></v-category-selector>
           <div class="calc-parametr-minimages">
             <div
                 class="minimages-wrap"
@@ -206,8 +211,13 @@ export default {
 
       return this.price_calculator.getAllPrices(this.currentProduct, this.productConfigs);
 
+    },
+    isShowCategories() {
+      if (this.type.id === 0) {
+        return true;
+      }
+      return !this.type.hideCategories;
     }
-
   },
   watch: {
     type(newVal, oldVal) {

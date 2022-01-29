@@ -190,7 +190,12 @@ class CalcController extends AbstractController
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                 return $object->getId();
             },
-            AbstractNormalizer::ATTRIBUTES                 => ['id', 'name', 'materials' => ['id', 'name']],
+            AbstractNormalizer::ATTRIBUTES                 => [
+                'id',
+                'name',
+                'hideCategories',
+                'materials' => ['id', 'name'],
+            ],
         ]);
         
         return json_decode($jsonObject);
