@@ -157,7 +157,7 @@ class CatalogManager
      */
     public function getProductsPaginator(array $filters, ?int $limit = null): PaginationInterface
     {
-        $order      = $this->request->query->get('order', 'price');
+        $order      = $this->request->query->get('order', 'popular-desc');
         $orderParts = explode('-', $order);
         $orderBy    = $orderParts[0];
         $orderDir   = $orderParts[1] ?? 'asc';

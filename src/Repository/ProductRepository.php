@@ -74,6 +74,7 @@ class ProductRepository extends ServiceEntityRepository
     public function getProductsQB(array $filters, string $orderBy, string $orderDir): QueryBuilder
     {
         $allowedOrderBy  = [
+            'popular',
             'name',
             'price',
         ];

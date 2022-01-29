@@ -1,12 +1,13 @@
 {% set options = {
+    'popular-desc': 'По популярности',
     'price': 'По возрастание цены',
     'price-desc': 'По убыванию цены',
 } %}
 
 <div class="order my-3">
     <form method="get" action="#content">
-        <select name="order" class="order" onchange="this.form.submit()">
-            <option>Сортировка</option>
+        <label for="order">Сортировка</label>
+        <select name="order" class="order" id="order" onchange="this.form.submit()">
             {% for optionValue, optionName in options %}
                 <option {{ app.request.query.get('order') == optionValue ? 'selected' }}
                         value="{{ optionValue }}">{{ optionName }}</option>
