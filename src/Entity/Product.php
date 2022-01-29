@@ -350,6 +350,10 @@ class Product extends Page
             return $this->getMaterial()->getCardMaterialName();
         }
     
+        if (null !== $this->getType()) {
+            return $this->getType()->getCardMaterialName();
+        }
+    
         return 'Не указан';
     }
     

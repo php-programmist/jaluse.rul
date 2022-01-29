@@ -23,7 +23,7 @@ final class Version20220129114403 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE material ADD card_type_name VARCHAR(255) DEFAULT NULL, ADD card_material_name VARCHAR(255) DEFAULT NULL');
         
-        $this->addSql('ALTER TABLE type ADD card_type_name VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE type ADD card_type_name VARCHAR(255) DEFAULT NULL, ADD card_material_name VARCHAR(255) DEFAULT NULL');
         
         $this->addSql('update material set card_material_name = ? where id in (191,192,193,194,195,196,197,198)', [
             'ткань',
@@ -53,15 +53,22 @@ final class Version20220129114403 extends AbstractMigration
             'XL',
             197,
         ]);
-        
+    
         $this->addSql('update material set card_type_name = ? where id = ?', [
             'Compact',
             198,
         ]);
-        
-        $this->addSql('update type set card_type_name = ? where id = ?', [
+    
+        $this->addSql('update type set card_type_name = ?, card_material_name = ? where id = ?', [
             'Жалюзи Isolite',
+            'алюминий',
             Product::ISOLITE_TYPE_ID,
+        ]);
+    
+        $this->addSql('update type set card_type_name = ?, card_material_name = ? where id = ?', [
+            '',
+            'ткань',
+            175,
         ]);
     }
     

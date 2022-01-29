@@ -278,7 +278,7 @@ class Type
     public function setHideCategories(bool $hideCategories): self
     {
         $this->hideCategories = $hideCategories;
-        
+    
         return $this;
     }
     
@@ -291,6 +291,11 @@ class Type
     }
     
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $cardMaterialName = null;
+    
+    /**
      * @param string|null $cardTypeName
      *
      * @return $this
@@ -298,6 +303,26 @@ class Type
     public function setCardTypeName(?string $cardTypeName): self
     {
         $this->cardTypeName = $cardTypeName;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getCardMaterialName(): ?string
+    {
+        return $this->cardMaterialName ?? $this->name;
+    }
+    
+    /**
+     * @param string|null $cardMaterialName
+     *
+     * @return $this
+     */
+    public function setCardMaterialName(?string $cardMaterialName): self
+    {
+        $this->cardMaterialName = $cardMaterialName;
         
         return $this;
     }

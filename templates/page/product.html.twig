@@ -36,7 +36,11 @@
         {% block header %}{{ page.cardHeader }}{% endblock header %}
         {% block content %}
             <div><b>Вид:</b> {{ page.typeNameForPage }}</div>
-            <div><b>Тип:</b> {{ page.typeForPage }}</div>
+    
+            {% if page.typeForPage %}
+                <div><b>Тип:</b> {{ page.typeForPage }}</div>
+            {% endif %}
+    
             <div><b>Материал:</b> {{ page.materialForPage }}</div>
             <div><b>Цвет:</b> {{ page.colorName }}.</div>
             {% if not (page.type.hideCategories|default(false)) %}
