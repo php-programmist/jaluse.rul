@@ -22,6 +22,15 @@ class Catalog extends Page
     
     public function getMatrixFolder(): ?string
     {
+        $parent = $this->getParent();
+        if (
+            null === $this->matrix_folder
+            && null !== $parent
+            && $parent instanceof Catalog
+        ) {
+            return $parent->getMatrixFolder();
+        }
+    
         return $this->matrix_folder;
     }
     
