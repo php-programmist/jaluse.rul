@@ -55,6 +55,11 @@ class Type
     private int $ordering = 0;
     
     /**
+     * @ORM\Column(type="integer", options={"default": 0})
+     */
+    private bool $hideCategories = false;
+    
+    /**
      * @ORM\OneToMany(targetEntity=WorkExample::class, mappedBy="productType")
      */
     private Collection $workExamples;
@@ -248,6 +253,26 @@ class Type
                 $workExample->setProductType(null);
             }
         }
+    
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isHideCategories(): bool
+    {
+        return $this->hideCategories;
+    }
+    
+    /**
+     * @param bool $hideCategories
+     *
+     * @return $this
+     */
+    public function setHideCategories(bool $hideCategories): self
+    {
+        $this->hideCategories = $hideCategories;
         
         return $this;
     }
