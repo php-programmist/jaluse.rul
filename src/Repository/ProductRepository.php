@@ -96,6 +96,7 @@ class ProductRepository extends ServiceEntityRepository
         }
     
         return $builder
+            ->addOrderBy('p.ordering', 'asc')
             ->addOrderBy('p.id', 'asc');
     }
     
