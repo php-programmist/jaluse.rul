@@ -178,7 +178,12 @@ class Catalog extends Page
                 $workExample->setCatalog(null);
             }
         }
-        
+    
         return $this;
+    }
+    
+    public function isHideCategories(): bool
+    {
+        return $this->getType()?->isHideCategories() ?? false;
     }
 }
