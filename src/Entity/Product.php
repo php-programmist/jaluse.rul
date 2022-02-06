@@ -40,6 +40,14 @@ class Product extends Page
         'calculationType',
         'minPrice',
     ];
+    
+    public const YML_CATEGORIES = [
+        'plisse'            => ['id' => 1, 'name' => 'Плиссе'],
+        'zhalyuzi'          => ['id' => 2, 'name' => 'Жалюзи'],
+        'rulonnyie-shtoryi' => ['id' => 3, 'name' => 'Рулонные шторы'],
+        'rimskies'          => ['id' => 4, 'name' => 'Римские шторы'],
+    ];
+    
     /**
      * @ORM\Column(type="float",nullable=true)
      */
@@ -249,11 +257,13 @@ class Product extends Page
     
     public function getYmlCategory(): array
     {
-        if (strpos($this->getUri(), 'zhalyuzi') === 0) {
-            return ['id' => 1, 'name' => 'Жалюзи'];
+        foreach (self::YML_CATEGORIES as $keyWord => $category) {
+            if (str_contains($this->getUri(), $keyWord)) {
+                return $category;
+            }
         }
-        
-        return ['id' => 2, 'name' => 'Рулонные шторы'];
+    
+        return ['id' => 0, 'name' => 'Без категории'];
     }
     
     public function getMatrixFolder()

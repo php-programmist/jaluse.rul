@@ -1,3 +1,4 @@
+{% set categories = constant('App\\Entity\\Product::YML_CATEGORIES') -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <yml_catalog date="{{ 'now'|date('Y-m-d H:i') }}">
     <shop>
@@ -8,8 +9,10 @@
             <currency id="RUR" rate="1" />
         </currencies>
         <categories>
-            <category id="1">Жалюзи</category>
-            <category id="2">Рулонные шторы</category>
+            {% for category in categories %}
+                <category id="{{ category.id }}">{{ category.name }}</category>
+            {% endfor %}
+        
         </categories>
         <delivery-options>
             <option cost="500" days="3" />
@@ -18,7 +21,7 @@
             {% for offer in offers -%}
                 <offer id="{{ offer.id }}" available="true">
                     <url>{{ app.request.schemeAndHttpHost~offer.path }}</url>
-                    <price>{{ min_price(offer,true) }}</price>
+                    <price>{{ min_price(offer, true, true) }}</price>
                     <currencyId>RUR</currencyId>
                     <categoryId>{{ offer.ymlCategory.id }}</categoryId>
                     <name>{{ offer.name }} ({{ offer.minSize }}, {{ offer.colorName }})</name>
@@ -28,7 +31,10 @@
                         <br/>
                         <ul>
                             <li>Вид: {{ offer.typeNameForPage }}</li>
+                            {% if offer.typeForPage -%}
                             <li>Тип: {{ offer.typeForPage }}</li>
+                            {%- endif %}
+                            
                             <li>Цвет: {{ offer.colorName }}</li>
                             <li>Категория: {{ offer.ymlCategory.name }}</li>
                             <li>Размер: На ваш выбор.</li>
@@ -40,7 +46,10 @@
                     <manufacturer_warranty>true</manufacturer_warranty>
                     <picture>{{ app.request.schemeAndHttpHost }}{{ offer.cardImageUrl }}</picture>
                     <param name="Вид">{{ offer.typeNameForPage }}</param>
-                    <param name="Тип">{{ offer.typeForPage }}</param>
+                    {% if offer.typeForPage -%}
+                        <param name="Тип">{{ offer.typeForPage }}</param>
+                    {%- endif %}
+                    
                     <param name="Материал">{{ offer.materialForPage }}</param>
                     <param name="Цвет">{{ offer.colorName }}</param>
                     <param name="Категория">{{ offer.ymlCategory.name }}</param>
