@@ -1,7 +1,7 @@
 {% set phone = '8 (495) 984-38-48' %}
 
 {% include 'turbo/catalog/why-us.html.twig' %}
-{% include 'turbo/rating.html.twig' %}
+{% include 'turbo/rating-yandex.html.twig' %}
 {% for subCatalog in catalog %}
     {% include 'turbo/catalog/card.html.twig' with {page: subCatalog} %}
     {% include 'turbo/callback-buttons-with-direct-link.html.twig' with {page: subCatalog} %}
