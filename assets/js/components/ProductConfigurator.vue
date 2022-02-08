@@ -4,13 +4,13 @@
 			<div class="bigzag">Задайте размер:</div>
 			<div class="dimension_row">
 				<div class="dimension_wrapper">
-					<label for="width">Ширина, мм</label>
-					<input id="width" type="number" placeholder="Ширина, мм" v-model.number="width">
-				</div>
-				<div class="dimension_wrapper">
-					<label for="height">Высота, мм</label>
-					<input id="height" type="number" placeholder="Высота, мм" v-model.number="height">
-				</div>
+          <label for="width">Ширина, см</label>
+          <input id="width" type="number" placeholder="Ширина, см" v-model.number="width">
+        </div>
+        <div class="dimension_wrapper">
+          <label for="height">Высота, см</label>
+          <input id="height" type="number" placeholder="Высота, см" v-model.number="height">
+        </div>
 			</div>
 		</div>
 		<div class="calc-parametr__control">
@@ -34,8 +34,8 @@
 	export default {
     data() {
       return {
-        width: 1000,
-        height: 1000,
+        width: 100,
+        height: 100,
         controlType: 'Ручное',
         number: 1
       };
@@ -62,11 +62,11 @@
     watch: {
       calculationType: function (newVal, oldVal) {
         if (newVal === 'matrix') {
-          this.width = 400;
-          this.height = 500;
+          this.width = 40;
+          this.height = 50;
         } else if (oldVal === 'matrix' && newVal === 'simple') {
-          this.width = 1000;
-          this.height = 1000;
+          this.width = 100;
+          this.height = 100;
         }
       }
     }

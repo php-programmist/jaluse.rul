@@ -3,12 +3,14 @@
 <p>Телефон клента: <strong>{{ phone }}</strong></p>
 <hr>
 <h3>Информация о заказе:</h3>
-<p>Ссылка: <a href="{{ app.request.schemeAndHttpHost~'/'~product_url~'/' }}">{{ app.request.schemeAndHttpHost~'/'~product_url~'/' }}</a></p>
+<p>Ссылка: <a
+            href="{{ app.request.schemeAndHttpHost~'/'~product_url~'/' }}">{{ app.request.schemeAndHttpHost~'/'~product_url~'/' }}</a>
+</p>
 <p>Название: <strong>{{ product_name }}</strong></p>
 <p>Категория: <strong>{{ category }}</strong></p>
 <p>Материал: <strong>{{ material }}</strong></p>
-<p>Ширина: <strong>{{ width }} мм</strong></p>
-<p>Высота: <strong>{{ height }} мм</strong></p>
+<p>Ширина: <strong>{{ width }} см</strong></p>
+<p>Высота: <strong>{{ height }} см</strong></p>
 <p>Количество: <strong>{{ number }} шт</strong></p>
 <p>Управление: <strong>{{ controlType }}</strong></p>
 <p>Цвет: <strong>{{ color }}</strong></p>

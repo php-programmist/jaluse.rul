@@ -77,8 +77,8 @@
             <div class="row">
               <div class="calc-vivod-opis-text col-sm-6">
 
-                <div><b>Размеры: </b><span>{{ productConfigs.width }}</span> ММ X
-                  <span>{{ productConfigs.height }}</span>ММ
+                <div><b>Размеры: </b><span>{{ productConfigs.width }}</span> СМ X
+                  <span>{{ productConfigs.height }}</span> СМ
                 </div>
                 <div><b>Цвет: {{ currentProduct.colorName }}</b></div>
               </div>

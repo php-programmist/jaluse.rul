@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MatrixService
 {
-    const BASE_FOLDER = '/csv/matrix/';
+    public const BASE_FOLDER = '/csv/matrix/';
     
     protected $project_dir;
     /**
@@ -92,11 +92,11 @@ class MatrixService
     
     public function getMatrix($folder, $file): array
     {
-        if (strpos($file, '.csv') === false) {
+        if (!str_contains($file, '.csv')) {
             $file .= '.csv';
         }
         $path_to_file = $this->project_dir . self::BASE_FOLDER . $folder . '/' . $file;
-        $fh           = fopen($path_to_file, 'r');
+        $fh           = fopen($path_to_file, 'rb');
         
         $matrix = [];
         while ($row = fgetcsv($fh, 8000, ';')) {
@@ -105,9 +105,9 @@ class MatrixService
                 continue;
             }
             foreach ($width_list as $index => $width) {
-                $width = (float)$width * 1000;
+                $width = (float)$width * 100;
                 if ( ! $width) {
-                    $height = (float)$row[0] * 1000;
+                    $height = (float)$row[0] * 100;
                     continue;
                 }
                 if ( ! $height) {

@@ -28,10 +28,10 @@ export default class PriceCalculator {
 		}
 		if (this.product.calculationType === 'simple') {
 			let area = this.width * this.height;
-			if (area < 1000000) {
-				area = 1000000;
+			if (area < 10000) {
+				area = 10000;
 			}
-			return this.basePrice = Math.round(this.number * this.product.price * area / 1000000);
+			return this.basePrice = Math.round(this.number * this.product.price * area / 10000);
 		}else if(this.product.calculationType === 'matrix'){
 			const matrix_folder = this.product.matrixFolder;
 			const matrix_name = this.product.matrixId;
