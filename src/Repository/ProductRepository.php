@@ -119,6 +119,7 @@ class ProductRepository extends ServiceEntityRepository
                       ->addSelect('p2')
                       ->andWhere('t.show_main_page_calc = 1')
                       ->andWhere('p.price IS NOT NULL OR p.matrix_id IS NOT NULL')
+                      ->andWhere('p.published = 1')
                       ->addOrderBy('p.price', 'ASC')
                       ->addOrderBy('p.matrix_id', 'ASC');
         
@@ -138,7 +139,8 @@ class ProductRepository extends ServiceEntityRepository
                       ->leftJoin('p.type', 't')
                       ->innerJoin('p.color', 'c')
                       ->select('c.id')
-                      ->andWhere('t.show_main_page_calc = 1');
+                      ->andWhere('t.show_main_page_calc = 1')
+                      ->andWhere('p.published = 1');
         
         $this->addFilterConditions($filters, $query);
         
