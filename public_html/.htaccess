@@ -147,6 +147,7 @@ RewriteRule termopechat/ / [R=301,L]
 RewriteRule texnicheskie/ / [R=301,L]
 RewriteRule stoimost-zhalyuzi-na-plastikovyie-okna/ / [R=301,L]
 RewriteRule somfy/ / [R=301,L]
+RewriteRule rekomendaczii/ / [R=301,L]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
