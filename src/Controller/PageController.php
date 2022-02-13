@@ -132,7 +132,7 @@ class PageController extends AbstractController
      */
     public function index($token)
     {
-        if (!$page = $this->page_repository->findOneBy(['uri' => $token])) {
+        if (!$page = $this->page_repository->findOneBy(['uri' => $token, 'published' => true])) {
             //Переадресовываем на раздел выше, если не была найдена страница
             $redirectUri = $this->getUriForRedirect($token);
             if (null !== $redirectUri) {
