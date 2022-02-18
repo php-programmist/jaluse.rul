@@ -65,6 +65,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    protected ?string $nameGenitive = null;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     protected $uri;
     
     /**
@@ -615,6 +620,26 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
         if ($this->workExamplesOfPage->removeElement($workExamplesOfPage)) {
             $workExamplesOfPage->removePage($this);
         }
+        
+        return $this;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getNameGenitive(): ?string
+    {
+        return $this->nameGenitive;
+    }
+    
+    /**
+     * @param string|null $nameGenitive
+     *
+     * @return $this
+     */
+    public function setNameGenitive(?string $nameGenitive): self
+    {
+        $this->nameGenitive = $nameGenitive;
         
         return $this;
     }
