@@ -1,0 +1,19 @@
+.order-block {
+  overflow: hidden;
+  padding: 15px 30px;
+  background: #f2f3f7;
+  display: flex;
+  justify-content: space-between;
+
+  .left-area {
+    line-height: 40px;
+    @media screen and (max-width: 992px) {
+      display: none;
+    }
+  }
+
+  .right-area {
+    overflow: hidden;
+    line-height: 40px;
+  }
+}

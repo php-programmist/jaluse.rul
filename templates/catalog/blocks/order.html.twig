@@ -1,18 +1,24 @@
 {% set options = {
-    'price': 'По возрастание цены',
+    'price': 'По возрастанию цены',
     'price-desc': 'По убыванию цены',
     'popular-desc': 'По популярности',
 } %}
 
-<div class="order my-3">
-    <form method="get" action="#content">
-        <label for="order">Сортировка</label>
-        <select name="order" class="order" id="order" onchange="this.form.submit()">
-            {% for optionValue, optionName in options %}
-                <option {{ app.request.query.get('order') == optionValue ? 'selected' }}
-                        value="{{ optionValue }}">{{ optionName }}</option>
-            {% endfor %}
-        </select>
-    </form>
+<div class="order-block my-3">
+    
+    <div class="left-area">
+        Товары {{ products.paginationData.firstItemNumber }} - {{ products.paginationData.lastItemNumber }} из {{ products.paginationData.totalCount }}
+    </div>
+    <div class="right-area">
+        <form method="get" action="#content">
+            <label for="order">Сортировка</label>
+            <select name="order" id="order" onchange="this.form.submit()">
+                {% for optionValue, optionName in options %}
+                    <option {{ app.request.query.get('order') == optionValue ? 'selected' }}
+                            value="{{ optionValue }}">{{ optionName }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
 
 </div>
