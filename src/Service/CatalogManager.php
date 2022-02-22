@@ -37,7 +37,8 @@ class CatalogManager
         PaginatorInterface $paginator,
         CatalogRepository $catalogRepository,
         private ConfigService $configs,
-        private Environment $twig
+        private Environment $twig,
+        private DeviceManager $deviceManager,
     ) {
         $this->entityManager = $entityManager;
         
@@ -163,10 +164,14 @@ class CatalogManager
         $orderBy    = $orderParts[0];
         $orderDir   = $orderParts[1] ?? 'asc';
     
+        $defaultLimitName = $this->deviceManager->isMobile()
+            ? 'calc.products_catalog_limit_mobile'
+            : 'calc.products_catalog_limit';
+    
         $pagination = $this->paginator->paginate(
             $this->getProductsQuery($filters, $orderBy, $orderDir),
             $this->request->query->getInt('page', 1),
-            $limit ?? $this->configs->getCached('calc.products_catalog_limit')
+            $limit ?? $this->configs->getCached($defaultLimitName)
         );
         $pagination->setParam('_fragment', 'content');
     
