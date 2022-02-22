@@ -77,6 +77,7 @@ class DashboardController extends AbstractDashboardController
     {
         $submenu1 = [
             MenuItem::linktoRoute('Товары', 'fas fa-file-alt', 'admin_product_import_index'),
+            MenuItem::linktoRoute('Обновление цен', 'fas fa-calculator', 'admin_update_prices'),
         ];
     
         yield MenuItem::linkToCrud('Примеры работ', 'fas fa-briefcase', WorkExample::class);

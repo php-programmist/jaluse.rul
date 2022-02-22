@@ -9,6 +9,7 @@ use App\Entity\Product;
 use App\Entity\Type;
 use App\Helper\SlugHelper;
 use App\Model\Admin\ProductImport;
+use App\Model\Admin\UpdatePrices;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use RuntimeException;
@@ -79,10 +80,45 @@ class ImportManager
     
         }
         $this->entityManager->flush();
-        
+    
         $this->importImages($productImport);
-        
+    
         return [$created, $updated];
+    }
+    
+    public function updatePrices(UpdatePrices $updatePricesDto): array
+    {
+        $spreadsheet = $this->xlsxReader->load($updatePricesDto->getXlsFile());
+        $updated     = [];
+        $notFound    = [];
+        $productRepo = $this->entityManager->getRepository(Product::class);
+        foreach ($spreadsheet->getAllSheets() as $sheet) {
+            $sheetData = $sheet->toArray(null, true, true, true);
+            foreach ($sheetData as $row_number => $row) {
+                [
+                    "A" => $url,
+                    "B" => $price,
+                ] = $row;
+    
+                if ($row_number < 2 || empty($url)) {
+                    continue;
+                }
+    
+                $uri = trim(parse_url($url, PHP_URL_PATH), ' /');
+    
+                $product = $productRepo->findOneBy(['uri' => $uri]);
+                if (null === $product) {
+                    $notFound[] = $url;
+                } else {
+                    $this->setPrice((float)$price, $product);
+                    $updated[] = $product->getPath();
+                }
+            }
+        }
+        
+        $this->entityManager->flush();
+        
+        return [$updated, $notFound];
     }
     
     private function generateProductUri(ProductImport $productImport, string $productName): string
@@ -92,7 +128,7 @@ class ImportManager
         if (!empty($productImport->getRemoveFromName())) {
             $nameForSlug = str_replace($productImport->getRemoveFromName(), '', $productName);
         }
-    
+        
         return $productImport->getCatalog()->getUri() . '/' . SlugHelper::makeSlug($nameForSlug);
     }
     
