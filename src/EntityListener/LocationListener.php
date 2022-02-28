@@ -3,17 +3,19 @@
 namespace App\EntityListener;
 
 use App\Entity\Location;
-use App\Service\ConfigService;
+use App\Service\CalculationService;
 
 class LocationListener
 {
-    public function __construct(private ConfigService $configService)
+    public function __construct(private CalculationService $calculation_service)
     {
     }
     
     public function postLoad(Location $location)
     {
-        $price = $this->configService->getCached('geo.' . $location->getGeoProductType());
-        $location->setPrice($price);
+        $price           = $this->calculation_service->getCatalogMinPriceByUri($location->getBaseCatalogUri());
+        $discountedPrice = $this->calculation_service->getDiscountedPrice($price);
+        $formattedPrice  = sprintf($location->getPriceFormat(), $discountedPrice);
+        $location->setPrice($formattedPrice);
     }
 }

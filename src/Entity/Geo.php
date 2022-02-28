@@ -61,9 +61,4 @@ abstract class Geo extends Page
     {
         return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'zhalyuzi/vertikalnye';
     }
-    
-    public function getPriceFormat(): string
-    {
-        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'от %d рублей за изделие' : 'от %d руб/м2';
-    }
 }

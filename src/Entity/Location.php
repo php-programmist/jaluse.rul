@@ -67,4 +67,9 @@ class Location extends Page
             ? '/rulonnyie-shtoryi/kalkulyator/'
             : '/zhalyuzi/kalkulyator/';
     }
+    
+    public function getBaseCatalogUri(): string
+    {
+        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'zhalyuzi/vertikalnye';
+    }
 }

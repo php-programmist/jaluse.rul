@@ -560,6 +560,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
         return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'zhalyuzi';
     }
     
+    public function getPriceFormat(): string
+    {
+        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'от %d рублей за изделие' : 'от %d руб/м2';
+    }
+    
     /**
      * @param string $geoProductType
      *
