@@ -57,6 +57,7 @@ class JaluseExtension extends AbstractExtension
             $value = $this->calculation_service->getCatalogMinPriceByUri($catalogUri);
             $item->set($value);
             $this->cache->save($item);
+    
         }
         
         return $item->get();

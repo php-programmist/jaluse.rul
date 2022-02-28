@@ -117,7 +117,9 @@ class CalculationService
     
         foreach ($catalog->getPages() as $page) {
             $minPriceCandidate = 0;
-        
+            if (!$page->getPublished()) {
+                continue;
+            }
             if ($page instanceof Product) {
                 $minPriceCandidate = $this->getMinPrice($page);
             } elseif ($page instanceof Catalog) {
