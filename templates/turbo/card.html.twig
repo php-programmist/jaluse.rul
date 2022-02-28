@@ -3,5 +3,5 @@
     <img src="{{ app.request.schemeAndHttpHost }}{{ page.cardImageUrl }}" alt="*">
     {{ page.textComputed|raw }}
     <hr />
-    <h3><b>Цена от 664 руб/м2</b></h3>
+    <h3><b>Цена от {{ discounted_price(catalog_min_price('zhalyuzi/vertikalnye')) }} руб/м2</b></h3>
 </div>

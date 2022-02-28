@@ -555,6 +555,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
         return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 133 : null;
     }
     
+    public function getBaseCatalogUri(): string
+    {
+        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'zhalyuzi';
+    }
+    
     /**
      * @param string $geoProductType
      *
