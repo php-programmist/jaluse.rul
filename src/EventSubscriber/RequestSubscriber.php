@@ -65,7 +65,7 @@ class RequestSubscriber implements EventSubscriberInterface
         if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
             return;
         }
-    
+        return;
         $session = $request->getSession();
         if ($session->get(self::SESSION_KEY_PASSED_CHECK)) {
             //Проверка каптчи пройдена ранне
