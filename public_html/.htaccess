@@ -2,7 +2,23 @@ RewriteEngine On RewriteBase /
 
 Order Allow,Deny
 Allow from all
-Deny from 31.173.80.0/21 178.176.64.0/20
+Deny from 31.173.80.0/21 178.176.64.0/20 213.87.128.0/19 188.170.64.0/19 94.25.168.0/21
+
+RewriteCond %{HTTP_USER_AGENT} ".AhrefsBot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".MJ12bot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".rogerBot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".MegaIndex\.ru/2\.0." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".LinkpadBot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".spbot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".Serpstatbot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".exabot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".SemrushBot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".boitho." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".AspiegelBot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".psbot." [OR]
+RewriteCond %{HTTP_USER_AGENT} ".Amazonbot" [OR]
+RewriteCond %{HTTP_USER_AGENT} ".sogou."
+RewriteRule ".*" "-" [F,L]
 
 RewriteRule rulonnyie-shtoryi/kollekcziya-euro-vista-novinka-sezona-2014/(.*)$ /rulonnyie-shtoryi/standartnye-rulonnye-shtory/$1 [R=301,L]
 #RewriteRule zhalyuzi/na-plastikovyie-okna/rulonnaya-kassetnaya-sistema-uni1/(.*)$ /rulonnyie-shtoryi/uni/of-rulonnaya-kassetnaya-sistema-uni2/$1 [R=301,L]
