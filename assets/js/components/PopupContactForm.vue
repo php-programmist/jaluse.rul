@@ -36,7 +36,8 @@
 							>
 						</p>
 						<p class="fieldset">
-							<button class="full-width form-submit" @click="sendForm($event)">ОТПРАВИТЬ</button>
+							<button class="full-width form-submit js-submit-callback-form" @click="sendForm($event)">ОТПРАВИТЬ
+              </button>
 						</p>
 					</div>
 				</form>
@@ -47,22 +48,23 @@
 </template>
 
 <script>
-	import {mask} from 'vue-the-mask'
-	export default {
-		data() {
-			return {
-				name: '',
-				phone: '',
-				visible: false
-			};
-		},
-		directives: {mask},
-		props: ["header"],
-		methods:{
+import {mask} from 'vue-the-mask'
+
+export default {
+  data() {
+    return {
+      name: '',
+      phone: '',
+      visible: false
+    };
+  },
+  directives: {mask},
+  props: ["header"],
+  methods: {
 			sendForm(event){
 				event.preventDefault();
 				if (this.name !== '' && this.phone !== '') {
-					this.$emit('sendForm', {name:this.name,phone:this.phone});
+          this.$emit('sendForm', {name: this.name, phone: this.phone});
 				}
 			}
 		}
