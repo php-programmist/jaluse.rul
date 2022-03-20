@@ -19,17 +19,26 @@ final class Version20220220130507 extends AbstractMigration
     
     public function up(Schema $schema): void
     {
-        
+    
         // удаляем старые образцы
         $plisseCatalogId = 23;
-        
+        $stmt            = $this->connection->executeQuery('select id from page where parent_id = ?', [
+            $plisseCatalogId,
+        ]);
+        $productsIds     = $stmt->fetchFirstColumn();
+        foreach ($productsIds as $productId) {
+            $this->addSql('UPDATE work_example SET product_id = null where product_id=?', [
+                $productId,
+            ]);
+        }
+    
         $this->addSql('DELETE from page where parent_id=?', [
             $plisseCatalogId,
         ]);
-        
+    
         //Добавляем подтипы
         $typeId = 175;
-        
+    
         $simpleMaterialId = 199;
         $this->addSql('insert into material (id, name, ordering) VALUES (?,?,?)', [
             $simpleMaterialId,
