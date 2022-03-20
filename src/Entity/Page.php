@@ -63,7 +63,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     protected $name;
     
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $nameGenitive = null;
     
@@ -639,7 +639,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      */
     public function getNameGenitive(): ?string
     {
-        return $this->nameGenitive;
+        return $this->nameGenitive ?? $this->name;
     }
     
     /**
