@@ -28,7 +28,11 @@ span.select2.select2-container.select2-container--bootstrap {
 .header_custom_menu .btn-primary a{
     color: white;
 }
-.header_custom_menu .alert{
+.header_custom_menu .alert {
     display: none;
     padding: 3px 1.25rem;
+}
+
+.custom-file-label {
+    padding-right: 100px;
 }

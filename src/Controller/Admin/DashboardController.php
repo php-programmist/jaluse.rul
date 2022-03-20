@@ -49,12 +49,13 @@ class DashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()
-            ->addCssFile('css/admin.css')
-            ->addCssFile('css/chosen.css')
-            ->addCssFile('css/jquery.dm-uploader.css')
-            ->addJsFile('js/cache_clear.js')
-            ->addJsFile('js/chosen.jquery.min.js')
-            ->addJsFile('js/chosen-select.js');
+                     ->addCssFile('css/admin.css')
+                     ->addCssFile('css/chosen.css')
+                     ->addCssFile('css/jquery.dm-uploader.css')
+                     ->addJsFile('js/cache_clear.js')
+                     ->addJsFile('js/chosen.jquery.min.js')
+                     ->addJsFile('js/chosen-select.js')
+                     ->addJsFile('js/bs-custom-file-input.min.js');
     }
     
     public function configureDashboard(): Dashboard
