@@ -4,11 +4,13 @@ namespace App\Service;
 
 use App\Entity\Catalog;
 use App\Entity\Markiz;
+use App\Entity\Page;
 use App\Entity\Product;
 use App\Entity\Roll;
 use App\Entity\Roman;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CalculationService
 {
@@ -91,21 +93,54 @@ class CalculationService
         if ($catalogUri === 'zhalyuzi') {
             $catalogUri = 'zhalyuzi/gorizontalnye';
         }
-        /** @var Catalog $catalog */
-        $catalog = $this->entityManager->getRepository(Catalog::class)->findOneBy(['uri' => $catalogUri]);
-        if (null === $catalog) {
-            $this->logger->error('Не найден каталог - ' . $catalogUri);
-        
-            return 0;
-        }
+        $catalog = $this->findCatalogByUri($catalogUri);
     
         $minPrice = $this->getCatalogMinPrice($catalog);
-        
+    
         if (0 === $minPrice) {
             $this->logger->error(sprintf('Для каталога %s не удалось рассчитать минимальную цену', $catalogUri));
         }
-        
+    
         return $minPrice;
+    }
+    
+    public function getCatalogMaxPriceByUri(string $catalogUri): int
+    {
+        if ($catalogUri === 'zhalyuzi') {
+            $catalogUri = 'zhalyuzi/vertikalnye';
+        }
+        $catalog = $this->findCatalogByUri($catalogUri);
+    
+        $maxPrice = $this->getCatalogMaxPrice($catalog);
+    
+        if (0 === $maxPrice) {
+            $this->logger->error(sprintf('Для каталога %s не удалось рассчитать максимальную цену', $catalogUri));
+        }
+    
+        return $maxPrice;
+    }
+    
+    public function getCatalogProductsCount(string $catalogUri): int
+    {
+        $catalog = $this->findCatalogByUri($catalogUri);
+        
+        $count = $this->getCatalogProductsNumber($catalog);
+        
+        if (0 === $count) {
+            $this->logger->error(sprintf('Для каталога %s не удалось посчитать количество товаров', $catalogUri));
+        }
+        
+        return $count;
+    }
+    
+    private function findCatalogByUri(string $catalogUri): Catalog
+    {
+        $catalog = $this->entityManager->getRepository(Catalog::class)->findOneBy(['uri' => $catalogUri]);
+        if (!($catalog instanceof Catalog)) {
+            throw new NotFoundHttpException('Не найден каталог - ' . $catalogUri);
+        }
+        
+        return $catalog;
     }
     
     private function getCatalogMinPrice(Catalog $catalog): int
@@ -114,7 +149,7 @@ class CalculationService
         if (null !== $catalog->getPrice()) {
             return $catalog->getPrice();
         }
-    
+        
         foreach ($catalog->getPages() as $page) {
             $minPriceCandidate = 0;
             if (!$page->getPublished()) {
@@ -127,7 +162,7 @@ class CalculationService
             } elseif ($page instanceof Markiz || $page instanceof Roll || $page instanceof Roman) {
                 $minPriceCandidate = $page->getPrice();
             }
-    
+            
             if (
                 $minPriceCandidate > 0
                 && ($minPriceCandidate < $minPrice || 0 === $minPrice)
@@ -135,8 +170,56 @@ class CalculationService
                 $minPrice = $minPriceCandidate;
             }
         }
-    
+        
         return $minPrice;
+    }
+    
+    private function getCatalogMaxPrice(Catalog $catalog): int
+    {
+        $maxPrice = 0;
+        foreach ($catalog->getPages() as $page) {
+            $maxPriceCandidate = 0;
+            if (!$page->getPublished()) {
+                continue;
+            }
+            if ($page instanceof Product) {
+                $maxPriceCandidate = $this->getMinPrice($page);
+            } elseif ($page instanceof Catalog) {
+                $maxPriceCandidate = $this->getCatalogMaxPrice($page);
+            } elseif ($page instanceof Markiz || $page instanceof Roll || $page instanceof Roman) {
+                $maxPriceCandidate = $page->getPrice();
+            }
+            
+            if ($maxPriceCandidate > 0 && $maxPriceCandidate > $maxPrice) {
+                $maxPrice = $maxPriceCandidate;
+            }
+        }
+        
+        return $maxPrice;
+    }
+    
+    private function getCatalogProductsNumber(Catalog $catalog): int
+    {
+        $products = $catalog->getPages()->filter(fn(Page $page) => $page instanceof Product
+                                                                   && $page->getPublished()
+                                                                   && $this->getMinPrice($page) > 0
+        );
+        $count    = $products ? $products->count() : 0;
+        
+        $markiz = $catalog->getPages()->filter(fn(Page $page) => $page instanceof Markiz
+                                                                 && $page->getPublished()
+        );
+        $count  += $markiz ? $markiz->count() : 0;
+        
+        $subCatalogs = $catalog->getPages()->filter(fn(Page $page
+        ) => $page instanceof Catalog && $page->getPublished());
+        if ($subCatalogs) {
+            foreach ($subCatalogs as $subCatalog) {
+                $count += $this->getCatalogProductsNumber($subCatalog);
+            }
+        }
+        
+        return $count;
     }
     
     /**

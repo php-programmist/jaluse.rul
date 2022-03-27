@@ -27,6 +27,8 @@ class JaluseExtension extends AbstractExtension
             new TwigFunction('catalog_min_price', [$this, 'catalog_min_price']),
             new TwigFunction('discounted_price', [$this, 'discounted_price']),
             new TwigFunction('price_with_delivery', [$this, 'price_with_delivery']),
+            new TwigFunction('catalog_max_price', [$this, 'catalog_max_price']),
+            new TwigFunction('catalog_products_count', [$this, 'catalog_products_count']),
         ];
     }
 
@@ -57,9 +59,36 @@ class JaluseExtension extends AbstractExtension
             $value = $this->calculation_service->getCatalogMinPriceByUri($catalogUri);
             $item->set($value);
             $this->cache->save($item);
+        
+        }
     
+        return $item->get();
+    }
+    
+    public function catalog_max_price(string $catalogUri): int
+    {
+        $key  = sprintf('catalog_max_price.%s', str_replace('/', '_', $catalogUri));
+        $item = $this->cache->getItem($key);
+        if (!$item->isHit()) {
+            $value = $this->calculation_service->getCatalogMaxPriceByUri($catalogUri);
+            $item->set($value);
+            $this->cache->save($item);
+            
         }
         
+        return $item->get();
+    }
+    
+    public function catalog_products_count(string $catalogUri): int
+    {
+        $key  = sprintf('catalog_products_count.%s', str_replace('/', '_', $catalogUri));
+        $item = $this->cache->getItem($key);
+        if (!$item->isHit()) {
+            $value = $this->calculation_service->getCatalogProductsCount($catalogUri);
+            $item->set($value);
+            $this->cache->save($item);
+        }
+    
         return $item->get();
     }
     

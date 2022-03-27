@@ -10,6 +10,7 @@
 {% block body %}
     <div id="content" class="container-fluid catalog-container">
         {{ include('modules/rating_schema.html.twig') }}
+        {{ include('catalog/blocks/aggregate_offer_schema.html.twig', {catalogUri: page.uri}) }}
         <h2>{% block content_h2 %}{{ page.name ~" "~ selectedColor.name|lower }}{% endblock %}</h2>
         {{ include('catalog/blocks/catalog.html.twig') }}
     
