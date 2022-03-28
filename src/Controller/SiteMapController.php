@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SiteMapController extends AbstractController
 {
     /**
-     * @Route("/sitemap.xml", name="sitemap",format="xml")
+     * @Route("/sitemap2.xml", name="sitemap",format="xml")
      */
     public function xml(SiteMapModel $model)
     {
