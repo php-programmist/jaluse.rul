@@ -18,53 +18,52 @@ class Catalog extends Page
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $matrix_folder;
-    
-    public function getMatrixFolder(): ?string
-    {
-        $parent = $this->getParent();
-        if (
-            null === $this->matrix_folder
-            && null !== $parent
-            && $parent instanceof Catalog
-        ) {
-            return $parent->getMatrixFolder();
-        }
-    
-        return $this->matrix_folder;
-    }
-    
-    public function setMatrixFolder(?string $matrix_folder): self
-    {
-        $this->matrix_folder = $matrix_folder;
-        
-        return $this;
-    }
+    private ?string $matrix_folder = null;
     
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="catalogs")
      */
-    private $type;
+    private ?Type $type = null;
     
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Material", inversedBy="catalogs")
      */
-    private $material;
+    private ?Material $material = null;
     
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $price;
+    private ?float $price = null;
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $recommendedTitle;
+    private ?string $recommendedTitle = null;
     
     /**
      * @ORM\OneToMany(targetEntity=WorkExample::class, mappedBy="catalog")
      */
     private Collection $workExamples;
+    
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private ?array $filters = [];
+    
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private bool $hideCategories = false;
+    
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private bool $hideFilters = false;
+    
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private bool $premium = false;
     
     public function __construct()
     {
@@ -106,7 +105,16 @@ class Catalog extends Page
     
     public function getMaterial(): ?Material
     {
-        return $this->material;
+        if ($this->material) {
+            return $this->material;
+        }
+    
+        $parent = $this->getParent();
+        if ($parent && $parent instanceof Catalog) {
+            return $parent->getMaterial();
+        }
+    
+        return null;
     }
     
     public function setMaterial(?Material $material): self
@@ -184,6 +192,103 @@ class Catalog extends Page
     
     public function isHideCategories(): bool
     {
+        if ($this->hideCategories) {
+            return true;
+        }
+        
         return $this->getType()?->isHideCategories() ?? false;
+    }
+    
+    public function getMatrixFolder(): ?string
+    {
+        $parent = $this->getParent();
+        if (
+            null === $this->matrix_folder
+            && null !== $parent
+            && $parent instanceof Catalog
+        ) {
+            return $parent->getMatrixFolder();
+        }
+        
+        return $this->matrix_folder;
+    }
+    
+    public function setMatrixFolder(?string $matrix_folder): self
+    {
+        $this->matrix_folder = $matrix_folder;
+        
+        return $this;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getFilters(): array
+    {
+        return $this->filters ?? [];
+    }
+    
+    /**
+     * @param array|null $filters
+     *
+     * @return $this
+     */
+    public function setFilters(?array $filters): self
+    {
+        $this->filters = $filters;
+        
+        return $this;
+    }
+    
+    /**
+     * @param bool $hideCategories
+     *
+     * @return $this
+     */
+    public function setHideCategories(bool $hideCategories): self
+    {
+        $this->hideCategories = $hideCategories;
+        
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isHideFilters(): bool
+    {
+        return $this->hideFilters;
+    }
+    
+    /**
+     * @param bool $hideFilters
+     *
+     * @return $this
+     */
+    public function setHideFilters(bool $hideFilters): self
+    {
+        $this->hideFilters = $hideFilters;
+        
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isPremium(): bool
+    {
+        return $this->premium;
+    }
+    
+    /**
+     * @param bool $premium
+     *
+     * @return $this
+     */
+    public function setPremium(bool $premium): self
+    {
+        $this->premium = $premium;
+        
+        return $this;
     }
 }
