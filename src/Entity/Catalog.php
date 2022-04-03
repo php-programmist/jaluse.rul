@@ -291,4 +291,9 @@ class Catalog extends Page
         
         return $this;
     }
+    
+    public function isShowSummary(): bool
+    {
+        return null !== $this->nameGenitive;
+    }
 }

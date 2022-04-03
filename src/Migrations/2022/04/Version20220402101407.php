@@ -20,12 +20,12 @@ final class Version20220402101407 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE page ADD filters LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:json)\', ADD hide_categories TINYINT(1) DEFAULT \'0\', ADD hide_filters TINYINT(1) DEFAULT \'0\', ADD premium TINYINT(1) DEFAULT \'0\'');
+        $this->addSql('ALTER TABLE page ADD filters LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:json)\', ADD hide_categories TINYINT(1) DEFAULT \'0\', ADD hide_filters TINYINT(1) DEFAULT \'0\', ADD premium TINYINT(1) DEFAULT \'0\', ADD name_nominative VARCHAR(255) DEFAULT NULL after `name_genitive`');
     }
     
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE page DROP filters, DROP hide_categories, DROP hide_filters, DROP premium');
+        $this->addSql('ALTER TABLE page DROP filters, DROP hide_categories, DROP hide_filters, DROP premium, DROP name_nominative');
     }
 }

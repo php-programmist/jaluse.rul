@@ -5,7 +5,7 @@
             {{ include('catalog/blocks/filters.html.twig') }}
         </div>
         <div class="col-md-10 col-sm-12">
-            {% if catalog.nameGenitive is not null %}
+            {% if catalog.showSummary %}
                 {{ include('catalog/blocks/summary.html.twig') }}
             {% endif %}
             
