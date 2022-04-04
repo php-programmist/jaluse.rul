@@ -93,6 +93,10 @@ class CatalogManager
     
     public function getCatalogsLinks(Catalog $catalog): array
     {
+        if ($catalog->isPremium()) {
+            //Не показываем ссылки для страниц премиум-каталогов
+            return [];
+        }
         $type     = $catalog->getType();
         $material = $catalog->getMaterial();
         $allTypes = $this->entityManager->getRepository(Type::class)->findBy([], ['id' => 'asc']);
