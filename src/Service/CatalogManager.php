@@ -79,6 +79,7 @@ class CatalogManager
     
     public function getBasicFiltersByCatalog(Catalog $catalog): array
     {
+        $filters = $catalog->getFilters();
         if ($catalog->getType()) {
             $filters['type'] = $catalog->getType()->getId();
         } else {

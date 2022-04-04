@@ -126,7 +126,7 @@ export default {
       colorsIds: [],
       products: [],
       categories: [],
-      category: {id: 0},
+      category: {id: this.selected_category},
       type: this.getPreSelectedType(),
       material: this.getPreSelectedMaterial(),
       product_index: 0,
@@ -139,7 +139,7 @@ export default {
       productConfigs: {}
     };
   },
-  props: ["type_filter", "available_types", "selected_type", "selected_material"],
+  props: ["type_filter", "available_types", "selected_type", "selected_material", "hide_categories", "selected_category"],
   components: {
     'v-consultation-form': ConsultationForm,
     'v-order-form': OrderForm,
@@ -170,7 +170,7 @@ export default {
           }
           this.colors = response.data.colors;
           this.categories = response.data.categories;
-          this.category = this.categories[0];
+          this.category = this.categories.find(category => +category.id === +this.selected_category);
           const matrices = response.data.matrices;
           const priceConfigs = response.data.priceConfigs;
           this.price_calculator = new PriceCalculator(priceConfigs, matrices);
@@ -216,7 +216,7 @@ export default {
       if (this.type.id === 0) {
         return true;
       }
-      return !this.type.hideCategories;
+      return !this.type.hideCategories && !this.hide_categories;
     }
   },
   watch: {

@@ -227,7 +227,6 @@ class PageController extends AbstractController
         $force_show_filters = false;
         $available_types    = null;
         $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
-    
         if ($this->request->isXmlHttpRequest()) {
             return $this->catalogManager->renderProducts($filters);
         }
@@ -263,6 +262,7 @@ class PageController extends AbstractController
             'categories'    => $this->categoryManager->getAllCategories(),
             'items'         => $this->catalogManager->getPopular($catalog),
             'catalogsLinks' => $this->catalogManager->getCatalogsLinks($catalog),
+            'selected_category' => $filters['category'] ?? 1,
         ];
     }
     
