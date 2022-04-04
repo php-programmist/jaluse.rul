@@ -51,45 +51,34 @@ class JaluseExtension extends AbstractExtension
         return sprintf('от <span class="price">%s</span> <small>руб. за изделие</small>', $min_price);
     }
     
-    public function catalog_min_price(string $catalogUri): int
+    public function catalog_min_price(string $catalogUri, array $filters = []): int
     {
-        $key  = sprintf('catalog_min_price.%s', str_replace('/', '_', $catalogUri));
-        $item = $this->cache->getItem($key);
-        if (!$item->isHit()) {
-            $value = $this->calculation_service->getCatalogMinPriceByUri($catalogUri);
-            $item->set($value);
-            $this->cache->save($item);
-        
-        }
-    
-        return $item->get();
+        return $this->getCachedValue(
+            'catalog_min_price',
+            $catalogUri,
+            $filters,
+            fn() => $this->calculation_service->getCatalogMinPriceByUri($catalogUri, $filters)
+        );
     }
     
-    public function catalog_max_price(string $catalogUri): int
+    public function catalog_max_price(string $catalogUri, array $filters = []): int
     {
-        $key  = sprintf('catalog_max_price.%s', str_replace('/', '_', $catalogUri));
-        $item = $this->cache->getItem($key);
-        if (!$item->isHit()) {
-            $value = $this->calculation_service->getCatalogMaxPriceByUri($catalogUri);
-            $item->set($value);
-            $this->cache->save($item);
-            
-        }
-        
-        return $item->get();
+        return $this->getCachedValue(
+            'catalog_max_price',
+            $catalogUri,
+            $filters,
+            fn() => $this->calculation_service->getCatalogMaxPriceByUri($catalogUri, $filters)
+        );
     }
     
-    public function catalog_products_count(string $catalogUri): int
+    public function catalog_products_count(string $catalogUri, array $filters = []): int
     {
-        $key  = sprintf('catalog_products_count.%s', str_replace('/', '_', $catalogUri));
-        $item = $this->cache->getItem($key);
-        if (!$item->isHit()) {
-            $value = $this->calculation_service->getCatalogProductsCount($catalogUri);
-            $item->set($value);
-            $this->cache->save($item);
-        }
-    
-        return $item->get();
+        return $this->getCachedValue(
+            'catalog_products_count',
+            $catalogUri,
+            $filters,
+            fn() => $this->calculation_service->getCatalogProductsCount($catalogUri, $filters)
+        );
     }
     
     public function discounted_price(int $basePrice, int $discount = 7): int
@@ -105,5 +94,28 @@ class JaluseExtension extends AbstractExtension
     public function rub_price(float $usdPrice): int
     {
         return $this->calculation_service->getRubPrice($usdPrice);
+    }
+    
+    private function getCacheKey(string $nameSpace, string $catalogUri, array $filters): string
+    {
+        $key = sprintf('%s.%s', $nameSpace, str_replace('/', '_', $catalogUri));
+        foreach ($filters as $key => $value) {
+            $key .= sprintf('.%s.%s', $key, $value);
+        }
+        
+        return $key;
+    }
+    
+    private function getCachedValue(string $nameSpace, string $catalogUri, array $filters, callable $getValue): int
+    {
+        $key  = $this->getCacheKey($nameSpace, $catalogUri, $filters);
+        $item = $this->cache->getItem($key);
+        if (!$item->isHit()) {
+            $value = $getValue();
+            $item->set($value);
+            $this->cache->save($item);
+        }
+        
+        return $item->get();
     }
 }

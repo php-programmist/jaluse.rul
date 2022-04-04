@@ -88,43 +88,43 @@ class CalculationService
         return round($this->usd_rate * $usdPrice);
     }
     
-    public function getCatalogMinPriceByUri(string $catalogUri): int
+    public function getCatalogMinPriceByUri(string $catalogUri, array $filters = []): int
     {
-        if ($catalogUri === 'zhalyuzi') {
+        if (in_array($catalogUri, ['zhalyuzi', 'zhalyuzi/premium-klassa'])) {
             $catalogUri = 'zhalyuzi/gorizontalnye';
         }
         $catalog = $this->findCatalogByUri($catalogUri);
-    
-        $minPrice = $this->getCatalogMinPrice($catalog);
-    
+        
+        $minPrice = $this->getCatalogMinPrice($catalog, $filters);
+        
         if (0 === $minPrice) {
             $this->logger->error(sprintf('Для каталога %s не удалось рассчитать минимальную цену', $catalogUri));
         }
-    
+        
         return $minPrice;
     }
     
-    public function getCatalogMaxPriceByUri(string $catalogUri): int
+    public function getCatalogMaxPriceByUri(string $catalogUri, array $filters = []): int
     {
-        if ($catalogUri === 'zhalyuzi') {
+        if (in_array($catalogUri, ['zhalyuzi', 'zhalyuzi/premium-klassa'])) {
             $catalogUri = 'zhalyuzi/vertikalnye';
         }
         $catalog = $this->findCatalogByUri($catalogUri);
-    
-        $maxPrice = $this->getCatalogMaxPrice($catalog);
-    
+        
+        $maxPrice = $this->getCatalogMaxPrice($catalog, $filters);
+        
         if (0 === $maxPrice) {
             $this->logger->error(sprintf('Для каталога %s не удалось рассчитать максимальную цену', $catalogUri));
         }
-    
+        
         return $maxPrice;
     }
     
-    public function getCatalogProductsCount(string $catalogUri): int
+    public function getCatalogProductsCount(string $catalogUri, array $filters = []): int
     {
         $catalog = $this->findCatalogByUri($catalogUri);
         
-        $count = $this->getCatalogProductsNumber($catalog);
+        $count = $this->getCatalogProductsNumber($catalog, $filters);
         
         if (0 === $count) {
             $this->logger->error(sprintf('Для каталога %s не удалось посчитать количество товаров', $catalogUri));
@@ -139,11 +139,15 @@ class CalculationService
         if (!($catalog instanceof Catalog)) {
             throw new NotFoundHttpException('Не найден каталог - ' . $catalogUri);
         }
-        
+    
+        if ($catalog->isPremium()) {
+            $catalog = $catalog->getParent();
+        }
+    
         return $catalog;
     }
     
-    private function getCatalogMinPrice(Catalog $catalog): int
+    private function getCatalogMinPrice(Catalog $catalog, array $filters): int
     {
         $minPrice = 0;
         if (null !== $catalog->getPrice()) {
@@ -155,10 +159,10 @@ class CalculationService
             if (!$page->getPublished()) {
                 continue;
             }
-            if ($page instanceof Product) {
+            if ($page instanceof Product && $this->isSatisfyFilters($page, $filters)) {
                 $minPriceCandidate = $this->getMinPrice($page);
             } elseif ($page instanceof Catalog) {
-                $minPriceCandidate = $this->getCatalogMinPrice($page);
+                $minPriceCandidate = $this->getCatalogMinPrice($page, $filters);
             } elseif ($page instanceof Markiz || $page instanceof Roll || $page instanceof Roman) {
                 $minPriceCandidate = $page->getPrice();
             }
@@ -174,7 +178,7 @@ class CalculationService
         return $minPrice;
     }
     
-    private function getCatalogMaxPrice(Catalog $catalog): int
+    private function getCatalogMaxPrice(Catalog $catalog, array $filters): int
     {
         $maxPrice = 0;
         foreach ($catalog->getPages() as $page) {
@@ -182,10 +186,10 @@ class CalculationService
             if (!$page->getPublished()) {
                 continue;
             }
-            if ($page instanceof Product) {
+            if ($page instanceof Product && $this->isSatisfyFilters($page, $filters)) {
                 $maxPriceCandidate = $this->getMinPrice($page);
             } elseif ($page instanceof Catalog) {
-                $maxPriceCandidate = $this->getCatalogMaxPrice($page);
+                $maxPriceCandidate = $this->getCatalogMaxPrice($page, $filters);
             } elseif ($page instanceof Markiz || $page instanceof Roll || $page instanceof Roman) {
                 $maxPriceCandidate = $page->getPrice();
             }
@@ -198,12 +202,14 @@ class CalculationService
         return $maxPrice;
     }
     
-    private function getCatalogProductsNumber(Catalog $catalog): int
+    private function getCatalogProductsNumber(Catalog $catalog, array $filters): int
     {
-        $products = $catalog->getPages()->filter(fn(Page $page) => $page instanceof Product
-                                                                   && $page->getPublished()
-                                                                   && $this->getMinPrice($page) > 0
-        );
+        $filterCallable = fn(Page $page) => $page instanceof Product
+                                            && $page->getPublished()
+                                            && $this->getMinPrice($page) > 0
+                                            && $this->isSatisfyFilters($page, $filters);
+        
+        $products = $catalog->getPages()->filter($filterCallable);
         $count    = $products ? $products->count() : 0;
         
         $markiz = $catalog->getPages()->filter(fn(Page $page) => $page instanceof Markiz
@@ -215,7 +221,7 @@ class CalculationService
         ) => $page instanceof Catalog && $page->getPublished());
         if ($subCatalogs) {
             foreach ($subCatalogs as $subCatalog) {
-                $count += $this->getCatalogProductsNumber($subCatalog);
+                $count += $this->getCatalogProductsNumber($subCatalog, $filters);
             }
         }
         
@@ -245,5 +251,29 @@ class CalculationService
         $discount ??= $this->discountGlobal;
         
         return round($basePrice * (1 - $discount / 100));
+    }
+    
+    private function isSatisfyFilters(Product $product, array $filters): bool
+    {
+        if (empty($filters)) {
+            return true;
+        }
+        
+        foreach ($filters as $field => $value) {
+            switch ($field) {
+                case 'category':
+                    if ($product->getCategory()?->getId() !== $value) {
+                        return false;
+                    }
+                    break;
+                case 'color':
+                    if ($product->getColorId() !== $value) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        
+        return true;
     }
 }
