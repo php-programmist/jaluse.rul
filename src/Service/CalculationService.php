@@ -253,6 +253,13 @@ class CalculationService
         return round($basePrice * (1 - $discount / 100));
     }
     
+    public function getPremiumCatalog(Catalog $catalog): ?Catalog
+    {
+        return $this->entityManager
+            ->getRepository(Catalog::class)
+            ->findOneBy(['parent' => $catalog, 'premium' => true]);
+    }
+    
     private function isSatisfyFilters(Product $product, array $filters): bool
     {
         if (empty($filters)) {

@@ -2,6 +2,8 @@
 
 namespace App\Twig;
 
+use App\Entity\Catalog;
+use App\Entity\Page;
 use App\Entity\Product;
 use App\Service\CalculationService;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -29,15 +31,16 @@ class JaluseExtension extends AbstractExtension
             new TwigFunction('price_with_delivery', [$this, 'price_with_delivery']),
             new TwigFunction('catalog_max_price', [$this, 'catalog_max_price']),
             new TwigFunction('catalog_products_count', [$this, 'catalog_products_count']),
+            new TwigFunction('premium_link', [$this, 'getPremiumLink'], ['is_safe' => ['html']]),
         ];
     }
-
+    
     public function min_price(Product $product, bool $digitsOnly = false, bool $discounted = false)
     {
         $min_price = $discounted
             ? $this->calculation_service->getMinDiscountedPrice($product)
             : $this->calculation_service->getMinPrice($product);
-    
+        
         if ($digitsOnly) {
             return $min_price;
         }
@@ -47,36 +50,36 @@ class JaluseExtension extends AbstractExtension
         if ($product->getType()->getCalculationType() === 'simple') {
             return sprintf('<span class="price">%s</span> <small>руб. за м<sup>2</sup></small>', $min_price);
         }
-    
+        
         return sprintf('от <span class="price">%s</span> <small>руб. за изделие</small>', $min_price);
     }
     
     public function catalog_min_price(string $catalogUri, array $filters = []): int
     {
+        $key = $this->getCacheKey('catalog_min_price', $catalogUri, $filters);
+        
         return $this->getCachedValue(
-            'catalog_min_price',
-            $catalogUri,
-            $filters,
+            $key,
             fn() => $this->calculation_service->getCatalogMinPriceByUri($catalogUri, $filters)
         );
     }
     
     public function catalog_max_price(string $catalogUri, array $filters = []): int
     {
+        $key = $this->getCacheKey('catalog_max_price', $catalogUri, $filters);
+        
         return $this->getCachedValue(
-            'catalog_max_price',
-            $catalogUri,
-            $filters,
+            $key,
             fn() => $this->calculation_service->getCatalogMaxPriceByUri($catalogUri, $filters)
         );
     }
     
     public function catalog_products_count(string $catalogUri, array $filters = []): int
     {
+        $key = $this->getCacheKey('catalog_products_count', $catalogUri, $filters);
+        
         return $this->getCachedValue(
-            'catalog_products_count',
-            $catalogUri,
-            $filters,
+            $key,
             fn() => $this->calculation_service->getCatalogProductsCount($catalogUri, $filters)
         );
     }
@@ -96,6 +99,19 @@ class JaluseExtension extends AbstractExtension
         return $this->calculation_service->getRubPrice($usdPrice);
     }
     
+    public function getPremiumLink(?Page $page): string
+    {
+        if (!($page instanceof Catalog)) {
+            return '';
+        }
+        $premiumCatalog = $this->calculation_service->getPremiumCatalog($page);
+        if (null === $premiumCatalog) {
+            return '';
+        }
+        
+        return sprintf('<a href="%s#content" class="footer-nav-ssli">Премиум класса</a>', $premiumCatalog->getPath());
+    }
+    
     private function getCacheKey(string $nameSpace, string $catalogUri, array $filters): string
     {
         $key = sprintf('%s.%s', $nameSpace, str_replace('/', '_', $catalogUri));
@@ -106,9 +122,8 @@ class JaluseExtension extends AbstractExtension
         return $key;
     }
     
-    private function getCachedValue(string $nameSpace, string $catalogUri, array $filters, callable $getValue): int
+    private function getCachedValue(string $key, callable $getValue): int
     {
-        $key  = $this->getCacheKey($nameSpace, $catalogUri, $filters);
         $item = $this->cache->getItem($key);
         if (!$item->isHit()) {
             $value = $getValue();
