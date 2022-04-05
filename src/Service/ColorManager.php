@@ -44,8 +44,7 @@ class ColorManager
     public function getAvailableColors(array $filters): array
     {
         $allColors = $this->getAllColors();
-        //цвета независимо отк категории
-        unset($filters['category']);
+    
         $availableColorsIds = $this->entityManager->getRepository(Product::class)->getAvailableColors($filters);
     
         return array_filter($allColors,
