@@ -40,7 +40,7 @@
         {{ include('modules/catalog_calculator.html.twig') }}
     {% endif %}
     
-    {% if items|default(null) is not empty %}
+    {% if items|default(null) is not empty and not page.premium|default(false) %}
         <div class="container hide-mobile">
             <h2>{{ page.recommendedTitle }}:</h2>
             {{ include('modules/recommended_products.html.twig') }}
