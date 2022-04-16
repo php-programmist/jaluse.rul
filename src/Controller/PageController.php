@@ -61,21 +61,19 @@ class PageController extends AbstractController
         /** @var Catalog $catalog */
         $catalog = $this->page_repository->findOneBy(['uri' => 'zhalyuzi']);
         
-        $force_show_filters = true;
-        $available_types    = [132, 133, 175, 178]; //Все, кроме вертикальных
         
-        $filters = ['type' => '132,178']; //Горизонтальные и Isolite
+        $filters = $catalog->getFilters();
         if ($this->request->isXmlHttpRequest()) {
             return $this->catalogManager->renderProducts($filters);
         }
         $params = array_merge(
             $this->getCatalogRenderParams($catalog, $filters),
             [
-                'force_show_filters' => $force_show_filters,
+                'force_show_filters' => true,
                 'show_calc'          => true,
                 'selected_type'      => $catalog->getType()?->getId(),
                 'selected_material'  => $catalog->getMaterial()?->getId(),
-                'available_types'    => $available_types,
+                'available_types'    => $catalog->getAvailableTypes(),
             ]
         );
         
@@ -217,29 +215,20 @@ class PageController extends AbstractController
     
     private function catalog(Catalog $catalog)
     {
-        $template = 'page/catalog.html.twig';
-        if (strpos($catalog->getUri(), 'zhalyuzi') === 0) {
-            $template = 'catalog/zhalyuzi/index.html.twig';
-        }
-        if (strpos($catalog->getUri(), 'rulonnyie-shtoryi') === 0) {
-            $template = 'catalog/rulonnyie-shtoryi/index.html.twig';
-        }
-        $force_show_filters = false;
-        $available_types    = null;
         $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         if ($this->request->isXmlHttpRequest()) {
             return $this->catalogManager->renderProducts($filters);
         }
     
-        return $this->render($template,
+        return $this->render($this->getCatalogTemplate($catalog),
             array_merge(
                 $this->getCatalogRenderParams($catalog, $filters),
                 [
-                    'force_show_filters' => $force_show_filters,
+                    'force_show_filters' => false,
                     'show_calc'          => true,
                     'selected_type'      => $catalog->getType()?->getId(),
                     'selected_material'  => $catalog->getMaterial()?->getId(),
-                    'available_types'    => $available_types,
+                    'available_types'    => $catalog->getAvailableTypes(),
                 ]
             ));
     }
@@ -305,7 +294,20 @@ class PageController extends AbstractController
         if (null === $this->page_repository->findOneBy(['uri' => $redirectUri])) {
             return $this->getUriForRedirect($redirectUri);
         }
-        
+    
         return $redirectUri;
+    }
+    
+    private function getCatalogTemplate(Catalog $catalog): string
+    {
+        $template = 'page/catalog.html.twig';
+        if (str_starts_with($catalog->getUri(), 'zhalyuzi')) {
+            $template = 'catalog/zhalyuzi/index.html.twig';
+        }
+        if (str_starts_with($catalog->getUri(), 'rulonnyie-shtoryi')) {
+            $template = 'catalog/rulonnyie-shtoryi/index.html.twig';
+        }
+        
+        return $template;
     }
 }

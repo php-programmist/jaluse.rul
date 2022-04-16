@@ -80,15 +80,15 @@ class CatalogManager
     public function getBasicFiltersByCatalog(Catalog $catalog): array
     {
         $filters = $catalog->getFilters();
-        if ($catalog->getType()) {
+    
+        if (empty($filters['type']) && $catalog->getType()) {
             $filters['type'] = $catalog->getType()->getId();
-        } else {
-            $filters['type'] = '178,86,132'; //isolite, вертикальные и горизонтальные
         }
+    
         if ($catalog->getMaterial()) {
             $filters['material'] = $catalog->getMaterial()->getId();
         }
-        
+    
         return $filters;
     }
     

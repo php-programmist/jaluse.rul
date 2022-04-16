@@ -288,12 +288,26 @@ class Catalog extends Page
     public function setPremium(bool $premium): self
     {
         $this->premium = $premium;
-        
+    
         return $this;
     }
     
     public function isShowSummary(): bool
     {
         return null !== $this->nameGenitive;
+    }
+    
+    public function getAvailableTypes(): ?array
+    {
+        if ($this->uri === 'zhalyuzi') {
+            return [132, 133, 175, 178]; //Все, кроме вертикальных
+        }
+        $types = $this->getFilters()['type'] ?? null;
+        if (null === $types) {
+            return null;
+        }
+        $typesArray = explode(',', $types);
+        
+        return array_map(static fn(string $item) => (int)$item, $typesArray);
     }
 }
