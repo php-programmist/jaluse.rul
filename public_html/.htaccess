@@ -40,7 +40,6 @@ RewriteRule rulonnyie-shtoryi/den-noch/zebra/$ /rulonnyie-shtoryi/den-noch/ [R=3
 RewriteRule zhalyuzi/bambukovye/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/avtomatika/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/uni/$ /zhalyuzi/ [R=301,L]
-RewriteRule zhalyuzi/bez-sverleniya/$ /zhalyuzi/ [R=301,L]
 RewriteRule zhalyuzi/rulonnye/$ /zhalyuzi/ [R=301,L]
 RewriteRule markizyi/vydvizhnye/$ /markizyi/ [R=301,L]
 RewriteRule zhalyuzi/materialy/$ /zhalyuzi/ [R=301,L]

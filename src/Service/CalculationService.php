@@ -140,7 +140,7 @@ class CalculationService
             throw new NotFoundHttpException('Не найден каталог - ' . $catalogUri);
         }
     
-        if ($catalog->isPremium()) {
+        if ($catalog->isPremium() || $catalog->isNoDrill()) {
             $catalog = $catalog->getParent();
         }
     
@@ -249,7 +249,7 @@ class CalculationService
     public function getDiscountedPrice(float $basePrice, ?int $discount = null): int
     {
         $discount ??= $this->discountGlobal;
-        
+    
         return round($basePrice * (1 - $discount / 100));
     }
     
@@ -258,6 +258,13 @@ class CalculationService
         return $this->entityManager
             ->getRepository(Catalog::class)
             ->findOneBy(['parent' => $catalog, 'premium' => true]);
+    }
+    
+    public function getNoDrillCatalog(Catalog $catalog): ?Catalog
+    {
+        return $this->entityManager
+            ->getRepository(Catalog::class)
+            ->findOneBy(['parent' => $catalog, 'noDrill' => true]);
     }
     
     private function isSatisfyFilters(Product $product, array $filters): bool

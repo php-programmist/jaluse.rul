@@ -65,6 +65,11 @@ class Catalog extends Page
      */
     private bool $premium = false;
     
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private bool $noDrill = false;
+    
     public function __construct()
     {
         parent::__construct();
@@ -320,5 +325,25 @@ class Catalog extends Page
         $categoriesArray = explode(',', $categories);
         
         return (int)$categoriesArray[0];
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isNoDrill(): bool
+    {
+        return $this->noDrill;
+    }
+    
+    /**
+     * @param bool $noDrill
+     *
+     * @return $this
+     */
+    public function setNoDrill(bool $noDrill): self
+    {
+        $this->noDrill = $noDrill;
+        
+        return $this;
     }
 }

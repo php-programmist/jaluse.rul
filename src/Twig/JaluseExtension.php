@@ -32,6 +32,7 @@ class JaluseExtension extends AbstractExtension
             new TwigFunction('catalog_max_price', [$this, 'catalog_max_price']),
             new TwigFunction('catalog_products_count', [$this, 'catalog_products_count']),
             new TwigFunction('premium_link', [$this, 'getPremiumLink'], ['is_safe' => ['html']]),
+            new TwigFunction('no_drill_link', [$this, 'getNoDrillLink'], ['is_safe' => ['html']]),
         ];
     }
     
@@ -108,8 +109,21 @@ class JaluseExtension extends AbstractExtension
         if (null === $premiumCatalog) {
             return '';
         }
-        
+    
         return sprintf('<a href="%s#content" class="footer-nav-ssli">Премиум класса</a>', $premiumCatalog->getPath());
+    }
+    
+    public function getNoDrillLink(?Page $page): string
+    {
+        if (!($page instanceof Catalog)) {
+            return '';
+        }
+        $premiumCatalog = $this->calculation_service->getNoDrillCatalog($page);
+        if (null === $premiumCatalog) {
+            return '';
+        }
+        
+        return sprintf('<a href="%s#content" class="footer-nav-ssli">Без сверления</a>', $premiumCatalog->getPath());
     }
     
     private function getCacheKey(string $nameSpace, string $catalogUri, array $filters): string
@@ -118,7 +132,7 @@ class JaluseExtension extends AbstractExtension
         foreach ($filters as $name => $value) {
             $key .= sprintf('.%s.%s', $name, $value);
         }
-    
+        
         return $key;
     }
     
