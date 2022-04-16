@@ -269,7 +269,8 @@ class CalculationService
         foreach ($filters as $field => $value) {
             switch ($field) {
                 case 'category':
-                    if ($product->getCategory()?->getId() !== $value) {
+                    $categories = explode(',', $value);
+                    if (!in_array($product->getCategory()?->getId(), $categories, false)) {
                         return false;
                     }
                     break;

@@ -251,7 +251,7 @@ class PageController extends AbstractController
             'categories'        => $this->categoryManager->getAllCategories(),
             'items'             => $this->catalogManager->getPopular($catalog),
             'catalogsLinks'     => $this->catalogManager->getCatalogsLinks($catalog),
-            'selected_category' => $filters['category'] ?? 1,
+            'selected_category' => $catalog->getSelectedCategory(),
             'filters'           => $filters,
         ];
     }

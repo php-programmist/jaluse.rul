@@ -307,7 +307,18 @@ class Catalog extends Page
             return null;
         }
         $typesArray = explode(',', $types);
-        
+    
         return array_map(static fn(string $item) => (int)$item, $typesArray);
+    }
+    
+    public function getSelectedCategory(): int
+    {
+        $categories = $this->getFilters()['category'] ?? null;
+        if (null === $categories) {
+            return 1;
+        }
+        $categoriesArray = explode(',', $categories);
+        
+        return (int)$categoriesArray[0];
     }
 }

@@ -244,8 +244,8 @@ class ProductRepository extends ServiceEntityRepository
     private function addFilterConditions($filters, QueryBuilder $query): void
     {
         if (!empty($filters['category'])) {
-            $query->andWhere('p.category = :category')
-                  ->setParameter('category', $filters['category']);
+            $query->andWhere('p.category IN(:category)')
+                  ->setParameter('category', explode(',', $filters['category']));
         }
     
         if (!empty($filters['type'])) {
