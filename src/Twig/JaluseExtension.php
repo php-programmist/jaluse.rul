@@ -115,10 +115,10 @@ class JaluseExtension extends AbstractExtension
     private function getCacheKey(string $nameSpace, string $catalogUri, array $filters): string
     {
         $key = sprintf('%s.%s', $nameSpace, str_replace('/', '_', $catalogUri));
-        foreach ($filters as $key => $value) {
-            $key .= sprintf('.%s.%s', $key, $value);
+        foreach ($filters as $name => $value) {
+            $key .= sprintf('.%s.%s', $name, $value);
         }
-        
+    
         return $key;
     }
     
