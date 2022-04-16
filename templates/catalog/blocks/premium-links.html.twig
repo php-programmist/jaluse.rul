@@ -1,0 +1,20 @@
+{% set premiumCatalogsLinks = {
+    "Горизонтальные":"/zhalyuzi/vertikalnye/premium-klassa/",
+    "Вертикальные":"/zhalyuzi/gorizontalnye/premium-klassa/",
+    "Тканевые":"/zhalyuzi/vertikalnye/tkanevye/premium-klassa/",
+    "Пластиковые":"/zhalyuzi/vertikalnye/plastikovyie/premium-klassa/",
+    "Алюминиевые":"/zhalyuzi/gorizontalnye/alyuminievye/premium-klassa/",
+    "Деревянные":"/zhalyuzi/gorizontalnye/derevyannye/premium-klassa/",
+    "Римские шторы":"/zhalyuzi/plisse/premium-klassa/",
+    "Плиссе":"/rimskies/premium-klassa/",
+    "Рулонные шторы":"/rulonnyie-shtoryi/premium-klassa/",
+} %}
+<div class="catalogs_links py-3">
+    <ul>
+        {% for name, link in premiumCatalogsLinks %}
+            <li class="not-active">
+                <a href="{{ link }}#content">{{ name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
