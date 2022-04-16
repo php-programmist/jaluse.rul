@@ -1,6 +1,7 @@
 {% if (lazyProducts is defined and lazyProducts) or (products is defined and products|length > 0) %}
     <div class="row catalog-calculator">
         <div class="col-md-2 col-sm-12">
+            <h4>{{ premium_link(page) }}</h4>
             <h3>Фильтры:</h3>
             {{ include('catalog/blocks/filters.html.twig') }}
         </div>
