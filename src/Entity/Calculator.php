@@ -13,13 +13,16 @@ class Calculator extends Page
     
     public function getTypeFilter(): array
     {
-        $types = [];
-        if (str_contains($this->getUri(), 'zhalyuzi')) {
+        if (str_contains($this->getUri(), 'zhalyuzi/plisse')) {
+            $types = [175];
+        } elseif (str_contains($this->getUri(), 'zhalyuzi')) {
             $types = [86, 132, 178];
         } elseif (str_contains($this->getUri(), 'rulonnyie-shtoryi')) {
             $types = [133, 175];
+        } else {
+            $types = [$this->getSelectedType()];
         }
-        
+    
         return $types;
     }
     

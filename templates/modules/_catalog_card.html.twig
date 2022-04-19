@@ -8,7 +8,7 @@
 
         {% block footer %}
             <div class="cart-footer-zag">
-                Цена от {{ discounted_price(catalog_min_price(page.uri)) }} {{ page.units }}
+                Цена от {{ discounted_price(catalog_min_price(page.uri, filters|default({}))) }} {{ page.units }}
             </div>
         {% endblock footer %}
     {% endembed %}
