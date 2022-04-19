@@ -1,8 +1,8 @@
 RewriteEngine On RewriteBase /
 
-Order Allow,Deny
-Allow from all
-Deny from 31.173.80.0/21 178.176.64.0/20 213.87.128.0/19 188.170.64.0/19 94.25.168.0/21
+#Order Allow,Deny
+#Allow from all
+#Deny from 31.173.80.0/21 178.176.64.0/20 213.87.128.0/19 188.170.64.0/19 94.25.168.0/21
 
 RewriteCond %{HTTP_USER_AGENT} ".AhrefsBot." [OR]
 RewriteCond %{HTTP_USER_AGENT} ".MJ12bot." [OR]
