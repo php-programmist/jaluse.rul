@@ -38,6 +38,8 @@
                 <a href="/rolstavni/" class="footer-nav-ssli">Рольставни</a>
                 <a href="" class="footer-nav-ssli">Шторы ПВХ</a>
                 <a href="{{ path('simple_page_pay') }}" class="footer-nav-ssli">Оплата</a>
+                {{ with_installation_link(page) }}
+                {{ for_order_link(page) }}
             </div>
             <div class="col-lg-3 footer-form">
                 <div class="footer-zag">Ответим на все вопросы</div>

@@ -140,7 +140,7 @@ class CalculationService
             throw new NotFoundHttpException('Не найден каталог - ' . $catalogUri);
         }
     
-        if ($catalog->isPremium() || $catalog->isNoDrill()) {
+        if (null !== $catalog->getSeoType()) {
             $catalog = $catalog->getParent();
         }
     
@@ -253,18 +253,11 @@ class CalculationService
         return round($basePrice * (1 - $discount / 100));
     }
     
-    public function getPremiumCatalog(Catalog $catalog): ?Catalog
+    public function getChildCatalogWithSeoType(Catalog $catalog, string $seoType): ?Catalog
     {
         return $this->entityManager
             ->getRepository(Catalog::class)
-            ->findOneBy(['parent' => $catalog, 'premium' => true]);
-    }
-    
-    public function getNoDrillCatalog(Catalog $catalog): ?Catalog
-    {
-        return $this->entityManager
-            ->getRepository(Catalog::class)
-            ->findOneBy(['parent' => $catalog, 'noDrill' => true]);
+            ->findOneBy(['parent' => $catalog, 'seoType' => $seoType]);
     }
     
     private function isSatisfyFilters(Product $product, array $filters): bool

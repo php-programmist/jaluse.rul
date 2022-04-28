@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Catalog extends Page
 {
+    public const SEO_TYPE_PREMIUM = 'premium';
+    public const SEO_TYPE_NO_DRILL = 'no-drill';
+    public const SEO_TYPE_WITH_INSTALLATION = 'with-installation';
+    public const SEO_TYPE_FOR_ORDER = 'for-order';
+    
     use CatalogCalcTrait;
     
     public const TYPE = 'catalog';
@@ -61,14 +66,9 @@ class Catalog extends Page
     private bool $hideFilters = false;
     
     /**
-     * @ORM\Column(type="boolean", options={"default": false})
+     * @ORM\Column(type="string", nullable=true)
      */
-    private bool $premium = false;
-    
-    /**
-     * @ORM\Column(type="boolean", options={"default": false})
-     */
-    private bool $noDrill = false;
+    private ?string $seoType = null;
     
     public function __construct()
     {
@@ -282,19 +282,7 @@ class Catalog extends Page
      */
     public function isPremium(): bool
     {
-        return $this->premium;
-    }
-    
-    /**
-     * @param bool $premium
-     *
-     * @return $this
-     */
-    public function setPremium(bool $premium): self
-    {
-        $this->premium = $premium;
-    
-        return $this;
+        return $this->seoType === self::SEO_TYPE_PREMIUM;
     }
     
     public function isShowSummary(): bool
@@ -323,7 +311,7 @@ class Catalog extends Page
             return 1;
         }
         $categoriesArray = explode(',', $categories);
-        
+    
         return (int)$categoriesArray[0];
     }
     
@@ -332,17 +320,41 @@ class Catalog extends Page
      */
     public function isNoDrill(): bool
     {
-        return $this->noDrill;
+        return $this->seoType === self::SEO_TYPE_NO_DRILL;
     }
     
     /**
-     * @param bool $noDrill
+     * @return bool
+     */
+    public function isWithInstallation(): bool
+    {
+        return $this->seoType === self::SEO_TYPE_WITH_INSTALLATION;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isForOrder(): bool
+    {
+        return $this->seoType === self::SEO_TYPE_FOR_ORDER;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getSeoType(): ?string
+    {
+        return $this->seoType;
+    }
+    
+    /**
+     * @param string|null $seoType
      *
      * @return $this
      */
-    public function setNoDrill(bool $noDrill): self
+    public function setSeoType(?string $seoType): self
     {
-        $this->noDrill = $noDrill;
+        $this->seoType = $seoType;
         
         return $this;
     }

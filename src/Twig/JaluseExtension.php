@@ -33,6 +33,8 @@ class JaluseExtension extends AbstractExtension
             new TwigFunction('catalog_products_count', [$this, 'catalog_products_count']),
             new TwigFunction('premium_link', [$this, 'getPremiumLink'], ['is_safe' => ['html']]),
             new TwigFunction('no_drill_link', [$this, 'getNoDrillLink'], ['is_safe' => ['html']]),
+            new TwigFunction('with_installation_link', [$this, 'getWithInstallationLink'], ['is_safe' => ['html']]),
+            new TwigFunction('for_order_link', [$this, 'getForOrderLink'], ['is_safe' => ['html']]),
         ];
     }
     
@@ -102,28 +104,35 @@ class JaluseExtension extends AbstractExtension
     
     public function getPremiumLink(?Page $page): string
     {
-        if (!($page instanceof Catalog)) {
-            return '';
-        }
-        $premiumCatalog = $this->calculation_service->getPremiumCatalog($page);
-        if (null === $premiumCatalog) {
-            return '';
-        }
-    
-        return sprintf('<a href="%s#content" class="footer-nav-ssli">Премиум класса</a>', $premiumCatalog->getPath());
+        return $this->getCatalogSeoTypeLink($page, Catalog::SEO_TYPE_PREMIUM, 'Премиум класса');
     }
     
     public function getNoDrillLink(?Page $page): string
     {
+        return $this->getCatalogSeoTypeLink($page, Catalog::SEO_TYPE_NO_DRILL, 'Без сверления');
+    }
+    
+    public function getWithInstallationLink(?Page $page): string
+    {
+        return $this->getCatalogSeoTypeLink($page, Catalog::SEO_TYPE_WITH_INSTALLATION, 'С установкой');
+    }
+    
+    public function getForOrderLink(?Page $page): string
+    {
+        return $this->getCatalogSeoTypeLink($page, Catalog::SEO_TYPE_FOR_ORDER, 'На заказ');
+    }
+    
+    private function getCatalogSeoTypeLink(?Page $page, string $seoType, string $text): string
+    {
         if (!($page instanceof Catalog)) {
             return '';
         }
-        $premiumCatalog = $this->calculation_service->getNoDrillCatalog($page);
-        if (null === $premiumCatalog) {
+        $catalog = $this->calculation_service->getChildCatalogWithSeoType($page, $seoType);
+        if (null === $catalog) {
             return '';
         }
         
-        return sprintf('<a href="%s#content" class="footer-nav-ssli">Без сверления</a>', $premiumCatalog->getPath());
+        return sprintf('<a href="%s#content" class="footer-nav-ssli">%s</a>', $catalog->getPath(), $text);
     }
     
     private function getCacheKey(string $nameSpace, string $catalogUri, array $filters): string
