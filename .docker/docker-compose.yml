@@ -2,7 +2,8 @@ version: "3.8"
 
 services:
   php:
-    image: phpprogrammist/php:8.0.6-fpm-alpine-dev-mysql
+    image: ${COMPOSE_PROJECT_NAME}/php
+    build: ./images/php
     environment:
       - VIRTUAL_HOST=${VIRTUAL_HOST}
       - APP_ENV=${APP_ENV}
@@ -16,7 +17,8 @@ services:
       mysql:
         condition: service_healthy
   nginx:
-    image: phpprogrammist/nginx-proxy
+    image: ${COMPOSE_PROJECT_NAME}/nginx-proxy
+    build: ./images/nginx
     volumes:
       - ${APP_PATH}:${WORKING_DIR}
       - ./var/log/nginx:/var/log/nginx
@@ -45,4 +47,11 @@ services:
       retries: 10
     ports:
       - "3306:3306"
+  nodejs:
+    image: ${COMPOSE_PROJECT_NAME}/node
+    build: ./images/nodejs
+    working_dir: ${WORKING_DIR}
+    volumes:
+      - ${APP_PATH}:${WORKING_DIR}
+
 
