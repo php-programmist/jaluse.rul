@@ -307,6 +307,11 @@
 
 .social_icons {
   transform: translateX(-13px);
+  display: flex;
+
+  &__wrapper {
+    flex-wrap: wrap;
+  }
 
   .search_input_toggle {
     margin-bottom: 4px;
@@ -347,6 +352,10 @@
       height: 100%;
     }
   }
+}
+
+.search_phrase {
+  margin: 2px 0 0 5px;
 }
 
 .header-search {
