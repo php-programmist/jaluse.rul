@@ -5,8 +5,9 @@ services:
     image: ${COMPOSE_PROJECT_NAME}/php
     build: ./images/php
     environment:
-      - VIRTUAL_HOST=${VIRTUAL_HOST}
-      - APP_ENV=${APP_ENV}
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      APP_ENV: ${APP_ENV}
+      PHP_IDE_CONFIG: serverName=Docker
     volumes:
       - ./etc/php/conf.d/php-${APP_ENV}.ini:/usr/local/etc/php/conf.d/php.ini:ro
       - ./etc/php/php-fpm.d/php-fpm.conf:/usr/local/etc/php-fpm.d/php-fpm.conf:ro
