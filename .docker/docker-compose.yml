@@ -54,5 +54,6 @@ services:
     working_dir: ${WORKING_DIR}
     volumes:
       - ${APP_PATH}:${WORKING_DIR}
-
+    profiles:
+      - frontend
 
