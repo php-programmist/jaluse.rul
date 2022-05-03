@@ -1,6 +1,6 @@
 server {
     listen 80 default_server;
-    server_name _;
+    server_name ${VIRTUAL_HOST} www.${VIRTUAL_HOST};
     return 301 https://$host$request_uri;
 }
 
@@ -9,9 +9,9 @@ server {
     ssl_certificate /etc/nginx/server.crt;
     ssl_certificate_key /etc/nginx/server.key;
     index index.php index.html;
-    server_name jaluse.rul;
+    server_name ${VIRTUAL_HOST} www.${VIRTUAL_HOST};
 
-    root /opt/project/public_html;
+    root ${ROOT_PATH}/public_html;
 
     location ~ \.(js|css)\.map$ {
         try_files $uri =404;
