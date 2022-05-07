@@ -20,6 +20,7 @@ services:
   nginx:
     image: ${COMPOSE_PROJECT_NAME}/nginx-proxy
     build: ./images/nginx
+    hostname: ${VIRTUAL_HOST}
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
       ROOT_PATH: ${WORKING_DIR}
