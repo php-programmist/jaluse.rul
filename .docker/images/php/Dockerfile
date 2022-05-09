@@ -6,7 +6,8 @@ RUN set -xe \
         mysql-dev \
     && docker-php-ext-install \
         pdo_mysql \
-        mysqli
+        mysqli \
+        opcache
 
 RUN apk add --no-cache \
         $PHPIZE_DEPS \
