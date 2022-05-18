@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Catalog;
+use App\Entity\Geo;
 use App\Entity\Markiz;
 use App\Entity\Page;
 use App\Entity\Product;
@@ -11,6 +12,7 @@ use App\Entity\Roman;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class CalculationService
 {
@@ -93,14 +95,17 @@ class CalculationService
         if (in_array($catalogUri, ['zhalyuzi', 'zhalyuzi/premium-klassa'])) {
             $catalogUri = 'zhalyuzi/gorizontalnye';
         }
-        $catalog = $this->findCatalogByUri($catalogUri);
-        
+        try{
+            $catalog = $this->findCatalogByUri($catalogUri);
+        } catch (Throwable){
+            return 0;
+        }
         $minPrice = $this->getCatalogMinPrice($catalog, $filters);
-        
+    
         if (0 === $minPrice) {
             $this->logger->error(sprintf('Для каталога %s не удалось рассчитать минимальную цену', $catalogUri));
         }
-        
+    
         return $minPrice;
     }
     
@@ -109,33 +114,44 @@ class CalculationService
         if (in_array($catalogUri, ['zhalyuzi', 'zhalyuzi/premium-klassa'])) {
             $catalogUri = 'zhalyuzi/vertikalnye';
         }
-        $catalog = $this->findCatalogByUri($catalogUri);
-        
+        try{
+            $catalog = $this->findCatalogByUri($catalogUri);
+        } catch (Throwable){
+            return 0;
+        }
         $maxPrice = $this->getCatalogMaxPrice($catalog, $filters);
-        
+    
         if (0 === $maxPrice) {
             $this->logger->error(sprintf('Для каталога %s не удалось рассчитать максимальную цену', $catalogUri));
         }
-        
+    
         return $maxPrice;
     }
     
     public function getCatalogProductsCount(string $catalogUri, array $filters = []): int
     {
-        $catalog = $this->findCatalogByUri($catalogUri);
-        
+        try{
+            $catalog = $this->findCatalogByUri($catalogUri);
+        } catch (Throwable){
+            return 0;
+        }
+    
         $count = $this->getCatalogProductsNumber($catalog, $filters);
-        
+    
         if (0 === $count) {
             $this->logger->error(sprintf('Для каталога %s не удалось посчитать количество товаров', $catalogUri));
         }
-        
+    
         return $count;
     }
     
     private function findCatalogByUri(string $catalogUri): Catalog
     {
-        $catalog = $this->entityManager->getRepository(Catalog::class)->findOneBy(['uri' => $catalogUri]);
+        $catalog = $this->entityManager->getRepository(Page::class)->findOneBy(['uri' => $catalogUri]);
+        if ($catalog instanceof Geo) {
+            return $this->findCatalogByUri($catalog->getBaseCatalogUri());
+        }
+    
         if (!($catalog instanceof Catalog)) {
             throw new NotFoundHttpException('Не найден каталог - ' . $catalogUri);
         }
