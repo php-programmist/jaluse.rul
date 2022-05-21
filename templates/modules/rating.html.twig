@@ -12,7 +12,7 @@
         'img': 'img/rating/logo-yandex.png',
         'alt': 'Yandex',
         'stars': 4.5,
-        'rating': 4.7
+        'rating': 4.8
     },
     {
         'link' : 'https://goo.gl/maps/RomdL3CkncjsZyr47',
@@ -32,6 +32,7 @@
 <div class="rating">
     <div class="container container2">
         <div class="zag">Независимые отзывы:</div>
+        {{ show_schema|default(false) ? include('modules/rating_schema.html.twig') }}
         <div class="row">
             {% for ratingItem in ratingItems %}
                 <div class="col-lg-3 col-6 scroll-item">
