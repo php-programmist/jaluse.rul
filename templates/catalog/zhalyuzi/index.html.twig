@@ -1,5 +1,8 @@
 {% extends 'page/catalog.html.twig' %}
 
+{% block popular_category_block %}
+    {{ include('popular-category.html.twig') }}
+{% endblock %}
 {% block utp %}
     {{ include('catalog/zhalyuzi/_upt.html.twig') }}
 {% endblock %}

@@ -1,0 +1,50 @@
+.popular-category {
+  .category {
+    position: relative;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: all 0s;
+    display: inline-block;
+
+    .title {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      padding: 0 20px;
+      height: 40px;
+      line-height: 40px;
+      background: rgba(12, 152, 207, .8);
+      color: #fff;
+    }
+
+    img {
+      height: auto;
+      max-width: 100%;
+      transition: all .2s ease;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.04);
+      }
+    }
+  }
+}
+
+.grid-item {
+  padding: 6px 7.5px;
+}
+
+.hidden-category {
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.show-more {
+  margin: 10px auto;
+  @media screen and (min-width: 767px) {
+    display: none;
+  }
+}

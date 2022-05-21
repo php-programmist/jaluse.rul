@@ -12,6 +12,7 @@ import './blocks/mobile-menu';
 import './blocks/recommended-products';
 import './blocks/example-works';
 import './blocks/search_input';
+import './blocks/popular-category';
 
 import LazyLoad from './libs/lazyload.min'
 

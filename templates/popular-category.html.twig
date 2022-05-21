@@ -1,0 +1,59 @@
+{% set catalogs = [
+    {
+        "label": "Вертикальные жалюзи",
+        "uri": "zhalyuzi/vertikalnye",
+    },
+    {
+        "label": "Горизонтальные жалюзи",
+        "uri": "zhalyuzi/gorizontalnye",
+    },
+    {
+        "label": "Рулонные шторы",
+        "uri": "rulonnyie-shtoryi",
+    },
+    {
+        "label": "Тканевые жалюзи",
+        "uri": "zhalyuzi/vertikalnye/tkanevye",
+    },
+    {
+        "label": "Пластиковые жалюзи",
+        "uri": "zhalyuzi/vertikalnye/plastikovyie",
+    },
+    {
+        "label": "Алюминиевые жалюзи",
+        "uri": "zhalyuzi/gorizontalnye/alyuminievye",
+    },
+    {
+        "label": "Деревянные жалюзи",
+        "uri": "zhalyuzi/gorizontalnye/derevyannye",
+    },
+    {
+        "label": "Плиссе",
+        "uri": "zhalyuzi/plisse",
+    },
+    {
+        "label": "Римские шторы",
+        "uri": "rimskies",
+    }
+] %}
+<div class="popular-category section">
+    <div class="container">
+        <div class="category-area row">
+            {% for catalog in catalogs %}
+                <div class="grid-item col-xl-4 col-md-6 col-12 {{ loop.index > 3 ? "hidden-category js-hidden-category" }}">
+                    <a class="category"
+                       href="/{{ catalog.uri }}/"
+                    >
+                        <img
+                                {{ lazy_load("/img/popular-category/"~catalog.label~".jpg") }}
+                                alt="{{ catalog.label }}"
+                        >
+                        <p class="title">{{ catalog.label }} от {{ discounted_price(catalog_min_price(catalog.uri)) }} руб</p>
+                    </a>
+                </div>
+
+            {% endfor %}
+            <button class="mbtn show-more js-popular-category-show-more">Показать все</button>
+        </div>
+    </div>
+</div>
