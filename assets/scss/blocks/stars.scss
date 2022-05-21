@@ -1,13 +1,10 @@
 .star {
     font-size: x-large;
-    width: 50px;
+    width: 28px;
     display: inline-block;
     color: gray;
-    position:relative;
+    position: relative;
     text-align: center;
-    @media (max-width: 576px) {
-        width: 28px;
-    }
 }
 .star:last-child {
     margin-right: 0;
@@ -19,14 +16,11 @@
     color: gold;
 }
 .star.half:after {
-    content:'\2605';
+    content: '\2605';
     color: gold;
     position: absolute;
     margin-left: 0;
     width: 11px;
-    left:14px;
+    left: 3px;
     overflow: hidden;
-    @media (max-width: 576px) {
-        left: 4px;
-    }
 }

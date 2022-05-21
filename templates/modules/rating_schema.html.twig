@@ -1,6 +1,7 @@
 <div class="rating_schema hide-mobile">
+    <meta itemprop="worstRating" content="1">
     <div
-            class="pl-4 mt-2"
+            class="mt-1 rating_wrapper"
             itemprop="aggregateRating"
             itemscope="itemscope"
             itemtype="http://schema.org/AggregateRating"
@@ -8,7 +9,6 @@
         <div class="rating-box mr-2">
             {{ stars(4.5) }}
         </div>
-        <meta itemprop="worstRating" content="1">
 
         <div class="rating-details">
           <span class="mr-1">
@@ -23,8 +23,6 @@
                 <span itemprop="ratingCount">{{ page.ratingCount }}</span>&nbsp;оценок
             </em>
         </div>
-
-        <div class="clr"></div>
-        <p class="small text-muted"> Рейтинг составлялся по отзывам от клиентов.</p>
+        <div class="rating-details text-muted ml-2"> Рейтинг составлялся по отзывам от клиентов.</div>
     </div>
 </div>

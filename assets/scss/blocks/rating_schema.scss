@@ -1,7 +1,12 @@
 .rating-box{
     float: left;
 }
-.rating-details{
+.rating-details {
     height: 40px;
     padding-top: 8px;
+}
+
+.rating_wrapper {
+    display: flex;
+    flex-wrap: wrap;
 }
