@@ -61,6 +61,7 @@ class RequestSubscriber implements EventSubscriberInterface
     
     public function onKernelRequest(RequestEvent $event): void
     {
+        return;
         $request = $event->getRequest();
         if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
             return;
