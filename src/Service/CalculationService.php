@@ -320,7 +320,7 @@ class CalculationService
         $products = $this->getProductsByFilters($filters);
         $minPrice = 0;
         foreach ($products as $product) {
-            $price = $this->getRubPrice($product->getPrice());
+            $price = $this->getMinPrice($product);
             if ($price > 0 && ($price < $minPrice || 0 === $minPrice)) {
                 $minPrice = $price;
             }
@@ -337,7 +337,7 @@ class CalculationService
         $products = $this->getProductsByFilters($filters);
         $maxPrice = 0;
         foreach ($products as $product) {
-            $price = $this->getRubPrice($product->getPrice());
+            $price = $this->getMinPrice($product);
             if ($price > $maxPrice) {
                 $maxPrice = $price;
             }
