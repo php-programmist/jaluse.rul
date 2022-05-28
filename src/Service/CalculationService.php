@@ -18,23 +18,18 @@ class CalculationService
 {
     
     protected float $usd_rate;
-    protected MatrixService $matrix_service;
     private array $matrices = [];
-    private EntityManagerInterface $entityManager;
-    private LoggerInterface $logger;
     private int $discountGlobal;
     
     public function __construct(
         ConfigService $config_service,
-        MatrixService $matrix_service,
-        EntityManagerInterface $entityManager,
-        LoggerInterface $logger
+        private MatrixService $matrix_service,
+        private CatalogManager $catalogManager,
+        private EntityManagerInterface $entityManager,
+        private LoggerInterface $logger,
     ) {
-        $this->matrix_service = $matrix_service;
         $this->usd_rate       = $config_service->getCached('calc.usd_rate');
         $this->discountGlobal = $config_service->getCached('calc.discount_global');
-        $this->entityManager  = $entityManager;
-        $this->logger         = $logger;
     }
     
     public function getMinDiscountedPrice(Product $product): int
@@ -169,7 +164,15 @@ class CalculationService
         if (null !== $catalog->getPrice()) {
             return $catalog->getPrice();
         }
+    
+        if ($catalog->getPages()->isEmpty()) {
+            if (empty($filters)) {
+                $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+            }
         
+            return $this->getCatalogMinPriceByFilters($filters);
+        }
+    
         foreach ($catalog->getPages() as $page) {
             $minPriceCandidate = 0;
             if (!$page->getPublished()) {
@@ -196,6 +199,14 @@ class CalculationService
     
     private function getCatalogMaxPrice(Catalog $catalog, array $filters): int
     {
+        if ($catalog->getPages()->isEmpty()) {
+            if (empty($filters)) {
+                $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+            }
+        
+            return $this->getCatalogMaxPriceByFilters($filters);
+        }
+    
         $maxPrice = 0;
         foreach ($catalog->getPages() as $page) {
             $maxPriceCandidate = 0;
@@ -220,14 +231,22 @@ class CalculationService
     
     private function getCatalogProductsNumber(Catalog $catalog, array $filters): int
     {
+        if ($catalog->getPages()->isEmpty()) {
+            if (empty($filters)) {
+                $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+            }
+        
+            return $this->getCatalogProductsNumberByFilters($filters);
+        }
+    
         $filterCallable = fn(Page $page) => $page instanceof Product
                                             && $page->getPublished()
                                             && $this->getMinPrice($page) > 0
                                             && $this->isSatisfyFilters($page, $filters);
-        
+    
         $products = $catalog->getPages()->filter($filterCallable);
         $count    = $products ? $products->count() : 0;
-        
+    
         $markiz = $catalog->getPages()->filter(fn(Page $page) => $page instanceof Markiz
                                                                  && $page->getPublished()
         );
@@ -297,7 +316,57 @@ class CalculationService
                     break;
             }
         }
-        
+    
         return true;
+    }
+    
+    private function getCatalogMinPriceByFilters(array $filters): int
+    {
+        $products = $this->getProductsByFilters($filters);
+        $minPrice = 0;
+        foreach ($products as $product) {
+            $price = $this->getRubPrice($product->getPrice());
+            if ($price > 0 && ($price < $minPrice || 0 === $minPrice)) {
+                $minPrice = $price;
+            }
+        }
+        
+        return $minPrice;
+    }
+    
+    private function getCatalogMaxPriceByFilters(array $filters): int
+    {
+        $products = $this->getProductsByFilters($filters);
+        $maxPrice = 0;
+        foreach ($products as $product) {
+            $price = $this->getRubPrice($product->getPrice());
+            if ($price > $maxPrice) {
+                $maxPrice = $price;
+            }
+        }
+        
+        return $maxPrice;
+    }
+    
+    private function getCatalogProductsNumberByFilters(array $filters): int
+    {
+        return $this->entityManager
+            ->getRepository(Product::class)
+            ->getProductsQB($filters, 'price', 'desc')
+            ->select('count(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    
+    /**
+     * @param array $filters
+     *
+     * @return Product[]
+     */
+    private function getProductsByFilters(array $filters): array
+    {
+        return $this->catalogManager
+            ->getProductsQuery($filters, 'price', 'desc')
+            ->getResult();
     }
 }

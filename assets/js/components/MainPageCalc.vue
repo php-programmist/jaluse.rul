@@ -139,7 +139,7 @@ export default {
       productConfigs: {}
     };
   },
-  props: ["type_filter", "available_types", "selected_type", "selected_material", "hide_categories", "selected_category"],
+  props: ["type_filter", "available_types", "selected_type", "selected_material", "hide_categories", "selected_category", "excluded_materials"],
   components: {
     'v-consultation-form': ConsultationForm,
     'v-order-form': OrderForm,
@@ -152,7 +152,13 @@ export default {
     axios.get('/api/calc/getInitData')
         .then(response => {
           if (typeof this.available_types !== 'undefined' && null !== this.available_types) {
-            this.types = response.data.types.filter(type => this.available_types.indexOf(type.id) > -1)
+            this.types = response.data.types.filter(type => this.available_types.indexOf(type.id) > -1);
+            if (this.excluded_materials.length > 0) {
+              this.types = this.types.map(type => {
+                type.materials = type.materials.filter(material => this.excluded_materials.indexOf(material.id) === -1);
+                return type;
+              })
+            }
           } else {
             this.types = response.data.types;
           }
@@ -249,14 +255,11 @@ export default {
       this.product_index = 0;
       let query = '/api/calc/getProducts?';
       query += 'category=' + this.category.id;
-      if (this.type.id > 0) {
-        query += '&type=' + this.type.id;
-      } else {
-        query += '&type=' + this.types[0].id;
-      }
-      if (this.material.id > 0) {
-        query += '&material=' + this.material.id;
-      }
+      const currentType = this.type.id > 0 ? this.type : this.types[0];
+      const currentMaterial = this.material.id > 0 ? this.material : currentType.materials[0];
+
+      query += '&type=' + currentType.id + '&material=' + currentMaterial.id;
+
       if (this.colorsIds.length > 0) {
         query += '&color=' + this.colorsIds.join(',');
       }

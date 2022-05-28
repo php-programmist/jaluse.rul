@@ -70,6 +70,16 @@ class Catalog extends Page
      */
     private ?string $seoType = null;
     
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private ?array $catalogLinks = [];
+    
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private ?array $excludedMaterials = [];
+    
     public function __construct()
     {
         parent::__construct();
@@ -355,6 +365,46 @@ class Catalog extends Page
     public function setSeoType(?string $seoType): self
     {
         $this->seoType = $seoType;
+        
+        return $this;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getCatalogLinks(): array
+    {
+        return $this->catalogLinks ?? [];
+    }
+    
+    /**
+     * @param array|null $catalogLinks
+     *
+     * @return $this
+     */
+    public function setCatalogLinks(?array $catalogLinks): self
+    {
+        $this->catalogLinks = $catalogLinks;
+        
+        return $this;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getExcludedMaterials(): array
+    {
+        return $this->excludedMaterials ?? [];
+    }
+    
+    /**
+     * @param array|null $excludedMaterials
+     *
+     * @return $this
+     */
+    public function setExcludedMaterials(?array $excludedMaterials): self
+    {
+        $this->excludedMaterials = $excludedMaterials;
         
         return $this;
     }

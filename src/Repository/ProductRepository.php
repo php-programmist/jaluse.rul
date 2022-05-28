@@ -258,6 +258,11 @@ class ProductRepository extends ServiceEntityRepository
                   ->setParameter('material', $filters['material']);
         }
     
+        if (!empty($filters['excluded_materials'])) {
+            $query->andWhere('p.material not in(:excluded_materials)')
+                  ->setParameter('excluded_materials', explode(',', $filters['excluded_materials']));
+        }
+    
         if (!empty($filters['search'])) {
             $query
                 ->andWhere('MATCH_AGAINST(p.name,:search) > 0')

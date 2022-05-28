@@ -145,15 +145,18 @@ class JaluseExtension extends AbstractExtension
         return $key;
     }
     
-    private function getCachedValue(string $key, callable $getValue): int
+    private function getCachedValue(string $key, callable $getValue, bool $cacheDisabled = false): int
     {
+        if ($cacheDisabled) {
+            return $getValue();
+        }
         $item = $this->cache->getItem($key);
         if (!$item->isHit()) {
             $value = $getValue();
             $item->set($value);
             $this->cache->save($item);
         }
-        
+    
         return $item->get();
     }
 }

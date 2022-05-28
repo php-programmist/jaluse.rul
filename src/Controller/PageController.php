@@ -244,15 +244,16 @@ class PageController extends AbstractController
     private function getCatalogRenderParams(Catalog $catalog, array $filters): array
     {
         return [
-            'page'              => $catalog,
-            'catalog'           => $catalog,
-            'products'          => $this->catalogManager->getProductsPaginator($filters),
-            'colors'            => $this->colorManager->getAvailableColors($filters),
-            'categories'        => $this->categoryManager->getAllCategories(),
-            'items'             => $this->catalogManager->getPopular($catalog),
-            'catalogsLinks'     => $this->catalogManager->getCatalogsLinks($catalog),
-            'selected_category' => $catalog->getSelectedCategory(),
-            'filters'           => $filters,
+            'page'               => $catalog,
+            'catalog'            => $catalog,
+            'products'           => $this->catalogManager->getProductsPaginator($filters),
+            'colors'             => $this->colorManager->getAvailableColors($filters),
+            'categories'         => $this->categoryManager->getAllCategories(),
+            'items'              => $this->catalogManager->getPopular($catalog),
+            'catalogsLinks'      => $this->catalogManager->getCatalogsLinks($catalog),
+            'selected_category'  => $catalog->getSelectedCategory(),
+            'filters'            => $filters,
+            'excluded_materials' => $catalog->getExcludedMaterials(),
         ];
     }
     

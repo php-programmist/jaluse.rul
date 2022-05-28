@@ -89,6 +89,8 @@ class CatalogManager
             $filters['material'] = $catalog->getMaterial()->getId();
         }
     
+        $filters['excluded_materials'] = implode(',', $catalog->getExcludedMaterials());
+    
         return $filters;
     }
     
@@ -98,6 +100,11 @@ class CatalogManager
             //Не показываем ссылки для страниц премиум-каталогов
             return [];
         }
+    
+        if (!empty($catalog->getCatalogLinks())) {
+            return $catalog->getCatalogLinks();
+        }
+    
         $type     = $catalog->getType();
         $material = $catalog->getMaterial();
         $allTypes = $this->entityManager->getRepository(Type::class)->findBy([], ['id' => 'asc']);
