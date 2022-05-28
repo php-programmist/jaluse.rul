@@ -80,6 +80,11 @@ class Catalog extends Page
      */
     private ?array $excludedMaterials = [];
     
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private ?array $popularCategories = [];
+    
     public function __construct()
     {
         parent::__construct();
@@ -405,6 +410,26 @@ class Catalog extends Page
     public function setExcludedMaterials(?array $excludedMaterials): self
     {
         $this->excludedMaterials = $excludedMaterials;
+        
+        return $this;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getPopularCategories(): array
+    {
+        return $this->popularCategories ?? [];
+    }
+    
+    /**
+     * @param array|null $popularCategories
+     *
+     * @return $this
+     */
+    public function setPopularCategories(?array $popularCategories): self
+    {
+        $this->popularCategories = $popularCategories;
         
         return $this;
     }
