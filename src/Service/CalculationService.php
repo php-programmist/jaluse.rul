@@ -30,6 +30,10 @@ class CalculationService
     ) {
         $this->usd_rate       = $config_service->getCached('calc.usd_rate');
         $this->discountGlobal = $config_service->getCached('calc.discount_global');
+        /*$this->entityManager
+            ->getConnection()
+            ->getConfiguration()
+            ?->setSQLLogger();*/
     }
     
     public function getMinDiscountedPrice(Product $product): int
@@ -165,12 +169,8 @@ class CalculationService
             return $catalog->getPrice();
         }
     
-        if ($catalog->getPages()->isEmpty()) {
-            if (empty($filters)) {
-                $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
-            }
-        
-            return $this->getCatalogMinPriceByFilters($filters);
+        if ($catalog->isAggregateCatalog()) {
+            return $this->getCatalogMinPriceByFilters($catalog, $filters);
         }
     
         foreach ($catalog->getPages() as $page) {
@@ -199,12 +199,8 @@ class CalculationService
     
     private function getCatalogMaxPrice(Catalog $catalog, array $filters): int
     {
-        if ($catalog->getPages()->isEmpty()) {
-            if (empty($filters)) {
-                $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
-            }
-        
-            return $this->getCatalogMaxPriceByFilters($filters);
+        if ($catalog->isAggregateCatalog()) {
+            return $this->getCatalogMaxPriceByFilters($catalog, $filters);
         }
     
         $maxPrice = 0;
@@ -231,12 +227,8 @@ class CalculationService
     
     private function getCatalogProductsNumber(Catalog $catalog, array $filters): int
     {
-        if ($catalog->getPages()->isEmpty()) {
-            if (empty($filters)) {
-                $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
-            }
-        
-            return $this->getCatalogProductsNumberByFilters($filters);
+        if ($catalog->isAggregateCatalog()) {
+            return $this->getCatalogProductsNumberByFilters($catalog, $filters);
         }
     
         $filterCallable = fn(Page $page) => $page instanceof Product
@@ -320,8 +312,11 @@ class CalculationService
         return true;
     }
     
-    private function getCatalogMinPriceByFilters(array $filters): int
+    private function getCatalogMinPriceByFilters(Catalog $catalog, array $filters): int
     {
+        if (empty($filters)) {
+            $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+        }
         $products = $this->getProductsByFilters($filters);
         $minPrice = 0;
         foreach ($products as $product) {
@@ -334,8 +329,11 @@ class CalculationService
         return $minPrice;
     }
     
-    private function getCatalogMaxPriceByFilters(array $filters): int
+    private function getCatalogMaxPriceByFilters(Catalog $catalog, array $filters): int
     {
+        if (empty($filters)) {
+            $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+        }
         $products = $this->getProductsByFilters($filters);
         $maxPrice = 0;
         foreach ($products as $product) {
@@ -348,8 +346,12 @@ class CalculationService
         return $maxPrice;
     }
     
-    private function getCatalogProductsNumberByFilters(array $filters): int
+    private function getCatalogProductsNumberByFilters(Catalog $catalog, array $filters): int
     {
+        if (empty($filters)) {
+            $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+        }
+        
         return $this->entityManager
             ->getRepository(Product::class)
             ->getProductsQB($filters, 'price', 'desc')
@@ -363,10 +365,10 @@ class CalculationService
      *
      * @return Product[]
      */
-    private function getProductsByFilters(array $filters): array
+    private function getProductsByFilters(array $filters): iterable
     {
         return $this->catalogManager
             ->getProductsQuery($filters, 'price', 'desc')
-            ->getResult();
+            ->toIterable();
     }
 }

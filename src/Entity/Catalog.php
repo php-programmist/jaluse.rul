@@ -85,6 +85,12 @@ class Catalog extends Page
      */
     private ?array $popularCategories = [];
     
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     * True - если каталог не имеет собственных товаров, а лишь агрегирует несколько каталогов
+     */
+    private bool $aggregateCatalog = false;
+    
     public function __construct()
     {
         parent::__construct();
@@ -432,5 +438,21 @@ class Catalog extends Page
         $this->popularCategories = $popularCategories;
         
         return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isAggregateCatalog(): bool
+    {
+        return $this->aggregateCatalog;
+    }
+    
+    /**
+     * @param bool $aggregateCatalog
+     */
+    public function setAggregateCatalog(bool $aggregateCatalog): void
+    {
+        $this->aggregateCatalog = $aggregateCatalog;
     }
 }
