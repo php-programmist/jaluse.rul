@@ -11,7 +11,7 @@
                         >
                             <img
                                     {{ lazy_load("/img/popular-category/"~label~".jpg") }}
-                                    alt="{{ label }}"
+                                    alt="{{ label }}" title="{{ label }}"
                             >
                             <p class="title">{{ label }} от {{ discounted_price(catalog_min_price(uri)) }} руб</p>
                         </a>
