@@ -2,7 +2,7 @@
 {% if catalogs|length > 0 %}
     <div class="popular-category section">
         <div class="container">
-            <h2 class="text-center">Жалюзи на пластиковые окна</h2>
+            <h2 class="text-center">{{ page.name }}</h2>
             <div class="category-area row">
                 {% for label, uri in catalogs %}
                     <div class="grid-item col-xl-4 col-md-6 col-12 {{ loop.index > 3 ? "hidden-category js-hidden-category" }}">
