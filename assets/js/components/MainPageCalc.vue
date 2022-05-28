@@ -258,7 +258,10 @@ export default {
       const currentType = this.type.id > 0 ? this.type : this.types[0];
       const currentMaterial = this.material.id > 0 ? this.material : currentType.materials[0];
 
-      query += '&type=' + currentType.id + '&material=' + currentMaterial.id;
+      query += '&type=' + currentType.id;
+      if (currentMaterial) {
+        query += '&material=' + currentMaterial.id;
+      }
 
       if (this.colorsIds.length > 0) {
         query += '&color=' + this.colorsIds.join(',');
