@@ -30,7 +30,7 @@
         {% endblock %}
         {% if (showCatalog is not defined or showCatalog) and (products is defined and products|length > 0) %}
             {{ include('catalog/blocks/aggregate_offer_schema.html.twig', {catalogUri: page.uri}) }}
-            <h2>{% block content_h2 %}{{ page.name }}{% endblock %}</h2>
+            <h2>{% block content_h2 %}{{ page.name }} — каталог и цены:{% endblock %}</h2>
             {{ include('catalog/blocks/catalog.html.twig') }}
         {% endif %}
         {% block location_block %}{% endblock %}
