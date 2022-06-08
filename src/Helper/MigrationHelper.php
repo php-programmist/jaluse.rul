@@ -22,7 +22,25 @@ class MigrationHelper
             throw new RuntimeException(sprintf('Не удалось найти страницу с URI "%s".',
                 $uri));
         }
-        
+    
         return $pageId;
+    }
+    
+    public static function insertPage(Connection $connection, array $page): void
+    {
+        $page = array_merge(
+            [
+                'published'   => 1,
+                'modified_at' => date('Y-m-d H:i:s'),
+                'created_at'  => date('Y-m-d H:i:s'),
+            ],
+            $page
+        );
+        
+        $fields       = array_keys($page);
+        $values       = array_values($page);
+        $placeholders = substr(str_repeat('?,', count($fields)), 0, -1);
+        $connection->executeQuery('insert into page (' . implode(',', $fields) . ') values(' . $placeholders . ')',
+            $values);
     }
 }
