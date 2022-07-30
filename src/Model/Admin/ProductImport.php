@@ -27,6 +27,8 @@ class ProductImport
     
     private ?string $removeFromName = null;
     
+    private ?string $baseUri = null;
+    
     private bool $matrix = false;
     
     /**
@@ -225,6 +227,26 @@ class ProductImport
     public function setMatrix(bool $matrix): self
     {
         $this->matrix = $matrix;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getBaseUri(): ?string
+    {
+        return trim($this->baseUri ? : $this->getCatalog()?->getUri(), ' /');
+    }
+    
+    /**
+     * @param string|null $baseUri
+     *
+     * @return $this
+     */
+    public function setBaseUri(?string $baseUri): self
+    {
+        $this->baseUri = $baseUri;
         
         return $this;
     }

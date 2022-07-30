@@ -123,13 +123,13 @@ class ImportManager
     
     private function generateProductUri(ProductImport $productImport, string $productName): string
     {
-        $catalogName = preg_replace('/\s+/', ' ', $productImport->getCatalog()->getName());
+        $catalogName = preg_replace('/\s+/', ' ', $productImport->getCatalog()?->getName());
         $nameForSlug = str_replace($catalogName, '', $productName);
         if (!empty($productImport->getRemoveFromName())) {
             $nameForSlug = str_replace($productImport->getRemoveFromName(), '', $productName);
         }
-        
-        return $productImport->getCatalog()->getUri() . '/' . SlugHelper::makeSlug($nameForSlug);
+    
+        return $productImport->getBaseUri() . '/' . SlugHelper::makeSlug($nameForSlug);
     }
     
     private function importImages(ProductImport $productImport): void
@@ -160,7 +160,7 @@ class ImportManager
     
     private function productImgFolder(ProductImport $productImport): string
     {
-        $segments = explode('/', $productImport->getCatalog()->getUri());
+        $segments = explode('/', $productImport->getBaseUri());
         $folder   = array_pop($segments);
         
         return $this->projectDir . '/public_html/img/products/' . $folder . '/';

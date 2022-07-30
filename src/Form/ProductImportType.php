@@ -33,6 +33,11 @@ class ProductImportType extends AbstractType
                     'class' => 'chosen',
                 ],
             ])
+            ->add('baseUri', TextType::class, [
+                'label'    => 'Базовый URI',
+                'help'     => 'Если не указать, то за основу будет взят URI каталога',
+                'required' => false,
+            ])
             ->add('removeFromName', TextType::class, [
                 'label'    => 'Удалить из названия',
                 'help'     => 'Указанный фрагмент будет удален из названия товара при генерации URL',
