@@ -34,6 +34,7 @@ final class Version20220730090000 extends AbstractMigration
                 'material_id'   => 89,
                 'name_genitive' => 'алюминиевых жалюзи 16 мм',
                 'catalog_links' => $catalogLinks,
+                'filters'       => '{"exact_catalog": true}',
             ],
             [
                 'name'          => 'Алюминиевые жалюзи 25 мм',
@@ -44,6 +45,7 @@ final class Version20220730090000 extends AbstractMigration
                 'material_id'   => 89,
                 'name_genitive' => 'алюминиевых жалюзи 25 мм',
                 'catalog_links' => $catalogLinks,
+                'filters'       => '{"exact_catalog": true}',
             ],
             [
                 'name'          => 'Алюминиевые жалюзи 50 мм',
@@ -54,6 +56,7 @@ final class Version20220730090000 extends AbstractMigration
                 'material_id'   => 89,
                 'name_genitive' => 'алюминиевых жалюзи 50 мм',
                 'catalog_links' => $catalogLinks,
+                'filters'       => '{"exact_catalog": true}',
             ],
         ];
         

@@ -81,15 +81,19 @@ class CatalogManager
     {
         $filters = $catalog->getFilters();
     
-        if (empty($filters['type']) && $catalog->getType()) {
-            $filters['type'] = $catalog->getType()->getId();
+        if ($filters['exact_catalog'] ?? false) {
+            $filters['parent'] = $catalog->getId();
+        } else {
+            if (empty($filters['type']) && $catalog->getType()) {
+                $filters['type'] = $catalog->getType()->getId();
+            }
+        
+            if ($catalog->getMaterial()) {
+                $filters['material'] = $catalog->getMaterial()->getId();
+            }
+        
+            $filters['excluded_materials'] = implode(',', $catalog->getExcludedMaterials());
         }
-    
-        if ($catalog->getMaterial()) {
-            $filters['material'] = $catalog->getMaterial()->getId();
-        }
-    
-        $filters['excluded_materials'] = implode(',', $catalog->getExcludedMaterials());
     
         return $filters;
     }
