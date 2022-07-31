@@ -172,6 +172,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     
     /**
      * @ORM\ManyToMany(targetEntity=WorkExample::class, mappedBy="pages")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private Collection $workExamplesOfPage;
     
