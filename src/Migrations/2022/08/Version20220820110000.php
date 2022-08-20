@@ -24,7 +24,7 @@ final class Version20220820110000 extends AbstractMigration
             '{
             "Алюминиевые жалюзи 16 мм": "zhalyuzi/gorizontalnye/alyuminievye/16mm",
             "Алюминиевые жалюзи 25 мм": "zhalyuzi/gorizontalnye/alyuminievye/25mm",
-            "Алюминиевые жалюзи 50 мм": "zhalyuzi/gorizontalnye/alyuminievye/50mm",
+            "Алюминиевые жалюзи 50 мм": "zhalyuzi/gorizontalnye/alyuminievye/50mm"
             }',
             'zhalyuzi/gorizontalnye/alyuminievye',
         ]);
