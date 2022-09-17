@@ -26,7 +26,7 @@ class MigrationHelper
         return $pageId;
     }
     
-    public static function insertPage(Connection $connection, array $page): void
+    public static function insertPage(Connection $connection, array $page): int
     {
         $page = array_merge(
             [
@@ -36,11 +36,13 @@ class MigrationHelper
             ],
             $page
         );
-        
+    
         $fields       = array_keys($page);
         $values       = array_values($page);
         $placeholders = substr(str_repeat('?,', count($fields)), 0, -1);
         $connection->executeQuery('insert into page (' . implode(',', $fields) . ') values(' . $placeholders . ')',
             $values);
+    
+        return $connection->lastInsertId();
     }
 }
