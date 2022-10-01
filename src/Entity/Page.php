@@ -709,10 +709,31 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      *
      * @return Catalog
      */
-    public function setPopularCategories(?array $popularCategories): Catalog
+    public function setPopularCategories(?array $popularCategories): self
     {
         $this->popularCategories = $popularCategories;
         
         return $this;
+    }
+    
+    public function getLocationsCatalog(): ?Catalog
+    {
+        $catalog = $this->getPages()
+                        ->filter(
+                            fn(Page $page) => $page instanceof Catalog
+                                              && $page->isLocationsCatalog()
+                        );
+        
+        return $catalog->isEmpty() ? null : $catalog->first();
+    }
+    
+    public function getImageAlt(): string
+    {
+        return sprintf('%s цена. Купить в «Мастерская Жалюзи»', $this->getName() ?? '');
+    }
+    
+    public function getImageTitle(): string
+    {
+        return $this->getName() ?? '';
     }
 }

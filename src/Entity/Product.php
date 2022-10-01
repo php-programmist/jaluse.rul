@@ -591,16 +591,6 @@ class Product extends Page
         return $this;
     }
     
-    public function getImageAlt(): string
-    {
-        return sprintf('%s цена. Купить в «Мастерская Жалюзи»', $this->getName() ?? '');
-    }
-    
-    public function getImageTitle(): string
-    {
-        return $this->getName() ?? '';
-    }
-    
     /**
      * @return int
      */

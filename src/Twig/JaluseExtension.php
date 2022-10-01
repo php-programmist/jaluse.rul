@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Catalog;
+use App\Entity\Location;
 use App\Entity\Page;
 use App\Entity\Product;
 use App\Service\CalculationService;
@@ -38,8 +39,11 @@ class JaluseExtension extends AbstractExtension
         ];
     }
     
-    public function min_price(Product $product, bool $digitsOnly = false, bool $discounted = false)
+    public function min_price(Product|Location $product, bool $digitsOnly = false, bool $discounted = false)
     {
+        if ($product instanceof Location) {
+            return $product->getPrice();
+        }
         $min_price = $discounted
             ? $this->calculation_service->getMinDiscountedPrice($product)
             : $this->calculation_service->getMinPrice($product);

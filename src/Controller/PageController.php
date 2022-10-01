@@ -143,7 +143,7 @@ class PageController extends AbstractController
         }
         
         if ($page instanceof Catalog) {
-            if (str_contains($token, 'pomeshheniya')) {
+            if ($page->isLocationsCatalog()) {
                 return $this->locationsCatalog($page);
             }
     

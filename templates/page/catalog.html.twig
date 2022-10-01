@@ -49,22 +49,30 @@
             {{ include('modules/recommended_products.html.twig') }}
         </div>
     {% endif %}
+
     {% block catalog_card %}
         {{ include('modules/_catalog_card.html.twig') }}
     {% endblock %}
-    
+
     {% block rating_block %}
         {{ include('modules/rating.html.twig') }}
     {% endblock %}
-    
+
+    {% if page.locations|default(null) is not empty %}
+        <div class="container hide-mobile">
+            <h2>{{ page.name }} для помещений:</h2>
+            {{ include('modules/recommended_products.html.twig', {items: page.locations, hideCatalog: true, locationsCatalog: page.locationsCatalog}) }}
+        </div>
+    {% endif %}
+
     {{ include('modules/_seo_block.html.twig') }}
-    
+
     {% if work_example_block is empty %}
         {{ include('modules/_our_works.html.twig') }}
     {% endif %}
-    
+
     {% block recommended_block %}{% endblock %}
-    
+
     {{ include('modules/_employees.html.twig') }}
     {{ include('modules/_clients.html.twig') }}
 {% endblock %}

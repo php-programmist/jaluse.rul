@@ -463,7 +463,12 @@ class Catalog extends Page
                 $location->setBaseCatalog(null);
             }
         }
-        
+    
         return $this;
+    }
+    
+    public function isLocationsCatalog(): bool
+    {
+        return str_contains($this->getUri(), 'pomeshheniya');
     }
 }

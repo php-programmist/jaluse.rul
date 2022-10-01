@@ -37,3 +37,9 @@
         <a class="mbtn" href="/zhalyuzi/#content">Каталог</a>
     </div>
 {% endif %}
+
+{% if locationsCatalog|default(false) %}
+    <div class="catalog_button">
+        <a class="mbtn" href="{{ locationsCatalog.path }}#content">Показать еще</a>
+    </div>
+{% endif %}
