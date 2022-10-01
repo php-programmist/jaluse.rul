@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\Admin\LocationImport;
 use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use App\Model\GeoProduct\ZhalyuziGeoProduct;
 use Doctrine\ORM\Mapping as ORM;
@@ -84,6 +85,35 @@ class Location extends Page
     public function setBaseCatalog(?Catalog $baseCatalog): self
     {
         $this->baseCatalog = $baseCatalog;
+        
+        return $this;
+    }
+    
+    public function generateDescription(): self
+    {
+        $this->description = sprintf('%s купить недорого в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ %s по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.',
+            $this->getH1(), $this->getName());
+        
+        return $this;
+    }
+    
+    public function generateTitle(): self
+    {
+        $this->title = sprintf('%s купить в Москве. %s Каталог и цены', $this->getName(), $this->getH1());
+        
+        return $this;
+    }
+    
+    public function generateCardDescription(LocationImport $locationImport, string $locationName): self
+    {
+        $this->cardDescription = sprintf(
+            '<p><span><b>Материал:</b> %s</span> <span><b>Цвет:</b> на выбор.</span> <span><b>Размеры:</b> стандартные и под заказ</span> <span><b>Тип:</b> %s</span> <span><b>Виды:</b> %s</span> <span><b>Помещения:</b> %s</span><span><b>Управление:</b> механическое и автоматическое</span> <span><b>Срок изготовления и установки:</b> 2-7 дней (зависит от сложности и объема).</span> <span><b>Замер:</b> бесплатный (при оформлении и оплате заказа).</span> <span><b>Доставка и установка жалюзи:</b> в Москве и Московской области.</span> <span>Возможна доставка и установка по России</span></p>
+',
+            $locationImport->getMaterials(),
+            $locationImport->getType(),
+            $locationImport->getSubTypes(),
+            $locationName
+        );
         
         return $this;
     }

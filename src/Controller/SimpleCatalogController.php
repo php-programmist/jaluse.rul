@@ -65,20 +65,6 @@ class SimpleCatalogController extends AbstractController
     }
     
     /**
-     * @Route("/zhalyuzi/pomeshheniya/", name="simple_catalog_pomeshheniya")
-     */
-    public function pomeshheniya()
-    {
-        $page  = $this->page_repository->findOneBy(['uri' => 'zhalyuzi/pomeshheniya']);
-        $items = $page->getPages();
-        
-        return $this->render('simple_catalog/pomeshheniya.html.twig', [
-            'page'  => $page,
-            'items' => $items,
-        ]);
-    }
-    
-    /**
      * @Route("/districts/", name="simple_catalog_districts")
      */
     public function districts()
@@ -105,20 +91,6 @@ class SimpleCatalogController extends AbstractController
         return $this->render('simple_catalog/districts.html.twig', [
             'page'      => $page,
             'districts' => $districts,
-        ]);
-    }
-    
-    /**
-     * @Route("/rulonnyie-shtoryi/pomeshheniya/", name="simple_catalog_pomeshheniya_rulonnyie")
-     */
-    public function pomeshheniya_rulonnyie()
-    {
-        $page  = $this->page_repository->findOneBy(['uri' => 'rulonnyie-shtoryi/pomeshheniya']);
-        $items = $page->getPages();
-        
-        return $this->render('simple_catalog/pomeshheniya.html.twig', [
-            'page'  => $page,
-            'items' => $items,
         ]);
     }
 }

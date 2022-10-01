@@ -63,7 +63,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     protected ?string $name = '';
     
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $h1 = null;
     

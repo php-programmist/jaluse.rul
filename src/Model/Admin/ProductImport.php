@@ -7,7 +7,7 @@ use App\Entity\Material;
 use App\Entity\Type;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ProductImport
+class ProductImport implements SlugConfig
 {
     private ?UploadedFile $xlsFile = null;
     

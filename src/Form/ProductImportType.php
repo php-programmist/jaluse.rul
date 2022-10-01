@@ -40,7 +40,7 @@ class ProductImportType extends AbstractType
             ])
             ->add('removeFromName', TextType::class, [
                 'label'    => 'Удалить из названия',
-                'help'     => 'Указанный фрагмент будет удален из названия товара при генерации URL',
+                'help'     => 'Указанный фрагмент будет удален из названия товара при генерации URL. Если не указать, то будет удалено название каталога',
                 'required' => false,
             ])
             ->add('type', EntityType::class, [

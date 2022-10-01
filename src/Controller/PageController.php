@@ -143,7 +143,12 @@ class PageController extends AbstractController
         }
         
         if ($page instanceof Catalog) {
+            if (str_contains($token, 'pomeshheniya')) {
+                return $this->locationsCatalog($page);
+            }
+    
             return $this->catalog($page);
+    
         }
         
         if ($page instanceof Location) {
@@ -331,5 +336,13 @@ class PageController extends AbstractController
             'selected_material' => $catalog->getMaterial()?->getId(),
             'available_types'   => $catalog->getAvailableTypes(),
         ];
+    }
+    
+    private function locationsCatalog(Catalog $page): Response
+    {
+        return $this->render('simple_catalog/pomeshheniya.html.twig', [
+            'page'  => $page,
+            'items' => $page->getPages(),
+        ]);
     }
 }

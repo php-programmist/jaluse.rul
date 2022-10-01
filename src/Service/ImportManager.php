@@ -4,15 +4,19 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Color;
+use App\Entity\Location;
 use App\Entity\Material;
 use App\Entity\Product;
 use App\Entity\Type;
 use App\Helper\SlugHelper;
+use App\Model\Admin\LocationImport;
 use App\Model\Admin\ProductImport;
+use App\Model\Admin\SlugConfig;
 use App\Model\Admin\UpdatePrices;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ZipArchive;
 
 class ImportManager
@@ -33,10 +37,7 @@ class ImportManager
     
     public function importProducts(ProductImport $productImport): array
     {
-        $spreadsheet = $this->xlsxReader->load($productImport->getXlsFile());
-        $sheetData   = $spreadsheet
-            ->getActiveSheet()
-            ->toArray(null, true, true, true);
+        $sheetData   = $this->getSheetData($productImport->getXlsFile());
         $created     = [];
         $updated     = [];
         $productRepo = $this->entityManager->getRepository(Product::class);
@@ -74,15 +75,74 @@ class ImportManager
             } else {
                 $this->setPrice($price, $product);
             }
-    
+        
             $this->setType($productImport->getType(), $product);
             $this->setMaterial($productImport->getMaterial(), $product);
-    
+        
         }
         $this->entityManager->flush();
     
-        $this->importImages($productImport);
+        $imgFolder = $this->productImgFolder($productImport);
     
+        $this->importImages(
+            $productImport->getImagesSmall(),
+            $imgFolder . 'small/'
+        );
+    
+        $this->importImages(
+            $productImport->getImagesBig(),
+            $imgFolder . 'big/'
+        );
+    
+        $this->importImages(
+            $productImport->getImagesCatalog(),
+            $imgFolder . 'catalog/'
+        );
+    
+        return [$created, $updated];
+    }
+    
+    public function importLocations(LocationImport $locationImport): array
+    {
+        $sheetData    = $this->getSheetData($locationImport->getXlsFile());
+        $created      = [];
+        $updated      = [];
+        $locationRepo = $this->entityManager->getRepository(Location::class);
+        foreach ($sheetData as $row_number => $row) {
+            if ($row_number < $locationImport->getFirstRow()) {
+                continue;
+            }
+            [
+                "A" => $name,
+                "B" => $h1,
+                "C" => $locationName,
+                "D" => $imageName,
+            ] = $row;
+            
+            if (empty($name)) {
+                break;
+            }
+            $location = $locationRepo->findOneBy(['name' => $name, 'baseCatalog' => $locationImport->getCatalog()]);
+            if (null === $location) {
+                $location  = $this->initLocation($name, $locationImport);
+                $created[] = $location->getPath();
+            } else {
+                $updated[] = $location->getPath();
+            }
+            
+            $location
+                ->setH1($h1 ? : null)
+                ->generateDescription()
+                ->generateTitle()
+                ->generateCardDescription($locationImport, $locationName)
+                ->setCardImage($imageName);
+        }
+        $this->entityManager->flush();
+        
+        $this->importImages(
+            $locationImport->getImages(),
+            $this->projectDir . '/public_html/img/location/');
+        
         return [$created, $updated];
     }
     
@@ -121,41 +181,26 @@ class ImportManager
         return [$updated, $notFound];
     }
     
-    private function generateProductUri(ProductImport $productImport, string $productName): string
+    private function generateUri(SlugConfig $config, string $productName): string
     {
-        $catalogName = preg_replace('/\s+/', ' ', $productImport->getCatalog()?->getName());
-        $nameForSlug = str_replace($catalogName, '', $productName);
-        if (!empty($productImport->getRemoveFromName())) {
-            $nameForSlug = str_replace($productImport->getRemoveFromName(), '', $productName);
-        }
-    
-        return $productImport->getBaseUri() . '/' . SlugHelper::makeSlug($nameForSlug);
+        $catalogName = preg_replace('/\s+/', ' ', $config->getCatalog()?->getName());
+        $search      = $config->getRemoveFromName() ? : $catalogName;
+        
+        $nameForSlug = str_replace($search, '', $productName);
+        
+        return $config->getBaseUri() . '/' . SlugHelper::makeSlug($nameForSlug);
     }
     
-    private function importImages(ProductImport $productImport): void
+    private function importImages(?UploadedFile $zippedImages, string $folder): void
     {
-        $imgFolder = $this->productImgFolder($productImport);
-        
-        if (null !== $productImport->getImagesSmall()) {
-            $zip = new ZipArchive();
-            $zip->open($productImport->getImagesSmall()->getRealPath());
-            $zip->extractTo($imgFolder . 'small/');
-            $zip->close();
+        if (null === $zippedImages) {
+            return;
         }
         
-        if (null !== $productImport->getImagesBig()) {
-            $zip = new ZipArchive();
-            $zip->open($productImport->getImagesBig()->getRealPath());
-            $zip->extractTo($imgFolder . 'big/');
-            $zip->close();
-        }
-        
-        if (null !== $productImport->getImagesCatalog()) {
-            $zip = new ZipArchive();
-            $zip->open($productImport->getImagesCatalog()->getRealPath());
-            $zip->extractTo($imgFolder . 'catalog/');
-            $zip->close();
-        }
+        $zip = new ZipArchive();
+        $zip->open($zippedImages->getRealPath());
+        $zip->extractTo($folder);
+        $zip->close();
     }
     
     private function productImgFolder(ProductImport $productImport): string
@@ -203,10 +248,23 @@ class ImportManager
         $product = (new Product())
             ->setName($productName)
             ->setParent($productImport->getCatalog())
-            ->setUri($this->generateProductUri($productImport, $productName));
+            ->setUri($this->generateUri($productImport, $productName));
         $this->entityManager->persist($product);
         
         return $product;
+    }
+    
+    private function initLocation($name, LocationImport $locationImport): Location
+    {
+        $location = (new Location())
+            ->setName($name)
+            ->setParent($locationImport->getParent())
+            ->setBaseCatalog($locationImport->getCatalog())
+            ->setUri($this->generateUri($locationImport, $name));
+        
+        $this->entityManager->persist($location);
+        
+        return $location;
     }
     
     private function setImages($imageName, $product): void
@@ -245,5 +303,14 @@ class ImportManager
         if (!empty($matrixId)) {
             $product->setMatrixId($matrixId);
         }
+    }
+    
+    private function getSheetData(UploadedFile $xlsFile): array
+    {
+        $spreadsheet = $this->xlsxReader->load($xlsFile);
+        
+        return $spreadsheet
+            ->getActiveSheet()
+            ->toArray(null, true, true, true);
     }
 }

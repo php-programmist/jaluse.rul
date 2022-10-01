@@ -2,8 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Form\LocationImportType;
 use App\Form\ProductImportType;
 use App\Form\UpdatePricesType;
+use App\Model\Admin\LocationImport;
 use App\Model\Admin\ProductImport;
 use App\Model\Admin\UpdatePrices;
 use App\Service\ImportManager;
@@ -13,12 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
-class ProductImportController extends AbstractController
+class PageImportController extends AbstractController
 {
     /**
-     * @Route("/admin/product-import", name="admin_product_import_index")
+     * @Route("/admin/product-import", name="admin_product_import")
      */
-    public function index(Request $request, ImportManager $manager): Response
+    public function products(Request $request, ImportManager $manager): Response
     {
         $productImport = new ProductImport();
         $form          = $this->createForm(ProductImportType::class, $productImport);
@@ -30,8 +32,8 @@ class ProductImportController extends AbstractController
                 $this->addFlash('warning', $e->getMessage());
             }
         }
-    
-        return $this->render('admin/product-import/index.html.twig', [
+        
+        return $this->render('admin/page-import/index.html.twig', [
             'form'    => $form->createView(),
             'created' => $created ?? [],
             'updated' => $updated ?? [],
@@ -58,6 +60,29 @@ class ProductImportController extends AbstractController
             'form'     => $form->createView(),
             'notFound' => $notFound ?? [],
             'updated'  => $updated ?? [],
+        ]);
+    }
+    
+    /**
+     * @Route("/admin/locations-import", name="admin_locations_import")
+     */
+    public function locations(Request $request, ImportManager $manager): Response
+    {
+        $locationImport = new LocationImport();
+        $form           = $this->createForm(LocationImportType::class, $locationImport);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try{
+                [$created, $updated] = $manager->importLocations($locationImport);
+            } catch (Throwable $e){
+                $this->addFlash('warning', $e->getMessage());
+            }
+        }
+        
+        return $this->render('admin/page-import/locations.html.twig', [
+            'form'    => $form->createView(),
+            'created' => $created ?? [],
+            'updated' => $updated ?? [],
         ]);
     }
 }
