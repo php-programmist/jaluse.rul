@@ -61,7 +61,6 @@ class PageController extends AbstractController
         /** @var Catalog $catalog */
         $catalog = $this->page_repository->findOneBy(['uri' => 'zhalyuzi']);
         
-        
         $filters = $catalog->getFilters();
         if ($this->request->isXmlHttpRequest()) {
             return $this->catalogManager->renderProducts($filters);
@@ -215,7 +214,7 @@ class PageController extends AbstractController
     
     private function catalog(Catalog $catalog)
     {
-        $filters            = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+        $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         if ($this->request->isXmlHttpRequest()) {
             return $this->catalogManager->renderProducts($filters);
         }
@@ -223,22 +222,34 @@ class PageController extends AbstractController
         return $this->render($this->getCatalogTemplate($catalog),
             array_merge(
                 $this->getCatalogRenderParams($catalog, $filters),
-                [
-                    'force_show_filters' => false,
-                    'show_calc'          => true,
-                    'selected_type'      => $catalog->getType()?->getId(),
-                    'selected_material'  => $catalog->getMaterial()?->getId(),
-                    'available_types'    => $catalog->getAvailableTypes(),
-                ]
+                $this->getCalcSettings($catalog),
+                ['force_show_filters' => false]
             ));
     }
     
-    private function location(Location $location)
+    private function location(Location $location): Response
     {
-        return $this->render('page/location.html.twig', [
+        $params = [
             'page'  => $location,
             'items' => [],
-        ]);
+        ];
+        
+        $catalog = $location->getBaseCatalog();
+        if (null !== $catalog) {
+            $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
+            
+            if ($this->request->isXmlHttpRequest()) {
+                return $this->catalogManager->renderProducts($filters);
+            }
+            
+            $params = array_merge(
+                $this->getCatalogRenderParams($catalog, $filters),
+                $this->getCalcSettings($catalog),
+                $params
+            );
+        }
+        
+        return $this->render('page/location.html.twig', $params);
     }
     
     private function getCatalogRenderParams(Catalog $catalog, array $filters): array
@@ -308,7 +319,17 @@ class PageController extends AbstractController
         if (str_starts_with($catalog->getUri(), 'rulonnyie-shtoryi')) {
             $template = 'catalog/rulonnyie-shtoryi/index.html.twig';
         }
-        
+    
         return $template;
+    }
+    
+    private function getCalcSettings(Catalog $catalog): array
+    {
+        return [
+            'show_calc'         => true,
+            'selected_type'     => $catalog->getType()?->getId(),
+            'selected_material' => $catalog->getMaterial()?->getId(),
+            'available_types'   => $catalog->getAvailableTypes(),
+        ];
     }
 }

@@ -122,16 +122,18 @@ class DashboardController extends AbstractDashboardController
     
     public static function getSeoBlock(): array
     {
-        $title        = TextField::new('title', 'Заголовок');
+        $title        = TextField::new('title', 'Заголовок страницы');
+        $h1           = TextField::new('h1', 'H1');
         $description  = TextareaField::new('description', 'Мета-описание');
         $showSeoText  = Field::new('showSeoText', 'SEO-текст');
         $content      = CKEditorField::new('content', 'SEO-текст');
         $seoImageFile = VichImageField::new('seoImageFile', 'SEO-Изображение');
         $seoPanel     = FormField::addPanel('SEO')->collapsible();
-        
+    
         return [
             $seoPanel,
             $title,
+            $h1,
             $description,
             $showSeoText,
             $content,

@@ -81,20 +81,21 @@ class Catalog extends Page
     private ?array $excludedMaterials = [];
     
     /**
-     * @ORM\Column(type="json", nullable=true)
-     */
-    private ?array $popularCategories = [];
-    
-    /**
      * @ORM\Column(type="boolean", options={"default": false})
      * True - если каталог не имеет собственных товаров, а лишь агрегирует несколько каталогов
      */
     private bool $aggregateCatalog = false;
     
+    /**
+     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="baseCatalog")
+     */
+    private Collection $locations;
+    
     public function __construct()
     {
         parent::__construct();
         $this->workExamples = new ArrayCollection();
+        $this->locations    = new ArrayCollection();
     }
     
     public function getPrice(): ?float
@@ -421,26 +422,6 @@ class Catalog extends Page
     }
     
     /**
-     * @return array
-     */
-    public function getPopularCategories(): array
-    {
-        return $this->popularCategories ?? [];
-    }
-    
-    /**
-     * @param array|null $popularCategories
-     *
-     * @return $this
-     */
-    public function setPopularCategories(?array $popularCategories): self
-    {
-        $this->popularCategories = $popularCategories;
-        
-        return $this;
-    }
-    
-    /**
      * @return bool
      */
     public function isAggregateCatalog(): bool
@@ -454,5 +435,35 @@ class Catalog extends Page
     public function setAggregateCatalog(bool $aggregateCatalog): void
     {
         $this->aggregateCatalog = $aggregateCatalog;
+    }
+    
+    /**
+     * @return Collection<Collection>
+     */
+    public function getLocations(): Collection
+    {
+        return $this->locations;
+    }
+    
+    public function addLocation(Location $location): self
+    {
+        if (!$this->locations->contains($location)) {
+            $this->locations[] = $location;
+            $location->setBaseCatalog($this);
+        }
+        
+        return $this;
+    }
+    
+    public function removeLocation(Location $location): self
+    {
+        if ($this->locations->removeElement($location)) {
+            // set the owning side to null (unless already changed)
+            if ($location->getBaseCatalog() === $this) {
+                $location->setBaseCatalog(null);
+            }
+        }
+        
+        return $this;
     }
 }

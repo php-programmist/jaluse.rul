@@ -14,6 +14,11 @@ class Location extends Page
 {
     public const TYPE = 'location';
     
+    /**
+     * @ORM\ManyToOne(targetEntity=Catalog::class, inversedBy="locations")
+     */
+    private ?Catalog $baseCatalog;
+    
     public function getCardImgFolder()
     {
         return 'img/location/';
@@ -63,13 +68,23 @@ class Location extends Page
     
     public function getCalcLink(): ?string
     {
-        return str_contains($this->getUri(), 'rulonnyie-shtoryi')
-            ? '/rulonnyie-shtoryi/kalkulyator/'
-            : '/zhalyuzi/kalkulyator/';
+        return '/' . $this->getBaseCatalogUri() . '/kalkulyator/';
     }
     
     public function getBaseCatalogUri(): string
     {
-        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'zhalyuzi/vertikalnye';
+        return $this->getBaseCatalog()?->getUri();
+    }
+    
+    public function getBaseCatalog(): ?Catalog
+    {
+        return $this->baseCatalog;
+    }
+    
+    public function setBaseCatalog(?Catalog $baseCatalog): self
+    {
+        $this->baseCatalog = $baseCatalog;
+        
+        return $this;
     }
 }

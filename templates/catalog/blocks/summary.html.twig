@@ -6,7 +6,7 @@
     <ul>
         <li class="summary__item">✅<span
                     class="summary__accent">{{ products.paginationData.totalCount }}</span> {{ catalog.nameGenitive }} по ценам от ⭐
-            <span class="summary__accent">{{ discounted_price(catalog_min_price(page.uri, filters|default({}))) }} {{ page.units }}</span> ⭐
+            <span class="summary__accent">{{ discounted_price(catalog_min_price(catalog.uri, filters|default({}))) }} {{ catalog.units }}</span> ⭐
         </li>
         <li class="summary__item">✅ Быстрое производство, доставка и монтаж в любой точке Москвы.</li>
         <li class="summary__item">✅ {{ catalog.nameNominative }} от производителя по антикризисным ценам и бесплатным замером.</li>

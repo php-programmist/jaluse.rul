@@ -60,7 +60,12 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
+    protected ?string $name = '';
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected ?string $h1 = null;
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -169,6 +174,10 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      * @ORM\Column(type="string",options={"default": App\Model\GeoProduct\ZhalyuziGeoProduct::TYPE})
      */
     protected $geoProductType = ZhalyuziGeoProduct::TYPE;
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    protected ?array $popularCategories = [];
     
     /**
      * @ORM\ManyToMany(targetEntity=WorkExample::class, mappedBy="pages")
@@ -483,7 +492,14 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     
     public function getH1(): string
     {
-        return $this->getName();
+        return !empty($this->h1) ? $this->h1 : $this->getName();
+    }
+    
+    public function setH1(?string $h1): self
+    {
+        $this->h1 = $h1;
+        
+        return $this;
     }
     
     public function getCardHeader(): string
@@ -676,6 +692,26 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function setNameNominative(?string $nameNominative): self
     {
         $this->nameNominative = $nameNominative;
+        
+        return $this;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getPopularCategories(): array
+    {
+        return $this->popularCategories ?? [];
+    }
+    
+    /**
+     * @param array|null $popularCategories
+     *
+     * @return Catalog
+     */
+    public function setPopularCategories(?array $popularCategories): Catalog
+    {
+        $this->popularCategories = $popularCategories;
         
         return $this;
     }
