@@ -99,7 +99,7 @@ class Location extends Page
     
     public function generateTitle(): self
     {
-        $this->title = sprintf('%s купить в Москве. %s Каталог и цены', $this->getName(), $this->getH1());
+        $this->title = sprintf('%s купить в Москве. %s каталог и цены', $this->getName(), $this->getH1());
         
         return $this;
     }
