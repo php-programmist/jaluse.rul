@@ -1,0 +1,35 @@
+{% extends 'page/catalog.html.twig' %}
+
+{% block body %}
+    <div id="content" class="container-fluid catalog-container">
+        {{ include('modules/rating_schema.html.twig') }}
+        {% block popular_category_block %}
+            {{ include('popular-category.html.twig') }}
+        {% endblock %}
+        {% if (showCatalog is not defined or showCatalog) and (products is defined and products|length > 0) %}
+            {{ include('catalog/blocks/aggregate_offer_schema.html.twig', {catalogUri: page.uri}) }}
+            <h2>{% block content_h2 %}{{ page.name }} каталог и цены:{% endblock %}</h2>
+            {{ include('catalog/blocks/catalog.html.twig') }}
+        {% endif %}
+        {% block location_block %}{% endblock %}
+    </div>
+
+    {% if show_calc is not defined or show_calc %}
+        {{ include('modules/catalog_calculator.html.twig') }}
+    {% endif %}
+
+    {% block rating_block %}
+        {{ include('modules/rating.html.twig') }}
+    {% endblock %}
+
+    {% if page.locations|default(null) is not empty %}
+        <div class="container">
+            <h2>{{ page.name }} для помещений:</h2>
+            {{ include('modules/recommended_products.html.twig', {items: page.locations, hideCatalog: true, locationsCatalog: page.locationsCatalog}) }}
+        </div>
+    {% endif %}
+
+    {{ include('modules/_seo_block.html.twig') }}
+
+    {% block recommended_block %}{% endblock %}
+{% endblock %}

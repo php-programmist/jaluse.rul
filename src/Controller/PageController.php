@@ -317,7 +317,7 @@ class PageController extends AbstractController
     
     private function getCatalogTemplate(Catalog $catalog): string
     {
-        $template = 'page/catalog.html.twig';
+        $template = 'page/catalog-with-less-blocks.html.twig';
         if (str_starts_with($catalog->getUri(), 'zhalyuzi')) {
             $template = 'catalog/zhalyuzi/index.html.twig';
         }
