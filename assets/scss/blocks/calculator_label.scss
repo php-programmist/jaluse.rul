@@ -25,6 +25,9 @@
   position: relative;
   padding: 16px;
   overflow: hidden;
+  @media (max-width: 768px) {
+    padding: 6px;
+  }
 
   &::after {
     content: "";
