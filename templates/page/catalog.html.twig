@@ -59,7 +59,7 @@
     {% endblock %}
 
     {% if page.locations|default(null) is not empty %}
-        <div class="container hide-mobile">
+        <div class="container">
             <h2>{{ page.name }} для помещений:</h2>
             {{ include('modules/recommended_products.html.twig', {items: page.locations, hideCatalog: true, locationsCatalog: page.locationsCatalog}) }}
         </div>
