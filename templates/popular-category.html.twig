@@ -3,9 +3,9 @@
     <div class="popular-category section">
         <div class="container">
             <h2 class="text-center">{{ page.name }}</h2>
-            <div class="category-area row">
+            <div class="category-area">
                 {% for label, uri in catalogs %}
-                    <div class="grid-item col-xl-4 col-md-6 col-12 {{ loop.index > 3 ? "hidden-category js-hidden-category" }}">
+                    <div class="grid-item">
                         <a class="category"
                            href="/{{ uri }}/#content"
                         >
@@ -18,7 +18,6 @@
                     </div>
 
                 {% endfor %}
-                <button class="mbtn show-more js-popular-category-show-more">Показать все</button>
             </div>
         </div>
     </div>

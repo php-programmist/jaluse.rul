@@ -37,17 +37,6 @@
 
 .grid-item {
   padding: 12px;
-}
-
-.hidden-category {
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-}
-
-.show-more {
-  margin: 10px auto;
-  @media screen and (min-width: 767px) {
-    display: none;
-  }
+  display: flex !important;
+  justify-content: center;
 }
