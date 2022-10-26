@@ -9,7 +9,9 @@
 					accurateTrackBounce: true,
 					webvisor: true
 				});
+				console.log("Ya.Metrika initialized");
 			} catch (e) {
+				console.warn("Ya.Metrika error:", e);
 			}
 		});
 		var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () {
@@ -30,7 +32,7 @@
 
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
-		document.querySelector(".js-submit-callback-form").addEventListener('click', function () {
+		document.querySelector(".js-submit-success").addEventListener('click', function () {
 			console.log('callback-form');
 			window.yaCounter57496875.reachGoal('callback-form');
 		});

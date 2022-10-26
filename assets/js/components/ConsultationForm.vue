@@ -8,6 +8,7 @@
 <script>
 import PopupContactForm from './PopupContactForm'
 import axios from 'axios';
+import {openSuccessModal} from "./modal_success";
 
 export default {
   data() {
@@ -27,9 +28,9 @@ export default {
 				const str = JSON.stringify(body);
 				axios.post('/mail/callback/consultation', str)
 					.then(({data}) => {
-						alert(data.msg);
-						this.$refs.consultation.visible = false;
-					})
+            this.$refs.consultation.visible = false;
+            openSuccessModal();
+          })
 					.catch((error) => {
 						alert(error.response.data.detail);
 					});

@@ -1,5 +1,6 @@
 import Inputmask from 'inputmask';
 import $ from 'jquery';
+import {openSuccessModal} from "../components/modal_success";
 
 function initBanner() {
 	let banner_shown = getCookie("banner_shown");
@@ -27,8 +28,8 @@ const bannerFetchHandler = (response) => {
 	}
 	response.json().then((data) => {
 		if (data.status) {
-			alert(data.msg);
 			$('.modal-close-action').click();
+			openSuccessModal();
 		} else {
 			alert("Произошла ошибка: \n\n" + data.errors.join("\r\n"));
 		}

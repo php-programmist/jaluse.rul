@@ -1,6 +1,7 @@
 import Inputmask from 'inputmask';
 import $ from 'jquery';
 import '../../scss/modal_callback.css'
+import {openSuccessModal} from "./modal_success";
 
 /*Обработчик ответа получаемого при отправке формы консультации*/
 const consultationFetchHandler = (response) => {
@@ -12,8 +13,8 @@ const consultationFetchHandler = (response) => {
 	}
 	response.json().then((data) => {
 		if (data.status) {
-			alert(data.msg);
 			$('#modal-callback').removeClass('is-visible');
+			openSuccessModal();
 		} else {
 			alert("Произошла ошибка: \n\n" + data.errors.join("\r\n"));
 		}

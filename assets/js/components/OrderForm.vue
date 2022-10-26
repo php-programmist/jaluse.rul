@@ -8,6 +8,7 @@
 <script>
 import PopupContactForm from './PopupContactForm'
 import axios from 'axios';
+import {openSuccessModal} from "./modal_success";
 
 export default {
   data() {
@@ -37,11 +38,11 @@ export default {
 					price_with_delivery: this.prices.priceWithDelivery,
 				};
 				const str = JSON.stringify(body);
-				axios.post('/mail/callback/order', str)
-					.then(({data}) => {
-						alert(data.msg);
-						this.$refs.order.visible = false;
-					})
+      axios.post('/mail/callback/order', str)
+          .then(() => {
+            this.$refs.order.visible = false;
+            openSuccessModal();
+          })
 					.catch((error) => {
 						alert(error.response.data.detail);
 					});
