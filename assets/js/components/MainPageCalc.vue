@@ -1,8 +1,8 @@
 <template>
-  <div class="calc-wrap">
-    <div class="row">
-      <div class="col-lg-7 col-md-6 calc-parametr">
-        <form action="#">
+  <form action="#">
+    <div class="calc-wrap">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 calc-parametr">
           <div class="calc-parametr-typewrap">
             <div class="minzag">Выберите тип</div>
             <div class="row">
@@ -60,51 +60,55 @@
             </div>
           </div>
           <v-product-configurator v-model="productConfigs"
-                                  :calculationType="currentProduct.calculationType"></v-product-configurator>
+                                  v-if="!isMobile"
+                                  :calculationType="currentProduct.calculationType" />
 
-        </form>
-      </div>
-      <div class="col-lg-5 col-md-6 calc-vivod align-self-center">
-        <div class="calc-vivod-imgwrap">
-          <img :src="currentProduct.imageBig" alt="*">
         </div>
-        <div class="product-name">
-          {{ currentProduct.name }}
-        </div>
-        <div class="w-100">
-          <v-price-renderer :prices="prices"></v-price-renderer>
-          <div class="calc-vivod-opis">
-            <div class="row">
-              <div class="calc-vivod-opis-text col-sm-6">
+        <div class="col-lg-5 col-md-6 calc-vivod align-self-center">
+          <div class="calc-vivod-imgwrap">
+            <img :src="currentProduct.imageBig" alt="*">
+          </div>
+          <div class="product-name">
+            {{ currentProduct.name }}
+          </div>
+          <div class="w-100">
+            <v-price-renderer :prices="prices"></v-price-renderer>
+            <div class="calc-vivod-opis">
+              <div class="row">
+                <div class="calc-vivod-opis-text col-sm-6">
 
-                <div><b>Размеры: </b><span>{{ productConfigs.width }}</span> СМ X
-                  <span>{{ productConfigs.height }}</span> СМ
+                  <div><b>Размеры: </b><span>{{ productConfigs.width }}</span> СМ X
+                    <span>{{ productConfigs.height }}</span> СМ
+                  </div>
+                  <div><b>Цвет: {{ currentProduct.colorName }}</b></div>
                 </div>
-                <div><b>Цвет: {{ currentProduct.colorName }}</b></div>
-              </div>
-              <div class="calc-vivod-opis-text col-sm-6 d-none d-md-block">
-                <div><b>Управление: </b><span>{{ productConfigs.controlType }}</span></div>
-                <div><b>Подтип: </b><span>{{ currentProduct.materialName }}</span></div>
-              </div>
+                <div class="calc-vivod-opis-text col-sm-6 d-none d-md-block">
+                  <div><b>Управление: </b><span>{{ productConfigs.controlType }}</span></div>
+                  <div><b>Подтип: </b><span>{{ currentProduct.materialName }}</span></div>
+                </div>
 
+              </div>
             </div>
-          </div>
-          <div class="button-wrapper">
-            <v-order-form
-                text="Заказать"
-                :product="currentProduct"
-                :productConfigs="productConfigs"
-                :prices="prices"
-            ></v-order-form>
-            <v-consultation-form text="Получить консультацию"></v-consultation-form>
+            <v-product-configurator v-model="productConfigs"
+                                    v-if="isMobile"
+                                    :calculationType="currentProduct.calculationType" />
+            <div class="button-wrapper">
+              <v-order-form
+                  text="Заказать"
+                  :product="currentProduct"
+                  :productConfigs="productConfigs"
+                  :prices="prices"
+              ></v-order-form>
+              <v-consultation-form text="Получить консультацию"></v-consultation-form>
+            </div>
+
           </div>
 
         </div>
-
       </div>
-    </div>
 
-  </div>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -186,6 +190,9 @@ export default {
   },
 
   computed: {
+    isMobile() {
+      return document.documentElement.clientWidth <= 576;
+    },
     materials() {
       return this.type.id > 0 ? this.type.materials : [];
     },
@@ -364,6 +371,9 @@ $text-grey: rgba(54, 54, 54, 0.8);
 
   &-opis {
     margin-bottom: 20px;
+    @media (max-width: 576px) {
+      display: none;
+    }
 
     &-text {
 

@@ -238,6 +238,12 @@
   }
 }
 @media (max-width: 576px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+  .block3 .calc-parametr-minimages .minimages-wrap {
+    width: 77px;
+  }
   .header-n1-logo img {
     width: 180px;
     max-width: 100%;
@@ -274,7 +280,7 @@
     padding-bottom: 20px;
   }
   .block1-wrap h1 {
-    font-size: 22px;
+    font-size: 16px;
     margin-bottom: 40px;
   }
   .block1-wrap .utp-wrap {
