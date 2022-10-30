@@ -9,9 +9,13 @@
                 <div class="product__name">
                     <a href="{{ app.request.schemeAndHttpHost }}/{{ item.uri }}/">{{ item.name }}</a>
                 </div>
-                <div class="product__price">
-                    {{ min_price(item, false, true) }}
-                </div>
+                <hr />
+                <center>
+                    <strong>
+                        Цены от {{ min_price(item, false, true) }}
+                    </strong>
+                </center>
+
                 <button
                         formaction="tel:{{ phone }}"
                         data-background-color="blue"

@@ -314,7 +314,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      */
     public function getPages(): Collection
     {
-        return $this->pages;
+        return $this->pages ?? new ArrayCollection();
     }
     
     public function addPage(self $page)

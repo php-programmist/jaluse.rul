@@ -5,8 +5,9 @@
 {% for subCatalog in catalog %}
     {% include 'turbo/catalog/card.html.twig' with {page: subCatalog} %}
     {% include 'turbo/callback-buttons-with-direct-link.html.twig' with {page: subCatalog} %}
+    {% include 'turbo/calс-button.html.twig' %}
+    <hr />
 {% endfor %}
-{% include 'turbo/calс-button.html.twig' %}
 {% include 'turbo/catalog/our-works.html.twig' %}
 
 {% include 'turbo/advantages.html.twig' %}
