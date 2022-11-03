@@ -23,9 +23,7 @@
         {% block buttons %}
             <div class="three-button-wrapper">
                 <a class="mbtn" href="/zhalyuzi/#content">Каталог</a>
-                <img src="/img/buttons/calculate.jpg" alt="Рассчитать" class="js-modal-open" data-title="Рассчитать">
-                <img src="/img/buttons/consultation.jpg" alt="Консультация" class=" js-modal-open"
-                     data-title="Консультация">
+                {{ include('modules/_callback_buttons.html.twig') }}
             </div>
         {% endblock %}
     {% endembed %}

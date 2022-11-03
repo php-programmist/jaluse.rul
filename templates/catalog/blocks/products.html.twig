@@ -24,12 +24,7 @@
                 </a>
                 <div class="product__name"><a href="/{{ product.uri }}/">{{ product.name }}</a></div>
                 <div class="product__price">{{ min_price(product, false, false) }}</div>
-                <div class="d-flex justify-content-center flex-column">
-                    <img src="/img/buttons/calculate.jpg" alt="Рассчитать" class=" js-modal-open"
-                         data-title="Рассчитать">
-                    <img src="/img/buttons/consultation.jpg" alt="Консультация" class=" js-modal-open"
-                         data-title="Консультация">
-                </div>
+                {{ include('modules/_callback_buttons.html.twig') }}
             </div>
         {% endfor %}
     </div>
