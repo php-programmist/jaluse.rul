@@ -4,7 +4,6 @@
       <div class="row">
         <div class="col-lg-7 col-md-6 calc-parametr">
           <div class="calc-parametr-typewrap">
-            <div class="minzag">Выберите тип</div>
             <div class="row">
               <div class="type_selector" v-show="!type_hidden">
                 <v-drop-down-selector
@@ -138,7 +137,7 @@ export default {
       type_hidden: false,
       material_opened: false,
       material_hidden: false,
-      color_opened: false,
+      color_opened: true,
       price_calculator: null,
       productConfigs: {}
     };
