@@ -36,7 +36,7 @@
         <div class="row">
             {% for ratingItem in ratingItems %}
                 <div class="col-lg-3 col-6 scroll-item">
-                    <a target="_blank" href="{{ ratingItem.link }}">
+                    <a target="_blank" rel="nofollow" href="{{ ratingItem.link }}">
                         <div class="rating-card">
                             <div class="img">
                                 <img {{ lazy_load(asset(ratingItem.img)) }} alt="{{ ratingItem.alt }}">
