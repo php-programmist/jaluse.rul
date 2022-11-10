@@ -18,11 +18,7 @@
             <div class="product__price">
                 {{ min_price(item, false, true) }}
             </div>
-            <div class="d-flex justify-content-center flex-wrap">
-                <button class="mbtn mbtn_orange js-modal-open" data-title="Рассчитать">Рассчитать</button>
-                <button class="mbtn js-modal-open" data-title="Консультация">Консультация</button>
-        
-            </div>
+            {{ include('modules/_callback_buttons.html.twig') }}
         </div>
     {% endfor %}
 </div>
