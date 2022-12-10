@@ -101,6 +101,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Технические ссылки');
         yield MenuItem::linkToCrud('Настройки', 'fas fa-cogs', Config::class);
         yield MenuItem::linktoRoute('Генератор', 'fas fa-cogs', 'admin_generator_index');
+        yield MenuItem::linktoRoute('Изменение URI', 'fas fa-chain', 'admin_change_uri');
         yield MenuItem::subMenu('Импорт', 'fas fa-file-import')->setSubItems($submenu1);
     }
     

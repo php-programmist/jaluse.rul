@@ -18,7 +18,19 @@ class CatalogRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Catalog::class);
     }
-
+    
+    /**
+     * @return Catalog[] Returns an array of Catalog objects
+     */
+    public function findLike(string $field, string $value): array
+    {
+        return $this->createQueryBuilder('p')
+                    ->andWhere(sprintf('p.%s LIKE :val', $field))
+                    ->setParameter('val', $value)
+                    ->orderBy('p.id', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
     // /**
     //  * @return Catalog[] Returns an array of Catalog objects
     //  */
@@ -35,7 +47,7 @@ class CatalogRepository extends ServiceEntityRepository
         ;
     }
     */
-
+    
     /*
     public function findOneBySomeField($value): ?Catalog
     {

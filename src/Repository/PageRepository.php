@@ -18,7 +18,20 @@ class PageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Page::class);
     }
-
+    
+    /**
+     * @return Page[] Returns an array of Page objects
+     */
+    public function findLike(string $field, string $value): array
+    {
+        return $this->createQueryBuilder('p')
+                    ->andWhere(sprintf('p.%s LIKE :val', $field))
+                    ->setParameter('val', $value)
+                    ->orderBy('p.id', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+    
     // /**
     //  * @return Page[] Returns an array of Page objects
     //  */

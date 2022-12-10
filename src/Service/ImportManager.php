@@ -2,13 +2,16 @@
 
 namespace App\Service;
 
+use App\Entity\Catalog;
 use App\Entity\Category;
 use App\Entity\Color;
 use App\Entity\Location;
 use App\Entity\Material;
+use App\Entity\Page;
 use App\Entity\Product;
 use App\Entity\Type;
 use App\Helper\SlugHelper;
+use App\Model\Admin\ChangeUri;
 use App\Model\Admin\LocationImport;
 use App\Model\Admin\ProductImport;
 use App\Model\Admin\SlugConfig;
@@ -53,7 +56,7 @@ class ImportManager
                 "E" => $categoryName,
             ] = $row;
             $popular = isset($row['F']) ? (bool)$row['F'] : null;
-    
+            
             if (empty($productName)) {
                 break;
             }
@@ -64,41 +67,41 @@ class ImportManager
             } else {
                 $updated[] = $product->getPath();
             }
-    
+            
             $this->setColor($colorName, $product);
             $this->setCategory($categoryName, $product);
             $this->setImages($imageName, $product);
             $this->setPopular($popular, $product);
-    
+            
             if ($productImport->isMatrix()) {
                 $this->setMatrix($price, $product);
             } else {
                 $this->setPrice($price, $product);
             }
-        
+            
             $this->setType($productImport->getType(), $product);
             $this->setMaterial($productImport->getMaterial(), $product);
-        
+            
         }
         $this->entityManager->flush();
-    
+        
         $imgFolder = $this->productImgFolder($productImport);
-    
+        
         $this->importImages(
             $productImport->getImagesSmall(),
             $imgFolder . 'small/'
         );
-    
+        
         $this->importImages(
             $productImport->getImagesBig(),
             $imgFolder . 'big/'
         );
-    
+        
         $this->importImages(
             $productImport->getImagesCatalog(),
             $imgFolder . 'catalog/'
         );
-    
+        
         return [$created, $updated];
     }
     
@@ -159,13 +162,13 @@ class ImportManager
                     "A" => $url,
                     "B" => $price,
                 ] = $row;
-    
+                
                 if ($row_number < 2 || empty($url)) {
                     continue;
                 }
-    
+                
                 $uri = trim(parse_url($url, PHP_URL_PATH), ' /');
-    
+                
                 $product = $productRepo->findOneBy(['uri' => $uri]);
                 if (null === $product) {
                     $notFound[] = $url;
@@ -179,6 +182,76 @@ class ImportManager
         $this->entityManager->flush();
         
         return [$updated, $notFound];
+    }
+    
+    public function changeUri(ChangeUri $data): array
+    {
+        $updated = $this->changeUriOfPages($data);
+        $this->changeUriOfCatalogsLinks($data);
+        $this->changeUriOfPopularCategories($data);
+        
+        if ($data->isApply()) {
+            $this->entityManager->flush();
+        }
+        
+        return $updated;
+    }
+    
+    public function getRedirect(ChangeUri $data): string
+    {
+        return sprintf(
+            'RewriteRule %s/(.*)$ /%s/$1 [R=301,L]',
+            trim($data->getOldUri(), ' /'),
+            trim($data->getNewUri(), ' /')
+        );
+    }
+    
+    private function changeUriOfPages(ChangeUri $data): array
+    {
+        $oldUriBase = trim($data->getOldUri(), ' /');
+        $newUriBase = trim($data->getNewUri(), ' /');
+        $pages      = $this->entityManager->getRepository(Page::class)->findLike('uri', $oldUriBase . '%');
+        $updated    = [];
+        foreach ($pages as $page) {
+            $oldUri = $page->getPath();
+            $page->setUri(str_replace($oldUriBase, $newUriBase, $page->getUri()));
+            $updated[$oldUri] = $page->getPath();
+        }
+        
+        return $updated;
+    }
+    
+    private function changeUriOfCatalogsLinks(ChangeUri $data): void
+    {
+        $pages = $this->entityManager->getRepository(Catalog::class)->findLike('catalogLinks',
+            '%' . $data->getOldUri() . '%');
+        foreach ($pages as $page) {
+            $links = $page->getCatalogLinks();
+            foreach ($links as $name => $oldPath) {
+                if (str_starts_with($oldPath, $data->getOldUri())) {
+                    $links[$name] = str_replace($data->getOldUri(), $data->getNewUri(), $oldPath);
+                }
+            }
+            $page->setCatalogLinks($links);
+        }
+    }
+    
+    private function changeUriOfPopularCategories(ChangeUri $data): void
+    {
+        $oldUriBase = trim($data->getOldUri(), ' /');
+        $newUriBase = trim($data->getNewUri(), ' /');
+        
+        $pages = $this->entityManager->getRepository(Page::class)->findLike('popularCategories',
+            '%' . $oldUriBase . '%');
+        foreach ($pages as $page) {
+            $links = $page->getPopularCategories();
+            foreach ($links as $name => $oldPath) {
+                if (str_starts_with($oldPath, $oldUriBase)) {
+                    $links[$name] = str_replace($oldUriBase, $newUriBase, $oldPath);
+                }
+            }
+            $page->setPopularCategories($links);
+        }
     }
     
     private function generateUri(SlugConfig $config, string $productName): string

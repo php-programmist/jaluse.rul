@@ -1,0 +1,40 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title 'Изменить URI' %}
+
+{% block content %}
+    <div class="content py-3">
+        {% if updated is not empty %}
+            <div class="alert alert-warning">
+                <p>Необходимо также заменить старый URL в коде и переименовать папку изображения товаров.</p>
+                <p>И прописать редирект в .htaccess:</p>
+                <p>{{ redirect }}</p>
+            </div>
+            <div class="container-fluid">
+                <h2>Обновленные страницы</h2>
+                <ul>
+                    {% for old_uri, new_uri  in updated %}
+                        {% set new_url = app.request.schemeAndHttpHost~new_uri %}
+                        {% set old_url = app.request.schemeAndHttpHost~old_uri %}
+                        <li>
+                            <a href="{{ old_url }}" target="_blank">{{ old_url }}</a>
+                            => <a href="{{ new_url }}" target="_blank">{{ new_url }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="container-fluid">
+            <div class="row">
+                <form method="post" id="admin_form" class="w-100">
+
+                    <div class="form-group">
+                        <input type="submit" value="Изменить" class="btn btn-info ml-3">
+                    </div>
+                    {{ form_widget(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
