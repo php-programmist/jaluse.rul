@@ -13,12 +13,12 @@
         <div class="catalog-body catalog-body1">
             <div class="row">
                 <div class="col-lg-6">
-                    {% set new_price = catalog_min_price('zhalyuzi/vertikalnye') %}
+                    {% set new_price = catalog_min_price('vertikalnye-zhalyuzi-na-okna') %}
                     <div class="zagcena"><b>Цена</b> от {{ discounted_price(new_price) }} руб за м<sup>2</sup></div>
                     <p>Жалюзи состоят из вертикальных ламелей (пластиковые или тканевые) и крепятся к карнизу. Ручное и автоматическое управление на выбор. Ламели могут сдвигаться в бок и поворачиваться вокруг своей оси.</p>
                     <p class="catalog-vidi">Виды:
                         <a href="/vertikalnye-zhalyuzi-na-okna/tkanevye-zhalyuzi/">тканевые</a>,
-                        <a href="/zhalyuzi/vertikalnye/plastikovyie/">пластиковые</a>
+                        <a href="/vertikalnye-zhalyuzi-na-okna/plastikovye-zhalyuzi/">пластиковые</a>
                     </p>
 
                     <div class="catalog-body-opis">
@@ -33,7 +33,7 @@
                                 <p>Цвета и фактуры</p></div>
                         </div>
                     </div>
-                    {{ include('modules/_order/catalog-body-price.html.twig', {price: new_price, link: '/zhalyuzi/vertikalnye/'}) }}
+                    {{ include('modules/_order/catalog-body-price.html.twig', {price: new_price, link: '/vertikalnye-zhalyuzi-na-okna/'}) }}
                 </div>
                 <div class="col-lg-6">
                     <div class="catalog-body-slider">
