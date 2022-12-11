@@ -59,6 +59,6 @@ abstract class Geo extends Page
     
     public function getBaseCatalogUri(): string
     {
-        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'zhalyuzi/vertikalnye';
+        return $this->getGeoProductType() === RulonnyieShtoryiGeoProduct::TYPE ? 'rulonnyie-shtoryi' : 'vertikalnye-zhalyuzi-na-okna';
     }
 }

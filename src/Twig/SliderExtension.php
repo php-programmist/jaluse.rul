@@ -66,12 +66,12 @@ class SliderExtension extends AbstractExtension
     {
         $uris  = [
             'vertikalnye-zhalyuzi-na-okna/tkanevye-zhalyuzi/lajn-ii-belyj',
-            'zhalyuzi/vertikalnye/plastikovyie/plastikovie-vertikalnie-zhalyuzi-standart-309',
+            'vertikalnye-zhalyuzi-na-okna/plastikovye-zhalyuzi/plastikovie-vertikalnie-zhalyuzi-standart-309',
             'zhalyuzi/gorizontalnye/alyuminievye/1009',
             'zhalyuzi/isolite/1443',
             'zhalyuzi/gorizontalnye/derevyannye/derevo-242',
             'vertikalnye-zhalyuzi-na-okna/tkanevye-zhalyuzi/lajn-ii-sinij1',
-            'zhalyuzi/vertikalnye/plastikovyie/plastikovie-vertikalnie-zhalyuzi-standart-307',
+            'vertikalnye-zhalyuzi-na-okna/plastikovye-zhalyuzi/plastikovie-vertikalnie-zhalyuzi-standart-307',
             'zhalyuzi/gorizontalnye/alyuminievye/35',
             'zhalyuzi/isolite/443',
             'zhalyuzi/gorizontalnye/derevyannye/derevo-232',

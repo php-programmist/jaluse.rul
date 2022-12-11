@@ -111,7 +111,7 @@ class CalculationService
     public function getCatalogMaxPriceByUri(string $catalogUri, array $filters = []): int
     {
         if (in_array($catalogUri, ['zhalyuzi', 'zhalyuzi/premium-klassa'])) {
-            $catalogUri = 'zhalyuzi/vertikalnye';
+            $catalogUri = 'vertikalnye-zhalyuzi-na-okna';
         }
         try{
             $catalog = $this->findCatalogByUri($catalogUri);
