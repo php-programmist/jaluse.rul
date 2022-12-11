@@ -200,7 +200,7 @@ class ImportManager
     public function getRedirect(ChangeUri $data): string
     {
         return sprintf(
-            'RewriteRule %s/(.*)$ /%s/$1 [R=301,L]',
+            'RewriteRule %s/(.*)$ https://%%{HTTP_HOST}/%s/$1 [R=301,L]',
             trim($data->getOldUri(), ' /'),
             trim($data->getNewUri(), ' /')
         );
