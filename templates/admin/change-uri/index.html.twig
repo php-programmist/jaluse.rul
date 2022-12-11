@@ -11,16 +11,32 @@
                 <p>{{ redirect }}</p>
             </div>
             <div class="container-fluid">
-                <h2>Обновленные страницы</h2>
-                <ul>
+                <h2>Измененные ссылки</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Старые ссылки</th>
+                        <th>Новые ссылки</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     {% for old_uri, new_uri  in updated %}
                         {% set new_url = app.request.schemeAndHttpHost~new_uri %}
                         {% set old_url = app.request.schemeAndHttpHost~old_uri %}
-                        <li>
-                            <a href="{{ old_url }}" target="_blank">{{ old_url }}</a>
-                            => <a href="{{ new_url }}" target="_blank">{{ new_url }}</a>
-                        </li>
+                        <tr>
+                            <td>
+                                <a href="{{ old_url }}" target="_blank">{{ old_url }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ new_url }}" target="_blank">{{ new_url }}</a>
+                            </td>
+                        </tr>
                     {% endfor %}
+                    </tbody>
+
+                </table>
+                <ul>
+
                 </ul>
             </div>
         {% endif %}
