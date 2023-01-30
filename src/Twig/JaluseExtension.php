@@ -55,10 +55,10 @@ class JaluseExtension extends AbstractExtension
             return 'рассчитывается индивидуально';
         }
         if ($product->getType()->getCalculationType() === 'simple') {
-            return sprintf('<span class="price">%s</span> <small>руб. за м<sup>2</sup></small>', $min_price);
+            return sprintf('<span class="price">%s</span> <small>₽ за м<sup>2</sup></small>', $min_price);
         }
-        
-        return sprintf('от <span class="price">%s</span> <small>руб. за изделие</small>', $min_price);
+    
+        return sprintf('от <span class="price">%s</span> <small>₽ за изделие</small>', $min_price);
     }
     
     public function catalog_min_price(string $catalogUri, array $filters = []): int
