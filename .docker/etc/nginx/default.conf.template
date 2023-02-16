@@ -9,7 +9,7 @@ server {
     ssl_certificate /etc/nginx/certs/${VIRTUAL_HOST}.crt;
     ssl_certificate_key /etc/nginx/certs/${VIRTUAL_HOST}.key;
     index index.php index.html;
-    server_name ${VIRTUAL_HOST} www.${VIRTUAL_HOST};
+    server_name ${VIRTUAL_HOST} www.${VIRTUAL_HOST} localhost;
 
     root ${ROOT_PATH}/public_html;
 
