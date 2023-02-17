@@ -185,6 +185,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      */
     private Collection $workExamplesOfPage;
     
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    protected ?array $settings = [];
+    
     public function __construct()
     {
         $this->created_at  = new DateTimeImmutable();
@@ -735,5 +740,30 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function getImageTitle(): string
     {
         return $this->getName() ?? '';
+    }
+    
+    /**
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        return $this->settings ?? [];
+    }
+    
+    public function getSetting(string $name): mixed
+    {
+        return $this->getSettings()[$name] ?? null;
+    }
+    
+    /**
+     * @param array|null $settings
+     *
+     * @return $this
+     */
+    public function setSettings(?array $settings): self
+    {
+        $this->settings = $settings;
+        
+        return $this;
     }
 }

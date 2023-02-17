@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Catalog;
 use App\Service\CatalogManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class SearchController extends AbstractController
         $filters['search'] = $request->query->get('search', '');
         
         return $this->render('catalog-search/results.html.twig', [
-            'products' => $catalogManager->getProductsPaginator($filters, 10),
+            'products' => $catalogManager->getProductsPaginator($filters, new Catalog(), 10),
         ]);
     }
     

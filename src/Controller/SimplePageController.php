@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Catalog;
 use App\Repository\PageRepository;
 use App\Service\CatalogManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,7 +30,7 @@ class SimplePageController extends AbstractController
     public function kontaktyi()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'kontaktyi']);
-    
+        
         return $this->render('simple_page/kontaktyi.html.twig', [
             'page' => $page,
         ]);
@@ -41,7 +42,7 @@ class SimplePageController extends AbstractController
     public function o_kompanii()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'o-kompanii']);
-    
+        
         return $this->render('simple_page/o_kompanii.html.twig', [
             'page' => $page,
         ]);
@@ -53,7 +54,7 @@ class SimplePageController extends AbstractController
     public function zakaz_zhalyuzi()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'zakaz-zhalyuzi']);
-    
+        
         return $this->render('simple_page/zakaz_zhalyuzi.html.twig', [
             'page' => $page,
         ]);
@@ -65,7 +66,7 @@ class SimplePageController extends AbstractController
     public function video_jaluse()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'video-jaluse']);
-    
+        
         return $this->render('simple_page/video_jaluse.html.twig', [
             'page' => $page,
         ]);
@@ -77,7 +78,7 @@ class SimplePageController extends AbstractController
     public function optom()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'optom']);
-    
+        
         return $this->render('simple_page/optom.html.twig', [
             'page' => $page,
         ]);
@@ -97,7 +98,7 @@ class SimplePageController extends AbstractController
     public function pay()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'pay']);
-    
+        
         return $this->render('simple_page/pay.html.twig', [
             'page' => $page,
         ]);
@@ -109,7 +110,7 @@ class SimplePageController extends AbstractController
     public function dostavka()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'dostavka']);
-    
+        
         return $this->render('simple_page/dostavka.html.twig', [
             'page' => $page,
         ]);
@@ -121,7 +122,7 @@ class SimplePageController extends AbstractController
     public function uslugi()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'uslugi']);
-    
+        
         return $this->render('simple_page/uslugi.html.twig', [
             'page' => $page,
         ]);
@@ -133,7 +134,7 @@ class SimplePageController extends AbstractController
     public function yuridicheskimLicam()
     {
         $page = $this->page_repository->findOneBy(['uri' => 'yuridicheskim-licam']);
-    
+        
         return $this->render('simple_page/yuridicheskim-licam.html.twig', [
             'page' => $page,
         ]);
@@ -168,7 +169,7 @@ class SimplePageController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             30 /*limit per page*/
         );
-    
+        
         return $this->render('articles/index.html.twig', [
             'page'     => $page,
             'articles' => $pagination,
@@ -196,13 +197,13 @@ class SimplePageController extends AbstractController
         $filters['search'] = $request->query->get('search', '');
         
         if ($request->isXmlHttpRequest()) {
-            return $catalogManager->renderProducts($filters);
+            return $catalogManager->renderProducts($filters, new Catalog());
         }
         
         return $this->render('catalog-search/index.html.twig', [
             'page'     => $page,
             'search'   => $filters['search'],
-            'products' => $catalogManager->getProductsPaginator($filters),
+            'products' => $catalogManager->getProductsPaginator($filters, new Catalog()),
         ]);
     }
 }

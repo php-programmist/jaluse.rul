@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Contracts\HasCatalogSettingsInterface;
+use App\Entity\Traits\CatalogSettingsTrait;
 use App\Model\Admin\LocationImport;
 use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use App\Model\GeoProduct\ZhalyuziGeoProduct;
@@ -11,8 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
  * @ORM\EntityListeners({"App\EntityListener\LocationListener"})
  */
-class Location extends Page
+class Location extends Page implements HasCatalogSettingsInterface
 {
+    
+    use CatalogSettingsTrait;
+    
     public const TYPE = 'location';
     
     /**

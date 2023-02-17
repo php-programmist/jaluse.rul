@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Catalog;
+use App\Entity\Contracts\HasCatalogSettingsInterface;
 use App\Entity\Product;
 use App\Entity\Type;
 use App\Repository\CatalogRepository;
@@ -57,6 +58,7 @@ class CatalogManager
     {
         $filters             = $this->getBasicFiltersByCatalog($catalog);
         $filters['category'] = 1;
+    
         return $this->entityManager
             ->getRepository(Product::class)
             ->getPopular($filters, $limit);
@@ -168,29 +170,33 @@ class CatalogManager
     }
     
     /**
-     * @param array    $filters
-     * @param int|null $limit
+     * @param array                       $filters
+     * @param HasCatalogSettingsInterface $catalog
+     * @param int|null                    $limit
      *
      * @return PaginationInterface
      */
-    public function getProductsPaginator(array $filters, ?int $limit = null): PaginationInterface
-    {
-        $order      = $this->request->query->get('order', 'price');
+    public function getProductsPaginator(
+        array $filters,
+        HasCatalogSettingsInterface $catalog,
+        ?int $limit = null
+    ): PaginationInterface {
+        $order      = $this->request->query->get('order', $catalog->getDefaultOrdering());
         $orderParts = explode('-', $order);
         $orderBy    = $orderParts[0];
         $orderDir   = $orderParts[1] ?? 'asc';
-    
+        
         $defaultLimitName = $this->deviceManager->isMobile()
             ? 'calc.products_catalog_limit_mobile'
             : 'calc.products_catalog_limit';
-    
+        
         $pagination = $this->paginator->paginate(
             $this->getProductsQuery($filters, $orderBy, $orderDir),
             $this->request->query->getInt('page', 1),
-            $limit ?? $this->configs->getCached($defaultLimitName)
+            $catalog->getProductsPerPage() ?? $limit ?? $this->configs->getCached($defaultLimitName)
         );
         $pagination->setParam('_fragment', 'content');
-    
+        
         return $pagination;
     }
     
@@ -203,10 +209,10 @@ class CatalogManager
         return $catalog;
     }
     
-    public function renderProducts(array $filters): Response
+    public function renderProducts(array $filters, HasCatalogSettingsInterface $catalog): Response
     {
         $html = $this->twig->render('catalog/blocks/products.html.twig', [
-            'products' => $this->getProductsPaginator($filters),
+            'products' => $this->getProductsPaginator($filters, $catalog),
             'lazy_off' => true,
         ]);
         

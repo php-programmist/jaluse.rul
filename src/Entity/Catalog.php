@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Contracts\HasCatalogSettingsInterface;
 use App\Entity\Traits\CatalogCalcTrait;
+use App\Entity\Traits\CatalogSettingsTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CatalogRepository")
  */
-class Catalog extends Page
+class Catalog extends Page implements HasCatalogSettingsInterface
 {
     public const SEO_TYPE_PREMIUM = 'premium';
     public const SEO_TYPE_NO_DRILL = 'no-drill';
@@ -18,6 +20,7 @@ class Catalog extends Page
     public const SEO_TYPE_FOR_ORDER = 'for-order';
     
     use CatalogCalcTrait;
+    use CatalogSettingsTrait;
     
     public const TYPE = 'catalog';
     /**
@@ -135,12 +138,12 @@ class Catalog extends Page
         if ($this->material) {
             return $this->material;
         }
-    
+        
         $parent = $this->getParent();
         if ($parent && $parent instanceof Catalog) {
             return $parent->getMaterial();
         }
-    
+        
         return null;
     }
     
@@ -178,7 +181,7 @@ class Catalog extends Page
         if (in_array(explode('/', $this->getUri())[0], ['markizyi', 'rulonnyie-shtoryi'])) {
             return 'руб за изделие';
         }
-    
+        
         return parent::getUnits();
     }
     
@@ -213,7 +216,7 @@ class Catalog extends Page
                 $workExample->setCatalog(null);
             }
         }
-    
+        
         return $this;
     }
     
@@ -322,7 +325,7 @@ class Catalog extends Page
             return null;
         }
         $typesArray = explode(',', $types);
-    
+        
         return array_map(static fn(string $item) => (int)$item, $typesArray);
     }
     
@@ -333,7 +336,7 @@ class Catalog extends Page
             return 1;
         }
         $categoriesArray = explode(',', $categories);
-    
+        
         return (int)$categoriesArray[0];
     }
     
@@ -463,7 +466,7 @@ class Catalog extends Page
                 $location->setBaseCatalog(null);
             }
         }
-    
+        
         return $this;
     }
     

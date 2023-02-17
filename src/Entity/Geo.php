@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Contracts\HasCatalogSettingsInterface;
+use App\Entity\Traits\CatalogSettingsTrait;
 use App\Model\GeoProduct\AbstractGeoProduct;
 use App\Model\GeoProduct\RulonnyieShtoryiGeoProduct;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,8 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\EntityListeners({"App\EntityListener\GeoListener"})
  */
-abstract class Geo extends Page
+abstract class Geo extends Page implements HasCatalogSettingsInterface
 {
+    
+    use CatalogSettingsTrait;
+    
     public const TYPE = 'geo';
     /**
      * @var AbstractGeoProduct

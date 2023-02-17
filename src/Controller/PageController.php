@@ -63,7 +63,7 @@ class PageController extends AbstractController
         
         $filters = $catalog->getFilters();
         if ($this->request->isXmlHttpRequest()) {
-            return $this->catalogManager->renderProducts($filters);
+            return $this->catalogManager->renderProducts($filters, $catalog);
         }
         $params = array_merge(
             $this->getCatalogRenderParams($catalog, $filters),
@@ -93,7 +93,7 @@ class PageController extends AbstractController
         $filters['color'] = $selectedColor->getId();
         
         if ($this->request->isXmlHttpRequest()) {
-            return $this->catalogManager->renderProducts($filters);
+            return $this->catalogManager->renderProducts($filters, $catalog);
         }
         
         return $this->render('page/color-filtered-catalog.html.twig',
@@ -114,7 +114,7 @@ class PageController extends AbstractController
         $filters['category'] = $selectedCategory->getId();
         
         if ($this->request->isXmlHttpRequest()) {
-            return $this->catalogManager->renderProducts($filters);
+            return $this->catalogManager->renderProducts($filters, $catalog);
         }
         
         return $this->render('page/category-filtered-catalog.html.twig',
@@ -221,7 +221,7 @@ class PageController extends AbstractController
     {
         $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
         if ($this->request->isXmlHttpRequest()) {
-            return $this->catalogManager->renderProducts($filters);
+            return $this->catalogManager->renderProducts($filters, $catalog);
         }
     
         return $this->render($this->getCatalogTemplate($catalog),
@@ -244,7 +244,7 @@ class PageController extends AbstractController
             $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
             
             if ($this->request->isXmlHttpRequest()) {
-                return $this->catalogManager->renderProducts($filters);
+                return $this->catalogManager->renderProducts($filters, $location);
             }
             
             $params = array_merge(
@@ -262,7 +262,7 @@ class PageController extends AbstractController
         return [
             'page'               => $catalog,
             'catalog'            => $catalog,
-            'products'           => $this->catalogManager->getProductsPaginator($filters),
+            'products'           => $this->catalogManager->getProductsPaginator($filters, $catalog),
             'colors'             => $this->colorManager->getAvailableColors($filters),
             'categories'         => $this->categoryManager->getAllCategories(),
             'items'              => $this->catalogManager->getPopular($catalog),
@@ -286,9 +286,9 @@ class PageController extends AbstractController
         if ($params['showCatalog']) {
             $filters['type'] = $page->getTypeFilter();
             if ($this->request->query->get('products_only', false)) {
-                return $this->catalogManager->renderProducts($filters);
+                return $this->catalogManager->renderProducts($filters, $page);
             }
-            $params['products'] = $this->catalogManager->getProductsPaginator($filters);
+            $params['products'] = $this->catalogManager->getProductsPaginator($filters, $page);
     
             /** @var Catalog $catalog */
             $catalog                 = $this->page_repository->findOneBy(['uri' => $page->getBaseCatalogUri()]);
