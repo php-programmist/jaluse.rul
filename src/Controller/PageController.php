@@ -235,8 +235,9 @@ class PageController extends AbstractController
     private function location(Location $location): Response
     {
         $params = [
-            'page'  => $location,
-            'items' => [],
+            'page'        => $location,
+            'items'       => [],
+            'showCatalog' => false, //Скрываем каталог на странице помещений
         ];
         
         $catalog = $location->getBaseCatalog();
