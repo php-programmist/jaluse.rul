@@ -171,9 +171,9 @@ class Catalog extends Page implements HasCatalogSettingsInterface
         if (!empty($this->getDescription())) {
             return $this->getDescription();
         }
-        
-        return sprintf('%s купить недорого в Москве. ⭐ Выезд и замер бесплатно! ✅ Изготовление жалюзи с установкой за 1-4 дня. ✅ Гарантия 2 года. ⭐ %s по низким ценам в интернет магазине «Мастерская жалюзи» ☎ 8-800-775-72-38.',
-            $this->getName(), $this->getName());
+    
+        return sprintf('%s купить недорого с установкой в Москве. ⭐ Каталог и цены. ✅ Выезд и замер бесплатно. ✅ Гарантия 2 года.',
+            $this->getName());
     }
     
     public function getUnits(): string
