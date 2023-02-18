@@ -164,6 +164,7 @@ RewriteRule zhalyuzi/na-plastikovyie-okna/(.*)$ https://%{HTTP_HOST}/zhalyuzi/$1
 RewriteRule zhalyuzi/vertikalnye/tkanevye/(.*)$ https://%{HTTP_HOST}/vertikalnye-zhalyuzi-na-okna/tkanevye-zhalyuzi/$1 [R=301,L]
 RewriteRule zhalyuzi/vertikalnye/plastikovyie/(.*)$ https://%{HTTP_HOST}/vertikalnye-zhalyuzi-na-okna/plastikovye-zhalyuzi/$1 [R=301,L]
 RewriteRule zhalyuzi/vertikalnye/(.*)$ https://%{HTTP_HOST}/vertikalnye-zhalyuzi-na-okna/$1 [R=301,L]
+RewriteRule rulonnyie-shtoryi/pomeshheniya/na-plastikovyie-okna/ https://%{HTTP_HOST}/rulonnye-shtory-na-plastikovye-okna/ [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
