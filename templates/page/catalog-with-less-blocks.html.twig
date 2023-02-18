@@ -14,13 +14,20 @@
         {% block location_block %}{% endblock %}
     </div>
 
+    {% block rating_block %}
+        {{ include('modules/rating.html.twig') }}
+    {% endblock %}
+
     {% if show_calc is not defined or show_calc %}
         {{ include('modules/catalog_calculator.html.twig') }}
     {% endif %}
 
-    {% block rating_block %}
-        {{ include('modules/rating.html.twig') }}
-    {% endblock %}
+    {% set work_example_block = include('modules/work_example/without-filters.html.twig') %}
+    {{ work_example_block|raw }}
+
+    {% if work_example_block is empty %}
+        {{ include('modules/_our_works.html.twig') }}
+    {% endif %}
 
     {% if page.locations|default(null) is not empty %}
         <div class="container">
