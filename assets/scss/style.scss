@@ -66,15 +66,31 @@ p{
 }
 
 .three-button-wrapper {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  .callback_buttons {
+    flex-direction: row;
+    width: 690px;
+    transform: translateX(-180px);
+    justify-content: space-between;
+    @media (max-width: 1200px) {
+      transform: translateX(-270px);
+    }
+    @media (max-width: 991px) {
+      transform: translateX(-72px);
+      width: 673px;
+    }
+    @media (max-width: 768px) {
+      transform: translateX(0);
+      width: 100%;
+      flex-direction: column;
+    }
+  }
 
   .mbtn {
-    min-width: 150px;
+    min-width: 220px;
     text-align: center;
     display: block;
-    margin-top: 1em;
+    margin-bottom: 1em;
+    height: 50px;
   }
 }
 

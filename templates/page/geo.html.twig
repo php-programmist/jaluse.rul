@@ -22,8 +22,7 @@
         {% endblock %}
         {% block buttons %}
             <div class="three-button-wrapper">
-                <a class="mbtn" href="/zhalyuzi/#content">Каталог</a>
-                {{ include('modules/_callback_buttons.html.twig') }}
+                {{ include('modules/_callback_buttons.html.twig', { withCatalogButton: true }) }}
             </div>
         {% endblock %}
     {% endembed %}

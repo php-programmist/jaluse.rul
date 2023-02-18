@@ -1,4 +1,7 @@
 <div class="callback_buttons">
+    {% if withCatalogButton|default(false) %}
+        <a class="mbtn" href="/zhalyuzi/#content">Каталог</a>
+    {% endif %}
     <img src="/img/buttons/calculate.png" alt="Рассчитать" class="js-modal-open"
          data-title="Рассчитать">
     <img src="/img/buttons/consultation.png" alt="Консультация" class="js-modal-open"
