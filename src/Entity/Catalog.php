@@ -91,6 +91,7 @@ class Catalog extends Page implements HasCatalogSettingsInterface
     
     /**
      * @ORM\OneToMany(targetEntity=Location::class, mappedBy="baseCatalog")
+     * @ORM\OrderBy({"ordering" = "ASC", "id" = "ASC",})
      */
     private Collection $locations;
     

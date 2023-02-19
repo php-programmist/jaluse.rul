@@ -94,11 +94,6 @@ class Product extends Page
     protected ?string $imageSmallName = null;
     
     /**
-     * @ORM\Column(type="integer",nullable=false, options={"default": 0})
-     */
-    private int $ordering = 0;
-    
-    /**
      * @Vich\UploadableField(mapping="product_images_small", fileNameProperty="imageSmallName")
      * @var File
      */
@@ -588,26 +583,6 @@ class Product extends Page
             }
         }
     
-        return $this;
-    }
-    
-    /**
-     * @return int
-     */
-    public function getOrdering(): int
-    {
-        return $this->ordering;
-    }
-    
-    /**
-     * @param int $ordering
-     *
-     * @return $this
-     */
-    public function setOrdering(int $ordering): self
-    {
-        $this->ordering = $ordering;
-        
         return $this;
     }
     

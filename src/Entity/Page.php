@@ -190,6 +190,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      */
     protected ?array $settings = [];
     
+    /**
+     * @ORM\Column(type="integer",nullable=false, options={"default": 0})
+     */
+    protected int $ordering = 0;
+    
     public function __construct()
     {
         $this->created_at  = new DateTimeImmutable();
@@ -763,6 +768,26 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function setSettings(?array $settings): self
     {
         $this->settings = $settings;
+        
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getOrdering(): int
+    {
+        return $this->ordering;
+    }
+    
+    /**
+     * @param int $ordering
+     *
+     * @return $this
+     */
+    public function setOrdering(int $ordering): self
+    {
+        $this->ordering = $ordering;
         
         return $this;
     }
