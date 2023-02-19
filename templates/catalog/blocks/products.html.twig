@@ -23,7 +23,7 @@
                     >
                 </a>
                 <div class="product__name"><a href="/{{ product.uri }}/">{{ product.name }}</a></div>
-                <div class="product__price">{{ min_price(product, false, false) }}</div>
+                <div class="product__price">{{ min_price(product, false, true) }}</div>
                 {{ include('modules/_callback_buttons.html.twig') }}
             </div>
         {% endfor %}
