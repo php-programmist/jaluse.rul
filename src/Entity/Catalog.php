@@ -318,7 +318,7 @@ class Catalog extends Page implements HasCatalogSettingsInterface
     public function getAvailableTypes(): ?array
     {
         if ($this->uri === 'zhalyuzi') {
-            return [132, 133, 175, 178]; //Все, кроме вертикальных
+            return [132, 133, 175, 178, 86]; //Все, кроме вертикальных
         }
         $types = $this->getFilters()['type'] ?? null;
         if (null === $types) {

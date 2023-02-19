@@ -91,9 +91,6 @@ class CalculationService
     
     public function getCatalogMinPriceByUri(string $catalogUri, array $filters = []): int
     {
-        if (in_array($catalogUri, ['zhalyuzi', 'zhalyuzi/premium-klassa'])) {
-            $catalogUri = 'zhalyuzi/gorizontalnye';
-        }
         try{
             $catalog = $this->findCatalogByUri($catalogUri);
         } catch (Throwable){

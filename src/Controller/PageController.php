@@ -76,7 +76,6 @@ class PageController extends AbstractController
             ]
         );
         
-        unset($params['catalogsLinks']['Вертикальные']);
         $params['catalogsLinks']['Римские шторы'] = '/rimskies/';
         
         return $this->render('catalog/zhalyuzi/index.html.twig', $params);
