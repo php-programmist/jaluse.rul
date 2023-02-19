@@ -38,6 +38,8 @@ class WorkExampleExtension extends AbstractExtension
         if (0 === count($items)) {
             return '';
         }
+        $max   = $page?->getUri() === 'zhalyuzi' ? 5 : 3;
+        $items = array_slice($items, 0, $max);
         if ($withFilters) {
             $possibleFilters = $this->workExampleService->getPossibleFilters($items);
             $html            = $twig->render('modules/work_example/work_example_with_filters.html.twig', [
