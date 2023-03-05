@@ -1,2 +1,2 @@
 #!/bin/bash
-/opt/php80/bin/php -d memory_limit=2048M /usr/local/bin/composer $@
+/opt/php/8.0/bin/php -d memory_limit=2048M /var/www/u1959501/data/bin/composer $@
