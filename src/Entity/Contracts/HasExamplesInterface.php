@@ -11,4 +11,6 @@ interface HasExamplesInterface
      * @return Collection<WorkExample>
      */
     public function getWorkExamplesOfPage(): Collection;
+    
+    public function getWorkExamplesLimit(): int;
 }

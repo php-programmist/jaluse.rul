@@ -36,6 +36,12 @@ class WorkExampleService
     {
         if ($page instanceof HasExamplesInterface) {
             $items = $page->getWorkExamplesOfPage()->toArray();
+            $limit = $page->getWorkExamplesLimit();
+    
+            if ($limit > 0) {
+                $items = array_slice($items, 0, $limit);
+            }
+    
             foreach ($items as $item) {
                 $item->setImages($this->files_explorer->getImagesFromFolder($item->getImgFolder()));
             }

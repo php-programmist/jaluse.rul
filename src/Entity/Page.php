@@ -49,6 +49,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     const MAX_RATING_VALUE = 4.9;
     const MIN_RATING_COUNT = 8;
     const MAX_RATING_COUNT = 35;
+    const DEFAULT_WORK_EXAMPLES_LIMIT = 3;
     
     /**
      * @ORM\Id()
@@ -645,6 +646,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function getWorkExamplesOfPage(): Collection
     {
         return $this->workExamplesOfPage;
+    }
+    
+    public function getWorkExamplesLimit(): int
+    {
+        return $this->getSetting('work_examples_limit') ?? self::DEFAULT_WORK_EXAMPLES_LIMIT;
     }
     
     public function addWorkExamplesOfPage(WorkExample $workExamplesOfPage): self
