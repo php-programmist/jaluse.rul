@@ -1,0 +1,27 @@
+<item turbo="false">
+    <link>{{ app.request.schemeAndHttpHost }}{{ item.link }}</link>
+    <turbo:source>{{ app.request.schemeAndHttpHost }}{{ item.link }}</turbo:source>
+    <turbo:topic>{{ item.topic }}</turbo:topic>
+    <pubDate>{{ item.pubDate|date(date_format) }}</pubDate>
+    {% if item.breadcrumbs -%}
+        <metrics>
+            <yandex schema_identifier="{{ item.id }}">
+                <breadcrumblist>
+                    {% for breadcrumb_link, breadcrumb_text in item.breadcrumbs -%}
+                        <breadcrumb url="{{ app.request.schemeAndHttpHost }}{{ breadcrumb_link }}"
+                                    text="{{ breadcrumb_text }}" />
+                    {% endfor -%}
+                </breadcrumblist>
+            </yandex>
+        </metrics>
+    {% endif -%}
+    <yandex:related></yandex:related>
+    <turbo:content>
+        <![CDATA[
+                            <header>
+                                <h1>{{ item.topic }}</h1>
+                            </header>
+                            {{ item.content|raw }}
+                        ]]>
+    </turbo:content>
+</item>
