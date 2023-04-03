@@ -13,6 +13,7 @@ import './blocks/recommended-products';
 import './blocks/example-works';
 import './blocks/search_input';
 import './blocks/popular-category';
+import './blocks/link-selector';
 
 import LazyLoad from './libs/lazyload.min'
 

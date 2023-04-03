@@ -1,0 +1,28 @@
+{% set selected = placeholder %}
+{% for color in options %}
+    {% if color.link in app.request.requestUri %}
+        {% set selected = color.name %}
+    {% endif %}
+{% endfor %}
+
+<div class="link_selector">
+    <button class="link_selector__selected">{{ selected }}</button>
+    <div class="link_selector__options">
+        <ul class="bgcolor-wrap">
+            {% for color in options %}
+                <li {{ color.name != selected ? 'class = "not-active"' }}>
+                    <a
+                            href="{{ color.link }}#content"
+                            title="{{ color.name }}"
+                    >&nbsp;
+                        <span
+                                class="bgcolor-wrap-color"
+                                style="background-color: {{ color.hex }}"
+                        ></span>
+                        <span>{{ color.name }} ({{ color.productsCount }})</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

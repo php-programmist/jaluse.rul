@@ -2,21 +2,24 @@
 
 namespace App\Service;
 
+use App\Entity\Catalog;
 use App\Entity\Color;
 use App\Entity\Product;
 use App\Repository\ColorRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ColorManager
 {
-    private ColorRepository $colorRepository;
-    private EntityManagerInterface $entityManager;
     
-    public function __construct(ColorRepository $colorRepository, EntityManagerInterface $entityManager)
-    {
-        $this->colorRepository = $colorRepository;
-        $this->entityManager   = $entityManager;
+    public function __construct(
+        private ColorRepository $colorRepository,
+        private EntityManagerInterface $entityManager,
+        private UrlGeneratorInterface $urlGenerator,
+        private RequestStack $requestStack,
+    ) {
     }
     
     /**
@@ -41,14 +44,32 @@ class ColorManager
      *
      * @return array|Color[]
      */
-    public function getAvailableColors(array $filters): array
+    public function getAvailableColors(array $filters, Catalog $catalog): array
     {
-        $allColors = $this->getAllColors();
-    
-        $availableColorsIds = $this->entityManager->getRepository(Product::class)->getAvailableColors($filters);
-    
-        return array_filter($allColors,
-            static fn(Color $color) => in_array($color->getId(), $availableColorsIds,
-                false));
+        $query = $this->requestStack->getCurrentRequest()?->query->all();
+        
+        $availableColorsWithProducts = $this->entityManager->getRepository(Product::class)->getAvailableColorsWithProducts($filters);
+        
+        $ids    = array_map(static fn(array $data) => $data['id'], $availableColorsWithProducts);
+        $colors = $this->entityManager->getRepository(Color::class)->findBy(['id' => $ids]);
+        
+        foreach ($colors as $color) {
+            $colorData = current(
+                array_filter($availableColorsWithProducts, static fn(array $data) => $data['id'] === $color->getId())
+            );
+            if (false === $colorData) {
+                continue;
+            }
+            $color->setProductsCount($colorData['products']);
+            
+            $params = array_merge(
+                $query, [
+                'token' => $catalog->getUri(),
+                'color' => $color->getAlias(),
+            ]);
+            $color->setLink($this->urlGenerator->generate('catalog_filter_color', $params));
+        }
+        
+        return $colors;
     }
 }

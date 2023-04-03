@@ -1,47 +1,44 @@
-{% if catalogsLinks is defined and catalogsLinks|length > 0 %}
-    <div class="catalogs_links py-3">
-        <ul>
-            {% for name, link in catalogsLinks %}
-                <li {{ link != app.request.pathinfo ? 'class = "not-active"' }}>
-                    <a href="{{ link }}#content">{{ name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
-{% if selectedColor|default(false) or selectedCategory|default(false) %}
-    <div class="my-3">
-        <a class="mbtn py-2" href="/{{ page.uri }}/#content">Сбросить фильтры</a>
-    </div>
-{% endif %}
-{% if colors is defined and colors|length > 0 %}
-    <div class="color_selector">
-        <div class="calc-parametr-color">
-            <div class="colorzag">Цвет:</div>
-            <div class="bgcolor-wrap">
-                {% for color in colors %}
-                    <a
-                            href="{{ path('catalog_filter_color',{token: catalog.uri, color: color.alias}) }}#content"
-                            style="background-color: {{ color.hex }}"
-                            class="bgcolor-wrap-color {{ selectedColor|default(false) and selectedColor.id == color.id ? 'colorActive' }}"
-                            title="{{ color.name }}"
-                    >&nbsp;</a>
-                {% endfor %}
-            </div>
+{% set orderingOptions = {
+    'Подешевле': app.request.pathinfo~'?order=price',
+    'Премиум': app.request.pathinfo~'?order=price-desc' ,
+    'По популярности': app.request.pathinfo~'?order=popular-desc' ,
+} %}
+
+<div class="filters-block my-3">
+
+    {% if catalogsLinks is defined and catalogsLinks|length > 0 %}
+        <div class="filters-block__catalog">
+            {{ include('modules/link_selector.html.twig', {placeholder: page.name, options: catalogsLinks}) }}
         </div>
+    {% endif %}
+
+    <div class="filters-block__ordering">
+        {{ include('modules/link_selector.html.twig', {placeholder: 'Сортировка', options: orderingOptions}) }}
     </div>
-{% endif %}
-{% if categories is defined and categories|length > 0 and not catalog.hideCategories %}
-    <div class="categories">
-        <div class="calc-parametr-categori">
-            {% for category in categories %}
-                <a
-                        class="{{ selectedCategory|default(false) and selectedCategory.id == category.id ? 'activ' }}"
-                        href="{{ path('catalog_filter_category', {'token': catalog.uri, 'category': category.name|lower }) }}#content">
-                    {{ category.name }}
-                </a>
-            {% endfor %}
-    
+
+    {% if categoryLinks is defined and categoryLinks|length > 0 and not catalog.hideCategories %}
+        <div class="filters-block__category">
+            {{ include('modules/link_selector.html.twig', {placeholder: 'По классу', options: categoryLinks}) }}
+        </div>
+    {% endif %}
+
+    {% if colors is defined and colors|length > 0 %}
+        <div class="filters-block__color">
+            {{ include('modules/color_link_selector.html.twig', {placeholder: 'Цвет', options: colors}) }}
+        </div>
+    {% endif %}
+
+    <div class="filters-block__extra_ordering">
+        <a class="filters-block__button" href="{{ app.request.pathinfo~'?order=price' }}#content">Подешевле</a>
     </div>
+
+    <div class="filters-block__extra_ordering">
+        <a class="filters-block__button" href="{{ app.request.pathinfo~'?order=price-desc' }}#content">Премиум</a>
+    </div>
+
+    {% if selectedColor|default(false) or selectedCategory|default(false) %}
+        <div class="filters-block__reset">
+            <a class="filters-block__button" href="/{{ page.uri }}/#content">Сбросить фильтры</a>
+        </div>
+    {% endif %}
 </div>
-{% endif %}

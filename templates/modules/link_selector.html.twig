@@ -1,0 +1,19 @@
+{% set selected = placeholder %}
+{% for name, link in options %}
+    {% if link in app.request.requestUri %}
+        {% set selected = name %}
+    {% endif %}
+{% endfor %}
+
+<div class="link_selector">
+    <button class="link_selector__selected">{{ selected }}</button>
+    <div class="link_selector__options">
+        <ul>
+            {% for name, link in options %}
+                <li {{ name != selected ? 'class = "not-active"' }}>
+                    <a href="{{ link }}#content">{{ name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

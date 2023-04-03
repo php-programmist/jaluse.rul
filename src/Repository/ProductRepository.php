@@ -141,15 +141,33 @@ class ProductRepository extends ServiceEntityRepository
                       ->select('c.id')
                       ->andWhere('t.show_main_page_calc = 1')
                       ->andWhere('p.published = 1');
-        
+    
         $this->addFilterConditions($filters, $query);
-        
+    
         $result = $query->distinct()
                         ->getQuery()
                         ->getScalarResult();
         $ids    = array_map('current', $result);
-        
+    
         return array_filter($ids);
+    }
+    
+    public function getAvailableColorsWithProducts($filters = []): array
+    {
+        $query = $this->createQueryBuilder('p')
+                      ->leftJoin('p.type', 't')
+                      ->innerJoin('p.color', 'c')
+                      ->select('c.id, count(p.id) as products')
+                      ->andWhere('t.show_main_page_calc = 1')
+                      ->andWhere('p.published = 1')
+                      ->groupBy('c.id');
+        
+        $this->addFilterConditions($filters, $query);
+        
+        return $query->distinct()
+                     ->getQuery()
+                     ->getResult();
+        
     }
     
     public function getPopularSiblings(Product $product, $limit = 0)

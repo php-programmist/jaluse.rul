@@ -1,0 +1,87 @@
+.filters-block {
+  overflow: visible;
+  padding: 15px 30px;
+  background: #f2f3f7;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+  @media (max-width: 575px) {
+    justify-content: center;
+  }
+
+  &__catalog {
+
+    button {
+      padding-left: 38px;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 14px;
+        height: 12px;
+        position: absolute;
+        top: 10px;
+        left: 12px;
+        background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2214%22%20height%3D%2212%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2214%22%20height%3D%221.714%22%20rx%3D%22.857%22%20fill%3D%22%23000%22%2F%3E%3Crect%20y%3D%2210.286%22%20width%3D%2214%22%20height%3D%221.714%22%20rx%3D%22.857%22%20fill%3D%22%23000%22%2F%3E%3Crect%20y%3D%225.143%22%20width%3D%2214%22%20height%3D%221.714%22%20rx%3D%22.857%22%20fill%3D%22%23000%22%2F%3E%3C%2Fsvg%3E);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+    }
+  }
+
+  &__ordering {
+    button {
+      padding-left: 38px;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 13px;
+        position: absolute;
+        top: 10px;
+        left: 12px;
+        background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2214%22%20fill%3D%22none%22%3E%3Cpath%20fill%3D%22%23242424%22%20fill-rule%3D%22evenodd%22%20d%3D%22M12%20.5c.406%200%20.735.332.735.74v9.732l2.01-2.027a.73.73%200%200%201%201.04%200%20.745.745%200%200%201%200%201.047l-3.265%203.291a.73.73%200%200%201-1.033.007l-.007-.007-3.265-3.291a.745.745%200%200%201%200-1.047.73.73%200%200%201%201.04%200l2.01%202.027V1.24c0-.41.33-.741.735-.741ZM4%2013.5a.738.738%200%200%200%20.735-.74V3.027l2.01%202.027a.73.73%200%200%200%201.04%200%20.745.745%200%200%200%200-1.047L4.52.717a.73.73%200%200%200-1.04%200L.215%204.008a.745.745%200%200%200%200%201.047.73.73%200%200%200%201.04%200l2.01-2.027v9.731c0%20.41.33.741.735.741Z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+    }
+  }
+
+  &__category {
+    @media (max-width: 575px) {
+      display: none;
+    }
+  }
+
+  &__color {
+    .link_selector__options {
+      min-width: 270px;
+      padding-bottom: 20px;
+      transform: translateX(-18%);
+    }
+  }
+
+  &__button {
+    font-size: 14px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 272px;
+    display: block;
+    padding: 5px 30px 7px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+    background-color: transparent;
+    font-family: inherit;
+    border: none;
+    color: #000000;
+  }
+}

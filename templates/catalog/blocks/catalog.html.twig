@@ -1,21 +1,10 @@
 {% if (lazyProducts is defined and lazyProducts) or (products is defined and products|length > 0) %}
-    <div class="row catalog-calculator">
-        <div class="col-md-2 col-sm-12">
-            <div style="font-size: 24px">{{ premium_link(page) }}</div>
-            <div style="font-size: 24px">{{ no_drill_link(page) }}</div>
-            {% if page.uri == 'zhalyuzi/premium-klassa' %}
-                {{ include('catalog/blocks/premium-links.html.twig') }}
-            {% endif %}
-            <h3>Фильтры:</h3>
-            {{ include('catalog/blocks/filters.html.twig') }}
-        </div>
-        <div class="col-md-10 col-sm-12">
-            {% if catalog.showSummary %}
-                {{ include('catalog/blocks/summary.html.twig') }}
-            {% endif %}
-            
-            {{ include('catalog/blocks/order.html.twig') }}
-            {{ include('catalog/blocks/products.html.twig') }}
-        </div>
+    <div class="row catalog-calculator px-3">
+        {% if catalog.showSummary %}
+            {{ include('catalog/blocks/summary.html.twig') }}
+        {% endif %}
+
+        {{ include('catalog/blocks/filters.html.twig') }}
+        {{ include('catalog/blocks/products.html.twig') }}
     </div>
 {% endif %}

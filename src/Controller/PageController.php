@@ -263,13 +263,13 @@ class PageController extends AbstractController
             'page'               => $catalog,
             'catalog'            => $catalog,
             'products'           => $this->catalogManager->getProductsPaginator($filters, $catalog),
-            'colors'             => $this->colorManager->getAvailableColors($filters),
-            'categories'         => $this->categoryManager->getAllCategories(),
+            'colors'             => $this->colorManager->getAvailableColors($filters, $catalog),
             'items'              => $this->catalogManager->getPopular($catalog),
             'catalogsLinks'      => $this->catalogManager->getCatalogsLinks($catalog),
             'selected_category'  => $catalog->getSelectedCategory(),
             'filters'            => $filters,
             'excluded_materials' => $catalog->getExcludedMaterials(),
+            'categoryLinks'      => $this->categoryManager->getCategoriesFilterLinks($catalog),
         ];
     }
     
@@ -294,7 +294,7 @@ class PageController extends AbstractController
             $catalog                 = $this->page_repository->findOneBy(['uri' => $page->getBaseCatalogUri()]);
             $params['catalog']       = $catalog;
             $params['catalogsLinks'] = $this->catalogManager->getCatalogsLinks($catalog);
-            $params['colors']        = $this->colorManager->getAvailableColors($filters);
+            $params['colors']        = $this->colorManager->getAvailableColors($filters, $catalog);
         }
     
         return $this->render('page/geo.html.twig', $params);

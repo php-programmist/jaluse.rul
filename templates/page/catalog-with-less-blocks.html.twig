@@ -6,6 +6,11 @@
         {% block popular_category_block %}
             {{ include('popular-category.html.twig') }}
         {% endblock %}
+
+        {% block rating_block %}
+            {{ include('modules/rating.html.twig') }}
+        {% endblock %}
+
         {% if (showCatalog is not defined or showCatalog) and (products is defined and products|length > 0) %}
             {{ include('catalog/blocks/aggregate_offer_schema.html.twig', {catalogUri: page.uri}) }}
             <h2>{% block content_h2 %}{{ page.name }} каталог и цены:{% endblock %}</h2>
@@ -13,10 +18,6 @@
         {% endif %}
         {% block location_block %}{% endblock %}
     </div>
-
-    {% block rating_block %}
-        {{ include('modules/rating.html.twig') }}
-    {% endblock %}
 
     {% if show_calc is not defined or show_calc %}
         {{ include('modules/catalog_calculator.html.twig') }}
