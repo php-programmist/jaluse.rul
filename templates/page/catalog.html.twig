@@ -23,15 +23,18 @@
 {% block h1 %}{{ page.name }} в Москве{% endblock %}
 
 {% block body %}
-    <div id="content" class="container-fluid catalog-container">
+    <div class="container-fluid catalog-container">
         {{ include('modules/rating_schema.html.twig') }}
         {% block popular_category_block %}
             {{ include('popular-category.html.twig') }}
         {% endblock %}
         {% if (showCatalog is not defined or showCatalog) and (products is defined and products|length > 0) %}
             {{ include('catalog/blocks/aggregate_offer_schema.html.twig', {catalogUri: page.uri}) }}
-            <h2>{% block content_h2 %}{{ page.name }} каталог и цены:{% endblock %}</h2>
-            {{ include('catalog/blocks/catalog.html.twig') }}
+            <div id="content" class="container">
+                <h2>{% block content_h2 %}{{ page.name }} каталог и цены:{% endblock %}</h2>
+                {{ include('catalog/blocks/catalog.html.twig') }}
+            </div>
+
         {% endif %}
         {% block location_block %}{% endblock %}
     </div>
