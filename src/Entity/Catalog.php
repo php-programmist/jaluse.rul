@@ -467,12 +467,17 @@ class Catalog extends Page implements HasCatalogSettingsInterface
                 $location->setBaseCatalog(null);
             }
         }
-        
+    
         return $this;
     }
     
     public function isLocationsCatalog(): bool
     {
         return str_contains($this->getUri(), 'pomeshheniya');
+    }
+    
+    public function getFilterPlaceholder(): string
+    {
+        return $this->getSetting('filter_placeholder') ?? $this->getName();
     }
 }

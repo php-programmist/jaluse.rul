@@ -8,7 +8,7 @@
 
     {% if catalogsLinks is defined and catalogsLinks|length > 0 %}
         <div class="filters-block__catalog">
-            {{ include('modules/link_selector.html.twig', {placeholder: page.name, options: catalogsLinks}) }}
+            {{ include('modules/link_selector.html.twig', {placeholder: page.filterPlaceholder, options: catalogsLinks}) }}
         </div>
     {% endif %}
 
