@@ -12,6 +12,12 @@
         </div>
     {% endif %}
 
+    {% if colors is defined and colors|length > 0 %}
+        <div class="filters-block__color">
+            {{ include('modules/color_link_selector.html.twig', {placeholder: 'Цвет', options: colors}) }}
+        </div>
+    {% endif %}
+
     <div class="filters-block__ordering">
         {{ include('modules/link_selector.html.twig', {placeholder: 'Сортировка', options: orderingOptions}) }}
     </div>
@@ -19,12 +25,6 @@
     {% if categoryLinks is defined and categoryLinks|length > 0 and not catalog.hideCategories %}
         <div class="filters-block__category">
             {{ include('modules/link_selector.html.twig', {placeholder: 'По классу', options: categoryLinks}) }}
-        </div>
-    {% endif %}
-
-    {% if colors is defined and colors|length > 0 %}
-        <div class="filters-block__color">
-            {{ include('modules/color_link_selector.html.twig', {placeholder: 'Цвет', options: colors}) }}
         </div>
     {% endif %}
 

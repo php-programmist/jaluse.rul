@@ -50,6 +50,10 @@
         background-size: contain;
       }
     }
+
+    .link_selector__options {
+      min-width: 190px;
+    }
   }
 
   &__category {
@@ -66,7 +70,7 @@
     .link_selector__options {
       min-width: 300px;
       padding-bottom: 20px;
-      transform: translateX(-18%);
+      transform: translateX(-36%);
     }
   }
 

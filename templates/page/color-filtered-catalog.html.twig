@@ -11,7 +11,7 @@
     <div class="container-fluid catalog-container">
         {{ include('modules/rating_schema.html.twig') }}
         {{ include('catalog/blocks/aggregate_offer_schema.html.twig', {catalogUri: page.uri}) }}
-        <div id="content" class="container">
+        <div id="content" class="container container2">
             <h2>{% block content_h2 %}{{ page.name ~" "~ selectedColor.name|lower }} каталог и цены:{% endblock %}</h2>
             {{ include('catalog/blocks/catalog.html.twig') }}
         </div>

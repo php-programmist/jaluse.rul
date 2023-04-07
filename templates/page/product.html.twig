@@ -25,6 +25,7 @@
 {% block h1 %}{{ page.name }}{% endblock %}
 
 {% block body %}
+    <div id="card-title"></div>
     {{ include('modules/rating_schema.html.twig') }}
     {% embed 'embedded/card.html.twig' %}
         {% block image %}

@@ -16,13 +16,13 @@
     <div class="products">
         {% for product in products %}
             <div class="product">
-                <a href="/{{ product.uri }}/">
+                <a href="/{{ product.uri }}/#card-title">
                     <img {{ lazy_load(asset(product.imageCatalog),{},lazy_off|default(false)) }}
                             alt="{{ product.imageAlt }}"
                             title="{{ product.imageTitle }}"
                     >
                 </a>
-                <div class="product__name"><a href="/{{ product.uri }}/">{{ product.name }}</a></div>
+                <div class="product__name"><a href="/{{ product.uri }}/#card-title">{{ product.name }}</a></div>
                 <div class="product__price">{{ min_price(product, false, true) }}</div>
                 {{ include('modules/_callback_buttons.html.twig') }}
             </div>
