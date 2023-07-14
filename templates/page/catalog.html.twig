@@ -31,8 +31,7 @@
         {% if (showCatalog is not defined or showCatalog) and (products is defined and products|length > 0) %}
             {{ include('catalog/blocks/aggregate_offer_schema.html.twig', {catalogUri: page.uri}) }}
             <div id="content" class="container">
-                <h2>{% block content_h2 %}{{ page.name }} каталог и цены:{% endblock %}</h2>
-                {{ include('catalog/blocks/catalog.html.twig') }}
+                {{ include('catalog/blocks/catalog.html.twig', {h2:  page.name~" каталог и цены:"}) }}
             </div>
 
         {% endif %}
