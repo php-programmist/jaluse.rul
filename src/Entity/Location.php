@@ -128,6 +128,7 @@ class Location extends Page implements HasCatalogSettingsInterface
         $name = str_replace([
             'вертикальные жалюзи',
             'Вертикальные жалюзи',
+            'Горизонтальные жалюзи',
             'Рулонные шторы',
             'Жалюзи',
         ], '', $this->name);
