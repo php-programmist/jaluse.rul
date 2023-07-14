@@ -119,7 +119,21 @@ class Location extends Page implements HasCatalogSettingsInterface
             $locationImport->getSubTypes(),
             $locationName
         );
-        
+    
         return $this;
+    }
+    
+    public function getShortName(): string
+    {
+        $name = str_replace([
+            'вертикальные жалюзи',
+            'Вертикальные жалюзи',
+            'Рулонные шторы',
+            'Жалюзи',
+        ], '', $this->name);
+        
+        $name = trim($name);
+        
+        return mb_strtoupper(mb_substr($name, 0, 1)) . mb_substr($name, 1);
     }
 }

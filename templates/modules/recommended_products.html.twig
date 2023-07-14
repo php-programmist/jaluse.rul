@@ -17,7 +17,7 @@
                         {% endif %}
                     </a>
                     <div class="product__name">
-                        <a href="/{{ item.uri }}/" {{ target }}>{{ item.name }}</a>
+                        <a href="/{{ item.uri }}/" {{ target }}>{{ item.shortName }}</a>
                     </div>
                     <div class="product__price">
                         {{ min_price(item, false, true) }}

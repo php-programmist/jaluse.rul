@@ -797,4 +797,9 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
         
         return $this;
     }
+    
+    public function getShortName(): ?string
+    {
+        return $this->getName();
+    }
 }
