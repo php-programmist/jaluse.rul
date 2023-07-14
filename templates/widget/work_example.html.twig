@@ -29,7 +29,7 @@
                 <div class="job_col col-12 col-lg-6">
                     <div class="fotorama" data-autoplay="true">
                         {% for image in item.images %}
-                            <a href="{{ asset(image) }}"></a>
+                            <img src="{{ asset(image) }}" alt="*" />
                         {% endfor %}
                     </div>
                 </div>
