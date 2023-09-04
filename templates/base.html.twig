@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {{ page.title ?? 'Жалюзи на окна купить в Москве. Каталог и цены - Мастерская Жалюзи' }}{% endblock %}</title>
+    <title>{% block title %} {{ page.title ?? 'Жалюзи на окна купить в $city_prepositional. Каталог и цены - Мастерская Жалюзи' }}{% endblock %}</title>
     <meta name="description" content="{% block description %}{{ page.description|default('') }}{% endblock %}" />
-    <meta name="keywords" content="{% block keywords %}Жалюзи на окна в Москве{% endblock %}" />
+    <meta name="keywords" content="{% block keywords %}Жалюзи на окна в $city_prepositional{% endblock %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta property="og:title" content="{{ block('title') }}" />

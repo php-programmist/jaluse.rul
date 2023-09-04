@@ -14,13 +14,13 @@
     {%- if page.title -%}
         {{ page.title }}
     {%- else -%}
-        {{ page.name }} купить в Москве. Каталог и цены | Мастерская Жалюзи
+        {{ page.name }} купить в $city_prepositional. Каталог и цены | Мастерская Жалюзи
     {%- endif -%}
 {% endblock %}
 {% block description -%}
    {{ page.descriptionComputed }}
 {%- endblock %}
-{% block h1 %}{{ page.name }} в Москве{% endblock %}
+{% block h1 %}{{ page.name }} в $city_prepositional{% endblock %}
 
 {% block body %}
     <div class="container-fluid catalog-container">
