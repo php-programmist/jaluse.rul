@@ -31,12 +31,17 @@ class SubDomainService
         $subdomain = $this->entityManager
             ->getRepository(Subdomain::class)
             ->findOneBy(['name' => $this->getSubDomain()]);
-        
+    
         if (null === $subdomain) {
             return [];
         }
-        
+    
         return $subdomain->getSubstitutions();
+    }
+    
+    public function isMainDomain(): bool
+    {
+        return '' === $this->getSubDomain();
     }
     
 }

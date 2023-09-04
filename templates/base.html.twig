@@ -48,8 +48,12 @@
                             </div>
                             <div class="utp-block scroll-item"><span>Изготовление и установка 2-5 рабочих дня</span>
                             </div>
-                            <div class="utp-block scroll-item">
-                                <span>При заказе онлайн - доставка в пределах МКАД в подарок!</span></div>
+                            {% if isMainDomain %}
+                                <div class="utp-block scroll-item">
+                                    <span>При заказе онлайн - доставка в пределах МКАД в подарок!</span>
+                                </div>
+                            {% endif %}
+
                         {%- endblock utp -%}
                     </div>
                     <div class="col-lg-6 col-xl-4 align-self-center form-wrap hide-mobile">
