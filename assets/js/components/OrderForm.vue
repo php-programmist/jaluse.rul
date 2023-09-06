@@ -1,6 +1,6 @@
 <template>
 	<div class="mbtn-wrapper">
-    <button class="mbtn" @click="$refs.order.visible = true">{{ text }}</button>
+    <button class="mbtn" @click.prevent="$refs.order.visible = true">{{ text }}</button>
     <v-popup-contact-form :header="text" ref="order" @sendForm="sendOrder"></v-popup-contact-form>
   </div>
 </template>
