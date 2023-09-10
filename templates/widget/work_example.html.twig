@@ -5,13 +5,15 @@
                 <div class="job_col col-12 col-lg-6">
                     <div class="job_pad">
                         <h2 class="job_title">{{ item.name }}</h2>
-    
+
                         <div class="description hide-mobile">
                             {{ include('widget/work-example-description.html.twig') }}
                         </div>
                         <div class="d-none d-lg-flex">
                             <div class="work_example_button_wrapper col-lg-4">
-                                <a href="{{ item.product.path }}" class="mbtn">Хочу такие же</a>
+                                {% if item.product %}
+                                    <a href="{{ item.product.path }}" class="mbtn">Хочу такие же</a>
+                                {% endif %}
                             </div>
                             <div class="work_example_button_wrapper col-lg-4">
                                 <a href="{{ item.catalog.path }}" class="mbtn mbtn_orange">Каталог</a>
@@ -41,10 +43,12 @@
                         <div class="job_next mbtn">Следующая работа</div>
                     </div>
                 </div>
-        
+
                 <div class="row col-12 d-lg-none pl-4">
                     <div class="work_example_button_wrapper col-12">
-                        <a href="{{ item.product.path }}" class="mbtn">Хочу такие же</a>
+                        {% if item.product %}
+                            <a href="{{ item.product.path }}" class="mbtn">Хочу такие же</a>
+                        {% endif %}
                     </div>
                     <div class="work_example_button_wrapper col-12">
                         <div class="mbtn mbtn mbtn_orange js-modal-open">Консультация</div>
