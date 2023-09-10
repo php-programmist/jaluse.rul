@@ -173,7 +173,7 @@ class Catalog extends Page implements HasCatalogSettingsInterface
             return $this->getDescription();
         }
     
-        return sprintf('%s купить недорого с установкой в Москве. ⭐ Каталог и цены. ✅ Выезд и замер бесплатно. ✅ Гарантия 2 года.',
+        return sprintf('%s купить недорого с установкой в $city_prepositional. ⭐ Каталог и цены. ✅ Выезд и замер бесплатно. ✅ Гарантия 2 года.',
             $this->getName());
     }
     
