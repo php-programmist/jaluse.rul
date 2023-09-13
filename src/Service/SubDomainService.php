@@ -22,12 +22,11 @@ class SubDomainService
     
     public function getSubDomain(): string
     {
-        $request = $this->requestStack->getMainRequest();
-        $host    = $request?->headers->get('Host');
-        if (null === $host) {
+        $host = $this->getHost();
+        if ('' === $host) {
             return '';
         }
-        
+    
         return trim(str_replace($this->baseHost, '', $host), '.');
     }
     
@@ -80,12 +79,19 @@ class SubDomainService
                 $redirects[$path] = $subdomain->getName();
             }
         }
-        
+    
         return $redirects;
     }
     
     public function getSubDomainRoot(string $subdomain): string
     {
         return sprintf('https://%s.%s', $subdomain, $this->baseHost);
+    }
+    
+    public function getHost(): string
+    {
+        $request = $this->requestStack->getMainRequest();
+        
+        return $request?->headers->get('Host') ?? '';
     }
 }
