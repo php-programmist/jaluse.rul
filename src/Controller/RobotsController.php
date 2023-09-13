@@ -13,10 +13,8 @@ class RobotsController extends AbstractController
      */
     public function robots(SubDomainService $subDomainService)
     {
-        $host     = $subDomainService->getHost();
-        $response = $this->render('robots.txt.twig', compact('host'));
-        $response->headers->set('Content-Type', 'text/plain');
-        
-        return $response;
+        $host = $subDomainService->getHost();
+    
+        return $this->render('robots.txt.twig', compact('host'));
     }
 }
