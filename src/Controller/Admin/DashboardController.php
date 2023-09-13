@@ -15,6 +15,7 @@ use App\Entity\Product;
 use App\Entity\Roll;
 use App\Entity\Roman;
 use App\Entity\Simple;
+use App\Entity\Subdomain;
 use App\Entity\Type;
 use App\Entity\WorkExample;
 use App\Field\CKEditorField;
@@ -100,6 +101,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Категории', 'fas fa-file-alt', Category::class);
         yield MenuItem::section('Технические ссылки');
         yield MenuItem::linkToCrud('Настройки', 'fas fa-cogs', Config::class);
+        yield MenuItem::linkToCrud('Поддомены', 'fas fa-globe', Subdomain::class);
         yield MenuItem::linktoRoute('Генератор', 'fas fa-cogs', 'admin_generator_index');
         yield MenuItem::linktoRoute('Изменение URI', 'fas fa-chain', 'admin_change_uri');
         yield MenuItem::subMenu('Импорт', 'fas fa-file-import')->setSubItems($submenu1);
