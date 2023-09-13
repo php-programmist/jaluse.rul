@@ -4,13 +4,18 @@ namespace App\Service;
 
 use App\Entity\Subdomain;
 use Doctrine\ORM\EntityManagerInterface;
+use Redis;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class SubDomainService
 {
+    private const CACHE_KEY = 'redirects';
+    private const CACHE_TTL = 60 * 5;
+    
     public function __construct(
         private RequestStack $requestStack,
         private EntityManagerInterface $entityManager,
+        private Redis $redis,
         private string $baseHost,
     ) {
     }
@@ -44,4 +49,43 @@ class SubDomainService
         return '' === $this->getSubDomain();
     }
     
+    /**
+     * @throws \JsonException
+     */
+    public function getRedirects(): array
+    {
+        $data = $this->redis->get(self::CACHE_KEY);
+        if (false === $data) {
+            $redirects = $this->findRedirects();
+            $this->redis->setex(self::CACHE_KEY, self::CACHE_TTL, json_encode($redirects, JSON_THROW_ON_ERROR));
+        } else {
+            $redirects = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        }
+        
+        return $redirects;
+    }
+    
+    private function findRedirects(): array
+    {
+        $subdomains = $this->entityManager
+            ->getRepository(Subdomain::class)
+            ->findAll();
+        
+        $redirects = [];
+        foreach ($subdomains as $subdomain) {
+            if (empty($subdomain->getRedirects())) {
+                continue;
+            }
+            foreach ($subdomain->getRedirects() as $path) {
+                $redirects[$path] = $subdomain->getName();
+            }
+        }
+        
+        return $redirects;
+    }
+    
+    public function getSubDomainRoot(string $subdomain): string
+    {
+        return sprintf('https://%s.%s', $subdomain, $this->baseHost);
+    }
 }

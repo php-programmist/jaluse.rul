@@ -27,6 +27,11 @@ class Subdomain
      */
     private array $substitutions = [];
     
+    /**
+     * @ORM\Column(type="json")
+     */
+    private ?array $redirects = [];
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Subdomain
     public function setSubstitutions(array $substitutions): self
     {
         $this->substitutions = $substitutions;
+        
+        return $this;
+    }
+    
+    public function getRedirects(): array
+    {
+        return $this->redirects ?? [];
+    }
+    
+    public function setRedirects(array $redirects): self
+    {
+        $this->redirects = $redirects;
         
         return $this;
     }

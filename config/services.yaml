@@ -45,3 +45,5 @@ services:
     App\EntityListener\LocationListener:
         tags:
             - 'doctrine.orm.entity_listener'
+
+    Redis: '@snc_redis.default'
