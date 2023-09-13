@@ -35,7 +35,7 @@ class RedirectSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
+        if (!$event->isMainRequest() || $request->isXmlHttpRequest()) {
             return;
         }
         

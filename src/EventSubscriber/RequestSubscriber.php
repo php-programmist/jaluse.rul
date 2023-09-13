@@ -63,7 +63,7 @@ class RequestSubscriber implements EventSubscriberInterface
     {
         return;
         $request = $event->getRequest();
-        if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
+        if (!$event->isMainRequest() || $request->isXmlHttpRequest()) {
             return;
         }
     
