@@ -23,6 +23,11 @@ class Subdomain
     private string $name = '';
     
     /**
+     * @ORM\Column(type="string", length=255, options={"default": ""})
+     */
+    private string $cityNominative = '';
+    
+    /**
      * @ORM\Column(type="json")
      */
     private array $substitutions = [];
@@ -105,6 +110,26 @@ class Subdomain
     public function setCityGenitive(string $cityGenitive): self
     {
         $this->substitutions['$city_genitive'] = $cityGenitive;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getCityNominative(): string
+    {
+        return $this->cityNominative;
+    }
+    
+    /**
+     * @param string $cityNominative
+     *
+     * @return $this
+     */
+    public function setCityNominative(string $cityNominative): self
+    {
+        $this->cityNominative = $cityNominative;
         
         return $this;
     }

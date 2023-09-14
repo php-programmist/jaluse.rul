@@ -32,6 +32,7 @@ class SubdomainCrudController extends AbstractCrudController
     {
         $id                         = IntegerField::new('id', 'ID');
         $name                       = TextField::new('name', 'Название');
+        $cityNominative             = TextField::new('cityNominative', 'Город в именительном падеже');
         $cityPrepositional          = TextField::new('cityPrepositional', 'Город в предложном падеже');
         $cityAndRegionPrepositional = TextField::new('cityAndRegionPrepositional',
             'Город и область в предложном падеже');
@@ -39,12 +40,13 @@ class SubdomainCrudController extends AbstractCrudController
         $redirects                  = ArrayField::new('redirects', 'Редиректы');
     
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name];
+            return [$id, $name, $cityNominative];
         }
     
         if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
             return [
                 $name,
+                $cityNominative,
                 $cityPrepositional,
                 $cityAndRegionPrepositional,
                 $cityGenitive,
