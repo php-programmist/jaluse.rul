@@ -29,9 +29,12 @@ class SiteMapController extends AbstractController
      */
     public function xml(SubDomainService $subDomainService)
     {
-        $host = $subDomainService->getHost();
-        
-        return $this->render('sitemap.xml.twig', compact('host'));
+        $host     = $subDomainService->getHost();
+        $template = $subDomainService->isMainDomain()
+            ? 'sitemap.xml.twig'
+            : 'sitemap-sub.xml.twig';
+    
+        return $this->render($template, compact('host'));
     }
     
     /**
