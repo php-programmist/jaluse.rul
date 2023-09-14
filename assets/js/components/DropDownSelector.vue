@@ -1,15 +1,15 @@
 <template>
 	<div class="calc-parametr-typewrap-type " :class="{blink:!selectedItem.id}">
-		<div class="type-head" @click="selector_opened = !selector_opened">
-			<div class="type-text" >{{itemName}}</div>
-		</div>
+		<div class="type-head" @click.prevent="selector_opened = !selector_opened">
+      <div class="type-text">{{ itemName }}</div>
+    </div>
 		<transition name="slide">
 			<div class="type-body" v-show="selector_opened">
 				<div
-						v-for="item in items"
-						:key="item.id"
-						class="type-text"
-						@click="changeItem(item)"
+            v-for="item in items"
+            :key="item.id"
+            class="type-text"
+            @click.prevent="changeItem(item)"
 				>
 					{{ item.name }}
 				</div>

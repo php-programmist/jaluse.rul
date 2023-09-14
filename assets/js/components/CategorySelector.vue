@@ -1,9 +1,9 @@
 <template>
 	<div class="calc-parametr-categori">
 		<span
-			v-for="(category,index) in categories"
-			:class="{activ:category_index===index}"
-			@click="setActive(index)"
+        v-for="(category,index) in categories"
+        :class="{activ:category_index===index}"
+        @click.prevent="setActive(index)"
 		>
 			{{category.name}}
 		</span>

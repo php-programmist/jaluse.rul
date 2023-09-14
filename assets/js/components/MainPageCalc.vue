@@ -26,7 +26,7 @@
 
           </div>
           <div class="calc-parametr-color">
-            <div class="minzag colorzag" @click="toggleColorSelector()">Цвет:</div>
+            <div class="minzag colorzag" @click.prevent="toggleColorSelector()">Цвет:</div>
             <transition name="slide">
               <div class="bgcolor-wrap" v-show="color_opened">
                 <div
@@ -36,7 +36,7 @@
                     :class="{colorActive:colorsIds.includes(color.id)}"
                     :title="color.name"
                     :style="'background-color:'+color.hex"
-                    @click="toggleColorId(color.id)"
+                    @click.prevent="toggleColorId(color.id)"
                 ></div>
               </div>
             </transition>
@@ -53,7 +53,7 @@
                 v-for="(product,index) in products"
                 :key="product.id"
             >
-              <div class="minimages" @click="setActiveProductIndex(index)">
+              <div class="minimages" @click.prevent="setActiveProductIndex(index)">
                 <img :src="product.imageSmall" alt="">
               </div>
             </div>

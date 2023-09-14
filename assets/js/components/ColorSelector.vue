@@ -1,16 +1,16 @@
 <template>
 	<div class="calc-parametr-color">
-		<div class="colorzag" @click="selector_opened = !selector_opened">Цвет:</div>
+		<div class="colorzag" @click.prevent="selector_opened = !selector_opened">Цвет:</div>
 		<transition name="slide">
 			<div class="bgcolor-wrap" v-show="selector_opened">
 				<div
-						v-for="(color,index) in items"
-						:key="color.id"
-						class="bgcolor-wrap-color"
-						:class="{colorActive:colorsIds.includes(color.id)}"
-						:title="color.name"
-						:style="'background-color:'+color.hex"
-						@click="toggleColorId(color.id)"
+            v-for="(color,index) in items"
+            :key="color.id"
+            class="bgcolor-wrap-color"
+            :class="{colorActive:colorsIds.includes(color.id)}"
+            :title="color.name"
+            :style="'background-color:'+color.hex"
+            @click.prevent="toggleColorId(color.id)"
 				></div>
 			</div>
 		</transition>

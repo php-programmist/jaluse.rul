@@ -1,9 +1,9 @@
 <template>
 	<div class="cd-user-modal" :class="{'is-visible':visible}">
-		<div class="overlay" @click="visible=false"></div>
+		<div class="overlay" @click.prevent="visible=false"></div>
 		<div class="cd-user-modal-container">
 			<div id="cd-raschet">
-				<div class="modal_close" @click="visible=false">×</div>
+        <div class="modal_close" @click.prevent="visible=false">×</div>
 				<form class="cd-form" method="POST">
 					
 					<div class="form-body">
@@ -36,7 +36,7 @@
 							>
 						</p>
 						<p class="fieldset">
-							<button class="full-width form-submit js-submit-callback-form" @click="sendForm($event)">ОТПРАВИТЬ
+              <button class="full-width form-submit js-submit-callback-form" @click.prevent="sendForm($event)">ОТПРАВИТЬ
               </button>
 						</p>
 					</div>

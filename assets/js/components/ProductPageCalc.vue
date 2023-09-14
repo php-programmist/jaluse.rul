@@ -1,6 +1,6 @@
 <template>
 	<div class="button-wrapper">
-    <button class="mbtn" @click="showProductConfigurator">Рассчитать стоимость</button>
+    <button class="mbtn" @click.prevent="showProductConfigurator">Рассчитать стоимость</button>
     <v-consultation-form text="Получить консультацию"></v-consultation-form>
     <v-popup-product-configurator
         ref="product_configurator"

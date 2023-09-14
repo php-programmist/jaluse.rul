@@ -1,10 +1,10 @@
 <template>
 	
 	<div class="product-configurator-popup" :class="{'is-visible':visible}">
-		<div class="overlay" @click="visible=false"></div>
+		<div class="overlay" @click.prevent="visible=false"></div>
 		<div class="product-configurator-popup__container">
 			<div id="raschet">
-				<div class="modal_close" @click="visible=false">×</div>
+        <div class="modal_close" @click.prevent="visible=false">×</div>
 				<div class="product-configurator-popup__wrapper">
           <v-product-configurator v-model="productConfigs"
                                   :calculationType="product.calculationType"></v-product-configurator>
