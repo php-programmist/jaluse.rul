@@ -30,21 +30,28 @@ class SubdomainCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        $id            = IntegerField::new('id', 'ID');
-        $name          = TextField::new('name', 'Название');
-        $substitutions = ArrayField::new('substitutions', 'Подстановки');
-        $redirects     = ArrayField::new('redirects', 'Редиректы');
-        
+        $id                         = IntegerField::new('id', 'ID');
+        $name                       = TextField::new('name', 'Название');
+        $cityPrepositional          = TextField::new('cityPrepositional', 'Город в предложном падеже');
+        $cityAndRegionPrepositional = TextField::new('cityAndRegionPrepositional',
+            'Город и область в предложном падеже');
+        $cityGenitive               = TextField::new('cityGenitive', 'Город в родительном падеже');
+        $redirects                  = ArrayField::new('redirects', 'Редиректы');
+    
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name];
         }
-        
+    
         if (in_array($pageName, [Crud::PAGE_EDIT, Crud::PAGE_NEW], true)) {
             return [
                 $name,
-                $substitutions,
+                $cityPrepositional,
+                $cityAndRegionPrepositional,
+                $cityGenitive,
                 $redirects,
             ];
         }
+    
+        return [];
     }
 }

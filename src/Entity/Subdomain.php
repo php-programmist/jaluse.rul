@@ -72,4 +72,40 @@ class Subdomain
         
         return $this;
     }
+    
+    public function getCityPrepositional(): string
+    {
+        return $this->substitutions['$city_prepositional'] ?? '';
+    }
+    
+    public function setCityPrepositional(string $cityPrepositional): self
+    {
+        $this->substitutions['$city_prepositional'] = $cityPrepositional;
+        
+        return $this;
+    }
+    
+    public function getCityAndRegionPrepositional(): string
+    {
+        return $this->substitutions['$city_and_region_prepositional'] ?? '';
+    }
+    
+    public function setCityAndRegionPrepositional(string $cityAndRegionPrepositional): self
+    {
+        $this->substitutions['$city_and_region_prepositional'] = $cityAndRegionPrepositional;
+        
+        return $this;
+    }
+    
+    public function getCityGenitive(): string
+    {
+        return $this->substitutions['$city_genitive'] ?? '';
+    }
+    
+    public function setCityGenitive(string $cityGenitive): self
+    {
+        $this->substitutions['$city_genitive'] = $cityGenitive;
+        
+        return $this;
+    }
 }
