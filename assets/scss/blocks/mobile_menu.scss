@@ -1,8 +1,3 @@
-.mobile-menu {
-  background: #fdd921;
-  display: none;
-}
-
 .mobile-menu-left-area {
   float: left;
   height: 60px;
@@ -102,6 +97,7 @@
   float: none;
   clear: both;
   max-height: 400px;
+  max-width: 400px;
   overflow: auto;
   margin-left: -15px;
   margin-right: -15px;
@@ -151,8 +147,7 @@
   display: inline-block;
 }
 
-@media only screen and (max-width: 992px) {
-  .mobile-menu {
-    display: block;
-  }
+
+.mobile-menu {
+  display: block;
 }

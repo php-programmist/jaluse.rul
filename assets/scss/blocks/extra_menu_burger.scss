@@ -1,0 +1,19 @@
+.extra-menu-burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 150px;
+  color: #FFFFFF;
+  cursor: pointer;
+
+  &__icon {
+    width: 13px;
+    height: 12px;
+    background-image: url("../../img/icon/burger-icon.svg");
+
+    &-opened {
+      background-image: url("../../img/icon/times.svg");
+    }
+  }
+}

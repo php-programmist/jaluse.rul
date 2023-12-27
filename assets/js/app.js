@@ -5,6 +5,7 @@ import './components/modal_callback';
 import './components/slick_sliders';
 import './components/order_catalog';
 import './components/swiper_sliders';
+import './blocks/extra_menu_burger';
 import './blocks/seo-block';
 import './blocks/popup-banner';
 import './blocks/manimate';
