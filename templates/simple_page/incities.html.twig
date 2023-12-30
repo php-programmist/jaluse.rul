@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title page.title %}
+{% block h1 page.name %}
+{% block description page.description %}
+
+{% block body %}
+    <div class="domain-map container">
+        <div class="domain-map__title">Москва и Московская область</div>
+        <div class="domain-map__list">
+            {% for item in items %}
+                <div class="list__item">
+                    <a
+                            href="{{ item.mainPageUrl }}"
+                            class="{{ item is same as currentSubDomain ? 'city_current' : '' }}"
+                    >{{ item.cityNominative }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

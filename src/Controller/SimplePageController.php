@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Catalog;
 use App\Repository\PageRepository;
 use App\Service\CatalogManager;
+use App\Service\SubDomainService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -149,6 +150,22 @@ class SimplePageController extends AbstractController
         
         return $this->render('simple_page/rekvizity.html.twig', [
             'page' => $page,
+        ]);
+    }
+    
+    /**
+     * @Route("/incities/", name="simple_page_incities")
+     */
+    public function incities(SubDomainService $service)
+    {
+        $page             = $this->page_repository->findOneBy(['uri' => 'incities']);
+        $items            = $service->getSubdomains();
+        $currentSubDomain = $service->getSubdomainEntity();
+        
+        return $this->render('simple_page/incities.html.twig', [
+            'page'             => $page,
+            'items'            => $items,
+            'currentSubDomain' => $currentSubDomain,
         ]);
     }
     
