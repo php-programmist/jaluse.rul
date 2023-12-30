@@ -1,10 +1,10 @@
 <template>
 	<div class="calc-vivod-price">
     <div class="row">
-      <div class="col-md-6 col-12">
+      <div class="col-6">
         <div class="starcena">{{ prices.basePrice }}₽ <span>-{{ prices.currentDiscount }}%</span></div>
       </div>
-      <div class="col-md-6 col-12">
+      <div class="col-6">
         <div class="new-cenawrap">
           <div class="row">
             <div class="col-6 bigcena"><b>{{ prices.discountedPrice }}₽</b></div>

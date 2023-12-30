@@ -454,6 +454,12 @@
       background-color: #fd971f;
     }
   }
-
-
+  @media (max-width: 400px) {
+    .block3 .calc-parametr-minimages .minimages-wrap {
+      width: 60px;
+    }
+    .block3 .calc-parametr-minimages {
+      max-height: 135px;
+    }
+  }
 }
