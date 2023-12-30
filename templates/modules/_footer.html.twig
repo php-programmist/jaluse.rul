@@ -58,6 +58,7 @@
                 <form action="{{ path('mail.callback_consultation') }}" method="post" class="phone_callback">
                     <input type="text" class="phone-field" name="phone" placeholder="Номер телефона" required="">
                     <input type="submit" class="mbtn">
+                    <input type="hidden" name="token" value="{{ csrf_token('consultation') }}" />
                 </form>
             </div>
         </div>

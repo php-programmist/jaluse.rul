@@ -97,8 +97,12 @@
                   :product="currentProduct"
                   :productConfigs="productConfigs"
                   :prices="prices"
+                  :token="token"
               ></v-order-form>
-              <v-consultation-form text="Получить консультацию"></v-consultation-form>
+              <v-consultation-form
+                  text="Получить консультацию"
+                  :token="token"
+              ></v-consultation-form>
             </div>
 
           </div>
@@ -142,7 +146,7 @@ export default {
       productConfigs: {}
     };
   },
-  props: ["type_filter", "available_types", "selected_type", "selected_material", "hide_categories", "selected_category", "excluded_materials"],
+  props: ["type_filter", "available_types", "selected_type", "selected_material", "hide_categories", "selected_category", "excluded_materials", "token"],
   components: {
     'v-consultation-form': ConsultationForm,
     'v-order-form': OrderForm,

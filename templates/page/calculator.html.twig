@@ -26,6 +26,7 @@
                         :excluded_materials="{{ excluded_materials|default({})|json_encode }}"
                         :hide_categories="false"
                         :selected_category="1"
+                        token="{{ csrf_token('consultation') }}"
                 ></main-page-calc>
             </div>
         </div>

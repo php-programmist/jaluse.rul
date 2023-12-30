@@ -36,6 +36,10 @@ $('.phone_callback').submit(function (event) {
 	if (name_field.length > 0) {
 		body.name = name_field.val();
 	}
+	const token_field = form.find('input[name="token"]');
+	if (token_field.length > 0) {
+		body.token = token_field.val();
+	}
 	const url = form.prop('action');
 	fetch(url, {
 		method: 'POST',

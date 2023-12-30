@@ -6,6 +6,7 @@
             <main-page-calc
                     selected_category="1"
                     :excluded_materials="{{ excluded_materials|default({})|json_encode }}"
+                    token="{{ csrf_token('consultation') }}"
             ></main-page-calc>
         </div>
     </div>

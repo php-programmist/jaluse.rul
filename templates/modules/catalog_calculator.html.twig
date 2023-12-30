@@ -10,6 +10,7 @@
                     :excluded_materials="{{ excluded_materials|default({})|json_encode }}"
                     :hide_categories="{{ page.hideCategories|default(false) ? 'true':'false' }}"
                     :selected_category="{{ selected_category|default(1) }}"
+                    token="{{ csrf_token('consultation') }}"
             ></main-page-calc>
         </div>
     </div>

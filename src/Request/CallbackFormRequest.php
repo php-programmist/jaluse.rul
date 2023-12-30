@@ -49,11 +49,12 @@ class CallbackFormRequest implements RequestDTOInterface
     public $base_price;
     public $discounted_price;
     public $price_with_delivery;
+    public $token;
     
     public function __construct(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $request->request->replace(is_array($data) ? $data : array());
+        $request->request->replace(is_array($data) ? $data : []);
         if ($request->request->has('name')) {
             $this->name = trim($request->get('name'));
         } else {
@@ -75,6 +76,7 @@ class CallbackFormRequest implements RequestDTOInterface
         $this->base_price          = trim($request->get('base_price'));
         $this->discounted_price    = trim($request->get('discounted_price'));
         $this->price_with_delivery = trim($request->get('price_with_delivery'));
+        $this->token               = trim($request->get('token'));
     }
     
 }

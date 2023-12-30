@@ -15,8 +15,12 @@
                 :product="product"
                 :productConfigs="productConfigs"
                 :prices="prices"
+                :token="token"
             ></v-order-form>
-            <v-consultation-form text="Консультация"></v-consultation-form>
+            <v-consultation-form
+                text="Консультация"
+                :token="token"
+            ></v-consultation-form>
           </div>
 
         </div>
@@ -39,17 +43,17 @@ export default {
       productConfigs: {}
     };
   },
-  props: ["price_calculator", "product",],
+  props: ["price_calculator", "product", "token"],
   methods: {},
-		components: {
-			'v-price-renderer': PriceRenderer,
-			'v-product-configurator': ProductConfigurator,
-			'v-order-form': OrderForm,
-			'v-consultation-form': ConsultationForm,
-		},
-		computed:{
-			prices() {
-				if (!this.price_calculator || typeof this.price_calculator.getAllPrices === 'undefined') {
+  components: {
+    'v-price-renderer': PriceRenderer,
+    'v-product-configurator': ProductConfigurator,
+    'v-order-form': OrderForm,
+    'v-consultation-form': ConsultationForm,
+  },
+  computed: {
+    prices() {
+      if (!this.price_calculator || typeof this.price_calculator.getAllPrices === 'undefined') {
 					return {basePrice: 0, discountedPrice: 0, priceWithDelivery: 0, currentDiscount: 0};
 				}
 				

@@ -61,7 +61,10 @@
         {% endblock footer %}
         {% block buttons %}
             <div id="app" class="btn-wrap">
-                <v-product-page-calc product_id="{{ page.id }}"></v-product-page-calc>
+                <v-product-page-calc
+                        product_id="{{ page.id }}"
+                        token="{{ csrf_token('consultation') }}"
+                ></v-product-page-calc>
             </div>
         {% endblock buttons %}
     {% endembed %}

@@ -1,7 +1,11 @@
 <template>
 	<span class="mbtn-wrapper">
 		<button class="mbtn mbtn2" @click.prevent="$refs.consultation.visible = true">{{ text }}</button>
-		<v-popup-contact-form :header="text" ref="consultation" @sendForm="sendConsultation"></v-popup-contact-form>
+		<v-popup-contact-form
+        :header="text"
+        ref="consultation"
+        @sendForm="sendConsultation">
+    </v-popup-contact-form>
 	</span>
 </template>
 
@@ -17,22 +21,17 @@ export default {
   components: {
     'v-popup-contact-form': PopupContactForm
   },
-  props: ["text"],
+  props: ["text", "token"],
   methods: {
     sendConsultation(data) {
-      const {name, phone} = data;
-				const body = {
-					name,
-					phone
-				};
-				const str = JSON.stringify(body);
-				axios.post('/mail/callback/consultation', str)
-					.then(({data}) => {
+      const str = JSON.stringify({...data, token: this.token});
+      axios.post('/mail/callback/consultation', str)
+          .then(() => {
             this.$refs.consultation.visible = false;
             openSuccessModal();
           })
-					.catch((error) => {
-						alert(error.response.data.detail);
+          .catch((error) => {
+            alert(error.response.data.detail);
 					});
 			}
 		}

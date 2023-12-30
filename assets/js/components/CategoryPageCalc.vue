@@ -32,16 +32,21 @@
       </div>
 			<div class="products">
 				<div
-						class="product"
-						v-for="product in filteredProducts"
-						:key="product.id"
-				>
-					<a :href="`/${product.uri}/`" target="_blank"><img :src="product.imageCatalog" :alt="product.name"></a>
-					<div class="product__name"><a :href="`/${product.uri}/`" target="_blank">{{ product.name }}</a></div>
-					<div class="product__price">{{product.calculationType === 'simple'? `${product.minPrice} руб/м2`:`от ${product.minPrice} руб` }}</div>
-					<button class="mbtn mbtn_orange" @click.prevent="showProductConfigurator(product)">Рассчитать</button>
-          <v-consultation-form text="Консультация"></v-consultation-form>
-				</div>
+            class="product"
+            v-for="product in filteredProducts"
+            :key="product.id"
+        >
+          <a :href="`/${product.uri}/`" target="_blank"><img :src="product.imageCatalog" :alt="product.name"></a>
+          <div class="product__name"><a :href="`/${product.uri}/`" target="_blank">{{ product.name }}</a></div>
+          <div
+              class="product__price">{{ product.calculationType === 'simple' ? `${product.minPrice} руб/м2` : `от ${product.minPrice} руб` }}
+          </div>
+          <button class="mbtn mbtn_orange" @click.prevent="showProductConfigurator(product)">Рассчитать</button>
+          <v-consultation-form
+              text="Консультация"
+              :token="token"
+          ></v-consultation-form>
+        </div>
 			</div>
 			<div class="text-center">
         <button v-if="products.length < totalProducts" class="mbtn"
@@ -52,9 +57,10 @@
 		
 		
 		<v-popup-product-configurator
-				ref="product_configurator"
-				:price_calculator="price_calculator"
-				:product="currentProduct"
+        ref="product_configurator"
+        :price_calculator="price_calculator"
+        :product="currentProduct"
+        :token="token"
 		></v-popup-product-configurator>
 	</div>
 </template>
@@ -82,27 +88,27 @@ export default {
 				type: {id:0},
 				material: {id:0},
 				totalProducts:0,
-				page:1,
-				currentProduct: {
-					"price": 0,
-					"discount": 0,
-					"id": 0,
-					"name": "",
-					"uri": ""
-				},
-			};
-		},
-		props: ["type_id","material_id","force_show_filters"],
-		components: {
-			'v-consultation-form': ConsultationForm,
-			'v-popup-product-configurator': PopupProductConfigurator,
-			'v-category-selector': CategorySelector,
-			'v-drop-down-selector': DropDownSelector,
-			'v-color-selector': ColorSelector,
-		},
-		created() {
-			axios.get('/api/calc/getInitData')
-				.then(response => {
+      page: 1,
+      currentProduct: {
+        "price": 0,
+        "discount": 0,
+        "id": 0,
+        "name": "",
+        "uri": ""
+      },
+    };
+  },
+  props: ["type_id", "material_id", "force_show_filters", "token"],
+  components: {
+    'v-consultation-form': ConsultationForm,
+    'v-popup-product-configurator': PopupProductConfigurator,
+    'v-category-selector': CategorySelector,
+    'v-drop-down-selector': DropDownSelector,
+    'v-color-selector': ColorSelector,
+  },
+  created() {
+    axios.get('/api/calc/getInitData')
+        .then(response => {
 					this.types = response.data.types;
 					this.colors = response.data.colors;
 					this.categories = response.data.categories;

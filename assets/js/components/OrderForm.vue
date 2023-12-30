@@ -17,26 +17,27 @@ export default {
   components: {
     'v-popup-contact-form': PopupContactForm
   },
-  props: ["text", "product", "productConfigs", "prices"],
+  props: ["text", "product", "productConfigs", "prices", "token"],
   methods: {
     sendOrder(data) {
       const {name, phone} = data;
-				const body = {
-					name,
-					phone,
-					product_url: this.product.uri,
-					product_name: this.product.name,
-					category: this.product.categoryName,
-					material: this.product.materialName,
-					width: this.productConfigs.width,
-					height: this.productConfigs.height,
-					number: this.productConfigs.number,
-					controlType: this.productConfigs.controlType,
-					color: this.product.colorName,
-					base_price: this.prices.basePrice,
-					discounted_price: this.prices.discountedPrice,
-					price_with_delivery: this.prices.priceWithDelivery,
-				};
+      const body = {
+        name,
+        phone,
+        product_url: this.product.uri,
+        product_name: this.product.name,
+        category: this.product.categoryName,
+        material: this.product.materialName,
+        width: this.productConfigs.width,
+        height: this.productConfigs.height,
+        number: this.productConfigs.number,
+        controlType: this.productConfigs.controlType,
+        color: this.product.colorName,
+        base_price: this.prices.basePrice,
+        discounted_price: this.prices.discountedPrice,
+        price_with_delivery: this.prices.priceWithDelivery,
+        token: this.token,
+      };
 				const str = JSON.stringify(body);
       axios.post('/mail/callback/order', str)
           .then(() => {

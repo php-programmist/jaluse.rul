@@ -65,7 +65,9 @@ class CallbackController extends AbstractController
         // }
         //
         // return $this->response->fail(error_get_last());
-    
+        if (!$this->isCsrfTokenValid('consultation', $request->token)) {
+            return $this->response->fail(['Обновите страницу и повторите отправку']);
+        }
         $this->email
             ->subject("Заявка на консультацию")
             ->htmlTemplate('mail/callback/consultation.html.twig')
@@ -84,6 +86,9 @@ class CallbackController extends AbstractController
         // $body = $this->twig->render('mail/callback/order.html.twig',(array)$request);
         // mail($this->recipients,"Новый заказ",$body,$this->headers);
         // return $this->response->success("Спасибо, отправлено!");
+        if (!$this->isCsrfTokenValid('consultation', $request->token)) {
+            return $this->response->fail(['Обновите страницу и повторите отправку']);
+        }
         $this->email
             ->subject("Новый заказ")
             ->htmlTemplate('mail/callback/order.html.twig')

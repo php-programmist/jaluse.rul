@@ -63,6 +63,7 @@
                             <input type="text" class="phone-field" name="phone" placeholder="Номер телефона"
                                    required="" />
                             <input type="submit" class="form-btn" value="Узнать стоимость" />
+                            <input type="hidden" name="token" value="{{ csrf_token('consultation') }}" />
                         </form>
                     </div>
                 </div>
