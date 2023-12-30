@@ -1,0 +1,56 @@
+#modal-domain {
+  .cd-user-modal-container {
+    max-width: 530px;
+    padding: 2em;
+  }
+}
+
+.domain_modal {
+
+  &__title {
+    color: #485159;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  &__cities {
+    display: flex;
+    max-width: 530px;
+    flex-wrap: wrap;
+    margin: 1.5em 0 0 1.5em;
+    text-align: left;
+
+    & > * {
+      flex: 0 0 33.33%;
+    }
+
+    .cities_current {
+      color: red;
+      font-weight: bold;
+    }
+  }
+}
+
+.modal-domain-open {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    opacity: .6;
+  }
+
+  &__icon {
+    width: 13px;
+    height: 20px;
+    background-image: url("../../img/icon/geo-point.png");
+  }
+
+  &__title {
+    margin-right: 7px;
+    margin-left: 7px;
+    color: #ff3c1a;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+}

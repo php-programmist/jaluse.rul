@@ -1,0 +1,21 @@
+<div class="cd-user-modal" id="modal-domain">
+    <div class="overlay"></div>
+    <div class="cd-user-modal-container">
+        <div id="cd-raschet" class="is-selected">
+            <div class="modal_close">×</div>
+            <div class="domain_modal">
+                <div class="domain_modal__title">Выберите Ваш город</div>
+                <div class="domain_modal__cities">
+                    {% for item in items %}
+                        <div>
+                            <a
+                                    href="{{ item.mainPageUrl }}"
+                                    class="{{ item is same as currentSubDomain ? 'cities_current' : '' }}"
+                            >{{ item.cityNominative }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div> <!-- cd-user-modal-container -->
+</div>

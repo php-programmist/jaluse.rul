@@ -32,9 +32,7 @@ class SubDomainService
     
     public function getSubstitutions(): array
     {
-        $subdomain = $this->entityManager
-            ->getRepository(Subdomain::class)
-            ->findOneBy(['name' => $this->getSubDomain()]);
+        $subdomain = $this->getSubdomainEntity();
     
         if (null === $subdomain) {
             return [];
@@ -93,5 +91,22 @@ class SubDomainService
         $request = $this->requestStack->getMainRequest();
         
         return $request?->headers->get('Host') ?? '';
+    }
+    
+    /**
+     * @return Subdomain[]
+     */
+    public function getSubdomains(): array
+    {
+        return $this->entityManager
+            ->getRepository(Subdomain::class)
+            ->findBy([], ['id' => 'asc']);
+    }
+    
+    public function getSubdomainEntity(): Subdomain
+    {
+        return $this->entityManager
+            ->getRepository(Subdomain::class)
+            ->findOneBy(['name' => $this->getSubDomain()]);
     }
 }

@@ -133,4 +133,13 @@ class Subdomain
         
         return $this;
     }
+    
+    public function getMainPageUrl(): string
+    {
+        return sprintf('https://%s%s%s',
+            $this->getName(),
+            $this->getName() !== '' ? '.' : '',
+            $_ENV['BASE_HOST']
+        );
+    }
 }

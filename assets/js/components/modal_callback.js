@@ -2,6 +2,7 @@ import Inputmask from 'inputmask';
 import $ from 'jquery';
 import '../../scss/modal_callback.css'
 import {openSuccessModal} from "./modal_success";
+import {addModalOpenHandlers} from "../libs/modal-helper";
 
 /*Обработчик ответа получаемого при отправке формы консультации*/
 const consultationFetchHandler = (response) => {
@@ -48,22 +49,6 @@ $('.phone_callback').submit(function (event) {
 });
 
 /*Открытие/закрытие модального окна*/
-const modal_callback = $('#modal-callback');
-const modal_close = modal_callback.find('.modal_close');
-const modal_overlay = modal_callback.find('.overlay');
-const modal_title = modal_callback.find('.modal-title');
-$('body').on('click', '.js-modal-open', function (event) {
-	event.preventDefault();
-	let title = $(this).data('title');
-	if (!title) {
-		title = 'Заказать звонок';
-	}
-	modal_title.html(title + ':');
-	modal_callback.addClass('is-visible');
-});
-modal_close.on('click', () => {
-	modal_callback.removeClass('is-visible');
-});
-modal_overlay.on('click', () => {
-	modal_callback.removeClass('is-visible');
-});
+addModalOpenHandlers('.js-modal-open', '#modal-callback');
+addModalOpenHandlers('.js-modal-domain-open', '#modal-domain');
+
