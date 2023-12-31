@@ -1,0 +1,22 @@
+Поступил новый заказ.
+Имя клиента: <b>{{ name }}</b>
+Телефон клиента: <b>{{ phone }}</b>
+
+Информация о заказе:
+Ссылка: <a
+        href="{{ app.request.schemeAndHttpHost~'/'~product_url~'/' }}">{{ app.request.schemeAndHttpHost~'/'~product_url~'/' }}</a>
+
+Название: <b>{{ product_name }}</b>
+Категория: <b>{{ category }}</b>
+Материал: <b>{{ material }}</b>
+Ширина: <b>{{ width }} см</b>
+Высота: <b>{{ height }} см</b>
+Количество: <b>{{ number }} шт</b>
+Управление: <b>{{ controlType }}</b>
+Цвет: <b>{{ color }}</b>
+
+Рассчитанные цены:
+Базовая: <b>{{ base_price }} р.</b>
+Со скидкой: <b>{{ discounted_price }} р.</b>
+
+Referer: <b>{{ referer }}</b>

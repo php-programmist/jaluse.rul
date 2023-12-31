@@ -103,7 +103,7 @@ class SubDomainService
             ->findBy([], ['id' => 'asc']);
     }
     
-    public function getSubdomainEntity(): Subdomain
+    public function getSubdomainEntity(): ?Subdomain
     {
         return $this->entityManager
             ->getRepository(Subdomain::class)

@@ -5,6 +5,7 @@ namespace App\Controller\Mail;
 use App\Request\CallbackFormRequest;
 use App\Response\MailJsonResponse;
 use App\Service\ConfigService;
+use App\Service\TelegramApiManager;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
@@ -35,8 +36,13 @@ class CallbackController extends AbstractController
     private $recipients;
     private $headers;
     
-    public function __construct(MailerInterface $mailer, ConfigService $config, MailJsonResponse $response,Environment $twig )
-    {
+    public function __construct(
+        MailerInterface $mailer,
+        ConfigService $config,
+        MailJsonResponse $response,
+        Environment $twig,
+        private TelegramApiManager $telegramApiManager,
+    ) {
         $this->mailer     = $mailer;
         $this->recipients = $config->get('mail.recipients', '');
         $from             = $config->get('mail.from', '');
@@ -75,6 +81,8 @@ class CallbackController extends AbstractController
     
         $this->mailer->send($this->email);
     
+        $this->telegramApiManager->sendAdminMessage('telegram/callback/consultation.html.twig', (array)$request);
+    
         return $this->response->success("Спасибо, отправлено!");
     }
     
@@ -95,6 +103,8 @@ class CallbackController extends AbstractController
             ->context((array)$request);
     
         $this->mailer->send($this->email);
+    
+        $this->telegramApiManager->sendAdminMessage('telegram/callback/order.html.twig', (array)$request);
     
         return $this->response->success("Спасибо, отправлено!");
     }
