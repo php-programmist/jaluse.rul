@@ -24,7 +24,10 @@
     width: calc(1/2*100% - 20px);
   }
   @media (max-width: 575px) {
-    width: calc(100% - 20px);
+    width: 100%;
+    img {
+      transform: scale(105%);
+    }
   }
 
   &__image_wrapper{

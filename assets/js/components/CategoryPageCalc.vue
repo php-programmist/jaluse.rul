@@ -244,8 +244,8 @@ export default {
 				width: calc(1/2*100% - 20px);
 			}
 			@media (max-width: 575px) {
-				width: calc(100% - 20px);
-			}
+        width: 100%;
+      }
 			img{
 				max-width: 100%;
 				object-fit: contain;
