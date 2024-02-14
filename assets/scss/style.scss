@@ -990,10 +990,16 @@ p{
   width: 100% !important;
   height: 225px !important;
 }
-.pagination{
-  .page-item{
-    &::before{
+
+.pagination {
+  .page-item {
+    &::before {
       display: none;
     }
   }
+}
+
+.multi_button ul, .multi_button li {
+  margin-left: auto !important;
+  margin-bottom: auto !important;
 }
