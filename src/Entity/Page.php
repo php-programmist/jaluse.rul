@@ -794,12 +794,24 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function setOrdering(int $ordering): self
     {
         $this->ordering = $ordering;
-        
+    
         return $this;
     }
     
     public function getShortName(): ?string
     {
         return $this->getName();
+    }
+    
+    public function getPageName(): string
+    {
+        return $this->getName();
+    }
+    
+    public function setPageName(string $name): static
+    {
+        $this->name = $name;
+        
+        return $this;
     }
 }

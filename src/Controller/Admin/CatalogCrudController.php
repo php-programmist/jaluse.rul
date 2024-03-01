@@ -40,18 +40,18 @@ class CatalogCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        $name             = TextField::new('name', 'Название');
-        $parent           = AssociationField::new('parent', 'Родитель');
-        $published        = Field::new('published', 'Опубликован');
-        $type             = AssociationField::new('type', 'Тип');
-        $material         = AssociationField::new('material', 'Подтип');
-        $ourWorksFolder   = TextField::new('ourWorksFolder', 'Папка изображений наших работ');
-        $showSeoText      = Field::new('showSeoText', 'SEO-текст');
-        $price            = NumberField::new('price', 'Цена');
-        $id               = IntegerField::new('id', 'ID');
-        $path             = UrlField::new('path', 'Ссылка');
-        $typeName         = TextareaField::new('type.name', 'Тип');
-        $materialName     = TextareaField::new('material.name', 'Подтип');
+        $name           = TextField::new('pageName', 'Название');
+        $parent         = AssociationField::new('parent', 'Родитель');
+        $published      = Field::new('published', 'Опубликован');
+        $type           = AssociationField::new('type', 'Тип');
+        $material       = AssociationField::new('material', 'Подтип');
+        $ourWorksFolder = TextField::new('ourWorksFolder', 'Папка изображений наших работ');
+        $showSeoText    = Field::new('showSeoText', 'SEO-текст');
+        $price          = NumberField::new('price', 'Цена');
+        $id             = IntegerField::new('id', 'ID');
+        $path           = UrlField::new('path', 'Ссылка');
+        $typeName       = TextareaField::new('type.name', 'Тип');
+        $materialName   = TextareaField::new('material.name', 'Подтип');
         $seoImageUrl      = ImageField::new('seoImageUrl', 'SEO-Изображение');
         $recommendedTitle = TextField::new('recommendedTitle', 'Заголовок рекомендуемых товаров');
     
