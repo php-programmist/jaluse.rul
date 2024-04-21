@@ -10,5 +10,10 @@
         </li>
         <li class="summary__item">✅ Быстрое производство, доставка и монтаж в любой точке $city_genitive.</li>
         <li class="summary__item">✅ Самые актуальные цены лучше уточнять у менеджера.</li>
+        {% if '/zhalyuzi/gorizontalnye/derevyannye/' in app.request.pathinfo %}
+            <li class="summary__item">✅ До конца месяц на все деревянные жалюзи действует <span
+                        class="summary__accent-red">скидка 30%</span>.
+            </li>
+        {% endif %}
     </ul>
 </div>

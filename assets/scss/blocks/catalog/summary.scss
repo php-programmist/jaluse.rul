@@ -13,6 +13,11 @@
     color: #0c98cf;
     font-weight: bold;
     font-size: 1.4em;
+
+    &-red {
+      color: #cf0c0c;
+      font-size: 1.2em;
+    }
   }
 
   &__item {
