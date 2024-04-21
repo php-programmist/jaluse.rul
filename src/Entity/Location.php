@@ -125,16 +125,6 @@ class Location extends Page implements HasCatalogSettingsInterface
     
     public function getShortName(): string
     {
-        $name = str_replace([
-            'вертикальные жалюзи',
-            'Вертикальные жалюзи',
-            'Горизонтальные жалюзи',
-            'Рулонные шторы',
-            'Жалюзи',
-        ], '', $this->name);
-        
-        $name = trim($name);
-        
-        return mb_strtoupper(mb_substr($name, 0, 1)) . mb_substr($name, 1);
+        return $this->name;
     }
 }
