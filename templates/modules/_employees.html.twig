@@ -1,45 +1,37 @@
 <!--Блок НАШИ СОТРУДНИКИ-->
+{% set employees = [
+    {
+        name: 'Анатолие Амброси',
+        job: 'Руководитель компании',
+        img: '/img/empolyees/1.jpeg'
+    },
+    {
+        name: 'Елена Демьянова',
+        job: 'Старший менеджер',
+        img: '/img/empolyees/2.jpeg'
+    },
+    {
+        name: 'Александр Агеев',
+        job: 'Замерщик и установщик',
+        img: '/img/empolyees/3.jpeg'
+    }
+] %}
 <div class="block7 blockrabotniki">
     <div class="container container2">
         <div class="zag">Руководство компании «Мастерская жалюзи»</div>
         <div class="row rabotniki-slider">
-            <div class="col-md-4 col-sm-6 scroll-item">
-                <div class="rabotniki-card">
-                    <div class="img"><img {{ lazy_load('/img/anatolii.jpg') }} alt="*"></div>
-                    <div class="text">
-                        <b>Анатолие Амброси</b>
-                        <span>Директор компании</span>
+            {% for employee in employees %}
+                <div class="col-md-4 col-sm-6 scroll-item">
+                    <div class="rabotniki-card">
+                        <div class="img"><img {{ lazy_load(employee.img) }} alt="*"></div>
+                        <div class="text">
+                            <b>{{ employee.name }}</b>
+                            <span>{{ employee.job }}</span>
+                        </div>
+                        <div class="mbtn2 js-modal-open">Получить консультацию</div>
                     </div>
-                    <div class="mbtn2 js-modal-open">Заказать звонок</div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 scroll-item">
-                <div class="rabotniki-card">
-                    <div class="img">
-                        <img {{ lazy_load('/img/angelica.png') }} alt="*">
-                    </div>
-                    <div class="text">
-                        <b>Анжелика Дорофеева</b>
-                        <span>Старший менеджер</span>
-                    </div>
-                    <div class="mbtn2 js-modal-open">Заказать звонок</div>
-        
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 scroll-item offset-sm-3 offset-md-0">
-                <div class="rabotniki-card">
-                    <div class="img">
-                        <img {{ lazy_load('/img/urii.jpg') }} alt="*">
-                    </div>
-                    <div class="text">
-                        <b>Александр Мухамеджанов</b>
-                        <span>Отдел логистики</span>
-                    </div>
-                    <div class="mbtn2 js-modal-open">Заказать звонок</div>
-        
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
     </div>
 </div>
