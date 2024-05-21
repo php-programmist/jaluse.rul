@@ -14879,7 +14879,7 @@ a.close.disabled {
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    padding: 15px 20 px- .25rem;
+    padding: 15px 20px- .25rem;
     border-top: 1px solid var(--border-color);
     border-bottom-right-radius: calc(.3rem - 1px);
     border-bottom-left-radius: calc(.3rem - 1px)
