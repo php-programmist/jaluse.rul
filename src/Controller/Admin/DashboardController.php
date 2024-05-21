@@ -109,7 +109,7 @@ class DashboardController extends AbstractDashboardController
     
     public static function getMainBlock(): array
     {
-        $name      = TextField::new('pageName', 'Название');
+        $name = TextField::new('name', 'Название');
         $uri       = TextField::new('uri', 'Ссылка');
         $parent    = AssociationField::new('parent', 'Родитель');
         $published = Field::new('published', 'Опубликован');
@@ -141,7 +141,7 @@ class DashboardController extends AbstractDashboardController
             $description,
             $showSeoText,
             $content,
-            //$seoImageFile,
+            $seoImageFile,
         ];
     }
     
@@ -155,7 +155,7 @@ class DashboardController extends AbstractDashboardController
         return [
             $cardPanel,
             $cardDescription,
-            //$cardImageFile,
+            $cardImageFile,
         ];
     }
 }

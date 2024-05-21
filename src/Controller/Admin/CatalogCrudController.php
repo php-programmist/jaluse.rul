@@ -40,7 +40,7 @@ class CatalogCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        $name           = TextField::new('pageName', 'Название');
+        $name           = TextField::new('name', 'Название');
         $parent         = AssociationField::new('parent', 'Родитель');
         $published      = Field::new('published', 'Опубликован');
         $type           = AssociationField::new('type', 'Тип');
