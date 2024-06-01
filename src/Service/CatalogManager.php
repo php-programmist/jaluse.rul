@@ -161,7 +161,10 @@ class CatalogManager
                     }
                 }
             } else {
-                $links[$siblingMaterial->getName()] = $siblingMaterial->getCatalogs()->first()->getPath();
+                $firstSibling = $siblingMaterial->getCatalogs()->first();
+                if ($firstSibling) {
+                    $links[$siblingMaterial->getName()] = $firstSibling->getPath();
+                }
             }
     
         }
