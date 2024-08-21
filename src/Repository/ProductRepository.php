@@ -299,8 +299,11 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function getAllOrByCatalog(?Catalog $catalog): array
     {
-        $builder = $this->createQueryBuilder('p')
-                        ->orderBy('p.parent, p.name', 'ASC');
+        $builder = $this
+            ->createQueryBuilder('p')
+            ->andWhere('p.published = 1')
+            ->andWhere('p.parent is not null')
+            ->orderBy('p.parent, p.name', 'ASC');
         
         if ($catalog) {
             $builder->andWhere('p.parent = :catalog')

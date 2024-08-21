@@ -6,6 +6,8 @@ use App\Entity\Catalog;
 use App\Entity\Page;
 use App\Entity\Product;
 use App\Model\Admin\ProductExport;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,9 +27,14 @@ class ProductExportType extends AbstractType
                         $catalog->getPath(),
                         $catalog
                             ->getPages()
-                            ->filter(fn(Page $page) => $page instanceof Product)
+                            ->filter(fn(Page $page) => $page instanceof Product && $page->getPublished())
                             ->count()
                     );
+                },
+                'query_builder' => function (EntityRepository $er): QueryBuilder {
+                    return $er->createQueryBuilder('c')
+                              ->where('c.published = 1')
+                              ->orderBy('c.id', 'ASC');
                 },
                 'attr'         => [
                     'class' => 'chosen',

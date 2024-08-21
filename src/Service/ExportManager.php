@@ -28,7 +28,7 @@ class ExportManager
         $sheet->getColumnDimension('B')->setWidth(60);
         $sheet->getColumnDimension('D')->setWidth(30);
         
-        $sheet->fromArray(['URL', 'Название', 'Цвет', 'Родитель', 'Тип', 'Подтип', 'Цена']);
+        $sheet->fromArray(['URL', 'Название', 'Цвет', 'Родитель', 'Тип', 'Подтип', 'Категория', 'Цена']);
         
         $products = $this->getProductsData($catalog);
         foreach ($products as $index => $product) {
@@ -60,6 +60,7 @@ class ExportManager
                 $product->getParent()?->getName(),
                 $product->getType()?->getName(),
                 $product->getMaterial(),
+                $product->getCategoryName(),
                 $product->getPrice() ? : $product->getMatrixId(),
             ];
         }
