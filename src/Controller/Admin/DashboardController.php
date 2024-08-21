@@ -82,6 +82,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linktoRoute('Обновление цен', 'fas fa-calculator', 'admin_update_prices'),
             MenuItem::linktoRoute('Помещения', 'fas fa-file-alt', 'admin_locations_import'),
         ];
+        $submenu2 = [
+            MenuItem::linktoRoute('Товары', 'fas fa-file-alt', 'admin_product_export'),
+        ];
     
         yield MenuItem::linkToCrud('Примеры работ', 'fas fa-briefcase', WorkExample::class);
         yield MenuItem::section('Страницы');
@@ -105,6 +108,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoRoute('Генератор', 'fas fa-cogs', 'admin_generator_index');
         yield MenuItem::linktoRoute('Изменение URI', 'fas fa-chain', 'admin_change_uri');
         yield MenuItem::subMenu('Импорт', 'fas fa-file-import')->setSubItems($submenu1);
+        yield MenuItem::subMenu('Экспорт', 'fas fa-file-export')->setSubItems($submenu2);
     }
     
     public static function getMainBlock(): array

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Catalog;
 use App\Entity\Product;
 use App\Helper\SearchHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -291,5 +292,23 @@ class ProductRepository extends ServiceEntityRepository
                 ->andWhere('MATCH_AGAINST(p.name,:search) > 0')
                 ->setParameter('search', SearchHelper::prepareFullTextSearch($filters['search']));
         }
+    }
+    
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function getAllOrByCatalog(?Catalog $catalog): array
+    {
+        $builder = $this->createQueryBuilder('p')
+                        ->orderBy('p.parent, p.name', 'ASC');
+        
+        if ($catalog) {
+            $builder->andWhere('p.parent = :catalog')
+                    ->setParameter('catalog', $catalog);
+        }
+        
+        return $builder
+            ->getQuery()
+            ->getResult();
     }
 }
