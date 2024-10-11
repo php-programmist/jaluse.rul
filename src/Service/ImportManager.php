@@ -16,6 +16,7 @@ use App\Model\Admin\LocationImport;
 use App\Model\Admin\ProductImport;
 use App\Model\Admin\SlugConfig;
 use App\Model\Admin\UpdatePrices;
+use App\Model\Admin\UpdateTitles;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use RuntimeException;
@@ -175,6 +176,41 @@ class ImportManager
                 } else {
                     $this->setPrice((float)$price, $product);
                     $updated[] = $product->getPath();
+                }
+            }
+        }
+        
+        $this->entityManager->flush();
+        
+        return [$updated, $notFound];
+    }
+    
+    public function updateTitles(UpdateTitles $updateTitlesDto): array
+    {
+        $spreadsheet    = $this->xlsxReader->load($updateTitlesDto->getXlsFile());
+        $updated        = [];
+        $notFound       = [];
+        $pageRepository = $this->entityManager->getRepository(Page::class);
+        foreach ($spreadsheet->getAllSheets() as $sheet) {
+            $sheetData = $sheet->toArray(null, true, true, true);
+            foreach ($sheetData as $row_number => $row) {
+                [
+                    "A" => $url,
+                    "B" => $title,
+                ] = $row;
+                
+                if ($row_number < 2 || empty($url)) {
+                    continue;
+                }
+                
+                $uri = trim(parse_url($url, PHP_URL_PATH), ' /');
+                
+                $page = $pageRepository->findOneBy(['uri' => $uri]);
+                if (null === $page) {
+                    $notFound[] = $url;
+                } else {
+                    $page->setTitle($title);
+                    $updated[] = $page->getPath();
                 }
             }
         }
