@@ -126,7 +126,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Page", inversedBy="pages")
      */
-    protected $parent;
+    protected ?Page $parent;
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="parent")

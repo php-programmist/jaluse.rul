@@ -104,7 +104,7 @@ class Location extends Page implements HasCatalogSettingsInterface
     
     public function generateTitle(): self
     {
-        $this->title = sprintf('%s купить в $city_prepositional. Каталог и цены', $this->getName());
+        $this->title = sprintf('%s купить в $city_prepositional с установкой. Каталог и цены', $this->getName());
         
         return $this;
     }
