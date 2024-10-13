@@ -127,4 +127,9 @@ class Location extends Page implements HasCatalogSettingsInterface
     {
         return $this->name;
     }
+    
+    public function getFilterPlaceholder(): string
+    {
+        return $this->getBaseCatalog()?->getFilterPlaceholder() ?? $this->getName();
+    }
 }

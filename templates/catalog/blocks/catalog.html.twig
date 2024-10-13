@@ -1,6 +1,6 @@
 {% if (lazyProducts is defined and lazyProducts) or (products is defined and products|length > 0) %}
     <div class="catalog-calculator px-3">
-        {% if catalog.showSummary %}
+        {% if catalog.showSummary and not hideSummary|default(false) %}
             {{ include('catalog/blocks/summary.html.twig') }}
         {% endif %}
         <h2 class="text-center">{{ h2 }}</h2>

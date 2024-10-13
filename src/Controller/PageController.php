@@ -243,12 +243,13 @@ class PageController extends AbstractController
         if (null !== $catalog) {
             $filters = $this->catalogManager->getBasicFiltersByCatalog($catalog);
             
+            $limit = 12; //Количество карточек на странице
             if ($this->request->isXmlHttpRequest()) {
-                return $this->catalogManager->renderProducts($filters, $location);
+                return $this->catalogManager->renderProducts($filters, $location, $limit);
             }
             
             $params = array_merge(
-                $this->getCatalogRenderParams($catalog, $filters),
+                $this->getCatalogRenderParams($catalog, $filters, $limit),
                 $this->getCalcSettings($catalog),
                 $params
             );
@@ -257,12 +258,12 @@ class PageController extends AbstractController
         return $this->render('page/location.html.twig', $params);
     }
     
-    private function getCatalogRenderParams(Catalog $catalog, array $filters): array
+    private function getCatalogRenderParams(Catalog $catalog, array $filters, ?int $limit = null): array
     {
         return [
             'page'               => $catalog,
             'catalog'            => $catalog,
-            'products'           => $this->catalogManager->getProductsPaginator($filters, $catalog),
+            'products' => $this->catalogManager->getProductsPaginator($filters, $catalog, $limit),
             'colors'             => $this->colorManager->getAvailableColors($filters, $catalog),
             'items'              => $this->catalogManager->getPopular($catalog),
             'catalogsLinks'      => $this->catalogManager->getCatalogsLinks($catalog),

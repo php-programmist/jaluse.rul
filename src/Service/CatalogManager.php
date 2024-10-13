@@ -212,10 +212,10 @@ class CatalogManager
         return $catalog;
     }
     
-    public function renderProducts(array $filters, HasCatalogSettingsInterface $catalog): Response
+    public function renderProducts(array $filters, HasCatalogSettingsInterface $catalog, ?int $limit = null): Response
     {
         $html = $this->twig->render('catalog/blocks/products.html.twig', [
-            'products' => $this->getProductsPaginator($filters, $catalog),
+            'products' => $this->getProductsPaginator($filters, $catalog, $limit),
             'lazy_off' => true,
         ]);
         

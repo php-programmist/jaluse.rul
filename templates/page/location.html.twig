@@ -24,3 +24,10 @@
 {% endblock location_block %}
 {% block rating_block %}{% endblock %}
 {% block catalog_card %}{% endblock %}
+{% block location_catalog_block %}
+    {% if products is defined and products|length > 0 %}
+        <div id="content" class="container">
+            {{ include('catalog/blocks/catalog.html.twig', {h2:  page.name~" каталог и цены:", hideSummary: true}) }}
+        </div>
+    {% endif %}
+{% endblock %}
