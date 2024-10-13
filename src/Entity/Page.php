@@ -130,6 +130,7 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="parent")
+     * @ORM\OrderBy({"ordering" = "ASC", "id" = "ASC",})
      */
     protected $pages;
     
@@ -504,6 +505,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function getH1(): string
     {
         return !empty($this->h1) ? $this->h1 : $this->getName();
+    }
+    
+    public function getH2(): string
+    {
+        return str_replace(' в Москве', '', $this->getH1());
     }
     
     public function setH1(?string $h1): self

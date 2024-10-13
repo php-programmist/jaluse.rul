@@ -28,6 +28,7 @@ class LocationImportType extends AbstractType
                 'attr'         => [
                     'class' => 'chosen',
                 ],
+                'help' => 'Это страница, на которой выводится только список помещений. Например, "/zhalyuzi/pomeshheniya/". Должен содержать в URI "pomeshheniya". Внимание! URI этой страницы будет взят за основу для генерации URI помещения',
             ])
             ->add('catalog', EntityType::class, [
                 'label'        => 'Базовый каталог',
@@ -38,10 +39,11 @@ class LocationImportType extends AbstractType
                 'attr'         => [
                     'class' => 'chosen',
                 ],
+                'help' => 'Страница, на которой выводятся помещения в виде блока со слайдером. Например, "/zhalyuzi/"',
             ])
             ->add('baseUri', TextType::class, [
                 'label'    => 'Базовый URI',
-                'help'     => 'Если не указать, то за основу будет взят URI родителя',
+                'help' => 'Если не указать, то за основу будет взят URI родителя. Чаще всего, тут нужно указать URI базового каталога, если нужно, чтобы в URI не попало "pomeshheniya"',
                 'required' => false,
             ])
             ->add('removeFromName', TextType::class, [

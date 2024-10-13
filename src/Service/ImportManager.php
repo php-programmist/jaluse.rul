@@ -365,11 +365,16 @@ class ImportManager
     
     private function initLocation($name, LocationImport $locationImport): Location
     {
+        $maxOrdering = $this->entityManager
+            ->getRepository(Page::class)
+            ->getMaxOrdering($locationImport->getParent());
+        
         $location = (new Location())
             ->setName($name)
             ->setParent($locationImport->getParent())
             ->setBaseCatalog($locationImport->getCatalog())
-            ->setUri($this->generateUri($locationImport, $name));
+            ->setUri($this->generateUri($locationImport, $name))
+            ->setOrdering($maxOrdering + 1);
         
         $this->entityManager->persist($location);
         

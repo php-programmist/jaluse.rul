@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -30,6 +32,20 @@ class PageRepository extends ServiceEntityRepository
                     ->orderBy('p.id', 'ASC')
                     ->getQuery()
                     ->getResult();
+    }
+    
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getMaxOrdering(Page $parent): int
+    {
+        return $this->createQueryBuilder('p')
+                    ->select('MAX(p.ordering)')
+                    ->andWhere('p.parent = :parent')
+                    ->setParameter('parent', $parent)
+                    ->getQuery()
+                    ->getSingleScalarResult();
     }
     
     // /**
