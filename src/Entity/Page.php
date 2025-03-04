@@ -197,6 +197,11 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      */
     protected int $ordering = 0;
     
+    /**
+     * @ORM\Column(nullable=false, options={"default": 0.7})
+     */
+    protected float $priority = 0.7;
+    
     public function __construct()
     {
         $this->created_at  = new DateTimeImmutable();
@@ -807,5 +812,17 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
     public function getShortName(): ?string
     {
         return $this->getName();
+    }
+    
+    public function getPriority(): float
+    {
+        return $this->priority;
+    }
+    
+    public function setPriority(float $priority): self
+    {
+        $this->priority = $priority;
+        
+        return $this;
     }
 }

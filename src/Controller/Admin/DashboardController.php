@@ -137,6 +137,7 @@ class DashboardController extends AbstractDashboardController
         $showSeoText  = Field::new('showSeoText', 'SEO-текст');
         $content      = CKEditorField::new('content', 'SEO-текст');
         $seoImageFile = VichImageField::new('seoImageFile', 'SEO-Изображение');
+        $priority = Field::new('priority', 'Приоритет в Sitemap');
         $seoPanel     = FormField::addPanel('SEO')->collapsible();
     
         return [
@@ -147,6 +148,7 @@ class DashboardController extends AbstractDashboardController
             $showSeoText,
             $content,
             $seoImageFile,
+            $priority,
         ];
     }
     
