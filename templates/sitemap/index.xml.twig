@@ -4,11 +4,12 @@
         xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
         xsi:schemaLocation="https://www.sitemaps.org/schemas/sitemap/0.9 https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
-{% for page in pages -%}
+    {% for page in pages %}
     <url>
-        <loc>{{ app.request.schemeAndHttpHost~page.path }}</loc>
-        <lastmod>{{ page.modifyDate|date("Y-m-d\\TH:i:sP") }}</lastmod>
-        <priority>1</priority>
+        <loc>https://{{ host~page.path }}</loc>
+        <lastmod>{{ modified }}</lastmod>
+        <priority>{{ page.priority }}</priority>
+        <changefreq>weekly</changefreq>
     </url>
 {% endfor -%}
 </urlset>

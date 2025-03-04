@@ -4,19 +4,11 @@ namespace App\Dto;
 
 class PageDto
 {
-    public $path;
-    public $modifyDate;
-    
-    /**
-     * PageDto constructor.
-     *
-     * @param $path
-     * @param $modifyDate
-     */
-    public function __construct($path, $modifyDate)
+    public function __construct(
+        public string $path,
+        public float $priority,
+    )
     {
-        $this->path       = $path;
-        $this->modifyDate = $modifyDate;
     }
     
 }
