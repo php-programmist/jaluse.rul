@@ -44,16 +44,29 @@ class SiteMapService
     private function getPages(): array
     {
         $pages    = $this->pageRepository->findBy(['published' => true], ['id' => 'asc']);
-        $excluded = ['/404/'];
+        
         $pagesDto = [];
         foreach ($pages as $page) {
-            if (in_array($page->getPath(), $excluded, true)) {
+            if ($this->needSkip($page->getPath())) {
                 continue;
             }
+            
             $pagesDto[] = new PageDto($page->getPath(), $page->getPriority());
         }
         
         return $pagesDto;
+    }
+    
+    private function needSkip(string $path): bool
+    {
+        $excluded = ['/404/', '/sort/'];
+        foreach ($excluded as $item) {
+            if (str_contains($path, $item)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     private function getSiteMapPath(): string
