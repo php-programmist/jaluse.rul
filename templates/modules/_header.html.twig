@@ -37,8 +37,13 @@
                 <div class="col-xl-3 col-lg-4 col-md-4 col-sm-5 header-n1-phone align-self-center">
                     <div class="row">
                         <div class="col-lg-9 col-md-12 header-contacts-column">
-                            <p><b><a href="tel:+74959843848" class="header-n1-phone-phone">+7 (495) 984-38-48</a></b>
+                            {% if not isHidePhone %}
+                                <p>
+                                    <b>
+                                        <a href="tel:+74959843848" class="header-n1-phone-phone">+7 (495) 984-38-48</a>
+                                    </b>
                             </p>
+                            {% endif %}
                             {{ domain_modal_trigger() }}
                             <p><span style="color:#007bff;">Круглосуточно, 24/7</span></p>
                         </div>
@@ -65,7 +70,14 @@
                     </div>
 
                 </div>
-                <div class="headerpoisk col-3 align-self-center"><a href="tel:+74959843848">+7 (495) 984-38-48</a></div>
+                {% if not isHidePhone %}
+                    <div class="headerpoisk col-3 align-self-center">
+                        <a href="tel:+74959843848">+7 (495) 984-38-48</a>
+                    </div>
+                {% else %}
+                    <div class="headerpoisk col-3 align-self-center"><a href="tel:+79104014017">+7 (910) 401-40-17</a>
+                    </div>
+                {% endif %}
                 <div class="headermbtn col-2 align-self-center"><img {{ lazy_load('/img/burger.webp') }} alt="*"
                                                                                                          data-menu-visible="#mobile-menu-container">
                 </div>
@@ -275,7 +287,11 @@
                     <a href="/markizyi/">Маркизы</a>
                 </div>
                 <div class="vip-menu-wrap menu-wrap headern2phone">
-                    <a href="tel:+74959843848">+7 (495) 984-38-48</a>
+                    {% if not isHidePhone %}
+                        <a href="tel:+74959843848">+7 (495) 984-38-48</a>
+                    {% else %}
+                        <a href="tel:+79104014017">+7 (910) 401-40-17</a>
+                    {% endif %}
                 </div>
                 <div class="vip-menu-wrap menu-wrap social_icons header-search">
                     <a href="javascript:void(0)" class="js-search_input_toggle search_input_toggle">🔎</a>
