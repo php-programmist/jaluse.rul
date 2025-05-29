@@ -35,6 +35,17 @@
 									v-mask="'+# (###) ###-##-##'"
 							>
 						</p>
+            <div style="display: flex; justify-content: space-between; gap: 10px; padding: 10px 0;">
+              <input
+                  type="checkbox"
+                  name="confidence-policy"
+                  id="confidence-policy"
+                  checked=""
+                  style="width: auto"
+              >
+              <label for="confidence-policy">Даю <a
+                  href="/confidence-policy/">согласие</a> на обработку и хранение своих персональных данных</label><br>
+            </div>
 						<p class="fieldset">
               <button class="full-width form-submit js-submit-callback-form" @click.prevent="sendForm($event)">ОТПРАВИТЬ
               </button>
@@ -156,7 +167,7 @@ export default {
 		width: 90%;
 		max-width: 400px;
 		background: #FFF;
-		margin: 3em auto 4em;
+    margin: 0 auto;
 		cursor: auto;
 		border-radius: 0.25em;
 		-webkit-transform: translateY(-30px);
@@ -207,9 +218,6 @@ export default {
 	}
 	
 	@media only screen and (min-width: 600px) {
-		.cd-user-modal-container {
-			margin: 8em auto;
-		}
 		
 		.cd-user-modal-container .cd-switcher a {
 			height: 70px;

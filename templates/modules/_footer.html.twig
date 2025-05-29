@@ -24,8 +24,7 @@
                 <a href="{{ path('simple_page_o_kompanii') }}" class="footer-nav-ssli">О компании</a>
                 <a href="{{ path('simple_page_zakaz_zhalyuzi') }}" class="footer-nav-ssli">Как заказать</a>
                 <a href="{{ path('simple_page_video_jaluse') }}" class="footer-nav-ssli">Видео</a>
-                <a href="{{ path('simple_page_confidence-policy') }}"
-                   class="footer-nav-ssli">Политика конфиденциальности</a>
+
                 <a href="{{ path('simple_page_optom') }}" class="footer-nav-ssli">Сотрудничество</a>
                 <a href="{{ path('simple_page_kontaktyi') }}" class="footer-nav-ssli">Контакты</a>
                 <a href="{{ path('simple_page_yuridicheskim-licam') }}" class="footer-nav-ssli">Юридическим лицам</a>
@@ -56,9 +55,20 @@
                 <div class="footer-zag">Ответим на все вопросы</div>
                 <form action="{{ path('mail.callback_consultation') }}" method="post" class="phone_callback">
                     <input type="text" class="phone-field" name="phone" placeholder="Номер телефона" required="">
+                    {{ include('modules/agreement-checkbox.html.twig') }}
                     <input type="submit" class="mbtn">
                     <input type="hidden" name="token" value="{{ csrf_token('consultation') }}" />
                 </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <noindex>
+                    <p class="text text-center" style="font-size: 1.2em">Политика конфиденциальности</p>
+                    <p class="text text-center">Отправляя данные, вы соглашаетесь с <a
+                                href="{{ path('simple_page_confidence-policy') }}">Политикой конфиденциальности</a> этого сайта.
+                    </p>
+                </noindex>
             </div>
         </div>
     </div>

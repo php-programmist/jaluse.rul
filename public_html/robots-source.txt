@@ -33,6 +33,7 @@ Disallow: /kupit-zhalyuzi-na-okna-v-internet-magazine/
 Disallow: /somfy/
 Disallow: /?order
 Disallow: /sort/
+Disallow: /confidence-policy/
 Clean-param: page
 Clean-param: order
 
