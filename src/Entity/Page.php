@@ -202,6 +202,16 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
      */
     protected float $priority = 0.7;
     
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    protected ?array $faq = [];
+    
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected ?string $faqTitle = null;
+    
     public function __construct()
     {
         $this->created_at  = new DateTimeImmutable();
@@ -825,4 +835,37 @@ abstract class Page implements TurboPageInterface, HasExamplesInterface
         
         return $this;
     }
+    
+    /**
+     * @return array
+     */
+    public function getFaq(): array
+    {
+        return $this->faq ?? [];
+    }
+    
+    /**
+     * @param array|null $faq
+     *
+     * @return $this
+     */
+    public function setFaq(?array $faq): self
+    {
+        $this->faq = $faq;
+        
+        return $this;
+    }
+    
+    public function getFaqTitle(): ?string
+    {
+        return $this->faqTitle;
+    }
+    
+    public function setFaqTitle(?string $faqTitle): self
+    {
+        $this->faqTitle = $faqTitle;
+        
+        return $this;
+    }
+    
 }
