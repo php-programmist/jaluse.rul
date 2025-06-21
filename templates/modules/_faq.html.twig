@@ -1,0 +1,33 @@
+{% if page.faq|length > 0 %}
+    <div class="container">
+        {% if page.faqTitle %}
+            <h2 class="faq-title">{{ page.faqTitle }}</h2>
+        {% endif %}
+
+        <div class="faq-container" itemscope itemtype="http://schema.org/FAQPage">
+            {% for item in page.faq %}
+                <div class="faq-item{% if loop.index > 5 %} faq-hidden{% endif %}" itemprop="mainEntity" itemscope
+                     itemtype="http://schema.org/Question">
+                    <h3 class="faq-question" itemprop="name">
+                        {{ item.question }}
+                    </h3>
+                    <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="http://schema.org/Answer">
+                        <div itemprop="text">
+                            {{ item.answer|nl2br|raw }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if page.faq|length > 5 %}
+                <button type="button" class="faq-show-more">
+                    <span class="button-text">Еще</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" />
+                    </svg>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
