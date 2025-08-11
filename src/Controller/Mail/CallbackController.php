@@ -65,23 +65,19 @@ class CallbackController extends AbstractController
      */
     public function consultation(CallbackFormRequest $request)
     {
-        // $body = $this->twig->render('mail/callback/consultation.html.twig',(array)$request);
-        // if (mail($this->recipients,"Заявка на консультацию",$body,$this->headers)) {
-        //     return $this->response->success("Спасибо, отправлено!");
-        // }
-        //
-        // return $this->response->fail(error_get_last());
         if (!$this->isCsrfTokenValid('consultation', $request->token)) {
             return $this->response->fail(['Обновите страницу и повторите отправку']);
         }
-        $this->email
-            ->subject("Заявка на консультацию")
-            ->htmlTemplate('mail/callback/consultation.html.twig')
-            ->context((array)$request);
-    
-        $this->mailer->send($this->email);
-    
         $this->telegramApiManager->sendAdminMessage('telegram/callback/consultation.html.twig', (array)$request);
+        // $this->email
+        //     ->subject("Заявка на консультацию")
+        //     ->htmlTemplate('mail/callback/consultation.html.twig')
+        //     ->context((array)$request);
+        //
+        // $this->mailer->send($this->email);
+        
+        $body = $this->twig->render('mail/callback/consultation.html.twig', (array)$request);
+        mail($this->recipients, "Заявка на консультацию", $body, $this->headers);
     
         return $this->response->success("Спасибо, отправлено!");
     }
@@ -91,21 +87,22 @@ class CallbackController extends AbstractController
      */
     public function order(CallbackFormRequest $request)
     {
-        // $body = $this->twig->render('mail/callback/order.html.twig',(array)$request);
-        // mail($this->recipients,"Новый заказ",$body,$this->headers);
-        // return $this->response->success("Спасибо, отправлено!");
+        
         if (!$this->isCsrfTokenValid('consultation', $request->token)) {
             return $this->response->fail(['Обновите страницу и повторите отправку']);
         }
-        $this->email
-            ->subject("Новый заказ")
-            ->htmlTemplate('mail/callback/order.html.twig')
-            ->context((array)$request);
-    
-        $this->mailer->send($this->email);
+        // $this->email
+        //     ->subject("Новый заказ")
+        //     ->htmlTemplate('mail/callback/order.html.twig')
+        //     ->context((array)$request);
+        //
+        // $this->mailer->send($this->email);
     
         $this->telegramApiManager->sendAdminMessage('telegram/callback/order.html.twig', (array)$request);
-    
+        
+        $body = $this->twig->render('mail/callback/order.html.twig', (array)$request);
+        mail($this->recipients, "Новый заказ", $body, $this->headers);
+        
         return $this->response->success("Спасибо, отправлено!");
     }
 }
