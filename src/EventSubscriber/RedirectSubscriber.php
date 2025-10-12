@@ -46,6 +46,23 @@ class RedirectSubscriber implements EventSubscriberInterface
         if (null !== $subdomain) {
             $url = $this->subDomainService->getSubDomainRoot($subdomain);
             $event->setResponse(new RedirectResponse($url));
+            
+            return;
+        }
+        
+        // домен не является ни основным, ни существующим поддоменом из списка
+        // В этом случае редиректим на основной домен
+        if (
+            !$this->subDomainService->isMainDomain()
+            && null === $this->subDomainService->getSubdomainEntity()
+        ) {
+            $url = sprintf(
+                '%s%s',
+                $this->subDomainService->getDomainRoot(),
+                $path
+            );
+            
+            $event->setResponse(new RedirectResponse($url));
         }
     }
     

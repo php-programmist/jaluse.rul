@@ -86,6 +86,11 @@ class SubDomainService
         return sprintf('https://%s.%s', $subdomain, $this->baseHost);
     }
     
+    public function getDomainRoot(): string
+    {
+        return sprintf('https://%s', $this->baseHost);
+    }
+    
     public function getHost(): string
     {
         $request = $this->requestStack->getMainRequest();

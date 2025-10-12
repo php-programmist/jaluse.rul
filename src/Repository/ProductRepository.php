@@ -94,6 +94,9 @@ class ProductRepository extends ServiceEntityRepository
                         ->orderBy('p.' . $orderBy, $orderDir);
     
         if ($orderBy === 'price') {
+            $builder->addSelect('CASE WHEN p.price IS NULL THEN 1 ELSE 0 END AS HIDDEN is_null_sort');
+            $builder->orderBy('is_null_sort', $orderDir);
+            $builder->addOrderBy('p.price', $orderDir);
             $builder->addOrderBy('p.matrix_id', $orderDir);
         } elseif ($orderBy === 'popular') {
             $builder

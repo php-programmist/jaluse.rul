@@ -50,7 +50,7 @@ class CalculationService
         if (!$type) {
             return 0;
         }
-        if ($product->getPrice() && $type->getCalculationType() === 'simple') {
+        if ($product->getPrice() || $type->getCalculationType() === 'simple') {
             return $this->getRubPrice($product->getPrice());
         }
         if ($type->getCalculationType() === 'matrix') {
