@@ -58,6 +58,8 @@ class CatalogCrudController extends AbstractCrudController
         $materialName   = TextareaField::new('material.name', 'Подтип');
         $seoImageUrl = ImageField::new('seoImageUrl', 'SEO-Изображение');
         $recommendedTitle = TextField::new('recommendedTitle', 'Заголовок рекомендуемых товаров');
+        $nameNominative = TextField::new('nameNominative', 'Именительный падеж');
+        $nameGenitive = TextField::new('nameGenitive', 'Родительный падеж');
         $faqPanel = FormField::addPanel('FAQ')->collapsible();
         $faqTitle = TextField::new('faqTitle', 'Заголовок');
         $faq = CollectionField::new('faq', 'Вопросы и ответы')
@@ -93,6 +95,8 @@ class CatalogCrudController extends AbstractCrudController
                 $price,
                 ...DashboardController::getSeoBlock(),
                 $recommendedTitle,
+                $nameNominative,
+                $nameGenitive,
                 $faqPanel,
                 $faqTitle,
                 $faq,

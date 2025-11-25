@@ -37,7 +37,7 @@
             {{ include('modules/recommended_products.html.twig', {items: page.locations, hideCatalog: true, locationsCatalog: page.locationsCatalog, newPage: false}) }}
         </div>
     {% endif %}
-
+    {{ include('modules/_advantages.html.twig') }}
     {{ include('modules/_seo_block.html.twig') }}
 
     {% block recommended_block %}{% endblock %}
